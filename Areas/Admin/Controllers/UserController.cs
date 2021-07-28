@@ -107,7 +107,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return RedirectToAction("MyProfile");
         }
 
-        //function Logout User 
+        //function Logout User lhd
         public ActionResult Logout()
         {
             Session.Clear();
