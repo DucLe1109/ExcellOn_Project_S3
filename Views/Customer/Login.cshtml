@@ -1,0 +1,102 @@
+﻿@model _ExcellOn_.Models.ViewModel.SignInViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>login</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="~/Public/Login/css/login.css" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+
+    <div>
+       
+        
+        <div class="container" id="container">
+            <div class="form-container sign-up-container">
+                <form action="#">
+                    <h2 class="fw-bold">Create Account</h2>
+                    <div class="social-container">
+                        <div style="background-color: red; width: 30px;height:30px;border-radius: 50%; display: inline-block;margin-right: 10px"></div>
+                        <div style="background-color: blue; width: 30px;height:30px;border-radius: 50%;display: inline-block;margin-right: 10px"></div>
+                        <div style="background-color: yellowgreen; width: 30px;height:30px;border-radius: 50%; display: inline-block"></div>
+                    </div>
+
+                    <input type="text" style="border-radius: 30px" class="form-control" required id="FullName" placeholder="FullName" />
+                    <input type="text" style="border-radius: 30px" class="form-control" required id="Telephone" placeholder="Telephone" />
+                    <input type="text" style="border-radius: 30px" class="form-control" required id="UserName" placeholder="UserName" />
+                    <input type="password" style="border-radius: 30px" class="form-control" required id="Password" placeholder="Password" />
+                    <input type="email" style="border-radius: 30px" class="form-control" required id="Email" placeholder="Email" />
+                    <button class="sign" style="margin-top: 10px; cursor:pointer" onclick="return _SignUp()">Sign Up</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form action="/Customer/Login" method="post">
+                    <h1 style="cursor: pointer">Sign in</h1>
+                    <div class="social-container">
+                        <div style="background-color: red; width: 30px;height:30px;border-radius: 50%; display: inline-block;margin-right: 10px"></div>
+                        <div style="background-color: blue; width: 30px;height:30px;border-radius: 50%;display: inline-block;margin-right: 10px"></div>
+                        <div style="background-color: yellowgreen; width: 30px;height:30px;border-radius: 50%; display: inline-block"></div>
+                    </div>
+                    <span style="font-weight: bold; font-size: 14px;margin-bottom: 20px"> by your account</span>
+
+                    <input type="text" name="UserName" style="border-radius: 30px" class="form-control" placeholder="Email" />
+                    <input type="password" name="Password" style="border-radius: 30px" class="form-control" placeholder="Password" />
+                    <span style="margin-bottom: 15px; font-weight: bold; font-size: 15px" class="text-danger text-center">@ViewBag.message</span>
+                    <button class="sign" style="cursor: pointer; margin-top: 20px">Sign In</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome Back!</h1>
+                        <p>To keep connected with us please login with your personal info</p>
+                        <button class="ghost" style="cursor: pointer" id="signIn">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Hello, Friend!</h1>
+                        <p>Enter your personal details and start journey with us</p>
+                        <button class="ghost" style="cursor: pointer" id="signUp">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p style="padding-bottom: 20px">
+               
+            </p>
+        </footer>
+    </div>
+    <script type="text/javascript">
+        function _SignUp() {
+            var SignUp_Obj = {
+                UserName: $('#UserName').val(),
+                FullName: $('#FullName').val(),
+                Telephone: $('#Telephone').val(),
+                Password: $('#Password').val(),
+                Email: $('#Email').val()
+            };
+            $.ajax({
+                url: "/Customer/SignUp",
+                type: "POST",
+                data: JSON.stringify(SignUp_Obj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "Json",
+                success: function (result) {
+                    alert(result);
+                }
+            });
+            
+        }
+    </script>
+    <script type="text/javascript" src="~/Public/Login/js/login.js"></script>
+</body>
+</html>
