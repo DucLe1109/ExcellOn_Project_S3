@@ -39,7 +39,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Index", "AdminHome");
+                            return RedirectToAction("DashboardIndex", "AdminHome");
                         }
                         
                     }

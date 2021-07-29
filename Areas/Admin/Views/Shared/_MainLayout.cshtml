@@ -18,6 +18,7 @@
     <!-- Page plugins -->
     <!-- Argon CSS -->
     <link rel="stylesheet" href="~/Areas/Admin/Public/css/argon.css?v=1.2.0" type="text/css">
+    @RenderSection("css",false)
 </head>
 
 <body>
@@ -164,6 +165,7 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            $('#table_id').DataTable();
             var page = location.pathname.split('/').pop();
             $(".nav-link").each(function () {
                 $(this).removeClass("active");
@@ -177,9 +179,13 @@
             $(location).attr("href", "/Admin/User/Logout");
         }
         function _Dashboard() {
-            $(location).attr("href", "/Admin/AdminHome/Index");
+            $(location).attr("href", "/Admin/AdminHome/DashboardIndex");
+        }
+        function _Customer() {
+            $(location).attr("href", "/Admin/CustomerManagement/CustomerIndex");
         }
     </script>
+    @RenderSection("js", false)
 </body>
 
 </html>

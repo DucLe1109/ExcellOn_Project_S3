@@ -79,7 +79,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 return RedirectToAction("MyProfile");
             }else
             {
-                return Redirect("AdminLogin");
+                return RedirectToRoute("AdminLogin");
             }
            
         }

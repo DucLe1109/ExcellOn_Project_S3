@@ -1,0 +1,59 @@
+﻿
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
+
+
+<div class="container" style="margin-top: 30px">
+
+    <div class="row">
+        <div class="col-xl-12">
+            <table id="table_id" class="display">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>User Name</th>
+                        <th>Company</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.list_customer)
+                    {
+                        <tr>
+                            <td>@item.Customer_Name</td>
+                            <td>@item.Customer_Phone</td>
+                            <td>@item.Customer_Email</td>
+                            <td>@item.Customer_UserName</td>
+                            <td>@item.CompanyId</td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                        <a class="dropdown-item" href="#">Detail</a>
+                                        <a class="dropdown-item" href="#">Edit</a>
+                                        <a class="dropdown-item" href="#">Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+}
+@section js{
+   
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
+}
