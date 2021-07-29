@@ -62,6 +62,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 var list_service = db.Services.ToList();
                 ViewBag.list_service = list_service;
                 ViewBag.CurrentService = CurrentService;
+                ViewBag.CurrentUser = CurrentUser;
                 return View(CurrentUser);
             }
             else

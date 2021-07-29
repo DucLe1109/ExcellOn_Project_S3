@@ -1,237 +1,205 @@
 ﻿@model _ExcellOn_.Models.UserInFo
-@{ 
-    Layout = null;
-}
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Profile</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    <link type="text/css" href="~/Public/Profile/profile.css" rel="stylesheet">
-</head>
+@if (Model.User_Name != null && Model.User_Password != null)
+{
+<div class="main-content">
+    
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(https://www.makemyassignments.com/blog/wp-content/uploads/2019/08/business-communication-tools-1024x574.png); background-size: cover; background-position: center top;">
+        <span class="mask bg-gradient-default opacity-8"></span>
+        <div class="container-fluid d-flex align-items-center">
+            <div class="row">
+                <div class="col-lg-7 col-md-10">
+                    <h1 class="display-2 text-white">Hello @Model.User_Name</h1>
+                    <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<body>
-    @if (Model.User_Name != null && Model.User_Password != null)
-    {
-        <div class="main-content">  
-            <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-                <div class="container-fluid">           
-                    <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="#">User profile</a>
-                    <ul class="navbar-nav align-items-center d-none d-md-flex">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div class="media align-items-center">
-                                    <div class="media-body ml-2 d-none d-lg-block">
-                                        <span class="mb-0 text-sm  font-weight-bold">@Model.User_Name</span>
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                <div class="card card-profile shadow">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3 order-lg-2">
+                            <div class="card-profile-image">
+                                <img src="@Url.Content(Model.User_Avatar)" class="rounded-circle" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <div class="d-flex justify-content-between">
+
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pt-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                                    <div>
+                                        <span class="heading">22</span>
+                                        <span class="description">Friends</span>
+                                    </div>
+                                    <div>
+                                        <span class="heading">10</span>
+                                        <span class="description">Photos</span>
+                                    </div>
+                                    <div>
+                                        <span class="heading">89</span>
+                                        <span class="description">Comments</span>
                                     </div>
                                 </div>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div class="media align-items-center">
-                                    <span class="avatar avatar-sm rounded-circle">
-                                        <img alt="Image placeholder" src="@Url.Content(Model.User_Avatar)">
-                                    </span>
-                                    <a style="color:white;margin-left: 15px;margin-top: -5px" href="/Admin/User/Logout">Logout</a>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(https://www.makemyassignments.com/blog/wp-content/uploads/2019/08/business-communication-tools-1024x574.png); background-size: cover; background-position: center top;">
-                <span class="mask bg-gradient-default opacity-8"></span>
-                <div class="container-fluid d-flex align-items-center">
-                    <div class="row">
-                        <div class="col-lg-7 col-md-10">
-                            <h1 class="display-2 text-white">Hello @Model.User_Name</h1>
-                            <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h3>
+                                @Model.User_FullName<span class="font-weight-light">, @Model.User_Age</span>
+                            </h3>
+                            <div class="h5 font-weight-300">
+                                <i class="ni location_pin mr-2"></i>@Model.User_Address
+                            </div>
+                            <div class="h5 mt-4">
+                                <i class="ni business_briefcase-24 mr-2"></i>@Model.User_Email
+                            </div>
+                            <div>
+                                <i class="ni education_hat mr-2"></i>@Model.User_Phone
+                            </div>
+                            <hr class="my-4">
+                            <p>@Model.User_AboutMe</p>
+
                         </div>
                     </div>
                 </div>
             </div>
-           
-            <div class="container-fluid mt--7">
-                <div class="row">
-                    <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
-                        <div class="card card-profile shadow">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-3 order-lg-2">
-                                    <div class="card-profile-image">
-                                        <img src="@Url.Content(Model.User_Avatar)" class="rounded-circle" />
-                                    </div>
-                                </div>
+            <div class="col-xl-8 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">My Account</h3>
                             </div>
-                            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                                <div class="d-flex justify-content-between">
 
-                                </div>
-                            </div>
-                            <div class="card-body pt-0 pt-md-4">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                                            <div>
-                                                <span class="heading">22</span>
-                                                <span class="description">Friends</span>
-                                            </div>
-                                            <div>
-                                                <span class="heading">10</span>
-                                                <span class="description">Photos</span>
-                                            </div>
-                                            <div>
-                                                <span class="heading">89</span>
-                                                <span class="description">Comments</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <h3>
-                                        @Model.User_FullName<span class="font-weight-light">, @Model.User_Age</span>
-                                    </h3>
-                                    <div class="h5 font-weight-300">
-                                        <i class="ni location_pin mr-2"></i>@Model.User_Address
-                                    </div>
-                                    <div class="h5 mt-4">
-                                        <i class="ni business_briefcase-24 mr-2"></i>@Model.User_Email
-                                    </div>
-                                    <div>
-                                        <i class="ni education_hat mr-2"></i>@Model.User_Phone
-                                    </div>
-                                    <hr class="my-4">
-                                    <p>@Model.User_AboutMe</p>
-
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-xl-8 order-xl-1">
-                        <div class="card bg-secondary shadow">
-                            <div class="card-header bg-white border-0">
-                                <div class="row align-items-center">
-                                    <div class="col-8">
-                                        <h3 class="mb-0">My Account</h3>
+                    <div class="card-body">
+                        <form action="/Admin/User/Update_Profile" method="post" enctype="multipart/form-data">
+                            <h6 class="heading-small text-muted mb-4">User information</h6>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px">
+                                        
                                     </div>
-
+                                    <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px;">
+                                        <p class="form-control-label">Avatar</p>
+                                        <input name="AvatarUpload" type="file" class="btn btn-sm btn-primary col-lg-12">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-username">Username</label>
+                                            <input type="text" name="User_Name" readonly class="form-control form-control-alternative" value="@Model.User_Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-email">Password</label>
+                                            <input type="password" name="User_Password" class="form-control form-control-alternative" value="@Model.User_Password">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-first-name">Email Address</label>
+                                            <input type="text" name="User_Email" class="form-control form-control-alternative" value="@Model.User_Email">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-last-name">Full Name</label>
+                                            <input type="text" name="User_FullName" class="form-control form-control-alternative" value="@Model.User_FullName">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-address">About Me</label>
+                                            <textarea name="User_AboutMe" class="form-control form-control-alternative" rows="10">@Model.User_AboutMe</textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <form action="/Admin/User/Update_Profile" method="post" enctype="multipart/form-data">
-                                    <h6 class="heading-small text-muted mb-4">User information</h6>
-                                    <div class="pl-lg-4">
-                                        <div class="col-md-6 text-right" style="margin-bottom: 20px">
-                                            <p class="form-control-label">Avatar</p>
-                                            <input name="AvatarUpload" type="file" class="btn btn-sm btn-primary col-lg-12">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group focused">
-                                                    <label class="form-control-label" for="input-username">Username</label>
-                                                    <input type="text" name="User_Name" readonly class="form-control form-control-alternative" value="@Model.User_Name">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-email">Password</label>
-                                                    <input type="password" name="User_Password" class="form-control form-control-alternative" value="@Model.User_Password">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group focused">
-                                                    <label class="form-control-label" for="input-first-name">Email Address</label>
-                                                    <input type="text" name="User_Email" class="form-control form-control-alternative" value="@Model.User_Email">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group focused">
-                                                    <label class="form-control-label" for="input-last-name">Full Name</label>
-                                                    <input type="text" name="User_FullName" class="form-control form-control-alternative" value="@Model.User_FullName">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group focused">
-                                                    <label class="form-control-label" for="input-address">About Me</label>
-                                                    <textarea name="User_AboutMe" class="form-control form-control-alternative" rows="10">@Model.User_AboutMe</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr class="my-4">
-                                    <h6 class="heading-small text-muted mb-4">Contact information</h6>
-                                    <div class="pl-lg-4">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group focused">
-                                                    <label class="form-control-label" for="input-address">Address</label>
-                                                    <input name="User_Address" class="form-control form-control-alternative" value="@Model.User_Address" type="text">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="form-group focused">
-                                                    <label class="form-control-label" for="input-city">Age</label>
-                                                    <input type="number" name="User_Age" class="form-control form-control-alternative" value="@Model.User_Age">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group focused">
-                                                    <label class="form-control-label" for="input-country">Telephone</label>
-                                                    <input type="text" name="User_Phone" class="form-control form-control-alternative" value="@Model.User_Phone">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label class="form-control-label" for="input-country">Service Department</label>
-                                                    <select name="ServiceId" class="form-control form-control-alternative">
-                                                        @if (ViewBag.list_service != null)
-                                                        {
-                                                            foreach (var item in ViewBag.list_service)
-                                                            {
-                                                                if (ViewBag.CurrentService != null && item.Id == ViewBag.CurrentService.Id)
-                                                                {
-                                                                    <option value="@item.Id" selected>@item.Service_Name</option>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <option value="@item.Id">@item.Service_Name</option>
-                                                                }
-                                                            }
-                                                        }
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr class="my-4">
-                                    
-                                    <div class="pl-lg-4">
+                            <hr class="my-4">
+                            <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="form-group focused">
-                                            <button type="submit" class="btn btn-info">Edit profile</button>
+                                            <label class="form-control-label" for="input-address">Address</label>
+                                            <input name="User_Address" class="form-control form-control-alternative" value="@Model.User_Address" type="text">
                                         </div>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-city">Age</label>
+                                            <input type="number" name="User_Age" class="form-control form-control-alternative" value="@Model.User_Age">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-country">Telephone</label>
+                                            <input type="text" name="User_Phone" class="form-control form-control-alternative" value="@Model.User_Phone">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-country">Service Department</label>
+                                            <select name="ServiceId" class="form-control form-control-alternative">
+                                                @if (ViewBag.list_service != null)
+                                                {
+                                                    foreach (var item in ViewBag.list_service)
+                                                    {
+                                                        if (ViewBag.CurrentService != null && item.Id == ViewBag.CurrentService.Id)
+                                                        {
+                                <option value="@item.Id" selected>@item.Service_Name</option>
+ }
+                            else
+                            {
+    <option value="@item.Id">@item.Service_Name</option>
+}
+}
+}
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            <hr class="my-4">
+
+                            <div class="pl-lg-4">
+                                <div class="form-group focused">
+                                    <button type="submit" class="btn btn-info">Edit profile</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="footer">
-            <div class="row align-items-center justify-content-xl-between">
-                <div class="col-xl-6 m-auto text-center">
-                    <div class="copyright">
-                        
-                    </div>
-                </div>
-            </div>
-        </footer>
-    }
+    </div>
+</div>
+                <footer class="footer">
+                    <div class="row align-items-center justify-content-xl-between">
+                        <div class="col-xl-6 m-auto text-center">
+                            <div class="copyright">
 
-</body>
-</html>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+}
