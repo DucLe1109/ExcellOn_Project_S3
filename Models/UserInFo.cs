@@ -16,13 +16,11 @@ namespace _ExcellOn_.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Web;
-
     public partial class UserInFo
     {
 
         public UserInFo()
-        {
-            this.User_Avatar = "~/Public/Image/avt.png";
+        { 
             this.UserRoles = new HashSet<UserRole>();
 
         }
@@ -59,8 +57,6 @@ namespace _ExcellOn_.Models
         public virtual Service Service { get; set; }
 
         public virtual ICollection<UserRole> UserRoles { get; set; }
-        [NotMapped]
-        public HttpPostedFileBase AvatarUpload { set; get; }
 
     }
 

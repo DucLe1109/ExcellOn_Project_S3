@@ -2,6 +2,7 @@
 using _ExcellOn_.Models;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace _ExcellOn_.Areas.Admin.Controllers
@@ -73,7 +74,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
         //Function Update information for User
         [HttpPost]
-        public ActionResult Update_Profile(UserInFo CurrentUser)
+        public ActionResult Update_Profile(UserInFo CurrentUser, HttpPostedFileBase AvatarUpload)
         {
             var User = db.UserInFoes.Where(x => x.User_Name == CurrentUser.User_Name).FirstOrDefault();
             if (User != null)
@@ -87,10 +88,10 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 User.User_Address = CurrentUser.User_Address;
                 User.User_AboutMe = CurrentUser.User_AboutMe;
                 User.ServiceId = CurrentUser.ServiceId;
-                if (CurrentUser.AvatarUpload != null)
+                if (AvatarUpload.ContentLength > 0)
                 {
-                    string FileName = Path.GetFileNameWithoutExtension(CurrentUser.AvatarUpload.FileName);
-                    string Extension = Path.GetExtension(CurrentUser.AvatarUpload.FileName);
+                    string FileName = Path.GetFileNameWithoutExtension(AvatarUpload.FileName);
+                    string Extension = Path.GetExtension(AvatarUpload.FileName);
                     FileName = FileName + Extension;
                     User.User_Avatar = "~/Public/Image/" + FileName;
 
@@ -100,7 +101,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                     //    System.IO.File.Delete(fullPath);
                     //}
 
-                    CurrentUser.AvatarUpload.SaveAs(Path.Combine(Server.MapPath("~/Public/Image/"), FileName));
+                    AvatarUpload.SaveAs(Path.Combine(Server.MapPath("~/Public/Image/"), FileName));
                 }
 
                 db.SaveChanges();

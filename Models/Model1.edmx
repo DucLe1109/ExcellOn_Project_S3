@@ -14,6 +14,7 @@
           <Property Name="Company_Phone" Type="varchar" MaxLength="255" />
           <Property Name="Company_Address" Type="varchar" MaxLength="255" />
           <Property Name="Company_Email" Type="varchar" MaxLength="255" />
+          <Property Name="Company_Description" Type="text" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -86,6 +87,7 @@
           <Property Name="Service_Description" Type="text" />
           <Property Name="Service_TaxPercentage" Type="float" />
           <Property Name="Service_SaleStatus" Type="int" />
+          <Property Name="Service_Image" Type="text" />
           <Property Name="Service_PriceSale" Type="float" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -344,6 +346,7 @@
           <Property Name="Company_Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Company_Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Customers" Relationship="Model.FK__Customer__Compan__4C364F0E" FromRole="Company" ToRole="Customer" />
+          <Property Name="Company_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -430,6 +433,7 @@
           <Property Name="Service_PriceSale" Type="Double" />
           <NavigationProperty Name="OrderDetails" Relationship="Model.FK__OrderDeta__Servi__6225902D" FromRole="Service" ToRole="OrderDetail" />
           <NavigationProperty Name="UserInFoes" Relationship="Model.FK__UserInFo__Servic__50FB042B" FromRole="Service" ToRole="UserInFo" />
+          <Property Name="Service_Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -588,6 +592,7 @@
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="Model.Company">
               <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="Company_Description" ColumnName="Company_Description" />
                 <ScalarProperty Name="Company_Email" ColumnName="Company_Email" />
                 <ScalarProperty Name="Company_Address" ColumnName="Company_Address" />
                 <ScalarProperty Name="Company_Phone" ColumnName="Company_Phone" />
@@ -666,6 +671,7 @@
           <EntitySetMapping Name="Services">
             <EntityTypeMapping TypeName="Model.Service">
               <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="Service_Image" ColumnName="Service_Image" />
                 <ScalarProperty Name="Service_PriceSale" ColumnName="Service_PriceSale" />
                 <ScalarProperty Name="Service_SaleStatus" ColumnName="Service_SaleStatus" />
                 <ScalarProperty Name="Service_TaxPercentage" ColumnName="Service_TaxPercentage" />

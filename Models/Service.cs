@@ -42,6 +42,8 @@ public partial class Service
 
     public Nullable<double> Service_PriceSale { get; set; }
 
+    public string Service_Image { get; set; }
+
 
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; }
