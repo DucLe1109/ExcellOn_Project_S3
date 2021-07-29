@@ -26,5 +26,23 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             }
            
         }
+        
+        //public ActionResult CustomerIndex()
+        //{
+        //    string UserName = (string)Session["UserName"];
+        //    if (UserName == null)
+        //    {
+        //        return RedirectToAction("Login","User");
+        //    }
+        //    else
+        //    {
+        //        var CurrentUser = db.UserInFoes.Where(x => x.User_Name == UserName).FirstOrDefault();
+        //        ViewBag.CurrentUser = CurrentUser;
+        //        return View();
+        //    }
+           
+        //}
+
+
     }
 }

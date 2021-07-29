@@ -1,10 +1,10 @@
-﻿@*@model _ExcellOn_.Models.UserInFo
+﻿@model _ExcellOn_.Models.UserInFo
 @{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
 
 @if (Model.User_Name != null && Model.User_Password != null)
 {
 <div class="main-content">
-    
+
     <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(https://www.makemyassignments.com/blog/wp-content/uploads/2019/08/business-communication-tools-1024x574.png); background-size: cover; background-position: center top;">
         <span class="mask bg-gradient-default opacity-8"></span>
         <div class="container-fluid d-flex align-items-center">
@@ -83,19 +83,19 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="/Admin/User/Update_Profile" method="post" enctype="multipart/form-data">
+                        <form action="/Admin/UserManagement/Update_Profile" method="post" enctype="multipart/form-data">
                             <h6 class="heading-small text-muted mb-4">User information</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px">
-                                        
+
                                     </div>
                                     <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px;">
                                         <p class="form-control-label">Avatar</p>
                                         <input name="AvatarUpload" type="file" class="btn btn-sm btn-primary col-lg-12">
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
@@ -165,14 +165,12 @@
                                                     {
                                                         if (ViewBag.CurrentService != null && item.Id == ViewBag.CurrentService.Id)
                                                         {
-                                <option value="@item.Id" selected>@item.Service_Name</option>
- }
-                            else
-                            {
-    <option value="@item.Id">@item.Service_Name</option>
-}
-}
-}
+                                <option value="@item.Id" selected>@item.Service_Name</option> }
+                                                        else
+                                                        {
+                                <option value="@item.Id">@item.Service_Name</option>}
+                                                    }
+                                                }
 
                                             </select>
                                         </div>
@@ -201,5 +199,4 @@
                             </div>
                         </div>
                     </div>
-                </footer>
-}*@
+                </footer>}
