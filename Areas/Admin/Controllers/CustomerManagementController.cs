@@ -25,7 +25,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToRoute("AdminLogin");
+                return Redirect("/AdminLogin");
             }
             
         }

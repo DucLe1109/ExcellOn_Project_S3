@@ -40,6 +40,8 @@ public partial class Customer
 
     public Nullable<int> CompanyId { get; set; }
 
+    public string Customer_Comment { get; set; }
+
 
 
     public virtual Company Company { get; set; }

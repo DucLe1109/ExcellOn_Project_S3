@@ -66,7 +66,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("Login");
+            return Redirect("/AdminLogin");
         }
 
     }

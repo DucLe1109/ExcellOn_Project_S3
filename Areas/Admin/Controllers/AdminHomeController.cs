@@ -21,7 +21,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 return View();
             }else
             {
-                return Redirect("AdminLogin");
+                return Redirect("/AdminLogin");
             }
         }
     }

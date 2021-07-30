@@ -32,7 +32,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToRoute("AdminLogin");
+                return Redirect("/AdminLogin");
             }
         }
 
@@ -50,7 +50,15 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                     User.User_Email = CurrentUser.User_Email;
                     User.User_FullName = CurrentUser.User_FullName;
                     User.User_Gender = CurrentUser.User_Gender;
-                    User.User_Password = BCrypt.Net.BCrypt.HashPassword(CurrentUser.User_Password);
+                    if (CurrentUser.User_Password != null)
+                    {
+                        User.User_Password = BCrypt.Net.BCrypt.HashPassword(CurrentUser.User_Password);
+                    }
+                    else
+                    {
+                        User.User_Password = User.User_Password;
+                    }
+                    
                     User.User_Phone = CurrentUser.User_Phone;
                     User.User_Address = CurrentUser.User_Address;
                     User.User_AboutMe = CurrentUser.User_AboutMe;
@@ -79,7 +87,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 return RedirectToAction("MyProfile");
             }else
             {
-                return RedirectToRoute("AdminLogin");
+                return Redirect("/AdminLogin");
             }
            
         }
