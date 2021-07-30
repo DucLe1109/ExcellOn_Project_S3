@@ -218,6 +218,7 @@
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap-reboot.min.css" />
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap.css" />
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap.min.css" />
+    <Content Include="Areas\Admin\Public\DataTable\pagination.css" />
     <Content Include="Areas\Admin\Public\fonts\nucleo\nucleo-icons.svg" />
     <Content Include="Areas\Admin\Public\img\brand\blue.png" />
     <Content Include="Areas\Admin\Public\img\brand\favicon.png" />
