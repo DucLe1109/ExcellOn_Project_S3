@@ -153,6 +153,7 @@
     <Compile Include="Areas\Admin\ViewModel\LoginViewModel.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SendMailerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -162,6 +163,7 @@
     <Compile Include="Models\Customer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2759,6 +2761,33 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Public\assets\css\style-starter.css" />
+    <Content Include="Public\assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Public\assets\images\about.jpg" />
+    <Content Include="Public\assets\images\about2.jpg" />
+    <Content Include="Public\assets\images\banner1.jpg" />
+    <Content Include="Public\assets\images\bg1.jpg" />
+    <Content Include="Public\assets\images\blog1.jpg" />
+    <Content Include="Public\assets\images\blog2.jpg" />
+    <Content Include="Public\assets\images\blog3.jpg" />
+    <Content Include="Public\assets\images\image.jpg" />
+    <Content Include="Public\assets\images\inner.jpg" />
+    <Content Include="Public\assets\images\s1.jpg" />
+    <Content Include="Public\assets\images\s2.jpg" />
+    <Content Include="Public\assets\images\s3.jpg" />
+    <Content Include="Public\assets\images\team1.jpg" />
+    <Content Include="Public\assets\images\team2.jpg" />
+    <Content Include="Public\assets\images\team3.jpg" />
+    <Content Include="Public\assets\images\testi1.jpg" />
+    <Content Include="Public\assets\images\testi2.jpg" />
+    <Content Include="Public\assets\images\testi3.jpg" />
+    <Content Include="Public\assets\js\bootstrap.min.js" />
+    <Content Include="Public\assets\js\counter.js" />
+    <Content Include="Public\assets\js\jquery-3.3.1.min.js" />
+    <Content Include="Public\assets\js\jquery.magnific-popup.min.js" />
+    <Content Include="Public\assets\js\owl.carousel.js" />
+    <Content Include="Public\assets\js\theme-change.js" />
+    <Content Include="Public\assets\template\neworder.html" />
     <Content Include="Public\Image\avt.png" />
     <Content Include="Public\Image\Business-Growth.png" />
     <Content Include="Public\Image\OIP.jfif" />
@@ -3296,6 +3325,11 @@
     <Content Include="Areas\Admin\Views\AdminHome\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\MyProfile.cshtml" />
     <Content Include="Areas\Admin\Views\CustomerManagement\CustomerIndex.cshtml" />
+    <Content Include="Public\assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Public\assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Public\assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Public\assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Public\assets\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3320,6 +3354,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Customer\Login.cshtml" />
     <Content Include="Views\Home\abv.cshtml" />
+    <Content Include="Views\SendMailer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
