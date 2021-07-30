@@ -151,6 +151,8 @@
     <Compile Include="Areas\Admin\ViewModel\LoginViewModel.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ServicesController.cs" />
+    <Compile Include="Controllers\UserInFoesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -187,6 +189,7 @@
     <Compile Include="Models\PermissionRole.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ResultTeam.cs" />
     <Compile Include="Models\Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -2744,6 +2747,32 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Manh\assets\css\style-starter.css" />
+    <Content Include="Content\Manh\assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Manh\assets\images\about.jpg" />
+    <Content Include="Content\Manh\assets\images\about2.jpg" />
+    <Content Include="Content\Manh\assets\images\banner1.jpg" />
+    <Content Include="Content\Manh\assets\images\bg1.jpg" />
+    <Content Include="Content\Manh\assets\images\blog1.jpg" />
+    <Content Include="Content\Manh\assets\images\blog2.jpg" />
+    <Content Include="Content\Manh\assets\images\blog3.jpg" />
+    <Content Include="Content\Manh\assets\images\image.jpg" />
+    <Content Include="Content\Manh\assets\images\inner.jpg" />
+    <Content Include="Content\Manh\assets\images\s1.jpg" />
+    <Content Include="Content\Manh\assets\images\s2.jpg" />
+    <Content Include="Content\Manh\assets\images\s3.jpg" />
+    <Content Include="Content\Manh\assets\images\team1.jpg" />
+    <Content Include="Content\Manh\assets\images\team2.jpg" />
+    <Content Include="Content\Manh\assets\images\team3.jpg" />
+    <Content Include="Content\Manh\assets\images\testi1.jpg" />
+    <Content Include="Content\Manh\assets\images\testi2.jpg" />
+    <Content Include="Content\Manh\assets\images\testi3.jpg" />
+    <Content Include="Content\Manh\assets\js\bootstrap.min.js" />
+    <Content Include="Content\Manh\assets\js\counter.js" />
+    <Content Include="Content\Manh\assets\js\jquery-3.3.1.min.js" />
+    <Content Include="Content\Manh\assets\js\jquery.magnific-popup.min.js" />
+    <Content Include="Content\Manh\assets\js\owl.carousel.js" />
+    <Content Include="Content\Manh\assets\js\theme-change.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -3293,6 +3322,11 @@
     <Content Include="Areas\Admin\Views\Shared\_TopnavLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_SidenavLayout.cshtml" />
     <Content Include="Areas\Admin\Views\AdminHome\_ViewStart.cshtml" />
+    <Content Include="Content\Manh\assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Manh\assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Manh\assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Manh\assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Manh\assets\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3317,13 +3351,29 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Customer\Login.cshtml" />
     <Content Include="Views\Home\abv.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Services\Create.cshtml" />
+    <Content Include="Views\Services\Delete.cshtml" />
+    <Content Include="Views\Services\Details.cshtml" />
+    <Content Include="Views\Services\Edit.cshtml" />
+    <Content Include="Views\Services\Index.cshtml" />
+    <Content Include="Views\Services\service.cshtml" />
+    <Content Include="Views\Services\company.cshtml" />
+    <Content Include="Views\Services\detailservice.cshtml" />
+    <Content Include="Views\Services\detailteam.cshtml" />
+    <Content Include="Views\UserInFoes\Create.cshtml" />
+    <Content Include="Views\UserInFoes\Delete.cshtml" />
+    <Content Include="Views\UserInFoes\Details.cshtml" />
+    <Content Include="Views\UserInFoes\Edit.cshtml" />
+    <Content Include="Views\UserInFoes\Index.cshtml" />
+    <Content Include="Views\Services\feedback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

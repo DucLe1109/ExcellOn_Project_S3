@@ -1,0 +1,35 @@
+﻿@using _ExcellOn_.Models
+@model IEnumerable<Customer>
+<section class="w3l-customer-block py-5">
+    <div class="container py-md-5 py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="section-heading text-center mb-sm-5 mb-4">
+                    <h3 class="title-style mb-2">Customer Feedback</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="customer-single pr-lg-4">
+                        <blockquote>
+                           @item.Customer_Comment
+                        </blockquote>
+                        <div class="customer-img d-flex align-items-center mt-4">
+                            <img src="~/Content/Manh/assets/images/@item.Customer_Avatar" class="img-fluid mr-3" alt="" />
+                            <div class="customer-info">
+                                <h6>@item.Customer_Name</h6>
+                                <small class="mb-0">FeedBack</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+           
+        </div>
+    </div>
+</section>

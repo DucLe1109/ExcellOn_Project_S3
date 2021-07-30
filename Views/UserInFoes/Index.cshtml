@@ -1,0 +1,99 @@
+﻿@model IEnumerable<_ExcellOn_.Models.UserInFo>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.User_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_Avatar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_AboutMe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Service.Service_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_Avatar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_AboutMe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Service.Service_Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
