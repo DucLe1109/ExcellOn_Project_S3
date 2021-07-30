@@ -153,7 +153,6 @@
     <Compile Include="Areas\Admin\ViewModel\LoginViewModel.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SendMailerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3330,6 +3329,7 @@
     <Content Include="Public\assets\fonts\fontawesome-webfont.woff" />
     <Content Include="Public\assets\fonts\fontawesome-webfont.woff2" />
     <Content Include="Public\assets\fonts\FontAwesome.otf" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3350,11 +3350,10 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Customer\Login.cshtml" />
     <Content Include="Views\Home\abv.cshtml" />
-    <Content Include="Views\SendMailer\Index.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
