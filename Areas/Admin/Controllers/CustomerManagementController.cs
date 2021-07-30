@@ -7,22 +7,27 @@ using System.Web.Mvc;
 
 namespace _ExcellOn_.Areas.Admin.Controllers
 {
-    public class AdminHomeController : BaseController
+    public class CustomerManagementController : BaseController
     {
         private Entities db = new Entities();
-        // GET: Admin/Home
-        public ActionResult DashboardIndex()
+        
+        public ActionResult CustomerIndex()
         {
+            Session["return_url"] = "/Admin/CustomerManagement/CustomerIndex";
             if (check_auth())
             {
                 string UserName = (string)Session["UserName"];
                 var CurrentUser = db.UserInFoes.Where(x => x.User_Name == UserName).FirstOrDefault();
                 ViewBag.CurrentUser = CurrentUser;
+                var list_customer = db.Customers.ToList();
+                ViewBag.list_customer = list_customer;
                 return View();
-            }else
+            }
+            else
             {
                 return Redirect("/AdminLogin");
             }
+            
         }
     }
 }

@@ -1,0 +1,320 @@
+﻿
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="header bg-primary">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Company</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#myModal1">Add New</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 30px;padding-bottom: 40px">
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 150%">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="myModalLabel">Compose News Company</h2>
+                    <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="form">
+                    <div class="row">
+                        <div class="modal-body" style="padding: 50px">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Name</label>
+                                    <input id="Company_Name" class="form-control" placeholder="Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Phone</label>
+                                    <input id="Company_Phone" class="form-control" placeholder="Phone">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" style="margin-top: 15px">
+                                    <label>Email</label>
+                                    <input id="Company_Email" class="form-control" placeholder="Email">
+                                </div>
+                                <div class="col-md-6" style="margin-top: 15px">
+                                    <label>Address</label>
+                                    <input id="Company_Address" class="form-control" placeholder="Address">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top: 15px">
+                                    <label>Description</label>
+                                    <textarea id="Company_Description" rows="10" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 block_loader" style="display: none">
+                        <div style="float:right;width: 55%">
+                            <div class="loader"></div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="modal-footer col-md-12">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="return _Add();">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 150%">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Compose News Company</h4>
+                    <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="form">
+                    <div class="row">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6" style="display: none">
+                                    <label>Id</label>
+                                    <input id="Id_edit" class="form-control" placeholder="Id" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Name</label>
+                                    <input id="Company_Name_edit" class="form-control" placeholder="Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Phone</label>
+                                    <input id="Company_Phone_edit" class="form-control" placeholder="Phone">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" style="margin-top: 15px">
+                                    <label>Email</label>
+                                    <input id="Company_Email_edit" class="form-control" placeholder="Email">
+                                </div>
+                                <div class="col-md-6" style="margin-top: 15px">
+                                    <label>Address</label>
+                                    <input id="Company_Address_edit" class="form-control" placeholder="Address">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top: 15px">
+                                    <label>Description</label>
+                                    <textarea id="Company_Description_edit" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="loader" style="display:none"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="return _Update();">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="table-responsive">
+                <table id="table_Company" class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Name</th>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Phone</th>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Address</th>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Email</th>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Description</th>
+                            <th style="font-size: 0.875rem" scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                        @foreach (var item in ViewBag.list_company)
+                        {
+                            <tr>
+                                <th>
+                                    <div class="media align-items-center">
+                                        <a href="#" class="avatar rounded-circle mr-3">
+                                            <img alt="Image placeholder" src="~/Areas/Admin/Public/img/theme/bootstrap.jpg">
+                                        </a>
+                                        <div class="media-body">
+                                            <span class="name mb-0 text-sm">@item.Company_Name</span>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td>
+                                    @item.Company_Phone
+                                </td>
+                                <td class="">
+                                    <span class="badge badge-dot mr-4">
+                                        <i class="bg-warning"></i>
+                                        <span class="status">@item.Company_Address</span>
+                                    </span>
+                                </td>
+                                <td>
+                                    @item.Company_Email
+                                </td>
+                                <td class="Description">
+                                    @item.Company_Description
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                            <a class="dropdown-item" data-toggle="modal" data-target="#myModal2" href="#" onclick="return _GetById(@item.Id)">Edit</a>
+                                            <a class="dropdown-item" onclick="return _Delete(@item.Id)" href="#">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <link href="~/Areas/Admin/Public/DataTable/pagination.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/loader.css" rel="stylesheet" />
+}
+@section js{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table_Company').DataTable({
+                "lengthMenu": [5, 15, 20, 30],
+                "pagingType": "full_numbers",
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-fw fa-long-arrow-right">',
+                        previous: '<i class="fa fa-fw fa-long-arrow-left">'
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+        function _Add() {
+            $('.block_loader').show();
+            var companyObj = {
+                Company_Name: $('#Company_Name').val(),
+                Company_Address: $('#Company_Address').val(),
+                Company_Phone: $('#Company_Phone').val(),
+                Company_Email: $('#Company_Email').val(),
+                Company_Description: $('#Company_Description').val()
+            }
+            $.ajax({
+                url: "/Admin/CompanyManagement/Add",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(companyObj),
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    window.location.href = data;
+                },
+                error: function (errormessage) {
+                    alert("Add Unsuccessfully !");
+                }
+
+            });
+        }
+
+        function _GetById(CompanyId) {
+            $.ajax({
+                url: "/Admin/CompanyManagement/GetById?CompanyId=" + CompanyId,
+                contentType: "application/json;charset=utf-8",
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    $('#Company_Name_edit').val(result.Company_Name);
+                    $('#Company_Address_edit').val(result.Company_Address);
+                    $('#Company_Phone_edit').val(result.Company_Phone);
+                    $('#Company_Email_edit').val(result.Company_Email);
+                    $('#Company_Description_edit').val(result.Company_Description);
+                    $('#Id_edit').val(result.Id);
+                },
+                error: function () {
+                    alert("Error");
+                }
+            });
+        }
+
+        function _Update() {
+            $('.block_loader').show();
+            var companyObj = {
+                Id: $('#Id_edit').val(),
+                Company_Name: $('#Company_Name_edit').val(),
+                Company_Address: $('#Company_Address_edit').val(),
+                Company_Phone: $('#Company_Phone_edit').val(),
+                Company_Email: $('#Company_Email_edit').val(),
+                Company_Description: $('#Company_Description_edit').val()
+            }
+            $.ajax({
+                url: "/Admin/CompanyManagement/Update",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(companyObj),
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+
+                    window.location.href = data;
+                },
+                error: function (errormessage) {
+                    alert("Update Unsuccessfully !");
+                }
+
+            });
+        }
+
+        function _Delete(CompanyId) {
+
+            if (confirm("Do you make sure ?")) {
+                $.ajax({
+                    url: "/Admin/CompanyManagement/Delete?CompanyId=" + CompanyId,
+                    contentType: "application/json;charset=utf-8",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (result) {
+                        window.location.href = result;
+                    },
+                    error: function () {
+                        alert("Error !");
+                    }
+                });
+            }
+        }
+    </script>
+}
