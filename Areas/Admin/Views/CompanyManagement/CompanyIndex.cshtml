@@ -28,12 +28,12 @@
         <div class="modal-dialog">
             <div class="modal-content" style="width: 150%">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Compose News Company</h4>
+                    <h2 class="modal-title" id="myModalLabel">Compose News Company</h2>
                     <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="form">
                     <div class="row">
-                        <div class="modal-body">
+                        <div class="modal-body" style="padding: 50px">
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Name</label>
@@ -62,17 +62,14 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="modal-body">
-                        <div class="loader" style="display: none;"></div>
-                    </div>
-                    <div class="modal-body">
-                        <div class="sent-message"
-                             style="display: none;padding-left: 15px;color: red;font-size: 20px">
-                            Your message has been sent !
+                    <div class="col-md-12 block_loader" style="display: none">
+                        <div style="float:right;width: 55%">
+                            <div class="loader"></div>
                         </div>
+                        
                     </div>
-                    <div class="modal-footer">
+                    
+                    <div class="modal-footer col-md-12">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" onclick="return _Add();">Add</button>
                     </div>
@@ -216,14 +213,14 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#table_Company').DataTable({
-                "lengthMenu": [5 , 15, 20, 30],
+                "lengthMenu": [5, 15, 20, 30],
                 "pagingType": "full_numbers",
                 language: {
                     paginate: {
                         next: '<i class="fa fa-fw fa-long-arrow-right">',
                         previous: '<i class="fa fa-fw fa-long-arrow-left">'
                     }
-                }        
+                }
             });
         });
     </script>
@@ -231,7 +228,7 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
     <script type="text/javascript">
         function _Add() {
-            $('.loader').show();
+            $('.block_loader').show();
             var companyObj = {
                 Company_Name: $('#Company_Name').val(),
                 Company_Address: $('#Company_Address').val(),
@@ -276,7 +273,7 @@
         }
 
         function _Update() {
-            $('.loader').show();
+            $('.block_loader').show();
             var companyObj = {
                 Id: $('#Id_edit').val(),
                 Company_Name: $('#Company_Name_edit').val(),
