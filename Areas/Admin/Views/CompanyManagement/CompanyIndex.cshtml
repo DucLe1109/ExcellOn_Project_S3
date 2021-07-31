@@ -87,7 +87,7 @@
                 </div>
                 <div class="form">
                     <div class="row">
-                        <div class="modal-body">
+                        <div class="modal-body" style="padding: 50px">
                             <div class="row">
                                 <div class="col-md-6" style="display: none">
                                     <label>Id</label>
@@ -115,7 +115,7 @@
                             <div class="row">
                                 <div class="col-md-12" style="margin-top: 15px">
                                     <label>Description</label>
-                                    <textarea id="Company_Description_edit" class="form-control"></textarea>
+                                    <textarea id="Company_Description_edit" rows="10" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -184,7 +184,7 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                             <a class="dropdown-item" data-toggle="modal" data-target="#myModal2" href="#" onclick="return _GetById(@item.Id)">Edit</a>
-                                            <a class="dropdown-item" onclick="return _Delete(@item.Id)" href="#">Delete</a>
+                                            <a class="dropdown-item" onclick="return _Delete(@item.Id)" id="@item.Id" href="#">Delete</a>
                                         </div>
                                     </div>
                                 </td>
@@ -213,7 +213,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#table_Company').DataTable({
-                "lengthMenu": [5, 15, 20, 30],
+                "lengthMenu": [10, 15, 20, 30],
                 "pagingType": "full_numbers",
                 language: {
                     paginate: {
@@ -300,21 +300,36 @@
         }
 
         function _Delete(CompanyId) {
-
-            if (confirm("Do you make sure ?")) {
-                $.ajax({
-                    url: "/Admin/CompanyManagement/Delete?CompanyId=" + CompanyId,
-                    contentType: "application/json;charset=utf-8",
-                    type: "GET",
-                    dataType: "json",
-                    success: function (result) {
-                        window.location.href = result;
-                    },
-                    error: function () {
-                        alert("Error !");
-                    }
-                });
-            }
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/Admin/CompanyManagement/Delete?CompanyId=" + CompanyId,
+                        contentType: "application/json;charset=utf-8",
+                        type: "GET",
+                        dataType: "json",
+                        success: function (result) {
+                            $('#' + CompanyId).parent().parent().parent().parent().remove();
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted. Please Reload for Update',
+                                'success'
+                            )
+                        },
+                        error: function () {
+                            alert("Error !");
+                        }
+                    });
+                    
+                }
+            });
         }
     </script>
 }

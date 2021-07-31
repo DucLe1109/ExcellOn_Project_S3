@@ -28,6 +28,7 @@
           <Property Name="Customer_Password" Type="varchar" MaxLength="255" />
           <Property Name="CompanyId" Type="int" />
           <Property Name="Customer_Comment" Type="text" />
+          <Property Name="Customer_Avatar" Type="text" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -363,6 +364,7 @@
           <NavigationProperty Name="Company" Relationship="Model.FK__Customer__Compan__4C364F0E" FromRole="Customer" ToRole="Company" />
           <NavigationProperty Name="Orders" Relationship="Model.FK__Orders__Customer__5F492382" FromRole="Customer" ToRole="Order" />
           <Property Name="Customer_Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -606,6 +608,7 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="Model.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Customer_Avatar" ColumnName="Customer_Avatar" />
                 <ScalarProperty Name="Customer_Comment" ColumnName="Customer_Comment" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="Customer_Password" ColumnName="Customer_Password" />

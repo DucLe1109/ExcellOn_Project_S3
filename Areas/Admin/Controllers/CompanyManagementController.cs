@@ -94,9 +94,16 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             if (check_auth())
             {
                 Company company = db.Companies.Where(x => x.Id == CompanyId).FirstOrDefault();
-                db.Companies.Remove(company);
-                db.SaveChanges();
-                return Json("/Admin/CompanyManagement/CompanyIndex", JsonRequestBehavior.AllowGet);
+                if(company!= null)
+                {
+                    db.Companies.Remove(company);
+                    db.SaveChanges();
+                    return Json("/Admin/CompanyManagement/CompanyIndex", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("/Admin/CompanyManagement/CompanyIndex", JsonRequestBehavior.AllowGet);
+                }
             }
             else
             {

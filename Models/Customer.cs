@@ -42,6 +42,8 @@ public partial class Customer
 
     public string Customer_Comment { get; set; }
 
+    public string Customer_Avatar { get; set; }
+
 
 
     public virtual Company Company { get; set; }
