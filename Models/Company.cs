@@ -36,8 +36,6 @@ public partial class Company
 
     public string Company_Email { get; set; }
 
-    public string Company_Description { get; set; }
-
 
 
     public virtual ICollection<Customer> Customers { get; set; }

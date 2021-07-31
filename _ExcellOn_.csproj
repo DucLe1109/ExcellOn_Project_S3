@@ -146,11 +146,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminHomeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\CompanyManagementController.cs" />
-    <Compile Include="Areas\Admin\Controllers\CustomerManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
-    <Compile Include="Areas\Admin\Controllers\UserManagementController.cs" />
     <Compile Include="Areas\Admin\ViewModel\LoginViewModel.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -218,7 +215,6 @@
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap-reboot.min.css" />
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap.css" />
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap.min.css" />
-    <Content Include="Areas\Admin\Public\DataTable\pagination.css" />
     <Content Include="Areas\Admin\Public\fonts\nucleo\nucleo-icons.svg" />
     <Content Include="Areas\Admin\Public\img\brand\blue.png" />
     <Content Include="Areas\Admin\Public\img\brand\favicon.png" />
@@ -3291,15 +3287,12 @@
     <Content Include="Areas\Admin\Public\vendor\nucleo\fonts\nucleo-icons.woff" />
     <Content Include="Areas\Admin\Public\vendor\nucleo\fonts\nucleo-icons.woff2" />
     <Content Include="Areas\Admin\Public\vendor\prismjs\components.json" />
-    <Content Include="Areas\Admin\Views\AdminHome\DashboardIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\User\MyProfile.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminHome\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_MainLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_TopnavLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_SidenavLayout.cshtml" />
     <Content Include="Areas\Admin\Views\AdminHome\_ViewStart.cshtml" />
-    <Content Include="Areas\Admin\Views\UserManagement\MyProfile.cshtml" />
-    <Content Include="Areas\Admin\Views\CustomerManagement\CustomerIndex.cshtml" />
-    <Content Include="Areas\Admin\Views\CompanyManagement\CompanyIndex.cshtml" />
-    <Content Include="Areas\Admin\Public\css\loader.css" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3329,7 +3322,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Areas\Admin\Views\Company\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Shared\" />
   </ItemGroup>
