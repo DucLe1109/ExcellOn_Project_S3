@@ -34,8 +34,6 @@ public partial class Entities : DbContext
 
     public DbSet<Company> Companies { get; set; }
 
-    public DbSet<Customer> Customers { get; set; }
-
     public DbSet<OrderDetail> OrderDetails { get; set; }
 
     public DbSet<Order> Orders { get; set; }
@@ -53,6 +51,10 @@ public partial class Entities : DbContext
     public DbSet<UserInFo> UserInFoes { get; set; }
 
     public DbSet<UserRole> UserRoles { get; set; }
+
+    public DbSet<Customer> Customers { get; set; }
+
+    public DbSet<Image> Images { get; set; }
 
 }
 

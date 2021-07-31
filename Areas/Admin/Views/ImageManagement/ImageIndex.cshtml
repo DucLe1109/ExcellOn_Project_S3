@@ -1,0 +1,91 @@
+﻿@model List<_ExcellOn_.Models.Image>
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+
+
+}
+
+<div class="header bg-primary">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Customer</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a class="btn btn-sm btn-neutral" href="/Admin/ImageManagement/ImageIndex">Reload</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 30px;padding-bottom: 40px">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="table-responsive">
+                <table id="table_Image" class="cell-border text-center align-items-center table-flush ">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Image</th>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Service</th>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="@item.Image_link" width="150" style="border-radius: 20px" height="150" />
+                                    </td>
+                                    <td>
+                                        @item.Service.Service_Name
+                                    </td>
+                                    <td>
+                                        @item.Service.Service_Description
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <link href="~/Areas/Admin/Public/DataTable/pagination.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/loader.css" rel="stylesheet" />
+}
+@section js{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table_Image').DataTable({
+                "lengthMenu": [10, 15, 20, 30],
+                "pagingType": "full_numbers",
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-fw fa-long-arrow-right">',
+                        previous: '<i class="fa fa-fw fa-long-arrow-left">'
+                    }
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+}

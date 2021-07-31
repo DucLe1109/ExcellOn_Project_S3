@@ -68,7 +68,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                         string FileName = Path.GetFileNameWithoutExtension(AvatarUpload.FileName);
                         string Extension = Path.GetExtension(AvatarUpload.FileName);
                         FileName = FileName + Extension;
-                        User.User_Avatar = "~/Public/Image/" + FileName;
+                        User.User_Avatar = "/Public/Image/" + FileName;
 
                         //string fullPath = Request.MapPath("~/Public/Image/" + FileName);
                         //if (System.IO.File.Exists(fullPath))
@@ -76,7 +76,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                         //    System.IO.File.Delete(fullPath);
                         //}
 
-                        AvatarUpload.SaveAs(Path.Combine(Server.MapPath("~/Public/Image/"), FileName));
+                        AvatarUpload.SaveAs(Path.Combine(Server.MapPath("/Public/Image/"), FileName));
                     }else
                     {
                         User.User_Avatar = User.User_Avatar;

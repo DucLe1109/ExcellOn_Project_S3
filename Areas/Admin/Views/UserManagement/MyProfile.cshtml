@@ -165,12 +165,14 @@
                                                     {
                                                         if (ViewBag.CurrentService != null && item.Id == ViewBag.CurrentService.Id)
                                                         {
-                                <option value="@item.Id" selected>@item.Service_Name</option> }
-                                                        else
-                                                        {
-                                <option value="@item.Id">@item.Service_Name</option>}
-                                                    }
-                                                }
+                                <option value="@item.Id" selected>@item.Service_Name</option>
+ }
+                            else
+                            {
+    <option value="@item.Id">@item.Service_Name</option>
+}
+}
+}
 
                                             </select>
                                         </div>
@@ -199,4 +201,5 @@
                             </div>
                         </div>
                     </div>
-                </footer>}
+                </footer>
+}

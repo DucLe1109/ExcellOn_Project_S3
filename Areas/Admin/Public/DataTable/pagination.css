@@ -16,3 +16,6 @@
     background: none;
     color: black !important;
 }
+.hideScrollbar::-webkit-scrollbar {
+    display: none;
+}

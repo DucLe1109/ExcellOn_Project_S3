@@ -30,6 +30,14 @@
           <Property Name="Customer_Comment" Type="text" />
           <Property Name="Customer_Avatar" Type="text" />
         </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image_link" Type="text" />
+          <Property Name="ServiceId" Type="int" />
+        </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -91,7 +99,6 @@
           <Property Name="Service_SaleStatus" Type="int" />
           <Property Name="Service_Image" Type="text" />
           <Property Name="Service_PriceSale" Type="float" />
-          <Property Name="Service_Image" Type="text" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -129,7 +136,7 @@
           <Property Name="UserId" Type="int" />
           <Property Name="RoleId" Type="int" />
         </EntityType>
-        <Association Name="FK__Customer__Compan__47DBAE45">
+        <Association Name="FK__Customer__Compan__4C364F0E">
           <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -141,7 +148,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderDeta__Order__48CFD27E">
+        <Association Name="FK__Image__ServiceId__6CA31EA0">
+          <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Order__6319B466">
           <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
           <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -153,7 +172,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderDeta__Servi__49C3F6B7">
+        <Association Name="FK__OrderDeta__Servi__6225902D">
           <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
           <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -165,7 +184,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__Customer__4AB81AF0">
+        <Association Name="FK__Orders__Customer__5F492382">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -177,7 +196,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Permissio__Permi__4BAC3F29">
+        <Association Name="FK__Permissio__Permi__5B78929E">
           <End Role="Permission" Type="Self.Permission" Multiplicity="0..1" />
           <End Role="PermissionRole" Type="Self.PermissionRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -189,7 +208,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Permissio__RoleI__4CA06362">
+        <Association Name="FK__Permissio__RoleI__5C6CB6D7">
           <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="PermissionRole" Type="Self.PermissionRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -201,7 +220,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserInFo__Servic__4D94879B">
+        <Association Name="FK__UserInFo__Servic__50FB042B">
           <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
           <End Role="UserInFo" Type="Self.UserInFo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -213,7 +232,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserRole__RoleId__4E88ABD4">
+        <Association Name="FK__UserRole__RoleId__56B3DD81">
           <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -225,7 +244,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserRole__UserId__4F7CD00D">
+        <Association Name="FK__UserRole__UserId__55BFB948">
           <End Role="UserInFo" Type="Self.UserInFo" Multiplicity="0..1" />
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -240,6 +259,7 @@
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
@@ -249,39 +269,43 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInFo" EntityType="Self.UserInFo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Customer__Compan__47DBAE45" Association="Self.FK__Customer__Compan__47DBAE45">
+          <AssociationSet Name="FK__Customer__Compan__4C364F0E" Association="Self.FK__Customer__Compan__4C364F0E">
             <End Role="Company" EntitySet="Company" />
             <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderDeta__Order__48CFD27E" Association="Self.FK__OrderDeta__Order__48CFD27E">
+          <AssociationSet Name="FK__Image__ServiceId__6CA31EA0" Association="Self.FK__Image__ServiceId__6CA31EA0">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Image" EntitySet="Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Order__6319B466" Association="Self.FK__OrderDeta__Order__6319B466">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderDeta__Servi__49C3F6B7" Association="Self.FK__OrderDeta__Servi__49C3F6B7">
+          <AssociationSet Name="FK__OrderDeta__Servi__6225902D" Association="Self.FK__OrderDeta__Servi__6225902D">
             <End Role="Service" EntitySet="Service" />
             <End Role="OrderDetail" EntitySet="OrderDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__Orders__Customer__4AB81AF0" Association="Self.FK__Orders__Customer__4AB81AF0">
+          <AssociationSet Name="FK__Orders__Customer__5F492382" Association="Self.FK__Orders__Customer__5F492382">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Permissio__Permi__4BAC3F29" Association="Self.FK__Permissio__Permi__4BAC3F29">
+          <AssociationSet Name="FK__Permissio__Permi__5B78929E" Association="Self.FK__Permissio__Permi__5B78929E">
             <End Role="Permission" EntitySet="Permission" />
             <End Role="PermissionRole" EntitySet="PermissionRole" />
           </AssociationSet>
-          <AssociationSet Name="FK__Permissio__RoleI__4CA06362" Association="Self.FK__Permissio__RoleI__4CA06362">
+          <AssociationSet Name="FK__Permissio__RoleI__5C6CB6D7" Association="Self.FK__Permissio__RoleI__5C6CB6D7">
             <End Role="Role" EntitySet="Role" />
             <End Role="PermissionRole" EntitySet="PermissionRole" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserInFo__Servic__4D94879B" Association="Self.FK__UserInFo__Servic__4D94879B">
+          <AssociationSet Name="FK__UserInFo__Servic__50FB042B" Association="Self.FK__UserInFo__Servic__50FB042B">
             <End Role="Service" EntitySet="Service" />
             <End Role="UserInFo" EntitySet="UserInFo" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserRole__RoleId__4E88ABD4" Association="Self.FK__UserRole__RoleId__4E88ABD4">
+          <AssociationSet Name="FK__UserRole__RoleId__56B3DD81" Association="Self.FK__UserRole__RoleId__56B3DD81">
             <End Role="Role" EntitySet="Role" />
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserRole__UserId__4F7CD00D" Association="Self.FK__UserRole__UserId__4F7CD00D">
+          <AssociationSet Name="FK__UserRole__UserId__55BFB948" Association="Self.FK__UserRole__UserId__55BFB948">
             <End Role="UserInFo" EntitySet="UserInFo" />
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
@@ -292,7 +316,6 @@
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Companies" EntityType="Model.Company" />
-          <EntitySet Name="Customers" EntityType="Model.Customer" />
           <EntitySet Name="OrderDetails" EntityType="Model.OrderDetail" />
           <EntitySet Name="Orders" EntityType="Model.Order" />
           <EntitySet Name="Permissions" EntityType="Model.Permission" />
@@ -302,14 +325,6 @@
           <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagram" />
           <EntitySet Name="UserInFoes" EntityType="Model.UserInFo" />
           <EntitySet Name="UserRoles" EntityType="Model.UserRole" />
-          <AssociationSet Name="FK__Customer__Compan__4C364F0E" Association="Model.FK__Customer__Compan__4C364F0E">
-            <End Role="Company" EntitySet="Companies" />
-            <End Role="Customer" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__Customer__5F492382" Association="Model.FK__Orders__Customer__5F492382">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
           <AssociationSet Name="FK__OrderDeta__Order__6319B466" Association="Model.FK__OrderDeta__Order__6319B466">
             <End Role="Order" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
@@ -338,6 +353,20 @@
             <End Role="UserInFo" EntitySet="UserInFoes" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
+          <EntitySet Name="Customers" EntityType="Model.Customer" />
+          <AssociationSet Name="FK__Customer__Compan__4C364F0E" Association="Model.FK__Customer__Compan__4C364F0E">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__Customer__5F492382" Association="Model.FK__Orders__Customer__5F492382">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="Images" EntityType="Model.Image" />
+          <AssociationSet Name="FK__Image__ServiceId__6CA31EA0" Association="Model.FK__Image__ServiceId__6CA31EA0">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="Image" EntitySet="Images" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -348,24 +377,8 @@
           <Property Name="Company_Phone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Company_Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Company_Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Customers" Relationship="Model.FK__Customer__Compan__4C364F0E" FromRole="Company" ToRole="Customer" />
           <Property Name="Company_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Customer_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Customer_Phone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Customer_Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Customer_UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Customer_Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="CompanyId" Type="Int32" />
-          <NavigationProperty Name="Company" Relationship="Model.FK__Customer__Compan__4C364F0E" FromRole="Customer" ToRole="Company" />
-          <NavigationProperty Name="Orders" Relationship="Model.FK__Orders__Customer__5F492382" FromRole="Customer" ToRole="Order" />
-          <Property Name="Customer_Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Customer_Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customers" Relationship="Model.FK__Customer__Compan__4C364F0E" FromRole="Company" ToRole="Customer" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -392,8 +405,8 @@
           <Property Name="Order_TotalCost" Type="Double" />
           <Property Name="Order_Status" Type="Int32" />
           <Property Name="CustomerId" Type="Int32" />
-          <NavigationProperty Name="Customer" Relationship="Model.FK__Orders__Customer__5F492382" FromRole="Order" ToRole="Customer" />
           <NavigationProperty Name="OrderDetails" Relationship="Model.FK__OrderDeta__Order__6319B466" FromRole="Order" ToRole="OrderDetail" />
+          <NavigationProperty Name="Customer" Relationship="Model.FK__Orders__Customer__5F492382" FromRole="Order" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Permission">
           <Key>
@@ -439,6 +452,7 @@
           <NavigationProperty Name="OrderDetails" Relationship="Model.FK__OrderDeta__Servi__6225902D" FromRole="Service" ToRole="OrderDetail" />
           <NavigationProperty Name="UserInFoes" Relationship="Model.FK__UserInFo__Servic__50FB042B" FromRole="Service" ToRole="UserInFo" />
           <Property Name="Service_Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Images" Relationship="Model.FK__Image__ServiceId__6CA31EA0" FromRole="Service" ToRole="Image" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -480,30 +494,6 @@
           <NavigationProperty Name="Role" Relationship="Model.FK__UserRole__RoleId__56B3DD81" FromRole="UserRole" ToRole="Role" />
           <NavigationProperty Name="UserInFo" Relationship="Model.FK__UserRole__UserId__55BFB948" FromRole="UserRole" ToRole="UserInFo" />
         </EntityType>
-        <Association Name="FK__Customer__Compan__4C364F0E">
-          <End Type="Model.Company" Role="Company" Multiplicity="0..1" />
-          <End Type="Model.Customer" Role="Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__Customer__5F492382">
-          <End Type="Model.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="Model.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__OrderDeta__Order__6319B466">
           <End Type="Model.Order" Role="Order" Multiplicity="0..1" />
           <End Type="Model.OrderDetail" Role="OrderDetail" Multiplicity="*" />
@@ -588,6 +578,67 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_Phone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="Customer_Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Company" Relationship="Model.FK__Customer__Compan__4C364F0E" FromRole="Customer" ToRole="Company" />
+          <NavigationProperty Name="Orders" Relationship="Model.FK__Orders__Customer__5F492382" FromRole="Customer" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK__Customer__Compan__4C364F0E">
+          <End Type="Model.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="Model.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__Customer__5F492382">
+          <End Type="Model.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceId" Type="Int32" />
+          <NavigationProperty Name="Service" Relationship="Model.FK__Image__ServiceId__6CA31EA0" FromRole="Image" ToRole="Service" />
+        </EntityType>
+        <Association Name="FK__Image__ServiceId__6CA31EA0">
+          <End Type="Model.Service" Role="Service" Multiplicity="0..1" />
+          <End Type="Model.Image" Role="Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -602,21 +653,6 @@
                 <ScalarProperty Name="Company_Address" ColumnName="Company_Address" />
                 <ScalarProperty Name="Company_Phone" ColumnName="Company_Phone" />
                 <ScalarProperty Name="Company_Name" ColumnName="Company_Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="Model.Customer">
-              <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="Customer_Avatar" ColumnName="Customer_Avatar" />
-                <ScalarProperty Name="Customer_Comment" ColumnName="Customer_Comment" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="Customer_Password" ColumnName="Customer_Password" />
-                <ScalarProperty Name="Customer_UserName" ColumnName="Customer_UserName" />
-                <ScalarProperty Name="Customer_Email" ColumnName="Customer_Email" />
-                <ScalarProperty Name="Customer_Phone" ColumnName="Customer_Phone" />
-                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -724,6 +760,30 @@
               <MappingFragment StoreEntitySet="UserRole">
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="Model.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Customer_Avatar" ColumnName="Customer_Avatar" />
+                <ScalarProperty Name="Customer_Comment" ColumnName="Customer_Comment" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Customer_Password" ColumnName="Customer_Password" />
+                <ScalarProperty Name="Customer_UserName" ColumnName="Customer_UserName" />
+                <ScalarProperty Name="Customer_Email" ColumnName="Customer_Email" />
+                <ScalarProperty Name="Customer_Phone" ColumnName="Customer_Phone" />
+                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="Model.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="Image_link" ColumnName="Image_link" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

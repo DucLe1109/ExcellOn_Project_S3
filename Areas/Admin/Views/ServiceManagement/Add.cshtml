@@ -1,0 +1,156 @@
+﻿
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
+
+<div class="main-content">
+
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 100px; background-image: url(https://www.makemyassignments.com/blog/wp-content/uploads/2019/08/business-communication-tools-1024x574.png); background-size: cover; background-position: center top;">
+        <span class="mask bg-gradient-default opacity-8"></span>
+    </div>
+
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                <div class="card card-profile shadow">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3 order-lg-2">
+                            <div class="card-profile-image">
+                                <img src="" class="rounded-circle" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <div class="d-flex justify-content-between">
+
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pt-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                                    <div>
+                                        <span class="heading">22</span>
+                                        <span class="description">Friends</span>
+                                    </div>
+                                    <div>
+                                        <span class="heading">10</span>
+                                        <span class="description">Photos</span>
+                                    </div>
+                                    <div>
+                                        <span class="heading">89</span>
+                                        <span class="description">Comments</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h3>
+                                @*@Model.User_FullName*@<span class="font-weight-light">, @*@Model.User_Age*@</span>
+                            </h3>
+                            <div class="h5 font-weight-300">
+                                <i class="ni location_pin mr-2"></i>@*@Model.User_Address*@
+                            </div>
+                            <div class="h5 mt-4">
+                                <i class="ni business_briefcase-24 mr-2"></i>@*@Model.User_Email*@
+                            </div>
+                            <div>
+                                <i class="ni education_hat mr-2"></i>@*@Model.User_Phone*@
+                            </div>
+                            <hr class="my-4">
+                            <p>@*@Model.User_AboutMe*@</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Service Add</h3>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="/Admin/ServiceManagement/Add_Submit" method="post" enctype="multipart/form-data">
+                            <h6 class="heading-small text-muted mb-4">User information</h6>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px">
+                                        <p class="form-control-label">Feature Image</p>
+                                        <input name="FeatureImage" type="file" class="btn btn-sm btn-primary col-lg-12">
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px;">
+                                        <p class="form-control-label">Additional Image</p>
+                                        <input name="Service_AdditionalImage" type="file" multiple class="btn btn-sm btn-primary col-lg-12">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-username">Name</label>
+                                            <input type="text" name="Service_Name" class="form-control form-control-alternative">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-email">Price</label>
+                                            <input type="text" name="Service_Price" class="form-control form-control-alternative">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-first-name">Description</label>
+                                            <input type="text" name="Service_Description" class="form-control form-control-alternative">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-last-name">Tax Percentage</label>
+                                            <input type="text" name="Service_TaxPercentage" class="form-control form-control-alternative">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-address">Sale Status</label>
+                                            <select name="Service_SaleStatus" class="form-control form-control-alternative">
+                                                <option value="0" selected>0</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-last-name">Sale Price</label>
+                                            <input type="text" name="Service_PriceSale" class="form-control form-control-alternative">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <div class="pl-lg-4">
+                                <div class="form-group focused">
+                                    <button type="submit" class="btn btn-info">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <div class="row align-items-center justify-content-xl-between">
+        <div class="col-xl-6 m-auto text-center">
+            <div class="copyright">
+
+            </div>
+        </div>
+    </div>
+</footer>

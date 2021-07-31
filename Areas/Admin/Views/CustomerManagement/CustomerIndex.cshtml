@@ -1,5 +1,7 @@
 ﻿
 @{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+
+
 }
 
 <div class="header bg-primary">
@@ -17,6 +19,7 @@
                 </div>
                 <div class="col-lg-6 col-5 text-right">
                     <a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#myModal1">Add New</a>
+                    <a class="btn btn-sm btn-neutral" href="/Admin/CustomerManagement/CustomerIndex">Reload</a>
                 </div>
             </div>
         </div>
@@ -37,21 +40,21 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Name</label>
-                                    <input id="Customer_Name" class="form-control" placeholder="Name">
+                                    <input id="Customer_Name" class="form-control">
                                 </div>
                                 <div class="col-md-6">
                                     <label>Phone</label>
-                                    <input id="Customer_Phone" class="form-control" placeholder="Phone">
+                                    <input id="Customer_Phone" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6" style="margin-top: 15px">
                                     <label>Email</label>
-                                    <input id="Customer_Email" class="form-control" placeholder="Email">
+                                    <input id="Customer_Email" class="form-control">
                                 </div>
                                 <div class="col-md-6" style="margin-top: 15px">
                                     <label>Comment</label>
-                                    <input id="Customer_Comment" class="form-control" placeholder="Address">
+                                    <input id="Customer_Comment" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -123,7 +126,7 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="table-responsive">
-                <table id="table_Customer" class="table align-items-center table-flush">
+                <table id="table_Customer" class="cell-border text-center align-items-center table-flush ">
                     <thead class="thead-light">
                         <tr>
                             <th style="font-size: 0.875rem" scope="col" class="sort">Avatar</th>
@@ -135,46 +138,47 @@
                         </tr>
                     </thead>
                     <tbody class="list">
-                        @foreach (var item in ViewBag.list_customer)
+                        @if (ViewBag.list_customer != null)
                         {
-                            <tr>
-                                <th>
-                                    <div class="media align-items-center">
-                                        <a href="#" class="avatar rounded-circle mr-3">
-                                            <img alt="Image placeholder" src="@Url.Content(item.Customer_Avatar)">
-                                        </a>
-                                    </div>
-                                </th>
-                                <td>
-                                    @item.Customer_Name
-                                </td>
-                                <td>
-                                    <span class="badge badge-dot mr-4">
-                                        <i class="bg-warning"></i>
-                                        <span class="status">@item.Customer_Phone</span>
-                                    </span>
-                                </td>
-                                <td>
-                                    @item.Customer_Email
-                                </td>
-                                <td>
-                                    @item.Customer_Comment
-                                </td>
-                                <td class="text-right">
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" data-toggle="modal" data-target="#myModal2" href="#" onclick="return _GetById(@item.Id)">Edit</a>
-                                            <a class="dropdown-item" onclick="return _Delete(@item.Id)" id="@item.Id">Delete</a>
+                            foreach (var item in ViewBag.list_customer)
+                            {
+                                <tr>
+                                    <th>
+                                        <div class="media align-items-center">
+                                            <a href="#" class="avatar rounded-circle mr-3">
+                                                <img alt="Image placeholder" src="@item.Customer_Avatar">
+                                            </a>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </th>
+                                    <td>
+                                        @item.Customer_Name
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-dot mr-4">
+                                            <i class="bg-warning"></i>
+                                            <span class="status">@item.Customer_Phone</span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @item.Customer_Email
+                                    </td>
+                                    <td>
+                                        @item.Customer_Comment
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#myModal2" href="#" onclick="return _GetById(@item.Id)">Edit</a>
+                                                <a class="dropdown-item" style="cursor: pointer" onclick="return _Delete(@item.Id)" id="@item.Id">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
                         }
-
-
                     </tbody>
                 </table>
 

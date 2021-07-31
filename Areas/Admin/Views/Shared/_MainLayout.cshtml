@@ -18,7 +18,8 @@
     <!-- Page plugins -->
     <!-- Argon CSS -->
     <link rel="stylesheet" href="~/Areas/Admin/Public/css/argon.css?v=1.2.0" type="text/css">
-    @RenderSection("css",false)
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @RenderSection("css", false)
 </head>
 
 <body>
@@ -66,6 +67,12 @@
         }
         function _Company() {
             $(location).attr("href", "/Admin/CompanyManagement/CompanyIndex");
+        }
+        function _Service() {
+            $(location).attr("href", "/Admin/ServiceManagement/ServiceIndex");
+        }
+        function _Image() {
+            $(location).attr("href", "/Admin/ImageManagement/ImageIndex");
         }
     </script>
     @RenderSection("js", false)

@@ -19,6 +19,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 string UserName = (string)Session["UserName"];
                 var CurrentUser = db.UserInFoes.Where(x => x.User_Name == UserName).FirstOrDefault();
                 ViewBag.CurrentUser = CurrentUser;
+
                 var list_customer = db.Customers.ToList();
                 ViewBag.list_customer = list_customer;
                 return View();

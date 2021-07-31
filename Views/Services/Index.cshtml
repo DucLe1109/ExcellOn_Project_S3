@@ -1,0 +1,78 @@
+﻿@model IEnumerable<_ExcellOn_.Models.Service>
+
+@{
+    ViewBag.Title = "Index";
+    Layout=null;
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 2);
+}
+
+
+
+<div style="margin:15px">
+    <h1 style="margin:15px">Service</h1>
+    <button class="btn btn-success" style="margin:15px"> @Html.ActionLink("Create New", "Create")</button>
+
+
+    @grid.GetHtml(
+        tableStyle: "girdTable",
+        headerStyle: "girdHead",
+        footerStyle: "girdFooter",
+        rowStyle: "girdRow",
+        alternatingRowStyle: "girdAltRow",
+        columns: grid.Columns(
+            grid.Column("Service_Name", "Service Name"),
+            grid.Column("Service_Price", "Service Price"),
+            grid.Column("Service_Description", "Service Description",format: p => @Html.Raw(p.Service_Description)),
+            grid.Column("Service_TaxPercentage", "Service TaxPercentage"),
+            grid.Column("Service_SaleStatus", "Service SaleStatus"),
+            grid.Column("Service_PriceSale", "Service PriceSale"),
+            grid.Column("Service_Image", "Hình Ảnh", format: p => @Html.Raw("<img src=\"../Content/Manh/assets/images/" + p.Service_Image + "\">")),
+            grid.Column(format: p => @Html.ActionLink("Edit", "Edit", new { id = p.Id })),
+            grid.Column(format: p => @Html.ActionLink("Delete", "Delete", new { id = p.Id }))
+            ))
+</div>
+<style>
+    .girdTable {
+        width: 100%;
+        margin: 15px;
+       
+    }
+
+        .girdTable td {
+            border: 1px solid #999999;
+            text-align: center;
+            width: 100px;
+           
+        }
+
+    .girdHead {
+        background-color: cornflowerblue;
+        text-align: center
+    }
+
+        .girdHead > th > a {
+            color: #ffffff;
+            text-decoration: none
+        }
+
+    .girdFooter {
+        font-weight: bold
+    }
+
+    .girdRow img {
+        width: 370px;
+        height: 270px
+    }
+
+    .girdAltRow img {
+        width: 370px;
+        height: 270px
+    }
+
+    .girdFooter {
+        font-weight: bolder;
+        font-size: 15px
+    }
+</style>
+
+}
