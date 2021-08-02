@@ -1,4 +1,5 @@
-﻿@model List<_ExcellOn_.Models.OrderDetail>
+﻿@using _ExcellOn_.Models
+@model List<_ExcellOn_.Models.OrderDetail>
 @{
     Layout = null;
 }
@@ -25,23 +26,33 @@
                         <div class="col align-self-center text-right text-muted">3 items</div>
                     </div>
                 </div>
+
                 @foreach (var item in Model)
                 {
+                    Entities db = new Entities();
+                    Service service = db.Services.Where(x => x.Id == item.ServiceId).FirstOrDefault();
+                    DateTime date_start = (DateTime)item.OrderDetail_DateStart;
+                    DateTime date_end = (DateTime)item.OrderDetail_DateEnd;
+                    int total_day = (int)(date_end - date_start).TotalDays;
+                    float total_cost = (float)total_day * (float)service.Service_Price * (float)item.OrderDetail_NumberOfPeople;
+                    string date_start_string = date_start.ToString("MM/dd/yyyy");
+                    string date_end_string = date_end.ToString("MM/dd/yyyy");
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
-                            <div class="col-2"><img class="img-fluid" src="@item.Service.Service_Image"></div>
-                            <div class="col">
-                                <div class="row text-muted">@item.Service.Service_Name</div>
-                                <div class="row">From @item.OrderDetail_DateStart to @item.OrderDetail_DateEnd </div>
-                                <div class="row"> @item.OrderDetail_NumberOfPeople </div>
+                            <div class="col-3"><img class="img-fluid" style="width: 200px; height:150px;border-radius: 20px" src="@service.Service_Image"></div>
+                            <div class="col" style="font-size: 16px">
+                                <div class="row text-muted">@service.Service_Name</div>
+
+                                <div class="row"> @date_start_string - @date_end_string </div>
                             </div>
-                            <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                            <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                            <div class="col"> <a href="#">-</a><a href="#" class="border">@item.OrderDetail_NumberOfPeople</a><a href="#">+</a> </div>
+                            <div class="col">&euro; @total_cost <span class="close">&#10005;</span></div>
                         </div>
                     </div>
+
                 }
 
-                <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                <div class="back-to-shop"><a class="text-muted" href="/Admin/ServiceManagement/ServiceIndex">&leftarrow; Back to shop</a></div>
             </div>
 
             @*// CheckOut*@

@@ -151,7 +151,8 @@
     <Compile Include="Areas\Admin\Controllers\CustomerManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\ImageManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\ServiceManagementController.cs" />
-    <Compile Include="Areas\Admin\Controllers\OrderManagamentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrderManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StaffManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManagementController.cs" />
@@ -220,6 +221,7 @@
     </Compile>
     <Compile Include="Models\ViewModel\EmployRequest.cs" />
     <Compile Include="Models\ViewModel\OrderDetailViewModel.cs" />
+    <Compile Include="Models\ViewModel\SearchRequest.cs" />
     <Compile Include="Models\ViewModel\SignInViewModel.cs" />
     <Compile Include="Models\ViewModel\SignUpViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2979,8 +2981,13 @@
     <Content Include="Areas\Admin\Views\ServiceManagement\Add.cshtml" />
     <Content Include="Areas\Admin\Views\ServiceManagement\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ImageManagement\ImageIndex.cshtml" />
-    <Content Include="Areas\Admin\Views\OrderManagament\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Cart\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\OrderManagement\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\OrderManagement\Search.cshtml" />
+    <Content Include="Areas\Admin\Views\OrderManagement\form_search.cshtml" />
+    <Content Include="Areas\Admin\Views\StaffManagement\StaffIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\StaffManagement\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\StaffManagement\Add.cshtml" />
     <None Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1-vsdoc.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.min.js" />
@@ -3912,7 +3919,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Areas\Admin\Views\Company\" />
     <Folder Include="Areas\Admin\Views\Image\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Shared\" />

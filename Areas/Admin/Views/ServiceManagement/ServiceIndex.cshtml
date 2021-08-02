@@ -194,14 +194,15 @@
                 Description: $("#Description").val()
             }
             $.ajax({
-                url: "/Admin/OrderManagament/CreateOrder",
+                url: "/Admin/OrderManagement/CreateOrder",
                 contentType: "application/json;charset=utf-8",
                 type: "POST",
                 data: JSON.stringify(data),
                 dataType: "json",
                 success: function (result) {
-                    alert(result);
-                    if (result != "The Employee is greater than our Staff") {
+                    if (result == "The Employee is greater than our Staff") {
+                        alert(result);
+                    } else {
                         window.location.href = result;
                     }
                 },
