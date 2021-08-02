@@ -15,10 +15,10 @@ namespace _ExcellOn_.Models
 using System;
     using System.Collections.Generic;
     
-public partial class OrderDetail
+public partial class Staff
 {
 
-    public OrderDetail()
+    public Staff()
     {
 
         this.Staff_OrderDetail = new HashSet<Staff_OrderDetail>();
@@ -28,21 +28,31 @@ public partial class OrderDetail
 
     public int Id { get; set; }
 
-    public Nullable<System.DateTime> OrderDetail_DateStart { get; set; }
+    public string Staff_UserName { get; set; }
 
-    public Nullable<System.DateTime> OrderDetail_DateEnd { get; set; }
+    public string Staff_Password { get; set; }
 
-    public Nullable<int> OrderDetail_Status { get; set; }
+    public string Staff_Email { get; set; }
 
-    public Nullable<int> OrderDetail_NumberOfPeople { get; set; }
+    public Nullable<int> Staff_Gender { get; set; }
+
+    public Nullable<int> Staff_Age { get; set; }
+
+    public Nullable<int> Staff_Status { get; set; }
+
+    public string Staff_Phone { get; set; }
+
+    public string Staff_Address { get; set; }
+
+    public string Staff_Avatar { get; set; }
+
+    public string Staff_FullName { get; set; }
+
+    public string Staff_AboutMe { get; set; }
 
     public Nullable<int> ServiceId { get; set; }
 
-    public Nullable<int> OrdersId { get; set; }
 
-
-
-    public virtual Order Order { get; set; }
 
     public virtual Service Service { get; set; }
 

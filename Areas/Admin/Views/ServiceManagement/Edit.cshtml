@@ -28,7 +28,7 @@
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                                     <div>
-                                        <span class="heading">@Model.UserInFoes.Count</span>
+                                        <span class="heading">@Model.Staffs.Count</span>
                                         <span class="description">Staff</span>
                                     </div>
                                     <div>
@@ -54,9 +54,6 @@
                             </div>
                             <div class="h5 mt-4">
                                 <i class="ni business_briefcase-24 mr-2"></i>@Model.Service_PriceSale
-                            </div>
-                            <div>
-                                <i class="ni education_hat mr-2"></i>@Model.Service_TaxPercentage
                             </div>
                             <hr class="my-4">
                             <p style="font-weight: bold">Status is: @if (Model.Service_SaleStatus == 1)
@@ -96,9 +93,9 @@
 
                                     @*Id of current Service*@
                                     <div class="col-lg-6" style="display: none">
-                                        <div class="form-group focused" >
+                                        <div class="form-group focused">
                                             <label class="form-control-label" for="input-username">Id</label>
-                                            <input type="text" name="Id" readonly  value="@Model.Id" class="form-control form-control-alternative">
+                                            <input type="text" name="Id" readonly value="@Model.Id" class="form-control form-control-alternative">
                                         </div>
                                     </div>
 
@@ -108,10 +105,16 @@
                                             <input type="text" name="Service_Name" value="@Model.Service_Name" class="form-control form-control-alternative">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-email">Price</label>
                                             <input type="text" name="Service_Price" value="@Model.Service_Price" class="form-control form-control-alternative">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-last-name">Sale Price</label>
+                                            <input type="text" name="Service_PriceSale" value="@Model.Service_PriceSale" class="form-control form-control-alternative">
                                         </div>
                                     </div>
                                 </div>
@@ -120,18 +123,6 @@
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-first-name">Description</label>
                                             <input type="text" name="Service_Description" value="@Model.Service_Description" class="form-control form-control-alternative">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group focused">
-                                            <label class="form-control-label" for="input-last-name">Tax Percentage</label>
-                                            <input type="text" name="Service_TaxPercentage" value="@Model.Service_TaxPercentage" class="form-control form-control-alternative">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group focused">
-                                            <label class="form-control-label" for="input-last-name">Price</label>
-                                            <input type="text" name="Service_TaxPercentage" value="@Model.Service_Price" class="form-control form-control-alternative">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -143,12 +134,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group focused">
-                                            <label class="form-control-label"  for="input-last-name">Sale Price</label>
-                                            <input type="text" name="Service_PriceSale" value="@Model.Service_PriceSale" class="form-control form-control-alternative">
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                             <hr class="my-4">

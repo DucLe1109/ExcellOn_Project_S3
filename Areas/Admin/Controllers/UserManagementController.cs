@@ -23,10 +23,10 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 string url = (string)Session["return_url"];
                 string UserName = (string)Session["UserName"];
                 var CurrentUser = db.UserInFoes.Where(x => x.User_Name == UserName).FirstOrDefault();
-                var CurrentService = db.Services.Where(x => x.Id == CurrentUser.ServiceId).FirstOrDefault();
+
                 var list_service = db.Services.ToList();
                 ViewBag.list_service = list_service;
-                ViewBag.CurrentService = CurrentService;
+
                 ViewBag.CurrentUser = CurrentUser;
                 return View(CurrentUser);
             }
@@ -62,7 +62,6 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                     User.User_Phone = CurrentUser.User_Phone;
                     User.User_Address = CurrentUser.User_Address;
                     User.User_AboutMe = CurrentUser.User_AboutMe;
-                    User.ServiceId = CurrentUser.ServiceId;
                     if (AvatarUpload != null)
                     {
                         string FileName = Path.GetFileNameWithoutExtension(AvatarUpload.FileName);

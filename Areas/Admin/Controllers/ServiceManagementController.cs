@@ -60,7 +60,6 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 newService.Service_Price = request.Service_Price;
                 newService.Service_PriceSale = request.Service_PriceSale;
                 newService.Service_SaleStatus = request.Service_SaleStatus;
-                newService.Service_TaxPercentage = request.Service_TaxPercentage;
                 if (FeatureImage != null)
                 {
                     string FileName = Path.GetFileNameWithoutExtension(FeatureImage.FileName);
@@ -145,7 +144,6 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                     service.Service_Price = request.Service_Price;
                     service.Service_PriceSale = request.Service_PriceSale;
                     service.Service_SaleStatus = request.Service_SaleStatus;
-                    service.Service_TaxPercentage = request.Service_TaxPercentage;
                     if (FeatureImage != null)
                     {
                         string FileName = Path.GetFileNameWithoutExtension(FeatureImage.FileName);

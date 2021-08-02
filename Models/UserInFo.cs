@@ -38,8 +38,6 @@ public partial class UserInFo
 
     public Nullable<int> User_Age { get; set; }
 
-    public Nullable<int> User_Status { get; set; }
-
     public string User_Phone { get; set; }
 
     public string User_Address { get; set; }
@@ -50,11 +48,7 @@ public partial class UserInFo
 
     public string User_AboutMe { get; set; }
 
-    public Nullable<int> ServiceId { get; set; }
 
-
-
-    public virtual Service Service { get; set; }
 
     public virtual ICollection<UserRole> UserRoles { get; set; }
 

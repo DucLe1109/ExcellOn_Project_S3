@@ -6,27 +6,31 @@
     <edmx:Diagrams>
       <Diagram DiagramId="483356b3880c42f293c24f15f89676c0" Name="Diagram1">
         <EntityTypeShape EntityType="Model.Company" Width="1.5" PointX="1.5" PointY="15.625" />
-        <EntityTypeShape EntityType="Model.OrderDetail" Width="1.5" PointX="3" PointY="3.625" />
         <EntityTypeShape EntityType="Model.Order" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model.Permission" Width="1.5" PointX="3" PointY="20.5" />
         <EntityTypeShape EntityType="Model.PermissionRole" Width="1.5" PointX="5.25" PointY="0.75" />
         <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="3" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.Service" Width="1.5" PointX="0.75" PointY="4.625" />
         <EntityTypeShape EntityType="Model.sysdiagram" Width="1.5" PointX="5.75" PointY="3.75" />
-        <EntityTypeShape EntityType="Model.UserInFo" Width="1.5" PointX="3" PointY="7.75" />
-        <EntityTypeShape EntityType="Model.UserRole" Width="1.5" PointX="5.25" PointY="8.75" />
-        <AssociationConnector Association="Model.FK__OrderDeta__Order__6319B466" />
-        <AssociationConnector Association="Model.FK__OrderDeta__Servi__6225902D" />
+        <EntityTypeShape EntityType="Model.UserRole" Width="1.5" PointX="6" PointY="6.375" />
         <AssociationConnector Association="Model.FK__Permissio__Permi__5B78929E" />
         <AssociationConnector Association="Model.FK__Permissio__RoleI__5C6CB6D7" />
         <AssociationConnector Association="Model.FK__UserRole__RoleId__56B3DD81" />
-        <AssociationConnector Association="Model.FK__UserInFo__Servic__50FB042B" />
-        <AssociationConnector Association="Model.FK__UserRole__UserId__55BFB948" />
         <EntityTypeShape EntityType="Model.Customer" Width="1.5" PointX="3.75" PointY="15.25" />
         <AssociationConnector Association="Model.FK__Customer__Compan__4C364F0E" />
         <AssociationConnector Association="Model.FK__Orders__Customer__5F492382" />
         <EntityTypeShape EntityType="Model.Image" Width="1.5" PointX="3" PointY="23.25" />
+        <EntityTypeShape EntityType="Model.Staff" Width="1.5" PointX="3" PointY="26.375" />
+        <EntityTypeShape EntityType="Model.UserInFo" Width="1.5" PointX="8.375" PointY="1.375" />
+        <AssociationConnector Association="Model.FK__UserRole__UserId__55BFB948" />
+        <EntityTypeShape EntityType="Model.Service" Width="1.5" PointX="0.5" PointY="6.375" />
         <AssociationConnector Association="Model.FK__Image__ServiceId__6CA31EA0" />
+        <AssociationConnector Association="Model.FK__Staff__ServiceId__73501C2F" />
+        <EntityTypeShape EntityType="Model.OrderDetail" Width="1.5" PointX="3" PointY="3.625" />
+        <EntityTypeShape EntityType="Model.Staff_OrderDetail" Width="1.5" PointX="6.25" PointY="15.75" />
+        <AssociationConnector Association="Model.FK__OrderDeta__Order__6319B466" />
+        <AssociationConnector Association="Model.FK__OrderDeta__Servi__6225902D" />
+        <AssociationConnector Association="Model.FK__Staff_Ord__Order__7720AD13" />
+        <AssociationConnector Association="Model.FK__Staff_Ord__Staff__762C88DA" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

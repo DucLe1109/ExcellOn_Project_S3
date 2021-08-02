@@ -21,11 +21,11 @@ public partial class Service
     public Service()
     {
 
-        this.OrderDetails = new HashSet<OrderDetail>();
-
-        this.UserInFoes = new HashSet<UserInFo>();
-
         this.Images = new HashSet<Image>();
+
+        this.Staffs = new HashSet<Staff>();
+
+        this.OrderDetails = new HashSet<OrderDetail>();
 
     }
 
@@ -38,21 +38,19 @@ public partial class Service
 
     public string Service_Description { get; set; }
 
-    public Nullable<double> Service_TaxPercentage { get; set; }
-
     public Nullable<int> Service_SaleStatus { get; set; }
-
-    public Nullable<double> Service_PriceSale { get; set; }
 
     public string Service_Image { get; set; }
 
+    public Nullable<double> Service_PriceSale { get; set; }
 
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-
-    public virtual ICollection<UserInFo> UserInFoes { get; set; }
 
     public virtual ICollection<Image> Images { get; set; }
+
+    public virtual ICollection<Staff> Staffs { get; set; }
+
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
 }
 

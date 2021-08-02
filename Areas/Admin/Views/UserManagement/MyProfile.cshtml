@@ -113,14 +113,29 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
-                                            <label class="form-control-label" for="input-first-name">Email Address</label>
-                                            <input type="text" name="User_Email" class="form-control form-control-alternative" value="@Model.User_Email">
+                                            <label class="form-control-label" for="input-city">Age</label>
+                                            <input type="number" name="User_Age" class="form-control form-control-alternative" value="@Model.User_Age">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-last-name">Full Name</label>
                                             <input type="text" name="User_FullName" class="form-control form-control-alternative" value="@Model.User_FullName">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            
+                                            <div>
+                                                <span style="margin-right: 150px">
+                                                    <input @(Model.User_Gender == 0 ? "checked" : "") type="radio" name="User_Gender" value="0">
+                                                    <label class="form-control-label" for="input-last-name">Male</label>
+                                                </span>
+                                                <span>
+                                                    <input @(Model.User_Gender == 1 ? "checked" : "") type="radio" name="User_Gender" value="1">
+                                                    <label class="form-control-label" for="input-last-name">Female</label><br>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -143,38 +158,16 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="form-group focused">
-                                            <label class="form-control-label" for="input-city">Age</label>
-                                            <input type="number" name="User_Age" class="form-control form-control-alternative" value="@Model.User_Age">
+                                            <label class="form-control-label" for="input-first-name">Email Address</label>
+                                            <input type="text" name="User_Email" class="form-control form-control-alternative" value="@Model.User_Email">
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-country">Telephone</label>
                                             <input type="text" name="User_Phone" class="form-control form-control-alternative" value="@Model.User_Phone">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-country">Service Department</label>
-                                            <select name="ServiceId" class="form-control form-control-alternative">
-                                                @if (ViewBag.list_service != null)
-                                                {
-                                                    foreach (var item in ViewBag.list_service)
-                                                    {
-                                                        if (ViewBag.CurrentService != null && item.Id == ViewBag.CurrentService.Id)
-                                                        {
-                                <option value="@item.Id" selected>@item.Service_Name</option>
- }
-                            else
-                            {
-    <option value="@item.Id">@item.Service_Name</option>
-}
-}
-}
-
-                                            </select>
                                         </div>
                                     </div>
                                 </div>

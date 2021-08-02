@@ -12,44 +12,44 @@
 namespace _ExcellOn_.Models
 {
 
-    using System;
+using System;
     using System.Collections.Generic;
+    
+public partial class Customer
+{
 
-    public partial class Customer
+    public Customer()
     {
 
-        public Customer()
-        {
-            this.Customer_Avatar = "/Public/Image/avt.png";
-            this.Orders = new HashSet<Order>();
-
-        }
-
-
-        public int Id { get; set; }
-
-        public string Customer_Name { get; set; }
-
-        public string Customer_Phone { get; set; }
-
-        public string Customer_Email { get; set; }
-
-        public string Customer_UserName { get; set; }
-
-        public string Customer_Password { get; set; }
-
-        public Nullable<int> CompanyId { get; set; }
-
-        public string Customer_Comment { get; set; }
-
-        public string Customer_Avatar { get; set; }
-
-
-
-        public virtual Company Company { get; set; }
-
-        public virtual ICollection<Order> Orders { get; set; }
+        this.Orders = new HashSet<Order>();
 
     }
+
+
+    public int Id { get; set; }
+
+    public string Customer_Name { get; set; }
+
+    public string Customer_Phone { get; set; }
+
+    public string Customer_Email { get; set; }
+
+    public string Customer_UserName { get; set; }
+
+    public string Customer_Password { get; set; }
+
+    public Nullable<int> CompanyId { get; set; }
+
+    public string Customer_Comment { get; set; }
+
+    public string Customer_Avatar { get; set; }
+
+
+
+    public virtual Company Company { get; set; }
+
+    public virtual ICollection<Order> Orders { get; set; }
+
+}
 
 }
