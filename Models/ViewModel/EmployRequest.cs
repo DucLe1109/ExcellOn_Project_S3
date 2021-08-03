@@ -11,6 +11,5 @@ namespace _ExcellOn_.Models.ViewModel
         public int Number_Of_Employee { get; set; }
         public DateTime Date_Start { get; set; }
         public DateTime Date_End { get; set; }
-        public string Description { get; set; }
     }
 }

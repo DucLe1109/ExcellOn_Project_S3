@@ -3,6 +3,7 @@
 @{
     Layout = null;
 }
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
@@ -10,6 +11,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="~/Areas/Admin/Public/ShoppingCart/shopping_cart.css" rel="stylesheet" />
+    <style>
+        table, td, th {
+        }
+
+        table {
+            width: 100%;
+        }
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
@@ -21,36 +30,52 @@
                 <div class="title">
                     <div class="row">
                         <div class="col">
-                            <h4><b>Shopping Cart</b></h4>
+                            <h4><b>Order Detail</b></h4>
                         </div>
-                        <div class="col align-self-center text-right text-muted">3 items</div>
+                        <div class="col align-self-center text-right text-muted">@Model.Count items</div>
+                    </div>
+                </div>
+                @{
+                    float _total_cost = 0;
+                }
+
+                <div class="row border-bottom">
+                    <div class="row main align-items-center">
+                        <table class="table text-center">
+                            <tr>
+                                <th>Your service </th>
+                                <th>Interval</th>
+                                <th>Number of Employee</th>
+                                <th>Price (&euro;)</th>
+                                <th></th>
+                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                Entities db = new Entities();
+                                Service service = db.Services.Where(x => x.Id == item.ServiceId).FirstOrDefault();
+                                DateTime date_start = (DateTime)item.OrderDetail_DateStart;
+                                DateTime date_end = (DateTime)item.OrderDetail_DateEnd;
+                                int total_day = (int)(date_end - date_start).TotalDays;
+                                float total_cost = (float)total_day * (float)service.Service_Price * (float)item.OrderDetail_NumberOfPeople;
+                                string date_start_string = date_start.ToString("MM/dd/yyyy");
+                                string date_end_string = date_end.ToString("MM/dd/yyyy");
+                                _total_cost += total_cost;
+                                <tr>
+                                    <td>
+                                        <p>@service.Service_Name</p>
+                                        <img class="img-fluid" style="width: 150px; height:150px;border-radius: 20px" src="@service.Service_Image">
+                                    </td>
+                                    <td><div class=""> @date_start_string - @date_end_string </div></td>
+                                    <td><a href="#" class="border">@item.OrderDetail_NumberOfPeople</a></td>
+                                    <td> @total_cost </td>
+                                    <td> <span class="close" id="@item.Id" style="cursor:pointer" onclick="return _remove(@item.Id)">&#10005;</span></td>
+                                </tr>
+                            }
+                        </table>
                     </div>
                 </div>
 
-                @foreach (var item in Model)
-                {
-                    Entities db = new Entities();
-                    Service service = db.Services.Where(x => x.Id == item.ServiceId).FirstOrDefault();
-                    DateTime date_start = (DateTime)item.OrderDetail_DateStart;
-                    DateTime date_end = (DateTime)item.OrderDetail_DateEnd;
-                    int total_day = (int)(date_end - date_start).TotalDays;
-                    float total_cost = (float)total_day * (float)service.Service_Price * (float)item.OrderDetail_NumberOfPeople;
-                    string date_start_string = date_start.ToString("MM/dd/yyyy");
-                    string date_end_string = date_end.ToString("MM/dd/yyyy");
-                    <div class="row border-top border-bottom">
-                        <div class="row main align-items-center">
-                            <div class="col-3"><img class="img-fluid" style="width: 200px; height:150px;border-radius: 20px" src="@service.Service_Image"></div>
-                            <div class="col" style="font-size: 16px">
-                                <div class="row text-muted">@service.Service_Name</div>
 
-                                <div class="row"> @date_start_string - @date_end_string </div>
-                            </div>
-                            <div class="col"> <a href="#">-</a><a href="#" class="border">@item.OrderDetail_NumberOfPeople</a><a href="#">+</a> </div>
-                            <div class="col">&euro; @total_cost <span class="close">&#10005;</span></div>
-                        </div>
-                    </div>
-
-                }
 
                 <div class="back-to-shop"><a class="text-muted" href="/Admin/ServiceManagement/ServiceIndex">&leftarrow; Back to shop</a></div>
             </div>
@@ -62,23 +87,73 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col" style="padding-left:0;">ITEMS 3</div>
-                    <div class="col text-right">&euro; 132.00</div>
+                    <div class="col-md-6" style="padding-left:0;">TOTAT COST (&euro;)</div>
+                    <div class="col-md-6 text-right">
+                        <input style="background:transparent;border:none;padding-top: 0px;margin-left:50px" type="number" class="total_cost" readonly value="@_total_cost" />
+                    </div>
                 </div>
-                <form>
-                    <p>SHIPPING</p> <select>
-                        <option class="text-muted">Standard-Delivery- &euro;5.00</option>
-                    </select>
-                    <p>GIVE CODE</p> <input id="code" placeholder="Enter your code">
-                </form>
-                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <div class="col">TOTAL PRICE</div>
-                    <div class="col text-right">&euro; 137.00</div>
-                </div> <button class="btn">CHECKOUT</button>
+
+                <p>GIVE CODE</p> <input id="code" placeholder="Enter your code">
+
+                <button class="btn btn-primary" onclick="return _GiveCode()">Apply</button>
+
+                <p class="alert-text text-danger text-center" id="discount" style="margin-top: 20px;font-size: 14px;display: none"> Your bill is discount 1% </p>
+
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding-top: 20px">
+                    <div class="col-md-6" style="padding-left:0px;padding-right: 0px">
+                        <div class="col">TOTAL PRICE (&euro;)</div>
+                    </div>
+                    <div class="col-md-6">
+                        <input style="background:transparent;border:none;padding-top: 0px;margin-left:50px;font-weight: bold" type="number" class="total_cost" readonly value="@_total_cost" />
+                    </div>
+
+                </div> <button class="btn" onclick="return _CheckOut()">CHECKOUT</button>
             </div>
         </div>
     </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        function _remove(ID) {
+            $.ajax({
+                url: "/Admin/OrderManagement/RemoveItem?OrderDetail_ID=" + ID,
+                contentType: "application/json;charset=utf-8",
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    $('#' + ID).parent().parent().remove();
+                    $('.total_cost').val($('.total_cost').val() - result);
+                },
+                error: function () {
+
+                }
+            });
+        }
+        function _GiveCode() {
+            a = ($('#code').val() == "huyducdeptrai");
+            if (a) {
+                $('.total_cost').val($('.total_cost').val() - $('.total_cost').val() * 0.01);
+                $('#discount').show();
+            }
+            //if () {
+            //
+            //}
+        }
+        function _CheckOut() {
+            $.ajax({
+                url: "/Admin/OrderManagement/SubmitOrder",
+                contentType: "application/json;charset=utf-8",
+                type: "GET",
+                data: { total_cost : $('.total_cost').val(), description : "abc"},
+                dataType: "json",
+                success: function (result) {
+                    alert(result);
+                },
+                error: function () {
+
+                }
+            });
+        }
+    </script>
 </body>
 </html>
 
