@@ -153,6 +153,7 @@
     <Compile Include="Areas\Admin\Controllers\ServiceManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\StaffManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Staff_OrderDetailController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManagementController.cs" />
@@ -220,6 +221,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModel\EmployRequest.cs" />
+    <Compile Include="Models\ViewModel\list_ordViewModel.cs" />
     <Compile Include="Models\ViewModel\OrderDetailViewModel.cs" />
     <Compile Include="Models\ViewModel\SearchRequest.cs" />
     <Compile Include="Models\ViewModel\SignInViewModel.cs" />
@@ -256,6 +258,10 @@
     <Content Include="Areas\Admin\Public\img\theme\team-4.jpg" />
     <Content Include="Areas\Admin\Public\img\theme\team-5.jpg" />
     <Content Include="Areas\Admin\Public\img\theme\vue.jpg" />
+    <Content Include="Areas\Admin\Public\JdLomX\css\style.css" />
+    <Content Include="Areas\Admin\Public\JdLomX\index.html" />
+    <Content Include="Areas\Admin\Public\JdLomX\license.txt" />
+    <Content Include="Areas\Admin\Public\JdLomX\README.txt" />
     <Content Include="Areas\Admin\Public\js\argon.js" />
     <Content Include="Areas\Admin\Public\js\argon.min.js" />
     <Content Include="Areas\Admin\Public\js\components\charts\chart-bars.js" />
@@ -2988,6 +2994,10 @@
     <Content Include="Areas\Admin\Views\StaffManagement\StaffIndex.cshtml" />
     <Content Include="Areas\Admin\Views\StaffManagement\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\StaffManagement\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Staff_OrderDetail\Staff_OrderDetailIndex.cshtml" />
+    <Content Include="Areas\Admin\Public\JdLomX\config.rb" />
+    <Content Include="Areas\Admin\Public\JdLomX\scss\style.scss" />
+    <Content Include="Areas\Admin\Views\ServiceManagement\ServiceIndex2.cshtml" />
     <None Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1-vsdoc.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.min.js" />
@@ -3158,12 +3168,21 @@
     <Content Include="packages\System.Runtime.CompilerServices.Unsafe.4.5.3\version.txt" />
     <Content Include="packages\WebGrease.1.6.0\lib\WebGrease.dll" />
     <Content Include="packages\WebGrease.1.6.0\tools\WG.EXE" />
+    <Content Include="Public\Image\1761894.png" />
+    <Content Include="Public\Image\2021_06_15_17_02_IMG_0768.JPG" />
+    <Content Include="Public\Image\2021_06_15_17_03_IMG_0771.JPG" />
     <Content Include="Public\Image\95-telemarketing.jpg" />
+    <Content Include="Public\Image\ava.gif" />
     <Content Include="Public\Image\avt.png" />
+    <Content Include="Public\Image\Blog-Post-Graphic-How-to-design-the-perfect-MMS_gif.gif" />
     <Content Include="Public\Image\OIP.jfif" />
     <Content Include="Public\Image\th %281%29.jfif" />
     <Content Include="Public\Image\th %282%29.jfif" />
     <Content Include="Public\Image\th.jfif" />
+    <Content Include="Public\Image\WIN_20210622_17_11_17_Pro.jpg" />
+    <Content Include="Public\Image\WIN_20210622_17_11_37_Pro.jpg" />
+    <Content Include="Public\Image\WIN_20210628_21_05_08_Pro.jpg" />
+    <Content Include="Public\Image\WIN_20210628_21_05_33_Pro.jpg" />
     <Content Include="Public\Login\css\login.css" />
     <Content Include="Public\Login\js\login.js" />
     <Content Include="Public\Profile\profile.css" />

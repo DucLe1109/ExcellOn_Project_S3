@@ -1,4 +1,4 @@
-﻿
+﻿@model List<_ExcellOn_.Models.Staff_OrderDetail>
 @{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";}
 
 <div class="header bg-primary">
@@ -26,109 +26,59 @@
 
 <div class="container" style="margin-top: 30px;padding-bottom: 40px">
 
-    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h2 class="modal-title" style="color: white" id="myModalLabel">Compose News Customer</h2>
-                    <button type="button" class="close fa fa-close" style="color: white" data-dismiss="modal" aria-hidden="true"></button>
-                </div>
-                <div class="form">
-                    <div class="row">
-                        <div class="modal-body" style="padding: 50px">
-                            <div class="row">
-                                <div class="col-md-6" style="display:none">
-                                    <label>Service_Id</label>
-                                    <input type="number" readonly value="" id="Service_Id" class="form-control">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Number of Employee</label>
-                                    <input type="number" id="Number_Of_Employee" class="form-control">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Date Start</label>
-                                    <input type="date" id="Date_Start" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6" style="margin-top: 15px">
-                                    <label>Date End</label>
-                                    <input type="date" id="Date_End" class="form-control">
-                                </div>
-                                <div class="col-md-6" style="margin-top: 15px">
-                                    <label>Description</label>
-                                    <input id="Description" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 block_loader" style="display: none">
-                        <div style="float:right;width: 55%">
-                            <div class="loader"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer col-md-12">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="return _Submit();">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <div class="row">
         <div class="col-xl-12">
             <div class="table-responsive">
                 <table id="table_Service" class="cell-border text-center align-items-center table-flush ">
                     <thead class="thead-light">
                         <tr>
-                            <th style="font-size: 0.875rem" class="sort">Image</th>
-                            <th style="font-size: 0.875rem" class="sort">Name</th>
+                            <th style="font-size: 0.875rem" class="sort">Date Start</th>
+                            <th style="font-size: 0.875rem" class="sort">Date End</th>
                             <th style="font-size: 0.875rem" class="sort">Status</th>
-                            <th style="font-size: 0.875rem" class="sort">Description</th>
-                            <th style="font-size: 0.875rem" class="sort">Sale Price</th>
-                            <th style="font-size: 0.875rem" class="sort">Price</th>
+                            <th style="font-size: 0.875rem" class="sort">Staff Name</th>
+                            <th style="font-size: 0.875rem" class="sort">Service</th>
                             <th style="font-size: 0.875rem">Action</th>
                         </tr>
                     </thead>
                     <tbody class="list">
-                        @if (ViewBag.list_service != null)
+                        @if (Model != null)
                         {
-                            foreach (var item in ViewBag.list_service)
+                            foreach (var item in Model)
                             {
+                                DateTime date_start = (DateTime)item.Date_Start;
+                                DateTime date_end = (DateTime)item.Date_End;
+                                string date_start_string = date_start.ToString("MM/dd/yyyy");
+                                string date_end_string = date_end.ToString("MM/dd/yyyy");
                                 <tr>
-                                    <th>
-                                        <img alt="Image placeholder" src="@item.Service_Image" style="height: 200px; width: 200px;border-radius: 20px">
-                                    </th>
                                     <td>
-                                        @item.Service_Name
+                                        @date_start_string
                                     </td>
                                     <td>
-                                        @if (item.Service_SaleStatus == 1)
-                                        {
+                                        @date_end_string
+                                    </td>
+                                    @if (item.OrderDetail.OrderDetail_Status == 0)
+                                    {
+                                        <td>
                                             <span class="badge badge-dot mr-4">
                                                 <i class="bg-warning"></i>
-                                                <span class="status"> Sale </span>
+                                                <span>Waiting</span>
                                             </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge badge-dot mr-4">
-                                                <i class="bg-info"></i>
-                                                <span class="status"> Not Sale </span>
-                                            </span>
-                                        }
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <i class="bg-info"></i>
+                                            <span>Starting</span>
+                                        </td>
+                                    }
 
-                                    </td>
                                     <td>
-                                        @item.Service_Description
+                                        @item.Staff.Staff_FullName
                                     </td>
+
                                     <td>
-                                        $@item.Service_PriceSale
-                                    </td>
-                                    <td>
-                                        $@item.Service_Price
+                                        @item.OrderDetail.Service.Service_Name
                                     </td>
                                     <td class="text-right">
                                         <div class="dropdown">
@@ -157,6 +107,7 @@
 </div>
 
 @section css{
+
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
     <link href="~/Areas/Admin/Public/DataTable/pagination.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/css/loader.css" rel="stylesheet" />

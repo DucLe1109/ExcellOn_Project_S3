@@ -1,4 +1,6 @@
 ﻿using _ExcellOn_.Models;
+using _ExcellOn_.Models.ViewModel;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,6 +32,38 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 return Redirect("/AdminLogin");
             }
         }
+        public ActionResult ServiceIndex2()
+        {
+            Session["return_url"] = "/Admin/ServiceManagement/ServiceIndex2";
+            if (check_auth())
+            {
+                string UserName = (string)Session["UserName"];
+                var CurrentUser = db.UserInFoes.Where(x => x.User_Name == UserName).FirstOrDefault();
+                ViewBag.CurrentUser = CurrentUser;
+
+                List<Service> list_service = db.Services.ToList();
+                return View(list_service);
+            }
+            else
+            {
+                return Redirect("/AdminLogin");
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetOrderDetail(int Service_ID)
+        {
+
+            string UserName = (string)Session["UserName"];
+            var CurrentUser = db.UserInFoes.Where(x => x.User_Name == UserName).FirstOrDefault();
+            ViewBag.CurrentUser = CurrentUser;
+
+            List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.ServiceId == Service_ID).ToList();
+            string json_convert = JsonConvert.SerializeObject(list_ord);
+            return Json(json_convert, JsonRequestBehavior.AllowGet);
+
+        }
+
 
         public ActionResult Add()
         {
@@ -45,7 +79,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             {
                 return Redirect("/AdminLogin");
             }
-           
+
         }
 
         public ActionResult Add_Submit(Service request, HttpPostedFileBase FeatureImage, HttpPostedFileBase[] Service_AdditionalImage)
@@ -72,7 +106,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 db.Services.Add(newService);
 
                 // Add Image for Service
-                
+
                 foreach (HttpPostedFileBase file in Service_AdditionalImage)
                 {
                     //Checking file is available to save.  
@@ -82,7 +116,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                         string filename = Path.GetFileNameWithoutExtension(file.FileName);
                         string extension = Path.GetExtension(file.FileName);
                         filename = filename + extension;
-                        
+
                         newImage.Image_link = "/Public/Image/" + filename;
                         file.SaveAs(Path.Combine(Server.MapPath("/Public/Image/"), filename));
                         newImage.ServiceId = newService.Id;
@@ -96,7 +130,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             {
                 return Redirect("/AdminLogin");
             }
-           
+
         }
 
         public ActionResult Edit_Submit(Service request, HttpPostedFileBase FeatureImage, HttpPostedFileBase[] Service_AdditionalImage)
@@ -105,17 +139,17 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             if (check_auth())
             {
                 // Create Service and add Feature Image
-                Service service = db.Services.Where(x=> x.Id == request.Id).FirstOrDefault();
+                Service service = db.Services.Where(x => x.Id == request.Id).FirstOrDefault();
                 if (service != null)
                 {
                     if (Service_AdditionalImage[0] == null)
                     {
-                        
+
                     }
                     else
                     {
                         //Remove all Image Detail in table Image of current Service after update image
-                        List<Image> list_image = db.Images.Where(x=> x.ServiceId == service.Id).ToList();
+                        List<Image> list_image = db.Images.Where(x => x.ServiceId == service.Id).ToList();
                         foreach (var item in list_image)
                         {
                             db.Images.Remove(item);
@@ -153,7 +187,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
                         FeatureImage.SaveAs(Path.Combine(Server.MapPath("/Public/Image/"), FileName));
                     }
-                    
+
                     db.SaveChanges();
                     return RedirectToAction("ServiceIndex");
                 }
@@ -161,7 +195,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 {
                     return RedirectToAction("ServiceIndex");
                 }
-               
+
             }
             else
             {
@@ -179,7 +213,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 var CurrentUser = db.UserInFoes.Where(x => x.User_Name == UserName).FirstOrDefault();
                 ViewBag.CurrentUser = CurrentUser;
 
-                Service edit_service = db.Services.Where(x => x.Id == id).FirstOrDefault() ;
+                Service edit_service = db.Services.Where(x => x.Id == id).FirstOrDefault();
                 return View(edit_service);
             }
             else
@@ -196,7 +230,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             if (check_auth())
             {
                 Service service = db.Services.Where(x => x.Id == ServiceId).FirstOrDefault();
-                List<Image> service_image = db.Images.Where(x=> x.ServiceId == ServiceId).ToList();
+                List<Image> service_image = db.Images.Where(x => x.ServiceId == ServiceId).ToList();
                 foreach (var item in service_image)
                 {
                     db.Images.Remove(item);

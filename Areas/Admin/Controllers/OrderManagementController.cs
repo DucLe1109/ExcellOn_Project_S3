@@ -446,8 +446,6 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 return Json(Response.StatusCode = 404, JsonRequestBehavior.AllowGet);
             }
         }
-
-
         public ActionResult form_search()
         {
             return View();

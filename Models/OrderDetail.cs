@@ -11,43 +11,43 @@
 
 namespace _ExcellOn_.Models
 {
-
-using System;
+    using Newtonsoft.Json;
+    using System;
     using System.Collections.Generic;
-    
-public partial class OrderDetail
-{
 
-    public OrderDetail()
+    public partial class OrderDetail
     {
 
-        this.Staff_OrderDetail = new HashSet<Staff_OrderDetail>();
+        public OrderDetail()
+        {
+
+            this.Staff_OrderDetail = new HashSet<Staff_OrderDetail>();
+
+        }
+
+
+        public int Id { get; set; }
+
+        public Nullable<System.DateTime> OrderDetail_DateStart { get; set; }
+
+        public Nullable<System.DateTime> OrderDetail_DateEnd { get; set; }
+
+        public Nullable<int> OrderDetail_Status { get; set; }
+
+        public Nullable<int> OrderDetail_NumberOfPeople { get; set; }
+
+        public Nullable<int> ServiceId { get; set; }
+
+        public Nullable<int> OrdersId { get; set; }
+
+
+        [JsonIgnore]
+        public virtual Order Order { get; set; }
+        [JsonIgnore]
+        public virtual Service Service { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Staff_OrderDetail> Staff_OrderDetail { get; set; }
 
     }
-
-
-    public int Id { get; set; }
-
-    public Nullable<System.DateTime> OrderDetail_DateStart { get; set; }
-
-    public Nullable<System.DateTime> OrderDetail_DateEnd { get; set; }
-
-    public Nullable<int> OrderDetail_Status { get; set; }
-
-    public Nullable<int> OrderDetail_NumberOfPeople { get; set; }
-
-    public Nullable<int> ServiceId { get; set; }
-
-    public Nullable<int> OrdersId { get; set; }
-
-
-
-    public virtual Order Order { get; set; }
-
-    public virtual Service Service { get; set; }
-
-    public virtual ICollection<Staff_OrderDetail> Staff_OrderDetail { get; set; }
-
-}
 
 }
