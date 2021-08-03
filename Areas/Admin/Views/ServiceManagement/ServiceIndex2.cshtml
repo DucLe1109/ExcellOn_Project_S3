@@ -110,7 +110,7 @@
     <link href="~/Areas/Admin/Public/JdLomX/css/style.css" rel="stylesheet" />
 }
 @section js{
-    
+
     <script type="text/javascript">
         function _GetOrderDetail(Service_ID) {
             $.ajax({
@@ -119,9 +119,8 @@
                 type: "GET",
                 dataType: "json",
                 success: function (result) {
-                    console.log(result);
+                    $('#table_Service').show();
                     $('#table_Service').DataTable({
-
                         data: JSON.parse(result),
                         columns: [
                             { 'data': 'Id' },

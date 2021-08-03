@@ -25,22 +25,22 @@ body {
 }
 
 aside {
-  text-align: center;
-  display: block;
-  background-color: #29d08a;
-  width: 284px;
-  height: 380px;
-  border: solid 10px #fff;
-  margin-left: 45px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  position: relative;
-  margin-top: 0px;
-  -webkit-animation: showAside 0.25s ease forwards 2s;
-  -moz-animation: showAside 0.25s ease forwards 2s;
-  -ms-animation: showAside 0.25s ease forwards 2s;
-  -o-animation: showAside 0.25s ease forwards 2s;
-  animation: showAside 0.25s ease forwards 2s;
-  opacity: 0;
+    text-align: center;
+    display: block;
+    background-color: #29d08a;
+    width: 284px;
+    height: 380px;
+    border: solid 10px #fff;
+    margin-left: 45px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin-top: 0px;
+    -webkit-animation: showAside 0.25s ease forwards 0.5s;
+    -moz-animation: showAside 0.25s ease forwards 0.5s;
+    -ms-animation: showAside 0.25s ease forwards 0.5s;
+    -o-animation: showAside 0.25s ease forwards 0.5s;
+    animation: showAside 0.25s ease forwards 0.5s;
+    opacity: 0;
 }
 /*aside:hover, aside:focus {
   margin-top: 100px;
@@ -65,25 +65,25 @@ header {
   width: 100px;
   margin: auto;
 }
-header a {
-  display: inline-block;
-  text-align: center;
-  position: relative;
-  width: 100px;
-  height: 208px;
-  border-bottom: solid 3px #25bb7c;
-  -webkit-transform: translateY(30px);
-  -moz-transform: translateY(30px);
-  -ms-transform: translateY(30px);
-  -o-transform: translateY(30px);
-  transform: translateY(30px);
-  -webkit-animation: showAva 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.75s;
-  -moz-animation: showAva 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.75s;
-  -ms-animation: showAva 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.75s;
-  -o-animation: showAva 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.75s;
-  animation: showAva 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.75s;
-  opacity: 0;
-}
+    header a {
+        display: inline-block;
+        text-align: center;
+        position: relative;
+        width: 100px;
+        height: 208px;
+        border-bottom: solid 3px #25bb7c;
+        -webkit-transform: translateY(30px);
+        -moz-transform: translateY(30px);
+        -ms-transform: translateY(30px);
+        -o-transform: translateY(30px);
+        transform: translateY(30px);
+        -webkit-animation: showAva 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -moz-animation: showAva 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -ms-animation: showAva 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -o-animation: showAva 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        animation: showAva 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        opacity: 0;
+    }
 header a img {
   width: 100px;
   height: auto;
@@ -146,44 +146,44 @@ header h1, header h2 {
   left: 50%;
   right: 50%;
 }
-header h1 {
-  color: #fff;
-  height: 50px;
-  top: 300px;
-  text-align: center;
-  font-size: 24px;
-  padding: 20px 0 0;
-  font-weight: 500;
-  color: transparent;
-  -webkit-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.25s, showTitle-1 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.75s;
-  -moz-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.25s, showTitle-1 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.75s;
-  -ms-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.25s, showTitle-1 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.75s;
-  -o-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.25s, showTitle-1 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.75s;
-  animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.25s, showTitle-1 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.75s;
-}
-header h1:after, header h1:before {
-  content: '';
-  height: 0;
-  width: 0;
-  top: -20px;
-  display: inline-block;
-  position: absolute;
-  -webkit-transform: scaleY(0);
-  -moz-transform: scaleY(0);
-  -ms-transform: scaleY(0);
-  -o-transform: scaleY(0);
-  transform: scaleY(0);
-  -webkit-transform-origin: center bottom;
-  -moz-transform-origin: center bottom;
-  -ms-transform-origin: center bottom;
-  -o-transform-origin: center bottom;
-  transform-origin: center bottom;
-  -webkit-animation: showTips 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.5s;
-  -moz-animation: showTips 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.5s;
-  -ms-animation: showTips 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.5s;
-  -o-animation: showTips 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.5s;
-  animation: showTips 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.5s;
-}
+    header h1 {
+        color: #fff;
+        height: 50px;
+        top: 300px;
+        text-align: center;
+        font-size: 24px;
+        padding: 20px 0 0;
+        font-weight: 500;
+        color: transparent;
+        -webkit-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s, showTitle-1 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -moz-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s, showTitle-1 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -ms-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s, showTitle-1 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -o-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s, showTitle-1 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s, showTitle-1 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+    }
+    header h1:after, header h1:before {
+        content: '';
+        height: 0;
+        width: 0;
+        top: -20px;
+        display: inline-block;
+        position: absolute;
+        -webkit-transform: scaleY(0);
+        -moz-transform: scaleY(0);
+        -ms-transform: scaleY(0);
+        -o-transform: scaleY(0);
+        transform: scaleY(0);
+        -webkit-transform-origin: center bottom;
+        -moz-transform-origin: center bottom;
+        -ms-transform-origin: center bottom;
+        -o-transform-origin: center bottom;
+        transform-origin: center bottom;
+        -webkit-animation: showTips 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -moz-animation: showTips 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -ms-animation: showTips 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -o-animation: showTips 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        animation: showTips 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+    }
 header h1:before {
   border-left: solid 15px transparent;
   border-right: solid 15px #434e5c;
@@ -198,20 +198,20 @@ header h1:after {
   border-top: solid 10px transparent;
   right: 0;
 }
-header h2 {
-  color: white;
-  height: 40px;
-  top: 358px;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 500;
-  color: white;
-  -webkit-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.25s, showTitle-2 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 3s;
-  -moz-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.25s, showTitle-2 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 3s;
-  -ms-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.25s, showTitle-2 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 3s;
-  -o-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.25s, showTitle-2 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 3s;
-  animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.25s, showTitle-2 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 3s;
-}
+    header h2 {
+        color: #6f8196;
+        height: 40px;
+        top: 358px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+        color: transparent;
+        -webkit-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s, showTitle-2 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -moz-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s, showTitle-2 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -ms-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s, showTitle-2 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        -o-animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s, showTitle-2 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+        animation: showTitle 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s, showTitle-2 0.5s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+    }
 header:hover ~ .profile-bio {
   top: -55px;
   opacity: 1;
@@ -255,19 +255,19 @@ header:hover ~ .profile-bio {
 }
 
 .profile-social-links {
-  list-style: none;
-  position: absolute;
-  padding: 0;
-  bottom: -10px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  opacity: 0;
-  -webkit-animation: showSoc 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.5s;
-  -moz-animation: showSoc 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.5s;
-  -ms-animation: showSoc 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.5s;
-  -o-animation: showSoc 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.5s;
-  animation: showSoc 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 2.5s;
+    list-style: none;
+    position: absolute;
+    padding: 0;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    opacity: 0;
+    -webkit-animation: showSoc 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+    -moz-animation: showSoc 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+    -ms-animation: showSoc 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+    -o-animation: showSoc 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
+    animation: showSoc 0.25s cubic-bezier(0.37, 0.15, 0.54, 1.99) forwards 0.5s;
 }
 .profile-social-links li {
   display: inline-block;

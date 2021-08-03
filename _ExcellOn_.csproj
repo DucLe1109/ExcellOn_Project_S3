@@ -258,6 +258,7 @@
     <Content Include="Areas\Admin\Public\img\theme\team-4.jpg" />
     <Content Include="Areas\Admin\Public\img\theme\team-5.jpg" />
     <Content Include="Areas\Admin\Public\img\theme\vue.jpg" />
+    <Content Include="Areas\Admin\Public\JdLomX\css\asdasd.css" />
     <Content Include="Areas\Admin\Public\JdLomX\css\style.css" />
     <Content Include="Areas\Admin\Public\JdLomX\index.html" />
     <Content Include="Areas\Admin\Public\JdLomX\license.txt" />
