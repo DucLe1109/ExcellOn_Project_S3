@@ -150,6 +150,7 @@
     <Compile Include="Areas\Admin\Controllers\CompanyManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\ImageManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\ServiceManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\StaffManagementController.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Models\ViewModel\SearchRequest.cs" />
     <Compile Include="Models\ViewModel\SignInViewModel.cs" />
     <Compile Include="Models\ViewModel\SignUpViewModel.cs" />
+    <Compile Include="Models\ViewModel\UpdatePermissionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +241,7 @@
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap-reboot.min.css" />
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap.css" />
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap.min.css" />
+    <Content Include="Areas\Admin\Public\css\panel.css" />
     <Content Include="Areas\Admin\Public\DataTable\pagination.css" />
     <Content Include="Areas\Admin\Public\fonts\nucleo\nucleo-icons.svg" />
     <Content Include="Areas\Admin\Public\img\brand\blue.png" />
@@ -2999,6 +3002,7 @@
     <Content Include="Areas\Admin\Public\JdLomX\config.rb" />
     <Content Include="Areas\Admin\Public\JdLomX\scss\style.scss" />
     <Content Include="Areas\Admin\Views\ServiceManagement\ServiceIndex2.cshtml" />
+    <Content Include="Areas\Admin\Views\RoleManagement\RoleIndex.cshtml" />
     <None Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1-vsdoc.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.min.js" />

@@ -1,6 +1,8 @@
 ﻿@model List<_ExcellOn_.Models.Service>
 @{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";}
-
+@{
+    int count = Model.Count;
+}
 <div class="header bg-primary">
     <div class="container-fluid">
         <div class="header-body">
@@ -9,8 +11,8 @@
                     <h6 class="h2 text-white d-inline-block mb-0">Service</h6>
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Click in Icon to view</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -48,7 +50,7 @@
                                 <!-- bit of a bio; who are you? -->
                                 <div class="profile-bio">
                                     <p class="description">
-                                        @item.Service_Description.Substring(0, 100)
+                                        Click me to view my Order Detail
                                     </p>
                                 </div>
                                 <!-- some social links to show off -->
@@ -78,25 +80,28 @@
                     }
                 </div>
 
-                <div class="row" style="margin-top: 70px">
-                    <div class="table-responsive">
-                        <table id="table_Service" class="cell-border text-center align-items-center table-flush ">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th style="font-size: 0.875rem" class="sort">Id</th>
-                                    <th style="font-size: 0.875rem" class="sort">OrderDetail_DateStart</th>
-                                    <th style="font-size: 0.875rem" class="sort">OrderDetail_DateEnd</th>
-                                    <th style="font-size: 0.875rem" class="sort">OrderDetail_Status</th>
-                                    <th style="font-size: 0.875rem" class="sort">OrderDetail_NumberOfPeople Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                foreach (var item in Model)
+                {
+                    <div class="row table_row" id="table_row_@item.Id" style="margin-top: 80px;">
+                        <div class="table-responsive">
+                            <table id="table_Service_@item.Id" class="cell-border text-center align-items-center table-dark table-flush ">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th style="font-size: 0.875rem">Code</th>
+                                        <th style="font-size: 0.875rem">Date Start</th>
+                                        <th style="font-size: 0.875rem">Date End</th>
+                                        <th style="font-size: 0.875rem">Status</th>
+                                        <th style="font-size: 0.875rem">Number of Staff</th>
+                                        <th style="font-size: 0.875rem">Assign</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="list" style="color: white">
+                                </tbody>
+                            </table>
 
+                        </div>
                     </div>
-                </div>
-
+                }
             }
         </div>
     </div>
@@ -108,36 +113,98 @@
     <link href="~/Areas/Admin/Public/DataTable/pagination.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/css/loader.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/JdLomX/css/style.css" rel="stylesheet" />
+    <style>
+        td {
+            background-color: #172b4d;
+        }
+    </style>
 }
 @section js{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    @foreach (var item in Model)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $.ajax({
+                    url: "/Admin/ServiceManagement/GetOrderDetail?Service_ID=" + @item.Id,
+                    contentType: "application/json;charset=utf-8",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (result) {
+
+                        $('#table_Service_' + @item.Id).DataTable({
+                            "lengthMenu": [10, 15, 20, 30],
+                            "pagingType": "full_numbers",
+                            "scrollY": true,
+                            language: {
+                                paginate: {
+                                    next: '<i class="fa fa-fw fa-long-arrow-right">',
+                                    previous: '<i class="fa fa-fw fa-long-arrow-left">'
+                                }
+                            },
+                            data: JSON.parse(result),
+                            columns: [
+                                { 'data': 'Id' },
+                                {
+                                    'data': 'OrderDetail_DateStart',
+                                    'render': function (OrderDetail_DateStart) {
+                                        var pad = function (num) { return ('00' + num).slice(-2) };
+                                        var date;
+                                        date = new Date(OrderDetail_DateStart);
+                                        date = date.getUTCFullYear() + '-' +
+                                            pad(date.getUTCMonth() + 1) + '-' +
+                                            pad(date.getUTCDate()+1);
+                                        return date;
+                                    }
+                                },
+                                {
+                                    'data': 'OrderDetail_DateEnd',
+                                    'render': function (OrderDetail_DateEnd) {
+                                        var pad = function (num) { return ('00' + num).slice(-2) };
+                                        var date;
+                                        date = new Date(OrderDetail_DateEnd);
+                                        date = date.getUTCFullYear() + '-' +
+                                            pad(date.getUTCMonth() + 1) + '-' +
+                                            pad(date.getUTCDate()+1);
+                                        return date;
+                                    }
+                                },
+                                {
+                                    'data': 'OrderDetail_Status',
+                                    'render': function (OrderDetail_Status) {
+                                        if (OrderDetail_Status == 0) {
+                                            return '<span class="badge badge-dot mr-4"><i class="bg-warning"></i><span class="status">Pending</span></span>';
+                                        } else {
+                                            return '<span class="badge badge-dot mr-4"><i class="bg-info"></i><span class="status">Working</span></span>';
+                                        }
+
+                                    }
+                                },
+                                { 'data': 'OrderDetail_NumberOfPeople' },
+                                {
+                                    'render': function () {
+                                        return '<a class="btn" href="#" style="background-color: #e6eef1;font-size: 12px"> Assign </a>';
+                                    }
+                                },
+                            ]
+
+                        });
+                        $('.table_row').hide();
+                    },
+                    error: function (erro) {
+                    }
+                });
+            });
+        </script>
+    }
 
     <script type="text/javascript">
         function _GetOrderDetail(Service_ID) {
-            $.ajax({
-                url: "/Admin/ServiceManagement/GetOrderDetail?Service_ID=" + Service_ID,
-                contentType: "application/json;charset=utf-8",
-                type: "GET",
-                dataType: "json",
-                success: function (result) {
-                    $('#table_Service').show();
-                    $('#table_Service').DataTable({
-                        data: JSON.parse(result),
-                        columns: [
-                            { 'data': 'Id' },
-                            { 'data': 'OrderDetail_DateStart' },
-                            { 'data': 'OrderDetail_DateEnd' },
-                            { 'data': 'OrderDetail_Status' },
-                            { 'data': 'OrderDetail_NumberOfPeople' },
-                        ]
-
-                    });
-                },
-                error: function (erro) {
-                    alert(erro);
-                }
+            $('.table_row').each(function () {
+                $(this).hide();
             });
-        }
+            $('#table_row_' + Service_ID).show();
+        };
     </script>
 
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
 }

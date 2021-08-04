@@ -186,5 +186,29 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 return Json("/Admin/User/Login", JsonRequestBehavior.AllowGet);
             }
         }
+        public JsonResult ChangeStatus(int StaffId)
+        {
+            Session["return_url"] = "/Admin/ServiceManagement/ChangeStatus?StaffId=" + StaffId;
+            if (check_auth())
+            {
+                Staff staff = db.Staffs.Where(x => x.Id == StaffId).FirstOrDefault();
+                if (staff.Staff_Status == 0)
+                {
+                    staff.Staff_Status = 1;
+                    db.SaveChanges();
+                    return Json("status_1", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    staff.Staff_Status = 0;
+                    db.SaveChanges();
+                    return Json("status_0", JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json("/Admin/User/Login", JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

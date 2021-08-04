@@ -41,77 +41,97 @@
                             <th style="font-size: 0.875rem">Age</th>
                             <th style="font-size: 0.875rem">Gender</th>
                             <th style="font-size: 0.875rem">Email</th>
+                            <th style="font-size: 0.875rem">Status</th>
                             <th style="font-size: 0.875rem">Action</th>
                         </tr>
                     </thead>
                     <tbody class="list">
                         @foreach (var item in ViewBag.list_staff)
                         {
-                            <tr>
-                                <th>
-                                    <div class="media align-items-center">
-                                        <a href="#" class="avatar rounded-circle mr-3">
-                                            <img alt="Image placeholder" src="@item.Staff_Avatar">
-                                        </a>
-                                    </div>
-                                </th>
-                                <td>
-                                    @if (item.Staff_Status == 1)
-                                    {
-                                        <span class="badge badge-dot mr-4">
-                                            <i class="bg-warning"></i>
-                                            <span class="status"> Working </span>
-                                        </span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge badge-dot mr-4">
-                                            <i class="bg-info"></i>
-                                            <span class="status"> Free </span>
-                                        </span>
-                                    }
+                        <tr>
+                            <th>
+                                <div class="media align-items-center">
+                                    <a href="#" class="avatar rounded-circle mr-3">
+                                        <img alt="Image placeholder" src="@item.Staff_Avatar">
+                                    </a>
+                                </div>
+                            </th>
+                            <td>
+                                @if (item.Staff_Status == 1)
+                                {
+                                    <span class="badge badge-dot mr-4">
+                                        <i class="bg-warning"></i>
+                                        <span class="status"> Working </span>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-dot mr-4">
+                                        <i class="bg-info"></i>
+                                        <span class="status"> Free </span>
+                                    </span>
+                                }
 
-                                </td>
+                            </td>
+                            <td>
+                                @item.Service.Service_Name
+                            </td>
+                            <td>
+                                @item.Staff_FullName
+                            </td>
+                            <td>
+                                @item.Staff_Address
+                            </td>
+                            <td>
+                                @item.Staff_Phone
+                            </td>
+                            <td>
+                                @item.Staff_Age
+                            </td>
+                            <td>
+                                @if (item.Staff_Gender == 1)
+                                {
+                                    <span>Female</span>
+                                }
+                                else
+                                {
+                                    <span>Male</span>
+                                }
+                            </td>
+                            <td>
+                                @item.Staff_Email
+                            </td>
+                            @if (item.Staff_Status == 0)
+                            {
                                 <td>
-                                    @item.Service.Service_Name
+                                    <span class="badge badge-dot mr-4">
+                                        <i class="bg-warning"></i>
+                                        <span id="status_@item.Id">Training</span>
+                                    </span>
                                 </td>
+                            }
+                            else
+                            {
                                 <td>
-                                    @item.Staff_FullName
+                                    <span class="badge badge-dot mr-4">
+                                        <i class="bg-info"></i>
+                                        <span id="status_@item.Id">Profession</span>
+                                    </span>
                                 </td>
-                                <td>
-                                    @item.Staff_Address
-                                </td>
-                                <td>
-                                    @item.Staff_Phone
-                                </td>
-                                <td>
-                                    @item.Staff_Age
-                                </td>
-                                <td>
-                                    @if (item.Staff_Gender == 1)
-                                    {
-                                        <span>Female</span>
-                                    }
-                                    else
-                                    {
-                                        <span>Male</span>
-                                    }
-                                </td>
-                                <td>
-                                    @item.Staff_Email
-                                </td>
-                                <td class="text-right">
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="/Admin/StaffManagement/Edit/@item.Id">Edit</a>
-                                            <a class="dropdown-item" onclick="return _Delete(@item.Id)" id="@item.Id" href="#">Delete</a>
-                                        </div>
+                            }
+                            <td class="text-right">
+                                <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                        <a class="dropdown-item" href="/Admin/StaffManagement/Edit/@item.Id">Edit</a>
+                                        <a class="dropdown-item" onclick="return _ChangeStatus(@item.Id)" style="cursor: pointer">Change Status</a>
+                                        <a class="dropdown-item" onclick="return _Delete(@item.Id)" style="cursor: pointer" id="@item.Id">Delete</a>
                                     </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
                         }
 
 
@@ -178,6 +198,25 @@
                         }
                     });
 
+                }
+            });
+        }
+        function _ChangeStatus(StaffId) {
+            $.ajax({
+                url: "/Admin/StaffManagement/ChangeStatus?StaffId=" + StaffId,
+                contentType: "application/json;charset=utf-8",
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    if (result == "status_1") {
+                        $('#status_' + StaffId).html("Profession");
+                    } else {
+                        $('#status_' + StaffId).html("Training");
+                    }
+                   
+                },
+                error: function () {
+                    alert("Error !");
                 }
             });
         }

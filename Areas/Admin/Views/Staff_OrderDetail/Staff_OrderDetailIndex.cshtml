@@ -49,50 +49,51 @@
                                 DateTime date_end = (DateTime)item.Date_End;
                                 string date_start_string = date_start.ToString("MM/dd/yyyy");
                                 string date_end_string = date_end.ToString("MM/dd/yyyy");
-                                <tr>
-                                    <td>
-                                        @date_start_string
-                                    </td>
-                                    <td>
-                                        @date_end_string
-                                    </td>
-                                    @if (item.OrderDetail.OrderDetail_Status == 0)
-                                    {
-                                        <td>
-                                            <span class="badge badge-dot mr-4">
-                                                <i class="bg-warning"></i>
-                                                <span>Waiting</span>
-                                            </span>
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td>
-                                            <i class="bg-info"></i>
-                                            <span>Starting</span>
-                                        </td>
-                                    }
+                        <tr>
+                            <td>
+                                @date_start_string
+                            </td>
+                            <td>
+                                @date_end_string
+                            </td>
+                            @if (item.OrderDetail.OrderDetail_Status == 0)
+                            {
+                                <td>
+                                    <span class="badge badge-dot mr-4">
+                                        <i class="bg-warning"></i>
+                                        <span>Waiting</span>
+                                    </span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <i class="bg-info"></i>
+                                    <span>Starting</span>
+                                </td>
+                            }
 
-                                    <td>
-                                        @item.Staff.Staff_FullName
-                                    </td>
+                            <td>
+                                @item.Staff.Staff_FullName
+                            </td>
 
-                                    <td>
-                                        @item.OrderDetail.Service.Service_Name
-                                    </td>
-                                    <td class="text-right">
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#myModal1" onclick="return _setServiceId(@item.Id)" style="cursor: pointer">Employ</a>
-                                                <a class="dropdown-item" href="/Admin/ServiceManagement/Edit/@item.Id">Edit</a>
-                                                <a class="dropdown-item" style="cursor: pointer" onclick="return _Delete(@item.Id)" id="@item.Id">Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <td>
+                                @item.OrderDetail.Service.Service_Name
+                            </td>
+
+                            <td class="text-right">
+                                <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#myModal1" onclick="return _setServiceId(@item.Id)" style="cursor: pointer">Employ</a>
+                                        <a class="dropdown-item" href="/Admin/ServiceManagement/Edit/@item.Id">Edit</a>
+                                        <a class="dropdown-item" style="cursor: pointer" onclick="return _Delete(@item.Id)" id="@item.Id">Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                             }
                         }
                     </tbody>
