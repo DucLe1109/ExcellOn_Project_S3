@@ -1,0 +1,106 @@
+﻿
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";}
+@using _ExcellOn_.Models
+@{
+    Role current_role = (Role)ViewBag.current_role;
+    List<Permission> list_permission = (List<Permission>)ViewBag.list_permission;
+    List<PermissionRole> list_permission_roles = (List<PermissionRole>)ViewBag.list_permission_roles;
+}
+
+<div class="container" style="margin-top:30px;margin-bottom: 30px">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            PERMISSION ROLE
+        </div>
+        <label style="padding: 20px;margin-left: 10px">
+            <input type="checkbox" id="select_all" class="checkbox_wrapper"> All
+        </label>
+        <div class="panel-body">
+            <form action="/Admin/RoleManagement/Submit_Edit" method="post">
+                <input name="RoleId" type="number" value="@current_role.Id" style="display:none" />
+                <div class="row" style="padding-left:15px;padding-right:15px">
+                    @foreach (var item in list_permission)
+                    {
+                        if (item.Key_code == null)
+                        {
+                            <div class="col-md-6">
+                                <div class="panel panel-danger" style="padding:15px;margin-right:10px">
+                                    <div class="panel-heading">
+                                        <label>
+                                            <input type="checkbox" name="check_all" class="checkbox_wrapper">
+                                            @item.Permission_Name
+                                        </label>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            @foreach (var item2 in list_permission)
+                                            {
+                                                if (item2.Parent_id == item.Id)
+                                                {
+                                                    <div class="col-md-3">
+                                                        <label>
+                                                            <input type="checkbox" name="List_Permission_Id[]" value="@item2.Id" @(list_permission_roles.Exists(x => x.RoleId == current_role.Id && x.PermissionId == item2.Id) ? "checked" : "") class="checkbox_childrent"> @item2.Key_code
+                                                        </label>
+                                                    </div>
+                                                }
+
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+                    <button type="submit" style="margin-top:20px;margin-left:15px" class="btn btn-danger">Submit</button>
+                    <a style="margin-top:20px;margin-left:15px" class="btn btn-primary" href="/Admin/RoleManagement/RoleIndex">Back</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+@section css{
+
+    <link href="~/Areas/Admin/Public/css/panel.css" rel="stylesheet" />
+}
+@section js{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.checkbox_wrapper').on('click', function () {
+                $(this).parents('.panel-info').find('.checkbox_childrent').prop('checked', $(this).prop('checked'));
+            })
+
+            $('#select_all').click(function (event) {
+                if (this.checked) {
+                    // Iterate each checkbox
+                    $('input[type="checkbox"][name="check_all"]').each(function () {
+                        this.checked = true;
+                    });
+                    $('input[type="checkbox"][class="checkbox_childrent"]').each(function () {
+                        this.checked = true;
+                    })
+                } else {
+                    $('input[type="checkbox"][name="check_all"]').each(function () {
+                        this.checked = false;
+                    });
+                    $('input[type="checkbox"][class="checkbox_childrent"]').each(function () {
+                        this.checked = false;
+                    })
+                }
+            });
+            $('#table_Role').DataTable({
+                "lengthMenu": [10, 15, 20, 30],
+                "pagingType": "full_numbers",
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-fw fa-long-arrow-right">',
+                        previous: '<i class="fa fa-fw fa-long-arrow-left">'
+                    }
+                }
+            });
+        });
+    </script>
+}

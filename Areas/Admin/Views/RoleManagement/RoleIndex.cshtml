@@ -1,16 +1,13 @@
 ﻿@model List<_ExcellOn_.Models.Role>
-@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";}
-@using _ExcellOn_.Models
-@{
-    List<Permission> list_permission = (List<Permission>)ViewBag.list_permission;
-    List<PermissionRole> list_permission_roles = (List<PermissionRole>)ViewBag.list_permission_roles;
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
 }
+
 <div class="header bg-primary">
     <div class="container-fluid">
         <div class="header-body">
             <div class="row align-items-center py-4">
                 <div class="col-lg-6 col-7">
-                    <h6 class="h2 text-white d-inline-block mb-0">Roles</h6>
+                    <h6 class="h2 text-white d-inline-block mb-0">Company</h6>
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
@@ -32,7 +29,7 @@
         <div class="modal-dialog">
             <div class="modal-content" style="width: 150%">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="myModalLabel">Compose News Customer</h2>
+                    <h2 class="modal-title" id="myModalLabel">Compose News Company</h2>
                     <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="form">
@@ -41,11 +38,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Name</label>
-                                    <input id="Role_Name" class="form-control">
+                                    <input id="Role_Name" class="form-control" placeholder="Name">
                                 </div>
                                 <div class="col-md-6">
                                     <label>Description</label>
-                                    <input id="Role_Description" class="form-control">
+                                    <input id="Role_Description" class="form-control" placeholder="Phone">
                                 </div>
                             </div>
                         </div>
@@ -77,15 +74,15 @@
                             <div class="row">
                                 <div class="col-md-6" style="display: none">
                                     <label>Id</label>
-                                    <input id="Id_edit" class="form-control" readonly>
+                                    <input id="Id_edit" class="form-control" placeholder="Id" readonly>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Name</label>
-                                    <input id="Role_Name_edit" class="form-control">
+                                    <input id="Role_Name_edit" class="form-control" placeholder="Name">
                                 </div>
                                 <div class="col-md-6">
                                     <label>Description</label>
-                                    <input id="Role_Description_edit" class="form-control">
+                                    <input id="Role_Description_edit" class="form-control" placeholder="Phone">
                                 </div>
                             </div>
                         </div>
@@ -104,82 +101,23 @@
         </div>
     </div>
 
-    <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" style="margin-left: 200px">
-            <div class="modal-content" style="width: 250%">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Compose News Company</h4>
-                    <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            PERMISSION ROLE
-                        </div>
-                        <label style="padding: 20px">
-                            <input type="checkbox" id="select_all" class="checkbox_wrapper">All
-                        </label>
-                        <div class="panel-body">
-                            <form action="" method="post"></form>
-                            <input id="RoleId" type="number" style="display: none" />
-                            <div class="row" style="padding-left:15px;padding-right:15px">
-                                @foreach (var item in list_permission)
-                                {
-
-                                    if (item.Key_code == null)
-                                    {
-                                        <div class="panel panel-info col-md-6" style="display: inline-block;padding-top:15px;padding-right:10px">
-                                            <div class="panel-heading">
-                                                <label>
-                                                    <input type="checkbox" name="check_all" class="checkbox_wrapper">
-                                                    @item.Permission_Name
-                                                </label>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="row">
-                                                    @foreach (var item2 in list_permission)
-                                                    {
-                                                        if (item2.Parent_id == item.Id)
-                                                        {
-                                                            <div class="col-md-3">
-                                                                <label>
-                                                                    <input type="checkbox" name="permissions[]" value="@item2.Id" @(list_permission_roles.Exists(x=>x.PermissionId ==item2.Id) ? "checked" : "") class="checkbox_childrent"> @item2.Key_code
-                                                                </label>
-                                                            </div>
-                                                        }
-
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-
-                                }
-                            </div>
-                        </div>
-                        <div class="col-md-12 block_loader">
-                            <div style="padding-left: 560px;padding-bottom: 15px;display: none">
-                                <div class="loader"></div>
-                            </div>
-                            
-                        </div>
-                        <button type="submit" style="float:right;margin-top:20px" class="btn btn-danger" onclick="return _UpdatePermission()">Submit</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-xl-12">
+            @if (@TempData["message"] != null)
+            {
+                <p class="alert alert-danger" style="font-weight:bold">
+                    @TempData["message"]
+                </p>
+            }
+
             <div class="table-responsive">
-                <table id="table_Role" class="cell-border text-center align-items-center table-flush ">
-                    <thead class="thead-light">
+                <table id="table_Role" class=" text-center align-items-center table-dark table-flush">
+                    <thead class="thead-dark">
                         <tr>
-                            <th style="font-size: 0.875rem" scope="col" class="sort">Name</th>
-                            <th style="font-size: 0.875rem" scope="col" class="sort">Description</th>
-                            <th style="font-size: 0.875rem" scope="col">Action</th>
+                            <th style="font-size: 0.875rem">Name</th>
+                            <th style="font-size: 0.875rem">Description</th>
+                            <th style="font-size: 0.875rem">#</th>
+                            <th style="font-size: 0.875rem">Action</th>
                         </tr>
                     </thead>
                     <tbody class="list">
@@ -188,12 +126,15 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-
                                     <td>
                                         @item.Role_Name
                                     </td>
                                     <td>
                                         @item.Role_Description
+                                    </td>
+
+                                    <td>
+                                        <a class="btn" style="background-color: #e6eef1; font-size: 12px" href="/Admin/RoleManagement/Edit/@item.Id">Assign</a>
                                     </td>
 
                                     <td class="text-right">
@@ -202,7 +143,6 @@
                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#myModal3" href="#" onclick="return _SetRoleId(@item.Id)">Update Permission</a>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#myModal2" href="#" onclick="return _GetById(@item.Id)">Edit</a>
                                                 <a class="dropdown-item" style="cursor: pointer" onclick="return _Delete(@item.Id)" id="@item.Id">Delete</a>
                                             </div>
@@ -211,6 +151,7 @@
                                 </tr>
                             }
                         }
+
                     </tbody>
                 </table>
 
@@ -227,33 +168,15 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
     <link href="~/Areas/Admin/Public/DataTable/pagination.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/css/loader.css" rel="stylesheet" />
-    <link href="~/Areas/Admin/Public/css/panel.css" rel="stylesheet" />
+    <style>
+        td {
+            background-color: #172b4d;
+        }
+    </style>
 }
 @section js{
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.checkbox_wrapper').on('click', function () {
-                $(this).parents('.panel-info').find('.checkbox_childrent').prop('checked', $(this).prop('checked'));
-            })
-
-            $('#select_all').click(function (event) {
-                if (this.checked) {
-                    // Iterate each checkbox
-                    $('input[type="checkbox"][name="check_all"]').each(function () {
-                        this.checked = true;
-                    });
-                    $('input[type="checkbox"][class="checkbox_childrent"]').each(function () {
-                        this.checked = true;
-                    })
-                } else {
-                    $('input[type="checkbox"][name="check_all"]').each(function () {
-                        this.checked = false;
-                    });
-                    $('input[type="checkbox"][class="checkbox_childrent"]').each(function () {
-                        this.checked = false;
-                    })
-                }
-            });
             $('#table_Role').DataTable({
                 "lengthMenu": [10, 15, 20, 30],
                 "pagingType": "full_numbers",
@@ -269,43 +192,7 @@
 
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
     <script type="text/javascript">
-        function _SetRoleId(RoleId) {
-            $('#RoleId').val(RoleId);
-        }
-        function _UpdatePermission() {
-            $('.block_loader').show();
-            var list_permission_id = [];
-            $('input[type="checkbox"][name="permissions[]"]').each(function () {
-                if ($(this).prop('checked')) {
-                    list_permission_id.push($(this).val());
-                }
-            });
-            var permissionObj = {
-                RoleId: $('#RoleId').val(),
-                List_Permission_Id: list_permission_id
-            }
-            $.ajax({
-                url: "/Admin/RoleManagement/UpdatePermission",
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify(permissionObj),
-                type: "POST",
-                dataType: "json",
-                success: function (result) {
-                    if (result == "Update Successfully") {
-                        $('#myModal3').modal('hide');
-                        $('.block_loader').hide();
-                        alert(result);
-                    } else if (result == "Request is error") {
-                        $('.block_loader').hide();
-                        alert(result);
-                    }
-                },
-                error: function (errormessage) {
-                    $('#myModal3').modal('hide');
-                    alert(errormessage);
-                }
-            });
-        }
+
         function _Add() {
             $('.block_loader').show();
             var roleObj = {
@@ -339,8 +226,8 @@
                     $('#Role_Description_edit').val(result.Role_Description);
                     $('#Id_edit').val(result.Id);
                 },
-                error: function () {
-                    alert("Error");
+                error: function (erro) {
+                    alert(erro);
                 }
             });
         }

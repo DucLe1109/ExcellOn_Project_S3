@@ -11,35 +11,35 @@
 
 namespace _ExcellOn_.Models
 {
-
-using System;
+    using Newtonsoft.Json;
+    using System;
     using System.Collections.Generic;
-    
-public partial class Role
-{
 
-    public Role()
+    public partial class Role
     {
 
-        this.PermissionRoles = new HashSet<PermissionRole>();
+        public Role()
+        {
 
-        this.UserRoles = new HashSet<UserRole>();
+            this.PermissionRoles = new HashSet<PermissionRole>();
+
+            this.UserRoles = new HashSet<UserRole>();
+
+        }
+
+
+        public int Id { get; set; }
+
+        public string Role_Name { get; set; }
+
+        public string Role_Description { get; set; }
+
+
+        [JsonIgnore]
+        public virtual ICollection<PermissionRole> PermissionRoles { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<UserRole> UserRoles { get; set; }
 
     }
-
-
-    public int Id { get; set; }
-
-    public string Role_Name { get; set; }
-
-    public string Role_Description { get; set; }
-
-
-
-    public virtual ICollection<PermissionRole> PermissionRoles { get; set; }
-
-    public virtual ICollection<UserRole> UserRoles { get; set; }
-
-}
 
 }

@@ -158,6 +158,8 @@
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManagementController.cs" />
+    <Compile Include="Areas\Admin\Model\Permission_Role_Function.cs" />
+    <Compile Include="Areas\Admin\Model\HasPermissionAttribute.cs" />
     <Compile Include="Areas\Admin\ViewModel\LoginViewModel.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -3002,6 +3004,7 @@
     <Content Include="Areas\Admin\Public\JdLomX\config.rb" />
     <Content Include="Areas\Admin\Public\JdLomX\scss\style.scss" />
     <Content Include="Areas\Admin\Views\ServiceManagement\ServiceIndex2.cshtml" />
+    <Content Include="Areas\Admin\Views\RoleManagement\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\RoleManagement\RoleIndex.cshtml" />
     <None Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1-vsdoc.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.js" />

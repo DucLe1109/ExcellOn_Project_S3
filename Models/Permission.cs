@@ -12,32 +12,32 @@
 namespace _ExcellOn_.Models
 {
 
-    using System;
+using System;
     using System.Collections.Generic;
+    
+public partial class Permission
+{
 
-    public partial class Permission
+    public Permission()
     {
 
-        public Permission()
-        {
-
-            this.PermissionRoles = new HashSet<PermissionRole>();
-
-        }
-
-
-        public int Id { get; set; }
-
-        public string Permission_Name { get; set; }
-
-        public Nullable<int> Parent_id { get; set; }
-
-        public string Key_code { get; set; }
-
-
-
-        public virtual ICollection<PermissionRole> PermissionRoles { get; set; }
+        this.PermissionRoles = new HashSet<PermissionRole>();
 
     }
+
+
+    public int Id { get; set; }
+
+    public string Permission_Name { get; set; }
+
+    public Nullable<int> Parent_id { get; set; }
+
+    public string Key_code { get; set; }
+
+
+
+    public virtual ICollection<PermissionRole> PermissionRoles { get; set; }
+
+}
 
 }

@@ -20,9 +20,8 @@ namespace _ExcellOn_
         
         protected void Session_Start()
         {
-           
             if(Session.IsNewSession){
-                Session.Timeout = 30;
+                Session.Timeout = 120;
             }
         }
     }

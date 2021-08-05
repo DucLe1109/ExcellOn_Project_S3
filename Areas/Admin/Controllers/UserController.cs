@@ -1,5 +1,7 @@
-﻿using _ExcellOn_.Areas.Admin.ViewModel;
+﻿using _ExcellOn_.Areas.Admin.Model;
+using _ExcellOn_.Areas.Admin.ViewModel;
 using _ExcellOn_.Models;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -25,23 +27,24 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         {
             if (loginViewModel.UserName != null && loginViewModel.Password != null)
             {
-                var User = db.UserInFoes.Where(x => x.User_Name == loginViewModel.UserName).FirstOrDefault();
+                UserInFo User = db.UserInFoes.Where(x => x.User_Name == loginViewModel.UserName).FirstOrDefault();
                 if (User != null)
                 {
                     bool test = BCrypt.Net.BCrypt.Verify(loginViewModel.Password, User.User_Password);
                     if (test)
                     {
-                        Session["UserName"] = loginViewModel.UserName;
-                        string return_url = (string)Session["return_url"];
-                        if (return_url != null)
-                        {
-                            return Redirect(return_url);
-                        }
-                        else
-                        {
-                            return RedirectToAction("DashboardIndex", "AdminHome");
-                        }
-                        
+                        Session["UserName"] = User;
+
+                        // Take permission of current User
+                        Permission_Role_Function function = new Permission_Role_Function();
+                        List<string> list_permission = function.TakePermission(User);
+                        Session["ListPermission"] = list_permission;
+
+                        //Take role of current User
+                        List<string> list_role = function.TakeRole(User);
+                        Session["ListRole"] = list_role;
+
+                        return RedirectToAction("DashboardIndex", "AdminHome");
                     }
                     else
                     {

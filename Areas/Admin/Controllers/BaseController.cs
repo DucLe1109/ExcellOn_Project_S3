@@ -9,35 +9,45 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 {
     public class BaseController : Controller
     {
-        //protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        //C1: chưa tối ưu
+        //public BaseController()
         //{
-        //    var session = Session["UserName"];
-        //    string url = (string)Session["return_url"];
-        //    if (session != null)
+        //    if (System.Web.HttpContext.Current.Session["UserName"] == null)
         //    {
-
+        //        System.Web.HttpContext.Current.Response.Redirect("/AdminLogin");
         //    }
-        //    else
-        //    {
-        //        filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
-        //        {
-        //            controller = "User",
-        //            action = "Login",
-        //            Area = "Admin",
-        //            return_url = "url"
-        //        }));
-        //    }
-        //    base.OnActionExecuting(filterContext);
         //}
-        
-        protected bool check_auth()
+
+
+        // C2
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var session = Session["UserName"];
-            if (session == null)
+            string url = (string)Session["return_url"];
+            if (session != null)
             {
-                return false;
-            }return true;
+
+            }
+            else
+            {
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                {
+                    controller = "User",
+                    action = "Login",
+                    Area = "Admin"
+                }));
+            }
+            base.OnActionExecuting(filterContext);
         }
-       
+
+        //protected bool check_auth()
+        //{
+        //    var session = Session["UserName"];
+        //    if (session == null)
+        //    {
+        //        return false;
+        //    }return true;
+        //}
+
     }
 }

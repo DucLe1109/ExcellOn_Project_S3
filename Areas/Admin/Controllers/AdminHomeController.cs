@@ -1,4 +1,5 @@
-﻿using _ExcellOn_.Models;
+﻿using _ExcellOn_.Areas.Admin.Model;
+using _ExcellOn_.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +12,10 @@ namespace _ExcellOn_.Areas.Admin.Controllers
     {
         private Entities db = new Entities();
         // GET: Admin/Home
+        [HasPermission(Permission ="Admin")]
         public ActionResult DashboardIndex()
         {
-            if (check_auth())
-            {
-                string UserName = (string)Session["UserName"];
-                var CurrentUser = db.UserInFoes.Where(x => x.User_Name == UserName).FirstOrDefault();
-                ViewBag.CurrentUser = CurrentUser;
-                return View();
-            }else
-            {
-                return Redirect("/AdminLogin");
-            }
+            return View();
         }
     }
 }
