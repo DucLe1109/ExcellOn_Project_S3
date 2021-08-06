@@ -11,7 +11,7 @@
 
 namespace _ExcellOn_.Models
 {
-    using Newtonsoft.Json;
+
     using System;
     using System.Collections.Generic;
 
@@ -35,9 +35,9 @@ namespace _ExcellOn_.Models
         public string Role_Description { get; set; }
 
 
-        [JsonIgnore]
+
         public virtual ICollection<PermissionRole> PermissionRoles { get; set; }
-        [JsonIgnore]
+
         public virtual ICollection<UserRole> UserRoles { get; set; }
 
     }

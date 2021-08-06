@@ -161,6 +161,8 @@
     <Compile Include="Areas\Admin\Model\Permission_Role_Function.cs" />
     <Compile Include="Areas\Admin\Model\HasPermissionAttribute.cs" />
     <Compile Include="Areas\Admin\ViewModel\LoginViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\OrderDetailViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\RoleViewModel.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -3006,6 +3008,8 @@
     <Content Include="Areas\Admin\Views\ServiceManagement\ServiceIndex2.cshtml" />
     <Content Include="Areas\Admin\Views\RoleManagement\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\RoleManagement\RoleIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManagement\UserIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManagement\Add.cshtml" />
     <None Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1-vsdoc.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.min.js" />

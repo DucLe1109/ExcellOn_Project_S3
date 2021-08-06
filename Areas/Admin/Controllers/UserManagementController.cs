@@ -1,4 +1,5 @@
-﻿using _ExcellOn_.Models;
+﻿using _ExcellOn_.Areas.Admin.Model;
+using _ExcellOn_.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,12 +14,31 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
         private Entities db = new Entities();
 
-        //Function get Information for CurrentUser
-        public ActionResult MyProfile()
+        [HasPermission(Permission ="Admin")]
+        public ActionResult UserIndex()
         {
             UserInFo user = (UserInFo)Session["UserName"];
-            var list_service = db.Services.ToList();
-            ViewBag.list_service = list_service;
+            var list_user = db.UserInFoes.Where(x=>x.Id != user.Id).ToList();
+            return View(list_user);
+        }
+
+        //Add function 
+        [HasPermission(Permission = "Admin")]
+        [HttpGet]
+        public ActionResult Add()
+        {
+            var list_role = db.Roles.ToList();
+            ViewBag.list_role = list_role;
+            return View();
+        }
+
+        //Function get Information for CurrentUser
+        [HasPermission(Permission = "Admin")]
+        public ActionResult MyProfile()
+        {
+            var list_role = db.Roles.ToList();
+            ViewBag.list_role = list_role;
+            UserInFo user = (UserInFo)Session["UserName"];
 
             UserInFo _user = db.UserInFoes.Where(x=>x.Id == user.Id).FirstOrDefault();
             return View(_user);
@@ -26,6 +46,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         }
 
         //Function Update information for User
+        [HasPermission(Permission = "Admin")]
         [HttpPost]
         public ActionResult Update_Profile(UserInFo CurrentUser, HttpPostedFileBase AvatarUpload)
         {

@@ -1,4 +1,5 @@
 ﻿using _ExcellOn_.Areas.Admin.Model;
+using _ExcellOn_.Areas.Admin.ViewModel;
 using _ExcellOn_.Models;
 using _ExcellOn_.Models.ViewModel;
 using System;
@@ -107,7 +108,11 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         public JsonResult GetById(int RoleId)
         {
             Role role = db.Roles.Where(x => x.Id == RoleId).FirstOrDefault();
-            return Json(role, JsonRequestBehavior.AllowGet);
+            RoleViewModel viewModel = new RoleViewModel();
+            viewModel.Id = role.Id;
+            viewModel.Role_Name = role.Role_Name;
+            viewModel.Role_Description = role.Role_Description;
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
         //
@@ -129,7 +134,11 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HttpGet]
         public JsonResult Delete(int RoleId)
         {
-
+            var user_role = db.UserRoles.Where(x => x.RoleId == RoleId).ToList();
+            foreach(var item in user_role)
+            {
+                db.UserRoles.Remove(item);
+            }
             Role role = db.Roles.Where(x => x.Id == RoleId).FirstOrDefault();
             db.Roles.Remove(role);
             db.SaveChanges();

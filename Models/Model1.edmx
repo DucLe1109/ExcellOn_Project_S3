@@ -220,7 +220,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Permissio__Permi__5B78929E">
+        <Association Name="FK__Permissio__Permi__0C1BC9F9">
           <End Role="Permission" Type="Self.Permission" Multiplicity="0..1" />
           <End Role="PermissionRole" Type="Self.PermissionRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -232,7 +232,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Permissio__RoleI__5C6CB6D7">
+        <Association Name="FK__Permissio__RoleI__0D0FEE32">
           <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="PermissionRole" Type="Self.PermissionRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -280,7 +280,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserRole__RoleId__56B3DD81">
+        <Association Name="FK__UserRole__RoleId__0EF836A4">
           <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -292,7 +292,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserRole__UserId__55BFB948">
+        <Association Name="FK__UserRole__UserId__0E04126B">
           <End Role="UserInFo" Type="Self.UserInFo" Multiplicity="0..1" />
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
           <ReferentialConstraint>
@@ -339,11 +339,11 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Permissio__Permi__5B78929E" Association="Self.FK__Permissio__Permi__5B78929E">
+          <AssociationSet Name="FK__Permissio__Permi__0C1BC9F9" Association="Self.FK__Permissio__Permi__0C1BC9F9">
             <End Role="Permission" EntitySet="Permission" />
             <End Role="PermissionRole" EntitySet="PermissionRole" />
           </AssociationSet>
-          <AssociationSet Name="FK__Permissio__RoleI__5C6CB6D7" Association="Self.FK__Permissio__RoleI__5C6CB6D7">
+          <AssociationSet Name="FK__Permissio__RoleI__0D0FEE32" Association="Self.FK__Permissio__RoleI__0D0FEE32">
             <End Role="Role" EntitySet="Role" />
             <End Role="PermissionRole" EntitySet="PermissionRole" />
           </AssociationSet>
@@ -359,11 +359,11 @@
             <End Role="Staff" EntitySet="Staff" />
             <End Role="Staff_OrderDetail" EntitySet="Staff_OrderDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserRole__RoleId__56B3DD81" Association="Self.FK__UserRole__RoleId__56B3DD81">
+          <AssociationSet Name="FK__UserRole__RoleId__0EF836A4" Association="Self.FK__UserRole__RoleId__0EF836A4">
             <End Role="Role" EntitySet="Role" />
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserRole__UserId__55BFB948" Association="Self.FK__UserRole__UserId__55BFB948">
+          <AssociationSet Name="FK__UserRole__UserId__0E04126B" Association="Self.FK__UserRole__UserId__0E04126B">
             <End Role="UserInFo" EntitySet="UserInFo" />
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
@@ -375,23 +375,7 @@
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Companies" EntityType="Model.Company" />
           <EntitySet Name="Orders" EntityType="Model.Order" />
-          <EntitySet Name="Permissions" EntityType="Model.Permission" />
-          <EntitySet Name="PermissionRoles" EntityType="Model.PermissionRole" />
-          <EntitySet Name="Roles" EntityType="Model.Role" />
           <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagram" />
-          <EntitySet Name="UserRoles" EntityType="Model.UserRole" />
-          <AssociationSet Name="FK__Permissio__Permi__5B78929E" Association="Model.FK__Permissio__Permi__5B78929E">
-            <End Role="Permission" EntitySet="Permissions" />
-            <End Role="PermissionRole" EntitySet="PermissionRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Permissio__RoleI__5C6CB6D7" Association="Model.FK__Permissio__RoleI__5C6CB6D7">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="PermissionRole" EntitySet="PermissionRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UserRole__RoleId__56B3DD81" Association="Model.FK__UserRole__RoleId__56B3DD81">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="UserRole" EntitySet="UserRoles" />
-          </AssociationSet>
           <EntitySet Name="Customers" EntityType="Model.Customer" />
           <AssociationSet Name="FK__Customer__Compan__4C364F0E" Association="Model.FK__Customer__Compan__4C364F0E">
             <End Role="Company" EntitySet="Companies" />
@@ -403,11 +387,6 @@
           </AssociationSet>
           <EntitySet Name="Images" EntityType="Model.Image" />
           <EntitySet Name="Staffs" EntityType="Model.Staff" />
-          <EntitySet Name="UserInFoes" EntityType="Model.UserInFo" />
-          <AssociationSet Name="FK__UserRole__UserId__55BFB948" Association="Model.FK__UserRole__UserId__55BFB948">
-            <End Role="UserInFo" EntitySet="UserInFoes" />
-            <End Role="UserRole" EntitySet="UserRoles" />
-          </AssociationSet>
           <EntitySet Name="Services" EntityType="Model.Service" />
           <AssociationSet Name="FK__Image__ServiceId__6CA31EA0" Association="Model.FK__Image__ServiceId__6CA31EA0">
             <End Role="Service" EntitySet="Services" />
@@ -435,7 +414,28 @@
             <End Role="Staff" EntitySet="Staffs" />
             <End Role="Staff_OrderDetail" EntitySet="Staff_OrderDetail" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Permissions" EntityType="Model.Permission" />
+          <EntitySet Name="PermissionRoles" EntityType="Model.PermissionRole" />
+          <EntitySet Name="Roles" EntityType="Model.Role" />
+          <EntitySet Name="UserInFoes" EntityType="Model.UserInFo" />
+          <EntitySet Name="UserRoles" EntityType="Model.UserRole" />
+          <AssociationSet Name="FK__Permissio__Permi__0C1BC9F9" Association="Model.FK__Permissio__Permi__0C1BC9F9">
+            <End Role="Permission" EntitySet="Permissions" />
+            <End Role="PermissionRole" EntitySet="PermissionRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Permissio__RoleI__0D0FEE32" Association="Model.FK__Permissio__RoleI__0D0FEE32">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="PermissionRole" EntitySet="PermissionRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRole__RoleId__0EF836A4" Association="Model.FK__UserRole__RoleId__0EF836A4">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRole__UserId__0E04126B" Association="Model.FK__UserRole__UserId__0E04126B">
+            <End Role="UserInFo" EntitySet="UserInFoes" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Id" />
@@ -461,36 +461,6 @@
           <NavigationProperty Name="Customer" Relationship="Model.FK__Orders__Customer__5F492382" FromRole="Order" ToRole="Customer" />
           <NavigationProperty Name="OrderDetails" Relationship="Model.FK__OrderDeta__Order__6319B466" FromRole="Order" ToRole="OrderDetail" />
         </EntityType>
-        <EntityType Name="Permission">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Permission_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Parent_id" Type="Int32" />
-          <Property Name="Key_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PermissionRoles" Relationship="Model.FK__Permissio__Permi__5B78929E" FromRole="Permission" ToRole="PermissionRole" />
-        </EntityType>
-        <EntityType Name="PermissionRole">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PermissionId" Type="Int32" />
-          <Property Name="RoleId" Type="Int32" />
-          <NavigationProperty Name="Permission" Relationship="Model.FK__Permissio__Permi__5B78929E" FromRole="PermissionRole" ToRole="Permission" />
-          <NavigationProperty Name="Role" Relationship="Model.FK__Permissio__RoleI__5C6CB6D7" FromRole="PermissionRole" ToRole="Role" />
-        </EntityType>
-        <EntityType Name="Role">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Role_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Role_Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PermissionRoles" Relationship="Model.FK__Permissio__RoleI__5C6CB6D7" FromRole="Role" ToRole="PermissionRole" />
-          <NavigationProperty Name="UserRoles" Relationship="Model.FK__UserRole__RoleId__56B3DD81" FromRole="Role" ToRole="UserRole" />
-        </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -501,52 +471,6 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="UserRole">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="RoleId" Type="Int32" />
-          <NavigationProperty Name="Role" Relationship="Model.FK__UserRole__RoleId__56B3DD81" FromRole="UserRole" ToRole="Role" />
-          <NavigationProperty Name="UserInFo" Relationship="Model.FK__UserRole__UserId__55BFB948" FromRole="UserRole" ToRole="UserInFo" />
-        </EntityType>
-        <Association Name="FK__Permissio__Permi__5B78929E">
-          <End Type="Model.Permission" Role="Permission" Multiplicity="0..1" />
-          <End Type="Model.PermissionRole" Role="PermissionRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permission">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PermissionRole">
-              <PropertyRef Name="PermissionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Permissio__RoleI__5C6CB6D7">
-          <End Type="Model.Role" Role="Role" Multiplicity="0..1" />
-          <End Type="Model.PermissionRole" Role="PermissionRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PermissionRole">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UserRole__RoleId__56B3DD81">
-          <End Type="Model.Role" Role="Role" Multiplicity="0..1" />
-          <End Type="Model.UserRole" Role="UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -616,35 +540,6 @@
           <NavigationProperty Name="Service" Relationship="Model.FK__Staff__ServiceId__73501C2F" FromRole="Staff" ToRole="Service" />
           <NavigationProperty Name="Staff_OrderDetail" Relationship="Model.FK__Staff_Ord__Staff__762C88DA" FromRole="Staff" ToRole="Staff_OrderDetail" />
         </EntityType>
-        <EntityType Name="UserInFo">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="User_Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="User_Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="User_Gender" Type="Int32" />
-          <Property Name="User_Age" Type="Int32" />
-          <Property Name="User_Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="User_Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="User_Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="User_FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="User_AboutMe" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="UserRoles" Relationship="Model.FK__UserRole__UserId__55BFB948" FromRole="UserInFo" ToRole="UserRole" />
-        </EntityType>
-        <Association Name="FK__UserRole__UserId__55BFB948">
-          <End Type="Model.UserInFo" Role="UserInFo" Multiplicity="0..1" />
-          <End Type="Model.UserRole" Role="UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserInFo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Service">
           <Key>
             <PropertyRef Name="Id" />
@@ -759,6 +654,111 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Permission_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Parent_id" Type="Int32" />
+          <Property Name="Key_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PermissionRoles" Relationship="Model.FK__Permissio__Permi__0C1BC9F9" FromRole="Permission" ToRole="PermissionRole" />
+        </EntityType>
+        <EntityType Name="PermissionRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PermissionId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="Permission" Relationship="Model.FK__Permissio__Permi__0C1BC9F9" FromRole="PermissionRole" ToRole="Permission" />
+          <NavigationProperty Name="Role" Relationship="Model.FK__Permissio__RoleI__0D0FEE32" FromRole="PermissionRole" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Role_Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PermissionRoles" Relationship="Model.FK__Permissio__RoleI__0D0FEE32" FromRole="Role" ToRole="PermissionRole" />
+          <NavigationProperty Name="UserRoles" Relationship="Model.FK__UserRole__RoleId__0EF836A4" FromRole="Role" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserInFo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="User_Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="User_Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="User_Gender" Type="Int32" />
+          <Property Name="User_Age" Type="Int32" />
+          <Property Name="User_Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User_Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="User_Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="User_FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="User_AboutMe" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserRoles" Relationship="Model.FK__UserRole__UserId__0E04126B" FromRole="UserInFo" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="Model.FK__UserRole__RoleId__0EF836A4" FromRole="UserRole" ToRole="Role" />
+          <NavigationProperty Name="UserInFo" Relationship="Model.FK__UserRole__UserId__0E04126B" FromRole="UserRole" ToRole="UserInFo" />
+        </EntityType>
+        <Association Name="FK__Permissio__Permi__0C1BC9F9">
+          <End Type="Model.Permission" Role="Permission" Multiplicity="0..1" />
+          <End Type="Model.PermissionRole" Role="PermissionRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PermissionRole">
+              <PropertyRef Name="PermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Permissio__RoleI__0D0FEE32">
+          <End Type="Model.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="Model.PermissionRole" Role="PermissionRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PermissionRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRole__RoleId__0EF836A4">
+          <End Type="Model.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="Model.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRole__UserId__0E04126B">
+          <End Type="Model.UserInFo" Role="UserInFo" Multiplicity="0..1" />
+          <End Type="Model.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInFo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -789,34 +789,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Permissions">
-            <EntityTypeMapping TypeName="Model.Permission">
-              <MappingFragment StoreEntitySet="Permission">
-                <ScalarProperty Name="Key_code" ColumnName="Key_code" />
-                <ScalarProperty Name="Parent_id" ColumnName="Parent_id" />
-                <ScalarProperty Name="Permission_Name" ColumnName="Permission_Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PermissionRoles">
-            <EntityTypeMapping TypeName="Model.PermissionRole">
-              <MappingFragment StoreEntitySet="PermissionRole">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="Model.Role">
-              <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="Role_Description" ColumnName="Role_Description" />
-                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="Model.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -825,15 +797,6 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="Model.UserRole">
-              <MappingFragment StoreEntitySet="UserRole">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -880,23 +843,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserInFoes">
-            <EntityTypeMapping TypeName="Model.UserInFo">
-              <MappingFragment StoreEntitySet="UserInFo">
-                <ScalarProperty Name="User_AboutMe" ColumnName="User_AboutMe" />
-                <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
-                <ScalarProperty Name="User_Avatar" ColumnName="User_Avatar" />
-                <ScalarProperty Name="User_Address" ColumnName="User_Address" />
-                <ScalarProperty Name="User_Phone" ColumnName="User_Phone" />
-                <ScalarProperty Name="User_Age" ColumnName="User_Age" />
-                <ScalarProperty Name="User_Gender" ColumnName="User_Gender" />
-                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
-                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
-                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Services">
             <EntityTypeMapping TypeName="Model.Service">
               <MappingFragment StoreEntitySet="Service">
@@ -930,6 +876,60 @@
                 <ScalarProperty Name="Staff_Id" ColumnName="Staff_Id" />
                 <ScalarProperty Name="Date_End" ColumnName="Date_End" />
                 <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="Model.Permission">
+              <MappingFragment StoreEntitySet="Permission">
+                <ScalarProperty Name="Key_code" ColumnName="Key_code" />
+                <ScalarProperty Name="Parent_id" ColumnName="Parent_id" />
+                <ScalarProperty Name="Permission_Name" ColumnName="Permission_Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PermissionRoles">
+            <EntityTypeMapping TypeName="Model.PermissionRole">
+              <MappingFragment StoreEntitySet="PermissionRole">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="Model.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Role_Description" ColumnName="Role_Description" />
+                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInFoes">
+            <EntityTypeMapping TypeName="Model.UserInFo">
+              <MappingFragment StoreEntitySet="UserInFo">
+                <ScalarProperty Name="User_AboutMe" ColumnName="User_AboutMe" />
+                <ScalarProperty Name="User_FullName" ColumnName="User_FullName" />
+                <ScalarProperty Name="User_Avatar" ColumnName="User_Avatar" />
+                <ScalarProperty Name="User_Address" ColumnName="User_Address" />
+                <ScalarProperty Name="User_Phone" ColumnName="User_Phone" />
+                <ScalarProperty Name="User_Age" ColumnName="User_Age" />
+                <ScalarProperty Name="User_Gender" ColumnName="User_Gender" />
+                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="Model.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

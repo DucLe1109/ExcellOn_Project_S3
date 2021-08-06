@@ -1,4 +1,5 @@
 ﻿using _ExcellOn_.Areas.Admin.Model;
+using _ExcellOn_.Areas.Admin.ViewModel;
 using _ExcellOn_.Models;
 using Newtonsoft.Json;
 using System;
@@ -37,8 +38,21 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         {
 
             List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.ServiceId == Service_ID).ToList();
-            string json_convert = JsonConvert.SerializeObject(list_ord);
-            return Json(json_convert, JsonRequestBehavior.AllowGet);
+            List<OrderDetailViewModel> list_ord_vm = new List<OrderDetailViewModel>();
+            foreach (var item in list_ord)
+            {
+                OrderDetailViewModel _new = new OrderDetailViewModel();
+                _new.OrderDetail_DateStart = (DateTime)item.OrderDetail_DateStart;
+                _new.OrderDetail_DateEnd = (DateTime)item.OrderDetail_DateEnd;
+                _new.OrderDetail_NumberOfPeople = item.OrderDetail_NumberOfPeople;
+                _new.OrderDetail_Status = item.OrderDetail_Status;
+                _new.Id = item.Id;
+                _new.OrdersId = item.OrdersId;
+                _new.ServiceId = item.ServiceId;
+                list_ord_vm.Add(_new);
+            }
+            //string json_convert = JsonConvert.SerializeObject(list_ord_vm);
+            return Json(list_ord_vm, JsonRequestBehavior.AllowGet);
 
         }
 

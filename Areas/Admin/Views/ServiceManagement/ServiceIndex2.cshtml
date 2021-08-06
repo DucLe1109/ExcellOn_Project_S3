@@ -141,31 +141,23 @@
                                     previous: '<i class="fa fa-fw fa-long-arrow-left">'
                                 }
                             },
-                            data: JSON.parse(result),
+                            data: result,
                             columns: [
                                 { 'data': 'Id' },
                                 {
                                     'data': 'OrderDetail_DateStart',
                                     'render': function (OrderDetail_DateStart) {
-                                        var pad = function (num) { return ('00' + num).slice(-2) };
-                                        var date;
-                                        date = new Date(OrderDetail_DateStart);
-                                        date = date.getUTCFullYear() + '-' +
-                                            pad(date.getUTCMonth() + 1) + '-' +
-                                            pad(date.getUTCDate()+1);
-                                        return date;
+                                        var date = new Date(parseInt(OrderDetail_DateStart.substr(6)));
+                                        var month = date.getMonth() + 1;
+                                        return month + "/" + date.getDate() + "/" + date.getFullYear();
                                     }
                                 },
                                 {
                                     'data': 'OrderDetail_DateEnd',
                                     'render': function (OrderDetail_DateEnd) {
-                                        var pad = function (num) { return ('00' + num).slice(-2) };
-                                        var date;
-                                        date = new Date(OrderDetail_DateEnd);
-                                        date = date.getUTCFullYear() + '-' +
-                                            pad(date.getUTCMonth() + 1) + '-' +
-                                            pad(date.getUTCDate()+1);
-                                        return date;
+                                        var date = new Date(parseInt(OrderDetail_DateEnd.substr(6)));
+                                        var month = date.getMonth() + 1;
+                                        return month + "/" + date.getDate() + "/" + date.getFullYear();
                                     }
                                 },
                                 {
