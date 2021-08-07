@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-lg-6 col-5 text-right">
                     <a href="/Admin/UserManagement/Add" class="btn btn-sm btn-neutral">Add New</a>
-                    <a class="btn btn-sm btn-neutral" href="/Admin/StaffManagement/StaffIndex">Reload</a>
+                    <a class="btn btn-sm btn-neutral" href="/Admin/UserManagement/UserIndex">Reload</a>
                 </div>
             </div>
         </div>
@@ -29,6 +29,13 @@
 
     <div class="row">
         <div class="col-xl-12">
+            @if (@TempData["message"] != null)
+            {
+                <p class="alert alert-danger" style="font-weight:bold">
+                    @TempData["message"]
+                </p>
+            }
+
             <div class="table-responsive">
                 <table id="table_User" class="cell-border text-center align-items-center table-flush ">
                     <thead class="thead-light">
@@ -71,7 +78,7 @@
                                         foreach (var item3 in list_role)
                                         {
 
-                                            <span>@item3.Role_Name - </span>
+                                            <span style="display: block">- @item3.Role_Name </span>
 
                                         }
 
@@ -162,7 +169,7 @@
                         type: "GET",
                         dataType: "json",
                         success: function (result) {
-                            $('#' + StaffId).parent().parent().parent().parent().remove();
+                            $('#' + UserId).parent().parent().parent().parent().remove();
                             Swal.fire(
                                 'Deleted!',
                                 'Your file has been deleted. Please Reload for Update',

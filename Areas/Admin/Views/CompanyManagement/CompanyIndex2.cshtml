@@ -1,0 +1,245 @@
+﻿@{ List<string> list_permission = (List<string>)Session["ListPermission"];
+    List<string> list_role = (List<string>)Session["ListRole"]; }
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
+<div class="container" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+                <h6 class="h2 d-inline-block mb-0">Company Management</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+                @if (list_permission.Contains("Admin") || list_role.Contains("Admin"))
+                {
+    <a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#myModal1">Add New</a>}
+
+                <a class="btn btn-sm btn-neutral" href="/Admin/CompanyManagement/CompanyIndex">Reload</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 30px;padding-bottom: 40px">
+    <table id="table">
+    </table>
+    <ul id="pages">
+        <li class="pageInfo"></li>
+        <li class="goPrevious">&lsaquo;&lsaquo; Previous</li>
+        <li>
+            <input type="text" class="currentPage" id="currentPage" value="" />
+        </li>
+        <li class="goNext">Next &rsaquo;&rsaquo;</li>
+
+    </ul>
+    <div class="clr"></div>
+</div>
+
+
+@section css{
+    <link href="~/Areas/Admin/Public/Plugin_Table_HD/css/style.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/Plugin_Table_HD/css/paging.css" rel="stylesheet" />
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+}
+@section js{
+    <script>
+        // JavaScript Document
+        (function ($) {
+            $.fn.zPaging = function (options) {
+                console.log("Hi zPaging");
+
+                //=============================================
+                //Cac gia mac cua options
+                //=============================================
+                var defaults = {
+                    "table": "#table",
+                    "pages": "#pages",
+                    "items": 6,
+                    "currentPage": 1,
+                    "total": 0,
+                    "btnPrevious": ".goPrevious",
+                    "btnNext": ".goNext",
+                    "txtCurrentPage": "#currentPage",
+                    "pageInfo": ".pageInfo"
+                };
+                options = $.extend(defaults, options);
+
+                //=============================================
+                //Cac bien se su dung trong Plugin
+                //=============================================
+                var table = $(options.table);
+                var btnPrevious = $(options.btnPrevious);
+                var btnNext = $(options.btnNext);
+                var txtCurrentPage = $(options.txtCurrentPage);
+                var lblPageInfo = $(options.pageInfo);
+                //=============================================
+                //Khoi tao cac ham can thi khi Plugin duoc su dung
+                //=============================================
+                init();
+
+
+                //=============================================
+                //Ham khoi dong
+                //=============================================
+                function init() {
+                    //Lay tong so trang
+                    $.ajax({
+                        url: "/Admin/CompanyManagement/GetTotalPage?items=" + options.items,
+                        type: "GET",
+                        dataType: "json"
+                    }).done(function (data) {
+
+                        options.total = data;
+                        pageInfo();
+                        loadData(options.currentPage);
+                    });
+
+                    //Gan su kien vao cho btnPrevious - btnNext - txtCurrentPage
+                    setCurrentPage(options.currentPage);
+
+                    btnPrevious.on("click", function (e) {
+                        goPrevious();
+
+                    });
+
+                    btnNext.on("click", function (e) {
+                        goNext();
+
+                    });
+
+                    txtCurrentPage.on("keyup", function (e) {
+
+                        if (e.keyCode == 13) {
+                            var currentPageValue = parseInt($(this).val());
+
+                            if (isNaN(currentPageValue) || currentPageValue <= 0
+                                || currentPageValue > options.total) {
+                                alert("Gia tri nhap vao khong phu hop");
+                            } else {
+                                loadData(currentPageValue);
+                                options.currentPage = currentPageValue;
+                                pageInfo();
+                            }
+                        }
+
+                    });
+
+
+
+                }
+
+                //=============================================
+                //Ham xu ly khi nhan vao nut btnPrevious
+                //=============================================
+                function goPrevious() {
+
+                    if (options.currentPage != 1) {
+                        var p = options.currentPage - 1;
+                        loadData(p);
+                        setCurrentPage(p);
+                        options.currentPage = p;
+                        pageInfo();
+                    }
+                }
+
+                //=============================================
+                //Ham xu ly khi nhan vao nut btnNext
+                //=============================================
+                function goNext() {
+
+                    if (options.currentPage != options.total) {
+                        var p = options.currentPage + 1;
+                        loadData(p);
+                        setCurrentPage(p);
+                        options.currentPage = p;
+                        pageInfo();
+                    }
+                }
+
+                //=============================================
+                //Ham xu ly gan gia tri vao
+                //trong o textbox currentPage
+                //=============================================
+                function setCurrentPage(value) {
+                    txtCurrentPage.val(value);
+                }
+
+                //=============================================
+                //Ham hien thi thong tin phan trang
+                //=============================================
+                function pageInfo() {
+                    lblPageInfo.text("Page " + options.currentPage + " of " + options.total);
+                }
+
+                //=============================================
+                //Thiet lap chieu cao cho ul#rows
+                //=============================================
+                //function setRowsHeight() {
+                //    var ulHeight = (options.items * options.height) + "px";
+                //    rows.css("height", ulHeight);
+                //}
+
+                //=============================================
+                //Ham load cac thong trong database va dua vao #row
+                //=============================================
+                function loadData(page) {
+                    var html = '<tr>'
+                        + '<th>ID</th>'
+                        + '<th>Name</th>'
+                        + '<th>Email</th>'
+                        + '</tr>';
+                    $.ajax({
+                        url: "/Admin/CompanyManagement/GetData?CurrentPage=" + page + "&items=" + options.items,
+                        type: "GET",
+                        dataType: "json",
+                        cache: false
+                    }).done(function (data) {
+
+                        if (data.length > 0) {
+
+                            $.each(data, function (i, val) {
+                                html += '<tr>'
+                                    + '<th>' + val.Id + '</th>'
+                                    + '<th>' + val.Company_Name + '</th>'
+                                    + '<th>' + val.Company_Email + '</th>'
+                                    + '</tr>';
+                                table.html(html);
+                            });
+                        }
+                    });
+                }
+
+                //=============================================
+                //Xoa di mot dong trong #rows
+                //=============================================
+
+            }
+        })(jQuery);
+
+        $(document).ready(function (e) {
+            var obj = {"items" : 10};
+            $("#paging").zPaging(obj);
+        });
+
+    </script>
+}

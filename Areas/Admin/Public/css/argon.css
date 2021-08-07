@@ -21423,8 +21423,7 @@ textarea[resize='horizontal']
 .navbar-vertical .navbar-nav .nav-link
 {
     font-size: .875rem;
-    font-weight: 500; 
-
+    font-weight: 600; 
     padding-right: 1rem;
     padding-left: 1rem;
 }
@@ -22823,11 +22822,11 @@ textarea[resize='horizontal']
 }
 .navbar-top.border-bottom.navbar-dark
 {
-    border-color: rgba(255, 255, 255, .08) !important;
+    border-color: black !important;
 }
 .navbar-top.border-bottom.navbar-light
 {
-    border-color: rgba(0, 0, 0, .04) !important;
+    border-color: black !important;
 }
 
 .sidenav-pinned .navbar-top .navbar-brand

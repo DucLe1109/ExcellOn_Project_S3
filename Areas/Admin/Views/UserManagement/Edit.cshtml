@@ -1,6 +1,6 @@
-﻿@model _ExcellOn_.Models.Staff
+﻿@model _ExcellOn_.Models.UserInFo
 @{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
-
+@using _ExcellOn_.Models
 <div class="main-content">
 
     <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(https://www.makemyassignments.com/blog/wp-content/uploads/2019/08/business-communication-tools-1024x574.png); background-size: cover; background-position: center top;">
@@ -8,7 +8,7 @@
         <div class="container-fluid d-flex align-items-center">
             <div class="row">
                 <div class="col-lg-7 col-md-10">
-                    <h1 class="display-2 text-white">Hello @Model.Staff_FullName</h1>
+                    <h1 class="display-2 text-white">Hello </h1>
                     <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
-                                <img src="@Model.Staff_Avatar" class="rounded-circle" />
+                                <img src="" class="rounded-circle" />
                             </div>
                         </div>
                     </div>
@@ -36,12 +36,12 @@
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                                     <div>
-                                        <span class="heading">@Model.Staff_Age</span>
+                                        <span class="heading">@Model.User_Age</span>
                                         <span class="description">My Age</span>
                                     </div>
                                     <div>
-                                        <span class="heading">@Model.Service.Service_Name</span>
-                                        <span class="description">Service</span>
+                                        <span class="heading">@Model.UserRoles.Count</span>
+                                        <span class="description">Roles</span>
                                     </div>
                                     <div>
                                         <span class="heading">@Model.Id</span>
@@ -52,19 +52,19 @@
                         </div>
                         <div class="text-center">
                             <h3>
-                                @Model.Staff_FullName<span class="font-weight-light"></span>
+                                <span class="font-weight-light"></span>
                             </h3>
                             <div class="h5 font-weight-300">
-                                <i class="ni location_pin mr-2"></i>@Model.Staff_Address
+                                <i class="ni location_pin mr-2"></i>
                             </div>
                             <div class="h5 mt-4">
-                                <i class="ni business_briefcase-24 mr-2"></i>@Model.Staff_Email
+                                <i class="ni business_briefcase-24 mr-2"></i>
                             </div>
                             <div>
-                                <i class="ni education_hat mr-2"></i>@Model.Staff_Phone
+                                <i class="ni education_hat mr-2"></i>
                             </div>
                             <hr class="my-4">
-                            <p>@Model.Staff_AboutMe</p>
+                            <p></p>
 
                         </div>
                     </div>
@@ -75,14 +75,15 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">My Account</h3>
+                                <h3 class="mb-0">New Account</h3>
                             </div>
 
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="/Admin/StaffManagement/Update_Profile" method="post" enctype="multipart/form-data">
-                            <h6 class="heading-small text-muted mb-4">Staff information</h6>
+                        <form action="/Admin/UserManagement/Submit_Edit" method="post" enctype="multipart/form-data">
+                            <input name="Id" value="@Model.Id" style="display: none" readonly/>
+                            <h6 class="heading-small text-muted mb-4">User information</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px">
@@ -98,13 +99,13 @@
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-username">Username</label>
-                                            <input type="text" name="Staff_UserName" readonly class="form-control form-control-alternative" value="@Model.Staff_UserName">
+                                            <input type="text" name="User_Name" value="@Model.User_Name" readonly class="form-control form-control-alternative">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-email">Password</label>
-                                            <input type="password" name="Staff_Password" class="form-control form-control-alternative">
+                                            <input type="password" name="User_Password" class="form-control form-control-alternative">
                                         </div>
                                     </div>
                                 </div>
@@ -112,13 +113,13 @@
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-city">Age</label>
-                                            <input type="number" name="Staff_Age" class="form-control form-control-alternative" value="@Model.Staff_Age">
+                                            <input type="number" name="User_Age" value="@Model.User_Age" class="form-control form-control-alternative">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-last-name">Full Name</label>
-                                            <input type="text" name="Staff_FullName" class="form-control form-control-alternative" value="@Model.Staff_FullName">
+                                            <input type="text" name="User_FullName" value="@Model.User_FullName" class="form-control form-control-alternative">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -126,11 +127,11 @@
                                             <label class="form-control-label" style="margin-bottom: 20px" for="input-address">Gender</label>
                                             <div>
                                                 <span style="margin-right: 150px">
-                                                    <input @(Model.Staff_Gender == 0 ? "checked" : "") type="radio" name="Staff_Gender" value="0">
+                                                    <input @(Model.User_Gender == 0 ? "checked" : "") type="radio" name="User_Gender" value="0">
                                                     <label class="form-control-label" for="input-last-name">Male</label>
                                                 </span>
                                                 <span>
-                                                    <input @(Model.Staff_Gender == 1 ? "checked" : "") type="radio" name="Staff_Gender" value="1">
+                                                    <input @(Model.User_Gender == 1 ? "checked" : "") type="radio" name="User_Gender" value="1">
                                                     <label class="form-control-label" for="input-last-name">Female</label><br>
                                                 </span>
                                             </div>
@@ -138,20 +139,26 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
-                                            <label class="form-control-label" for="input-address">Service</label>
-                                            <select name="ServiceId" class="form-control form-control-alternative">
-                                                @foreach (var item in ViewBag.list_service)
-                                                {
-                                                    if (item.Id == Model.ServiceId)
-                                                    {
-                                                        <option value="@item.Id" selected>@item.Service_Name</option> 
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.Id">@item.Service_Name</option>
-                                                    }
-
+                                            <label class="form-control-label" for="input-address">Department</label>
+                                            <select name="RoleId[]" class="select" multiple>
+                                                @{ List<UserRole> list_user_role = ViewBag.list_user_role;
+                                                    List<Role> list_role = ViewBag.list_role;
                                                 }
+                                                @if (list_user_role != null && list_role != null)
+                                                {
+                                                    foreach (var item in list_role)
+                                                    {
+                                                        if (list_user_role.Exists(x => x.RoleId == item.Id && x.UserId == Model.Id))
+                                                        {
+                                                            <option value="@item.Id" selected>@item.Role_Name</option> 
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Id">@item.Role_Name</option>
+                                                        }
+                                                     }
+                                                }
+
                                             </select>
 
                                         </div>
@@ -159,7 +166,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-address">About Me</label>
-                                            <textarea name="Staff_AboutMe" class="form-control form-control-alternative" rows="10">@Model.Staff_AboutMe</textarea>
+                                            <textarea name="User_AboutMe" class="form-control form-control-alternative" rows="10">@Model.User_AboutMe</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +178,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-address">Address</label>
-                                            <input name="Staff_Address" class="form-control form-control-alternative" value="@Model.Staff_Address" type="text">
+                                            <input name="User_Address" value="@Model.User_Address" class="form-control form-control-alternative" type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -179,13 +186,13 @@
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-first-name">Email Address</label>
-                                            <input type="text" name="Staff_Email" class="form-control form-control-alternative" value="@Model.Staff_Email">
+                                            <input type="text" name="User_Email" value="@Model.User_Email" class="form-control form-control-alternative">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-country">Telephone</label>
-                                            <input type="text" name="Staff_Phone" class="form-control form-control-alternative" value="@Model.Staff_Phone">
+                                            <input type="text" name="User_Phone" value="@Model.User_Phone" class="form-control form-control-alternative">
                                         </div>
                                     </div>
                                 </div>
@@ -194,7 +201,7 @@
 
                             <div class="pl-lg-4">
                                 <div class="form-group focused">
-                                    <button type="submit" class="btn btn-info">Edit profile</button>
+                                    <button type="submit" class="btn btn-info">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -213,3 +220,21 @@
         </div>
     </div>
 </footer>
+
+@section css{
+    <style>
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            color: black !important;
+        }
+    </style>
+}
+@section js{
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script>
+    $('select').select2({
+            placeholder: 'Role',
+            tokenSeparators: [',', ' '],
+
+        });</script>
+}

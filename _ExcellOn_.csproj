@@ -158,11 +158,20 @@
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManagementController.cs" />
+    <Compile Include="Areas\Admin\Model\OrderDetail_Function.cs" />
+    <Compile Include="Areas\Admin\Model\Order_Interface\OrderDetail_Interface.cs" />
     <Compile Include="Areas\Admin\Model\Permission_Role_Function.cs" />
     <Compile Include="Areas\Admin\Model\HasPermissionAttribute.cs" />
+    <Compile Include="Areas\Admin\ViewModel\AssignmentSubmitViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\GetItemObj.cs" />
+    <Compile Include="Areas\Admin\ViewModel\GetItemObj_Return.cs" />
     <Compile Include="Areas\Admin\ViewModel\LoginViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\OrderDetailViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\RoleViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\SendEmailModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\StaffAssignmentViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\StaffViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\UserInfoViewModel.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -237,6 +246,12 @@
   <ItemGroup>
     <Content Include=".gitattributes" />
     <Content Include=".gitignore" />
+    <Content Include="Areas\Admin\Public\avatar\user1.png" />
+    <Content Include="Areas\Admin\Public\avatar\user2.png" />
+    <Content Include="Areas\Admin\Public\avatar\user3.png" />
+    <Content Include="Areas\Admin\Public\avatar\user4.png" />
+    <Content Include="Areas\Admin\Public\avatar\user5.png" />
+    <Content Include="Areas\Admin\Public\avatar\user6.png" />
     <Content Include="Areas\Admin\Public\css\argon.css" />
     <Content Include="Areas\Admin\Public\css\argon.min.css" />
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap-grid.css" />
@@ -245,6 +260,7 @@
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap-reboot.min.css" />
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap.css" />
     <Content Include="Areas\Admin\Public\css\bootstrap\bootstrap.min.css" />
+    <Content Include="Areas\Admin\Public\css\choose_staff.css" />
     <Content Include="Areas\Admin\Public\css\panel.css" />
     <Content Include="Areas\Admin\Public\DataTable\pagination.css" />
     <Content Include="Areas\Admin\Public\fonts\nucleo\nucleo-icons.svg" />
@@ -298,6 +314,12 @@
     <Content Include="Areas\Admin\Public\js\components\vendor\nouislider.min.js" />
     <Content Include="Areas\Admin\Public\js\components\vendor\scrollbar.js" />
     <Content Include="Areas\Admin\Public\js\components\vendor\scrollbar.min.js" />
+    <Content Include="Areas\Admin\Public\Plugin_Table_HD\css\pagination.css" />
+    <Content Include="Areas\Admin\Public\Plugin_Table_HD\css\paging.css" />
+    <Content Include="Areas\Admin\Public\Plugin_Table_HD\css\style.css" />
+    <Content Include="Areas\Admin\Public\Plugin_Table_HD\js\jquery-1.10.0.min.js" />
+    <Content Include="Areas\Admin\Public\Plugin_Table_HD\js\json2.js" />
+    <Content Include="Areas\Admin\Public\Plugin_Table_HD\js\paging.js" />
     <Content Include="Areas\Admin\Public\ShoppingCart\shopping_cart.css" />
     <Content Include="Areas\Admin\Public\vendor\%40fortawesome\fontawesome-free\css\all.min.css" />
     <Content Include="Areas\Admin\Public\vendor\%40fortawesome\fontawesome-free\css\brands.min.css" />
@@ -3010,6 +3032,11 @@
     <Content Include="Areas\Admin\Views\RoleManagement\RoleIndex.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\UserIndex.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManagement\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminHome\StartIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\CompanyManagement\CompanyIndex2.cshtml" />
+    <Content Include="Areas\Admin\Views\ServiceManagement\Assign_Staff.cshtml" />
+    <Content Include="Areas\Admin\Public\Plugin_Table_HD\js\jquery-1.10.2.min.map" />
     <None Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1-vsdoc.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.min.js" />

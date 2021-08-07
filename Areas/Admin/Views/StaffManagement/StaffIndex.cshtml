@@ -1,28 +1,29 @@
-﻿
-@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
-}
+﻿@{ List<string> list_permission = (List<string>)Session["ListPermission"];
+    List<string> list_role = (List<string>)Session["ListRole"]; }
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
 
-<div class="header bg-primary">
-    <div class="container-fluid">
-        <div class="header-body">
-            <div class="row align-items-center py-4">
-                <div class="col-lg-6 col-7">
-                    <h6 class="h2 text-white d-inline-block mb-0">Staff</h6>
-                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="col-lg-6 col-5 text-right">
-                    <a href="/Admin/StaffManagement/Add" class="btn btn-sm btn-neutral">Add New</a>
-                    <a class="btn btn-sm btn-neutral" href="/Admin/StaffManagement/StaffIndex">Reload</a>
-                </div>
+<div class="container" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+                <h6 class="h2 d-inline-block mb-0">Staff Management</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+                @if (list_permission.Contains("Staff_Add") || list_role.Contains("Admin"))
+                {
+    <a href="/Admin/StaffManagement/Add" class="btn btn-sm btn-neutral">Add New</a>}
+                <a class="btn btn-sm btn-neutral" href="/Admin/StaffManagement/StaffIndex">Reload</a>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="container" style="margin-top: 30px;padding-bottom: 40px">
 
@@ -48,91 +49,91 @@
                     <tbody class="list">
                         @foreach (var item in ViewBag.list_staff)
                         {
-                        <tr>
-                            <th>
-                                <div class="media align-items-center">
-                                    <a href="#" class="avatar rounded-circle mr-3">
-                                        <img alt="Image placeholder" src="@item.Staff_Avatar">
-                                    </a>
-                                </div>
-                            </th>
-                            <td>
-                                @if (item.Staff_Status == 1)
-                                {
-                                    <span class="badge badge-dot mr-4">
-                                        <i class="bg-warning"></i>
-                                        <span class="status"> Working </span>
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="badge badge-dot mr-4">
-                                        <i class="bg-info"></i>
-                                        <span class="status"> Free </span>
-                                    </span>
-                                }
+            <tr>
+                <th>
+                    <div class="media align-items-center">
+                        <a href="#" class="avatar rounded-circle mr-3">
+                            <img alt="Image placeholder" src="@item.Staff_Avatar">
+                        </a>
+                    </div>
+                </th>
+                <td>
+                    @if (item.Staff_Status == 1)
+                    {
+    <span class="badge badge-dot mr-4">
+        <i class="bg-warning"></i>
+        <span class="status"> Working </span>
+    </span> }
+else
+{
+<span class="badge badge-dot mr-4">
+    <i class="bg-info"></i>
+    <span class="status"> Free </span>
+</span>}
 
-                            </td>
-                            <td>
-                                @item.Service.Service_Name
-                            </td>
-                            <td>
-                                @item.Staff_FullName
-                            </td>
-                            <td>
-                                @item.Staff_Address
-                            </td>
-                            <td>
-                                @item.Staff_Phone
-                            </td>
-                            <td>
-                                @item.Staff_Age
-                            </td>
-                            <td>
-                                @if (item.Staff_Gender == 1)
-                                {
-                                    <span>Female</span>
-                                }
-                                else
-                                {
-                                    <span>Male</span>
-                                }
-                            </td>
-                            <td>
-                                @item.Staff_Email
-                            </td>
-                            @if (item.Staff_Status == 0)
-                            {
-                                <td>
-                                    <span class="badge badge-dot mr-4">
-                                        <i class="bg-warning"></i>
-                                        <span id="status_@item.Id">Training</span>
-                                    </span>
-                                </td>
-                            }
-                            else
-                            {
-                                <td>
-                                    <span class="badge badge-dot mr-4">
-                                        <i class="bg-info"></i>
-                                        <span id="status_@item.Id">Profession</span>
-                                    </span>
-                                </td>
-                            }
-                            <td class="text-right">
-                                <div class="dropdown">
-                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="/Admin/StaffManagement/Edit/@item.Id">Edit</a>
-                                        <a class="dropdown-item" onclick="return _ChangeStatus(@item.Id)" style="cursor: pointer">Change Status</a>
-                                        <a class="dropdown-item" onclick="return _Delete(@item.Id)" style="cursor: pointer" id="@item.Id">Delete</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        }
+                </td>
+                <td>
+                    @item.Service.Service_Name
+                </td>
+                <td>
+                    @item.Staff_FullName
+                </td>
+                <td>
+                    @item.Staff_Address
+                </td>
+                <td>
+                    @item.Staff_Phone
+                </td>
+                <td>
+                    @item.Staff_Age
+                </td>
+                <td>
+                    @if (item.Staff_Gender == 1)
+                    {
+    <span>Female</span> }
+else
+{
+<span>Male</span>}
+                </td>
+                <td>
+                    @item.Staff_Email
+                </td>
+                @if (item.Staff_Status == 0)
+                {
+<td>
+    <span class="badge badge-dot mr-4">
+        <i class="bg-warning"></i>
+        <span id="status_@item.Id">Training</span>
+    </span>
+</td>
+ }
+else
+{
+<td>
+    <span class="badge badge-dot mr-4">
+        <i class="bg-info"></i>
+        <span id="status_@item.Id">Profession</span>
+    </span>
+</td>
+}
+                <td class="text-right">
+                    <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            @if (list_permission.Contains("Staff_Edit") || list_role.Contains("Admin"))
+                            {<a class="dropdown-item" href="/Admin/StaffManagement/Edit/@item.Id">Edit</a>}
+                            @if (list_permission.Contains("Staff_Status") || list_role.Contains("Admin"))
+                            {<a class="dropdown-item" onclick="return _ChangeStatus(@item.Id)" style="cursor: pointer">Change Status</a>}
+                            @if (list_permission.Contains("Staff_Delete") || list_role.Contains("Admin"))
+                            {<a class="dropdown-item" onclick="return _Delete(@item.Id)" style="cursor: pointer" id="@item.Id">Delete</a>}
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+}
 
 
                     </tbody>
@@ -213,7 +214,7 @@
                     } else {
                         $('#status_' + StaffId).html("Training");
                     }
-                   
+
                 },
                 error: function () {
                     alert("Error !");

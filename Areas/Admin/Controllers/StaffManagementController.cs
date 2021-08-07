@@ -32,6 +32,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return View();
 
         }
+
         [HasPermission(Permission = "Staff_Add")]
         [HttpPost]
         public ActionResult Add(Staff request, HttpPostedFileBase AvatarUpload)
@@ -73,6 +74,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return Redirect("/Admin/StaffManagement/StaffIndex");
 
         }
+
         [HasPermission(Permission = "Staff_Edit")]
         [HttpGet]
         public ActionResult Edit(int id)

@@ -8,6 +8,38 @@ namespace _ExcellOn_.Areas.Admin.Controllers
     public class CompanyManagementController : BaseController
     {
         private Entities db = new Entities();
+
+        // Test pagination by ajax
+        public JsonResult GetTotalPage(int items)
+        {
+            int p;
+            var list_company = db.Companies.ToList();
+            var Count_list_company = list_company.Count();
+            float pages_tamp = (float)Count_list_company / items;
+            float pages_tamp2 = (int)pages_tamp;
+            pages_tamp2 = (float)(pages_tamp2 + 0.00001);
+            if (pages_tamp > pages_tamp2)
+            {
+                p = (int)pages_tamp2 + 1;
+            }
+            else
+            {
+                p = (int)pages_tamp2;
+            }
+            return Json(p, JsonRequestBehavior.AllowGet);
+        }
+        
+        public JsonResult GetData(int CurrentPage, int items)
+        {
+            int offset = (CurrentPage - 1) * items;
+            var list_company = db.Companies.ToList();
+            var company_ofPage = (from p in list_company select p).Skip(offset).Take(items);
+            return Json(company_ofPage, JsonRequestBehavior.AllowGet);
+        }
+
+        // End test pagination by ajax
+
+
         [HasPermission(Permission = "Company_List")]
         public ActionResult CompanyIndex()
         {

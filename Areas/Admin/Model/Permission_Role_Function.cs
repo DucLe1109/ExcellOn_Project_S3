@@ -13,7 +13,7 @@ namespace _ExcellOn_.Areas.Admin.Model
         {
             var list_permission_of_current_user = (from a in db.UserInFoes
                                                    join b in db.UserRoles on a.Id equals b.UserId
-                                                   join c in db.PermissionRoles on b.Id equals c.RoleId
+                                                   join c in db.PermissionRoles on b.RoleId equals c.RoleId
                                                    join d in db.Permissions on c.PermissionId equals d.Id
                                                    where a.Id == user.Id
                                                    select new

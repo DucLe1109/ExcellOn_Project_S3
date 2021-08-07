@@ -1,30 +1,30 @@
-﻿
-@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
-
-
-}
-
-<div class="header bg-primary">
-    <div class="container-fluid">
-        <div class="header-body">
-            <div class="row align-items-center py-4">
-                <div class="col-lg-6 col-7">
-                    <h6 class="h2 text-white d-inline-block mb-0">Customer</h6>
-                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="col-lg-6 col-5 text-right">
-                    <a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#myModal1">Add New</a>
-                    <a class="btn btn-sm btn-neutral" href="/Admin/CustomerManagement/CustomerIndex">Reload</a>
-                </div>
+﻿@{ List<string> list_permission = (List<string>)Session["ListPermission"];
+    List<string> list_role = (List<string>)Session["ListRole"]; }
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";}
+@model _ExcellOn_.Areas.Admin.ViewModel.SendEmailModel
+<div class="container" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+                <h6 class="h2 d-inline-block mb-0">Customer Management</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+                @if (list_permission.Contains("Customer_Add") || list_role.Contains("Admin"))
+                {
+    <a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#myModal1">Add New</a>}
+                <a href="#" class="btn btn-sm btn-neutral" id="popupsend" name="popupsend" data-toggle="modal" data-target="#sendEmailModal">Send Email</a>
+                <a class="btn btn-sm btn-neutral" href="/Admin/CustomerManagement/CustomerIndex">Reload</a>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="container" style="margin-top: 30px;padding-bottom: 40px">
     <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-hidden="true">
@@ -123,12 +123,65 @@
         </div>
     </div>
 
+    @using (Html.BeginForm("SendEmail", "CustomerManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+<input id="toEmail" type="text" value="" style="display: none" />
+                <div class="modal fade" id="sendEmailModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width: 150%">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="myModalLabel">New Email</h2>
+                                <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12" style="display:none">
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(model => model.To, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Titile</label>
+                                            @Html.TextBoxFor(model => model.Subject, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Content</label>
+                                            @Html.TextAreaFor(model => model.Body, new { cols = "5", rows = "6", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+                            </div>
+                            <div class="modal-body">
+                                <div class="loader" style="display:none"></div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Send Email</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>}
+
     <div class="row">
         <div class="col-xl-12">
             <div class="table-responsive">
                 <table id="table_Customer" class="cell-border text-center align-items-center table-flush ">
                     <thead class="thead-light">
                         <tr>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">
+                                <input type="checkbox" name="checkall" id="checkall" onClick="check_uncheck_checkbox(this.checked);" />
+                            </th>
                             <th style="font-size: 0.875rem" scope="col" class="sort">Avatar</th>
                             <th style="font-size: 0.875rem" scope="col" class="sort">Name</th>
                             <th style="font-size: 0.875rem" scope="col" class="sort">Phone</th>
@@ -137,48 +190,53 @@
                             <th style="font-size: 0.875rem" scope="col">Action</th>
                         </tr>
                     </thead>
-                    <tbody class="list">
+                    <tbody class="list" id="lstCustomer">
                         @if (ViewBag.list_customer != null)
                         {
                             foreach (var item in ViewBag.list_customer)
                             {
-                                <tr>
-                                    <th>
-                                        <div class="media align-items-center">
-                                            <a href="#" class="avatar rounded-circle mr-3">
-                                                <img alt="Image placeholder" src="@item.Customer_Avatar">
-                                            </a>
-                                        </div>
-                                    </th>
-                                    <td>
-                                        @item.Customer_Name
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-dot mr-4">
-                                            <i class="bg-warning"></i>
-                                            <span class="status">@item.Customer_Phone</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        @item.Customer_Email
-                                    </td>
-                                    <td>
-                                        @item.Customer_Comment
-                                    </td>
-                                    <td class="text-right">
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#myModal2" href="#" onclick="return _GetById(@item.Id)">Edit</a>
-                                                <a class="dropdown-item" style="cursor: pointer" onclick="return _Delete(@item.Id)" id="@item.Id">Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        }
+            <tr>
+                <td><input onclick="checkItem(this)" type="checkbox" name="sendEmail" value="@item.Customer_Email" /></td>
+                <th>
+                    <div class="media align-items-center">
+                        <a href="#" class="avatar rounded-circle mr-3">
+                            <img alt="Image placeholder" src="@item.Customer_Avatar">
+                        </a>
+                    </div>
+                </th>
+                <td>
+                    @item.Customer_Name
+                </td>
+                <td>
+                    <span class="badge badge-dot mr-4">
+                        <i class="bg-warning"></i>
+                        <span class="status">@item.Customer_Phone</span>
+                    </span>
+                </td>
+                <td>
+                    @item.Customer_Email
+                </td>
+                <td>
+                    @item.Customer_Comment
+                </td>
+                <td class="text-right">
+                    <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            @if (list_permission.Contains("Customer_Edit") || list_role.Contains("Admin"))
+                            {
+        <a class="dropdown-item" data-toggle="modal" data-target="#myModal2" href="#" onclick="return _GetById(@item.Id)">Edit</a>}
+                            @if (list_permission.Contains("Customer_Delete") || list_role.Contains("Admin"))
+                            {
+        <a class="dropdown-item" style="cursor: pointer" onclick="return _Delete(@item.Id)" id="@item.Id">Delete</a>}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+}
+    }
                     </tbody>
                 </table>
 
@@ -214,6 +272,34 @@
 
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
     <script type="text/javascript">
+
+        function check_uncheck_checkbox(isChecked) {
+            if (isChecked) {
+                $('input[name="sendEmail"]').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $('input[name="sendEmail"]').each(function () {
+                    this.checked = false;
+                });
+            }
+            checkItem();
+        }
+
+        function checkItem() {
+            //var isCheck = $(el).is(':checked');
+            var lstEmail = "";
+            var lstChecked = document.querySelectorAll('#lstCustomer input:checked');
+            [...lstChecked].map((elm, idx) => {
+                lstEmail += `${$(elm).val()},`;
+            })
+            $('#toEmail').val(lstEmail.slice(0, -1));
+
+            $("#popupsend").click(function () {
+                $("#To").val(lstEmail.slice(0, -1));
+            });
+        }
+
         function _Add() {
             $('.block_loader').show();
             var customerObj = {
@@ -315,4 +401,5 @@
             });
         }
     </script>
+
 }

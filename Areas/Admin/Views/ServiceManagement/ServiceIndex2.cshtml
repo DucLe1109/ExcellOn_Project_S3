@@ -1,26 +1,21 @@
 ﻿@model List<_ExcellOn_.Models.Service>
 @{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";}
-@{
-    int count = Model.Count;
-}
-<div class="header bg-primary">
-    <div class="container-fluid">
-        <div class="header-body">
-            <div class="row align-items-center py-4">
-                <div class="col-lg-6 col-7">
-                    <h6 class="h2 text-white d-inline-block mb-0">Service</h6>
-                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#">Click in Icon to view</a></li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="col-lg-6 col-5 text-right">
-                    <a class="btn btn-sm btn-neutral" href="/Admin/ServiceManagement/ServiceIndex2">Reload</a>
-                </div>
-
+<div class="container" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+                <h6 class="h2 d-inline-block mb-0">Service Management</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="#">Click in Icon to view</a></li>
+                    </ol>
+                </nav>
             </div>
+            <div class="col-lg-6 col-5 text-right">
+                <a class="btn btn-sm btn-neutral" href="/Admin/ServiceManagement/ServiceIndex2">Reload</a>
+            </div>
+
         </div>
     </div>
 </div>
@@ -82,24 +77,116 @@
 
                 foreach (var item in Model)
                 {
-                    <div class="row table_row" id="table_row_@item.Id" style="margin-top: 80px;">
-                        <div class="table-responsive">
-                            <table id="table_Service_@item.Id" class="cell-border text-center align-items-center table-dark table-flush ">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th style="font-size: 0.875rem">Code</th>
-                                        <th style="font-size: 0.875rem">Date Start</th>
-                                        <th style="font-size: 0.875rem">Date End</th>
-                                        <th style="font-size: 0.875rem">Status</th>
-                                        <th style="font-size: 0.875rem">Number of Staff</th>
-                                        <th style="font-size: 0.875rem">Assign</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="list" style="color: white">
-                                </tbody>
-                            </table>
+                    if (item.Service_Name == "In-bound")
+                    {
+                        <style>
+                            #table_Service_@item.Id td {
+                                background-color: #172b4d;
+                            }
+                        </style>
+                        <div class="row table_row" id="table_row_@item.Id" style="margin-top: 80px;">
+                            <div class="table-responsive">
+                                <table id="table_Service_@item.Id" class="cell-border text-center align-items-center table-dark table-flush ">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th style="font-size: 0.875rem">Code</th>
+                                            <th style="font-size: 0.875rem">Date Start</th>
+                                            <th style="font-size: 0.875rem">Date End</th>
+                                            <th style="font-size: 0.875rem">Status</th>
+                                            <th style="font-size: 0.875rem">Number of Staff</th>
+
+                                            <th style="font-size: 0.875rem">Assign</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list" style="color: white">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                    }
+                    else if (item.Service_Name == "Out-bound")
+                    {
+                        <style>
+                            #table_Service_@item.Id td {
+                                background-color: darkseagreen;
+                            }
+                        </style>
+                        <div class="row table_row" id="table_row_@item.Id" style="margin-top: 80px;">
+                            <div class="table-responsive">
+                                <table id="table_Service_@item.Id" class="cell-border text-center align-items-center table-flush ">
+                                    <thead>
+                                        <tr>
+                                            <th style="font-size: 0.875rem">Code</th>
+                                            <th style="font-size: 0.875rem">Date Start</th>
+                                            <th style="font-size: 0.875rem">Date End</th>
+                                            <th style="font-size: 0.875rem">Status</th>
+                                            <th style="font-size: 0.875rem">Number of Staff</th>
+
+                                            <th style="font-size: 0.875rem">Assign</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list" style="color: white">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    else if (item.Service_Name == "Tele Marketing")
+                    {
+                        <style>
+                            #table_Service_@item.Id td {
+                                color: midnightblue;
+                                background-color: lemonchiffon;
+                            }
+                        </style>
+                        <div class="row table_row" id="table_row_@item.Id" style="margin-top: 80px;">
+                            <div class="table-responsive">
+                                <table id="table_Service_@item.Id" class="cell-border text-center align-items-center table-flush ">
+                                    <thead>
+                                        <tr>
+                                            <th style="font-size: 0.875rem">Code</th>
+                                            <th style="font-size: 0.875rem">Date Start</th>
+                                            <th style="font-size: 0.875rem">Date End</th>
+                                            <th style="font-size: 0.875rem">Status</th>
+                                            <th style="font-size: 0.875rem">Number of Staff</th>
+
+                                            <th style="font-size: 0.875rem">Assign</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list" style="color: white">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <style>
+                            #table_Service_@item.Id td {
+                                background-color: lemonchiffon;
+                            }
+                        </style>
+                        <div class="row table_row" id="table_row_@item.Id" style="margin-top: 80px;">
+                            <div class="table-responsive">
+                                <table id="table_Service_@item.Id" class="cell-border text-center align-items-center table-flush ">
+                                    <thead>
+                                        <tr>
+                                            <th style="font-size: 0.875rem">Code</th>
+                                            <th style="font-size: 0.875rem">Date Start</th>
+                                            <th style="font-size: 0.875rem">Date End</th>
+                                            <th style="font-size: 0.875rem">Status</th>
+                                            <th style="font-size: 0.875rem">Number of Staff</th>
+
+                                            <th style="font-size: 0.875rem">Assign</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list" style="color: white">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+
                 }
             }
         </div>
@@ -112,11 +199,7 @@
     <link href="~/Areas/Admin/Public/DataTable/pagination.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/css/loader.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/JdLomX/css/style.css" rel="stylesheet" />
-    <style>
-        td {
-            background-color: #172b4d;
-        }
-    </style>
+
 }
 @section js{
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
@@ -130,7 +213,7 @@
                     type: "GET",
                     dataType: "json",
                     success: function (result) {
-
+                        var Id = result.Id;
                         $('#table_Service_' + @item.Id).DataTable({
                             "lengthMenu": [10, 15, 20, 30],
                             "pagingType": "full_numbers",
@@ -173,8 +256,9 @@
                                 },
                                 { 'data': 'OrderDetail_NumberOfPeople' },
                                 {
-                                    'render': function () {
-                                        return '<a class="btn" href="#" style="background-color: #e6eef1;font-size: 12px"> Assign </a>';
+                                    'data' : 'Id',
+                                    'render': function (Id) {
+                                        return '<a class="btn" href="/Admin/ServiceManagement/Assign_Staff/' + Id +'"style="background-color: #e6eef1;font-size: 12px"> Assign </a>';
                                     }
                                 },
                             ]

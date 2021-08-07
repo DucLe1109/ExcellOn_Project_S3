@@ -1,0 +1,276 @@
+﻿@{ List<string> list_permission = (List<string>)Session["ListPermission"];
+    List<string> list_role = (List<string>)Session["ListRole"]; }
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";}
+@model _ExcellOn_.Models.OrderDetail
+@using _ExcellOn_.Models
+@{ List<Staff_OrderDetail> list_sraff_ord = ViewBag.list_sraff_ord;
+    foreach (var item in list_sraff_ord)
+    {
+<input class="list_staff_ord" style="display:none" readonly value="@item.Staff_Id" /> } }
+
+<div class="container" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+                <h6 class="h2 d-inline-block mb-0">Staff Assignment</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="#">Board</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 30px;padding-bottom: 40px">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="container">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+
+                        <label>
+                            <input type="checkbox" id="checkall" /> Select <span class="Count_Check"></span>
+                        </label>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="select">
+                                    @*<label class="select__item">
+                                            <input type="checkbox" class="checkitem">
+                                            <span class="circle-image">
+                                                <img src="" />
+                                            </span>
+                                            &nbsp;
+                                        </label>*@
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 30px">
+                            <div class="col-md-6">
+                                <div>
+                                    <a href="/Admin/ServiceManagement/ServiceIndex2" class="btn btn-default" data-dismiss="modal">Close</a>
+                                    <button type="button" onclick="return _SubmitAssignment()" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <ul id="pages">
+                                    <li class="pageInfo">Page 1 of 3</li>
+                                    <li class="goPrevious btn" onclick="return _goPrevious()">&lsaquo;&lsaquo; Previous</li>
+                                    <li>
+                                        <input onkeyup="return _Indicate()" style="background:none;border:none" class="currentPage" id="current_textbox" />
+                                    </li>
+                                    <li style="margin-left:12px" class="goNext btn" onclick="return _goNext()">Next &rsaquo;&rsaquo;</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div style="padding: 20px">
+    <input type="number" value="@Model.Id" style="display:none" id="ord_id" />
+    <input type="number" value="@Model.OrderDetail_NumberOfPeople" style="display:none" id="number_of_employee" />
+    <input type="number" style="display:none" id="total_page" />
+    <input type="number" style="display:none" id="current_page" />
+</div>
+
+
+
+@section css{
+    <link href="~/Areas/Admin/Public/Plugin_Table_HD/css/paging.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/panel.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/choose_staff.css" rel="stylesheet" />
+}
+
+@section js{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Count checked input
+            var ord_id = $('#ord_id').val();
+            $('#current_page').val(1);
+            $('#current_textbox').val(1);
+            $.ajax({
+                url: "/Admin/ServiceManagement/GetTotalPage?items=21&ord_id=" + ord_id,
+                contentType: "application/json;charset=utf-8",
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    $('#total_page').val(result);
+                    $('.pageInfo').text("Page 1 of " + result);
+                    var html = '';
+                    _LoadData(1, ord_id, result);
+                    $('.select').html(html);
+                },
+                error: function (e) {
+                    alert(e);
+                }
+            });
+
+        });
+
+        // Đã fix được bug sau khi next hoặc previous trang bị mất checked. (bằng cách đưa những checked vào session và chia các trường hợp thêm checked or bớt checked )
+        function _LoadData(current_page, ord_id, total_page) {
+            // Gửi list id của những staff đã được check. (Fix bug sau khi đổi trang bị mất những staff đã check)
+            var input_checked = $('input[type="checkbox"][class="checkitem"]:checked');
+            var list_staff_id_checked = [];
+            for (var i = 0; i < input_checked.length; i++) {
+                list_staff_id_checked.push(parseInt($(input_checked[i]).val()));
+            }
+
+            var list_staff_ord = [];
+            var input_list_staff_ord = $('.list_staff_ord');
+            for (var i = 0; i < input_list_staff_ord.length; i++) {
+                list_staff_ord.push(parseInt($(input_list_staff_ord[i]).val()));
+            }
+
+            var GetItemObj = {
+                current_page: current_page,
+                ord_id: ord_id,
+                list_staff_id_checked: list_staff_id_checked
+            }
+            $.ajax({
+                url: "/Admin/ServiceManagement/GetItem",
+                contentType: "application/json;charset=utf-8",
+                type: "POST",
+                data: JSON.stringify(GetItemObj),
+                dataType: "json",
+                success: function (result) {
+
+                    $('#current_page').val(current_page);
+                    $('#current_textbox').val(current_page);
+                    $('.pageInfo').text("Page " + current_page + " of " + total_page);
+                    var html = "";
+                    result.list_staff.forEach(value => {
+                        if (list_staff_ord.indexOf(value.Id) < 0) {
+                            html +=
+                                ' <label class="select__item">                  ' +
+                                '     <input onclick="return _CountChecked()" type="checkbox" value="' + value.Id + '" class="checkitem"> ' +
+                                '         <span class="circle-image">           ' +
+                                '             <img src="' + value.Staff_Avatar + '" />' +
+                                '         </span>                               ' +
+                                '                 &nbsp; ' + value.Id +
+                                '             </label>                          ';
+                        } else if (list_staff_ord.indexOf(value.Id) >= 0) {
+                            html +=
+                                ' <label class="select__item">                  ' +
+                                '     <input onclick="return _CountChecked()" type="checkbox" value = "' + value.Id + '"  checked class="checkitem"> ' +
+                                '         <span class="circle-image">           ' +
+                                '             <img src="' + value.Staff_Avatar + '" />' +
+                                '         </span>                               ' +
+                                '                 &nbsp; ' + value.Id +
+                                '             </label>                          ';
+                        }
+                    });
+                    $('.select').html(html);
+                    result.list_staff_id_checked.forEach(val => {
+                        var checkitem_input = $('input[class = "checkitem"]');
+                        for (var i = 0; i < checkitem_input.length; i++) {
+                            if ($(checkitem_input[i]).val() == val) {
+                                $(checkitem_input[i]).prop("checked", true);
+                            }
+                        }
+                    });
+                    
+                    var input_checked = $('input[type="checkbox"][class="checkitem"]:checked');
+                    $('.Count_Check').text("(" + input_checked.length + ")");
+                },
+                error: function (e) {
+                    alert(e);
+                }
+
+            });
+        }
+        function _goNext() {
+            var ord_id = $('#ord_id').val()
+            var current_page = parseInt($('#current_page').val());
+            var total_page = $('#total_page').val();
+            if (current_page < total_page) {
+                current_page += 1;
+                _LoadData(current_page, ord_id, total_page);
+            }
+        }
+        function _goPrevious() {
+            var ord_id = $('#ord_id').val()
+            var current_page = parseInt($('#current_page').val());
+            var total_page = $('#total_page').val();
+            if (current_page > 1) {
+                current_page -= 1;
+                _LoadData(current_page, ord_id, total_page);
+            }
+        }
+        function _Indicate() {
+            var total_page = $('#total_page').val();
+            var ord_id = $('#ord_id').val()
+            var current_page = parseInt($('#current_textbox').val());
+            if (total_page >= current_page) {
+                _LoadData(current_page, ord_id, total_page);
+            }
+
+        }
+        function _CountChecked() {
+            var input_checked = $('input[type="checkbox"][class="checkitem"]:checked');
+            $('.Count_Check').text("(" + input_checked.length + ")");
+        }
+        function _SubmitAssignment() {
+            var ord_id = $('#ord_id').val();
+            var input_checked = $('input[type="checkbox"][class="checkitem"]:checked');
+            var input_checked_count = $('input[type="checkbox"][class="checkitem"]:checked').length;
+            var list_staff_id = [];
+            for (var i = 0; i < input_checked.length; i++) {
+                list_staff_id.push(parseInt($(input_checked[i]).val()));
+            }
+            var number_of_employee = parseInt($('#number_of_employee').val());
+            if (input_checked_count < number_of_employee) {
+                alert("The staff is not sufficient for this order");
+            } else if (input_checked_count == number_of_employee) {
+                var objSubmit = {
+                    list_staff_id: list_staff_id,
+                    orderdetail_id: ord_id
+                }
+                $.ajax({
+                    url: "/Admin/ServiceManagement/SubmitAssignment",
+                    contentType: "application/json;charset=utf-8",
+                    type: "POST",
+                    data: JSON.stringify(objSubmit),
+                    dataType: "json",
+                    success: function (return_url) {
+                        alert("Update successfully");
+                        window.location.href = return_url;
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+            else {
+                alert("The number of staff is greater than necessary number of employee !");
+            }
+        }
+    </script>
+
+    <script>
+        $("#checkall").change(function () {
+            $(".checkitem").prop("checked", $(this).prop("checked"));
+            var input_checked = $('input[type="checkbox"][class="checkitem"]:checked');
+            $('.Count_Check').text("(" + input_checked.length + ")");
+        })
+        $(".checkitem").change(function () {
+            if ($(this).prop("checked") == false) {
+                $("#checkall").prop("checked", false)
+            }
+            if ($(".checkitem:checked").length == $(".checkitem").length) {
+                $("#checkall").prop("checked", true)
+            }
+        })
+    </script>
+}

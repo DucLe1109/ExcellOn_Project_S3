@@ -44,7 +44,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                         List<string> list_role = function.TakeRole(User);
                         Session["ListRole"] = list_role;
 
-                        return RedirectToAction("DashboardIndex", "AdminHome");
+                        return View("/Areas/Admin/Views/AdminHome/StartIndex.cshtml");
                     }
                     else
                     {

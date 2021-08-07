@@ -1,0 +1,35 @@
+﻿
+.currentPage {
+    width: 40px;
+    text-align: center;
+}
+#paging {
+    padding: 10px;
+}
+
+#pages {
+    margin: 10px 0px 10px 10px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    list-style: inside none;
+    float: right;
+}
+    #pages li {
+        height: 25px;
+        line-height: 25px;
+        text-align: center;
+        border: solid 1px #ccc;
+        float: left;
+        margin-left: 5px;
+    }
+    #pages .currentPage {
+        width: 40px;
+        text-align: center;
+    }
+
+    #pages .pageInfo {
+        padding: 0px 5px;
+        border: 0px;
+    }
+

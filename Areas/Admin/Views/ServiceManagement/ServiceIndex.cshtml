@@ -1,25 +1,26 @@
-﻿
+﻿@{ List<string> list_permission = (List<string>)Session["ListPermission"];
+    List<string> list_role = (List<string>)Session["ListRole"]; }
 @{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";}
 
-<div class="header bg-primary">
-    <div class="container-fluid">
-        <div class="header-body">
-            <div class="row align-items-center py-4">
-                <div class="col-lg-6 col-7">
-                    <h6 class="h2 text-white d-inline-block mb-0">Service</h6>
-                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="col-lg-6 col-5 text-right">
-                    <a class="btn btn-sm btn-neutral" href="/Admin/ServiceManagement/Add">Add New</a>
-                    <a class="btn btn-sm btn-neutral" href="/Admin/ServiceManagement/ServiceIndex">Reload</a>
-                </div>
-
+<div class="container" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+                <h6 class="h2 d-inline-block mb-0">Service Management</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                    </ol>
+                </nav>
             </div>
+            <div class="col-lg-6 col-5 text-right">
+                @if (list_permission.Contains("Service_Add") || list_role.Contains("Admin"))
+                {
+    <a class="btn btn-sm btn-neutral" href="/Admin/ServiceManagement/Add">Add New</a>}
+                <a class="btn btn-sm btn-neutral" href="/Admin/ServiceManagement/ServiceIndex">Reload</a>
+            </div>
+
         </div>
     </div>
 </div>
@@ -97,53 +98,54 @@
                         {
                             foreach (var item in ViewBag.list_service)
                             {
-                                <tr>
-                                    <th>
-                                        <img alt="Image placeholder" src="@item.Service_Image" style="height: 200px; width: 200px;border-radius: 20px">
-                                    </th>
-                                    <td>
-                                        @item.Service_Name
-                                    </td>
-                                    <td>
-                                        @if (item.Service_SaleStatus == 1)
-                                        {
-                                            <span class="badge badge-dot mr-4">
-                                                <i class="bg-warning"></i>
-                                                <span class="status"> Sale </span>
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge badge-dot mr-4">
-                                                <i class="bg-info"></i>
-                                                <span class="status"> Not Sale </span>
-                                            </span>
-                                        }
+            <tr>
+                <th>
+                    <img alt="Image placeholder" src="@item.Service_Image" style="height: 200px; width: 200px;border-radius: 20px">
+                </th>
+                <td>
+                    @item.Service_Name
+                </td>
+                <td>
+                    @if (item.Service_SaleStatus == 1)
+                    {
+                        <span class="badge badge-dot mr-4">
+                            <i class="bg-warning"></i>
+                            <span class="status"> Sale </span>
+                        </span> }
+                                            else
+                                            {
+                        <span class="badge badge-dot mr-4">
+                            <i class="bg-info"></i>
+                            <span class="status"> Not Sale </span>
+                        </span>}
 
-                                    </td>
-                                    <td>
-                                        @item.Service_Description
-                                    </td>
-                                    <td>
-                                        $@item.Service_PriceSale
-                                    </td>
-                                    <td>
-                                        $@item.Service_Price
-                                    </td>
-                                    <td class="text-right">
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#myModal1" onclick="return _setServiceId(@item.Id)" style="cursor: pointer">Employ</a>
-                                                <a class="dropdown-item" href="/Admin/ServiceManagement/Edit/@item.Id">Edit</a>
-                                                <a class="dropdown-item" style="cursor: pointer" onclick="return _Delete(@item.Id)" id="@item.Id">Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
+                </td>
+                <td>
+                    @item.Service_Description
+                </td>
+                <td>
+                    $@item.Service_PriceSale
+                </td>
+                <td>
+                    $@item.Service_Price
+                </td>
+                <td class="text-right">
+                    <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            <a class="dropdown-item" data-toggle="modal" data-target="#myModal1" onclick="return _setServiceId(@item.Id)" style="cursor: pointer">Employ</a>
+                            @if (list_permission.Contains("Service_Edit") || list_role.Contains("Admin"))
+                            {
+                                <a class="dropdown-item" href="/Admin/ServiceManagement/Edit/@item.Id">Edit</a>}
+                            @if (list_permission.Contains("Service_Edit") || list_role.Contains("Admin"))
+                            {
+                                <a class="dropdown-item" style="cursor: pointer" onclick="return _Delete(@item.Id)" id="@item.Id">Delete</a>}
+                        </div>
+                    </div>
+                </td>
+            </tr>}
                         }
                     </tbody>
                 </table>

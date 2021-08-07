@@ -1,6 +1,7 @@
 ﻿@model _ExcellOn_.Models.UserInFo
 @{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
-
+@{ List<string> list_permission = (List<string>)Session["ListPermission"];
+    List<string> list_role = (List<string>)Session["ListRole"]; }
 @if (Model.User_Name != null && Model.User_Password != null)
 {
 <div class="main-content">
@@ -138,17 +139,20 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group focused">
-                                            <label class="form-control-label" for="input-address">Department</label>
-                                            <select name="ServiceId" class="form-control form-control-alternative">
-                                                @foreach (var item in ViewBag.list_role)
-                                                {
+                                    @if (list_permission.Contains("Admin") || list_role.Contains("Admin"))
+                                    {
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-address">Department</label>
+                                                <select name="ServiceId" class="form-control form-control-alternative">
+                                                    @foreach (var item in ViewBag.list_role)
+                                                    {
                                 <option value="@item.Id">@item.Role_Name</option>}
-                                            </select>
+                                                </select>
 
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                     <div class="col-md-12">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-address">About Me</label>
@@ -205,5 +209,4 @@
                             </div>
                         </div>
                     </div>
-                </footer>
-}
+                </footer>}
