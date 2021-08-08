@@ -23,3 +23,26 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 .search-result span.plus a:hover { background-color: #414141; }
 .search-result span.plus a i { color: #fff !important; }
 .search-result span.border { display: block; width: 97%; margin: 0 15px; border-bottom: 1px dotted #ccc; }
+
+
+.btn-booknow {
+    color: #fff;
+    background-color: #E80566;
+    border-color: #E80566
+}
+
+.btn-booknow:hover {
+    color: #fff;
+    background-color: #c7075a;
+    border-color: #c7075a
+}
+
+.btn-booknow:focus {
+    color: #fff;
+    background-color: #c7075a;
+    border-color: #c7075a
+}
+
+.text-excell-color {
+    color: #E80566;
+}
