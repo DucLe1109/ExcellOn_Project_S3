@@ -162,6 +162,7 @@
     <Compile Include="Areas\Admin\Model\Order_Interface\OrderDetail_Interface.cs" />
     <Compile Include="Areas\Admin\Model\Permission_Role_Function.cs" />
     <Compile Include="Areas\Admin\Model\HasPermissionAttribute.cs" />
+    <Compile Include="Areas\Admin\ViewModel\AppendedStaff.cs" />
     <Compile Include="Areas\Admin\ViewModel\AssignmentSubmitViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\GetItemObj.cs" />
     <Compile Include="Areas\Admin\ViewModel\GetItemObj_Return.cs" />
