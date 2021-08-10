@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="~/Areas/Admin/Public/vendor/fortawesome/fontawesome-free/css/all.min.css" type="text/css">
     <!-- Page plugins -->
     <!-- Argon CSS -->
-    <link rel="stylesheet" href="~/Areas/Admin/Public/css/argon.css?v=1.2.0" type="text/css">
+    <link href="~/Areas/Admin/Public/css/argon.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @RenderSection("css", false)
 </head>
@@ -26,7 +26,7 @@
     <!-- Sidenav -->
     @RenderPage("_SidenavLayout.cshtml")
     <!-- Main content -->
-    <div class="main-content" id="panel">
+    <div class="main-content" id="ducdz">
         @RenderPage("_TopnavLayout.cshtml")
         @RenderBody()
     </div>
@@ -88,6 +88,21 @@
         }
         function _Register() {
             $(location).attr("href", "/Admin/UserManagement/Add");
+        }
+        function _Order() {
+            $(location).attr("href", "/Admin/OrderManagement/OrderIndex");
+        }
+        function _HideShowNav() {
+            $('.sidenav').toggle("fast", function () {
+                if ($('.sidenav').is(":visible") == false) {
+                    $('#ducdz').css("margin-left", 0);
+                    $('.sidenav-toggler-line').css("background-color", "blue");
+                } else {
+                    $('#ducdz').css("margin-left", 250);
+                    $('.sidenav-toggler-line').css("background-color", "brown");
+                }
+            });
+            
         }
     </script>
     @RenderSection("js", false)

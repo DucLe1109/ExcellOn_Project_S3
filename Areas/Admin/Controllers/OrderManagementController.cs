@@ -1,4 +1,5 @@
 ﻿using _ExcellOn_.Areas.Admin.Model;
+using _ExcellOn_.Areas.Admin.ViewModel;
 using _ExcellOn_.Models;
 using _ExcellOn_.Models.ViewModel;
 using System;
@@ -13,6 +14,28 @@ namespace _ExcellOn_.Areas.Admin.Controllers
     {
         private Entities db = new Entities();
         private OrderDetail_Function orderDetail_Function = new OrderDetail_Function();
+
+        public ActionResult OrderIndex()
+        {
+            //List<Order> list_or = db.Orders.Where(x=>x.Order_Status != 3).ToList();
+            //return View(list_or);
+            List<Order_OrderDetail> list_order_orderdetail = new List<Order_OrderDetail>();
+
+            List<Order> list_or = db.Orders.Where(x => x.Order_Status != 3).OrderBy(x=>x.Order_DateCreate).ToList();
+            foreach (var item in list_or)
+            {
+                Order_OrderDetail _new = new Order_OrderDetail();
+                _new.Orders = item;
+                List<OrderDetail> list_ord = db.OrderDetails.Where(x=>x.OrdersId == item.Id && x.OrderDetail_Status != 3).ToList();
+                if (list_ord != null)
+                {
+                    _new.List_OrderDetail = list_ord;
+                }
+                list_order_orderdetail.Add(_new);
+            }
+            ViewBag.list_order_orderdetail = list_order_orderdetail;
+            return View("/Areas/Admin/Views/OrderManagement/OrderIndex2.cshtml");
+        }
 
         [HttpPost]
         public JsonResult CreateOrder(EmployRequest employRequest)
@@ -226,6 +249,12 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         {
 
             List<OrderDetail> list_ord = (List<OrderDetail>)Session["OrderDetail"];
+            Order new_Order = new Order();
+            new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
+            new_Order.Order_Description = description;
+            new_Order.Order_TotalCost = total_cost;
+            new_Order.Order_Status = 0;
+            db.Orders.Add(new_Order);
             foreach (var item in list_ord)
             {
                 int Service_Id = (int)item.ServiceId;
@@ -239,13 +268,6 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 {
                     if (list_Staff_free.Count >= Number_Of_Employee)
                     {
-                        Order new_Order = new Order();
-                        new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
-                        new_Order.Order_Description = description;
-                        new_Order.Order_TotalCost = total_cost;
-                        new_Order.Order_Status = 0;
-                        db.Orders.Add(new_Order);
-
                         OrderDetail new_OrderDetail = new OrderDetail();
                         new_OrderDetail.OrderDetail_DateStart = Date_Start;
                         new_OrderDetail.OrderDetail_DateEnd = Date_End;
@@ -270,8 +292,6 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                             }
                         }
                         db.SaveChanges();
-                        return Json("/Admin/OrderManagement/Index", JsonRequestBehavior.AllowGet);
-
                     }
                     else
                     {
@@ -321,13 +341,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
                         if (_list_Staff_free_service.Count >= Number_Of_Employee)
                         {
-                            Order new_Order = new Order();
-                            new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
-                            new_Order.Order_Description = description;
-                            new_Order.Order_TotalCost = total_cost;
-                            new_Order.Order_Status = 0;
-                            db.Orders.Add(new_Order);
-
+                            
                             OrderDetail new_OrderDetail = new OrderDetail();
                             new_OrderDetail.OrderDetail_DateStart = Date_Start;
                             new_OrderDetail.OrderDetail_DateEnd = Date_End;
@@ -352,9 +366,6 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                                 }
                             }
                             db.SaveChanges();
-                            return Json("/Admin/OrderManagement/Index", JsonRequestBehavior.AllowGet);
-                            // Lưu dữ liệu vào db
-
                         }
                         else
                         {
@@ -371,13 +382,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                             int a = list_staff_free.Count();
                             if (list_staff_free.Count() >= Number_Of_Employee)
                             {
-                                Order new_Order = new Order();
-                                new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
-                                new_Order.Order_Description = description;
-                                new_Order.Order_TotalCost = total_cost;
-                                new_Order.Order_Status = 0;
-                                db.Orders.Add(new_Order);
-
+                                
                                 OrderDetail new_OrderDetail = new OrderDetail();
                                 new_OrderDetail.OrderDetail_DateStart = Date_Start;
                                 new_OrderDetail.OrderDetail_DateEnd = Date_End;
@@ -402,8 +407,6 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                                     }
                                 }
                                 db.SaveChanges();
-                                return Json("/Admin/OrderManagement/Index", JsonRequestBehavior.AllowGet);
-
                             }
                             else
                             {
@@ -420,6 +423,8 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return Json("Create Order Successfully", JsonRequestBehavior.AllowGet);
 
         }
+
+        [HttpGet]
         public JsonResult RemoveItem(int OrderDetail_ID)
         {
 
@@ -457,6 +462,20 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             {
                 return RedirectToAction("ServiceIndex", "ServiceManagement");
             }
+        }
+
+        [HttpGet]
+        public JsonResult Delete(int OrderId)
+        {
+            Order order = db.Orders.Where(x => x.Id == OrderId).FirstOrDefault();
+            List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == order.Id).ToList();
+            foreach (var item in list_ord)
+            {
+                item.OrderDetail_Status = 3;
+            }
+            order.Order_Status = 3;
+            db.SaveChanges();
+            return Json("Delete successfully", JsonRequestBehavior.AllowGet);
         }
     }
 }

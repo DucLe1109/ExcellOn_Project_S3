@@ -6228,7 +6228,7 @@ input[type='button'].btn-block
 .navbar-dark .navbar-nav .nav-link.show,
 .navbar-dark .navbar-nav .nav-link.active
 {
-    color: rgba(255, 255, 255, .65);
+    color: white;
 }
 
 .navbar-dark .navbar-toggler
@@ -21587,16 +21587,14 @@ textarea[resize='horizontal']
 {
     margin-top: 2px;
 }
-.navbar-vertical.navbar-expand-xs .navbar-nav > .nav-item > .nav-link.active
-{
-    margin-right: .5rem;
-    margin-left: .5rem;
-    padding-right: 1rem;
-    padding-left: 1rem;
-
-    border-radius: .375rem; 
-    background: #f6f9fc;
-}
+    .navbar-vertical.navbar-expand-xs .navbar-nav > .nav-item > .nav-link.active {
+        margin-right: .5rem;
+        margin-left: .5rem;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        border-radius: .375rem;
+        background: #e91e63;
+    }
 .navbar-vertical.navbar-expand-xs .lavalamp-object
 {
     width: calc(100% - 1rem) !important;
@@ -22353,7 +22351,7 @@ textarea[resize='horizontal']
 
 .sidenav-toggler-dark .sidenav-toggler-line
 {
-    background-color: #fff;
+    background-color: brown;
 }
 
 .sidenav-toggler
@@ -24192,7 +24190,7 @@ button.bg-lighter:focus
 
 .bg-gradient-default
 {
-    background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
+    background: black;
 }
 
 .bg-gradient-white
@@ -24860,12 +24858,12 @@ button.section-darker:focus
 
 .opacity-8
 {
-    opacity: .8 !important;
+    opacity: .72 !important;
 }
 
 .opacity-8
 {
-    opacity: .9 !important;
+    opacity: .72 !important;
 }
 
 .opacity-10

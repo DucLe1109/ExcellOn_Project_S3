@@ -1,0 +1,156 @@
+﻿@{ List<string> list_permission = (List<string>)Session["ListPermission"];
+    List<string> list_role = (List<string>)Session["ListRole"]; }
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";}
+@model List<_ExcellOn_.Models.Order>
+<div class="container" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+                <h6 class="h2 d-inline-block mb-0">Order Management</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+                <a class="btn btn-sm btn-neutral" href="/Admin/OrderManagement/OrderIndex">Reload</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container" style="margin-top: 30px;padding-bottom: 40px">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="table-responsive">
+                <table id="table_Order" class="cell-border text-center align-items-center table-flush ">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="font-size: 0.875rem">Created Date</th>
+                            <th style="font-size: 0.875rem">Description</th>
+                            <th style="font-size: 0.875rem">Total cost</th>
+                            <th style="font-size: 0.875rem">Status</th>
+                            <th style="font-size: 0.875rem">Customer</th>
+                            <th style="font-size: 0.875rem" scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list" id="lstCustomer">
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+            <tr>
+                <td>
+                    @item.Order_DateCreate
+                </td>
+                <td>
+                    @item.Order_Description
+                </td>
+                <td>
+                    $ @item.Order_TotalCost
+                </td>
+                <td>
+                    @if (item.Order_Status == 0)
+                    {
+<span class="badge badge-dot mr-4">
+    <i class="bg-warning"></i>
+    <span class="status"> Pending </span>
+</span> }
+                    else if (item.Order_Status == 1)
+                    {
+                        <span class="badge badge-dot mr-4">
+                            <i class="bg-info"></i>
+                            <span class="status"> Working </span>
+                        </span>
+                    }
+                    else
+                    {
+<span class="badge badge-dot mr-4">
+    <i class="bg-gradient-orange"></i>
+    <span class="status"> Completed </span>
+</span>                    }
+
+                </td>
+                <td>
+                    @if (item.Customer != null)
+                    {
+<span>@item.Customer.Customer_Name</span> }
+                    else
+                    { <span>Admin test</span>}
+
+                </td>
+                <td class="text-center">
+                    <button style="font-size:10px" id="@item.Id" onclick="return _Delete(@item.Id)" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>}
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <link href="~/Areas/Admin/Public/DataTable/pagination.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/loader.css" rel="stylesheet" />
+}
+@section js{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table_Order').DataTable({
+                "lengthMenu": [10, 15, 20, 30],
+                "pagingType": "full_numbers",
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-fw fa-long-arrow-right">',
+                        previous: '<i class="fa fa-fw fa-long-arrow-left">'
+                    }
+                }
+            });
+        });</script>
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+        function _Delete(OrderId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/Admin/OrderManagement/Delete?OrderId=" + OrderId,
+                        contentType: "application/json;charset=utf-8",
+                        type: "GET",
+                        dataType: "json",
+                        success: function (result) {
+                            $('#' + OrderId).parent().parent().remove();
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        },
+                        error: function () {
+                            alert("Error !");
+                        }
+                    });
+
+                }
+            });
+        }</script>
+}

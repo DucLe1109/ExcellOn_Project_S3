@@ -1,20 +1,24 @@
 ﻿@{ List<string> list_permission = (List<string>)Session["ListPermission"];
-    List<string> list_role = (List<string>)Session["ListRole"]; }
+    List<string> list_role = (List<string>)Session["ListRole"];
+}
 <style>
     .nav-link {
         cursor: pointer;
-        font-weight: 600!important;
+        font-weight: 600 !important;
     }
 </style>
-<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+
+<nav class=" sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-dark" style="background: black;z-index:1; box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%), 0 4px 25px 0 rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%)"></nav>
+<nav class=" sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-dark" id="sidenav-main_behind" style="z-index: 2;opacity:.2;background-image: url('/Public/Image/sidebar-3.jpg');background-size:cover"></nav>
+<nav class=" sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-dark" id="sidenav-main" style="z-index: 3">
     <div class="scrollbar-inner">
         <!-- Brand -->
-        <div class="sidenav-header  align-items-center">
+        <div class="sidenav-header  align-items-center" style="z-index:2">
             <a class="navbar-brand" href="javascript:void(0)">
                 <img src="~/Areas/Admin/Public/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
         </div>
-        <div class="navbar-inner">
+        <div class="navbar-inner" style="z-index:2">
             <!-- Collapse -->
             <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                 <!-- Nav items -->
@@ -24,11 +28,10 @@
                     {
         <li class="nav-item">
             <a class="nav-link active DashboardIndex" onclick="return _Dashboard()">
-                <i class="ni ni-tv-2 text-primary"></i>
+                <i class="ni ni-tv-2 text-info"></i>
                 <span class="nav-link-text">Dashboard</span>
             </a>
-        </li>
-}
+        </li>}
                     @if (list_role != null)
                     {
         <li class="nav-item">
@@ -36,8 +39,7 @@
                 <i class="ni ni-single-02 text-yellow"></i>
                 <span class="nav-link-text">My Profile</span>
             </a>
-        </li>
-}
+        </li>}
                     @if (list_permission.Contains("Customer_List") || list_role.Contains("Admin"))
                     {
         <li class="nav-item">
@@ -45,24 +47,25 @@
                 <i class="ni ni-planet text-orange"></i>
                 <span class="nav-link-text">Customer</span>
             </a>
-        </li>
-}
+        </li>}
                     @if (list_permission.Contains("Company_List") || list_role.Contains("Admin"))
                     {
         <li class="nav-item">
             <a class="nav-link CompanyIndex" onclick="return _Company()">
-                <i class="fa fa-building-o" style="color:brown" aria-hidden="true"></i>
+                <i class="fa fa-building-o" style="color:aqua" aria-hidden="true"></i>
                 <span class="nav-link-text">Company</span>
             </a>
-        </li>}
+        </li>
+}
                     @if (list_permission.Contains("Service_List") || list_role.Contains("Admin"))
                     {
         <li class="nav-item">
             <a class="nav-link ServiceIndex" onclick="return _Service()">
-                <i class="fa fa-handshake-o" aria-hidden="true" style="color:darkblue"></i>
+                <i class="fa fa-handshake-o" aria-hidden="true" style="color:bisque"></i>
                 <span class="nav-link-text">Service</span>
             </a>
-        </li>}
+        </li>
+}
                     @if (list_permission.Contains("OrderDetail_List") || list_role.Contains("Admin"))
                     {
         <li class="nav-item">
@@ -70,15 +73,26 @@
                 <i class="fa fa-shopping-bag" aria-hidden="true" style="color: fuchsia"></i>
                 <span class="nav-link-text">Order Detail</span>
             </a>
-        </li>}
+        </li>
+}
+                    @if (list_permission.Contains("OrderDetail_List") || list_role.Contains("Admin"))
+                    {
+        <li class="nav-item">
+            <a class="nav-link OrderIndex" onclick="return _Order()">
+                <i class="fa fa-shopping-cart" aria-hidden="true" style="color:floralwhite"></i>
+                <span class="nav-link-text">Order</span>
+            </a>
+        </li>
+}
                     @if (list_permission.Contains("Staff_List") || list_role.Contains("Admin"))
                     {
         <li class="nav-item">
             <a class="nav-link StaffIndex" onclick="return _Staff()">
-                <i class="fa fa-users" style="color: InactiveCaptionText" aria-hidden="true"></i>
+                <i class="fa fa-users" style="color: khaki" aria-hidden="true"></i>
                 <span class="nav-link-text">Staff</span>
             </a>
-        </li>}
+        </li>
+}
 
                     @if (list_permission.Contains("Image_List") || list_permission.Contains("Service_List") || list_role.Contains("Admin"))
                     {
@@ -87,16 +101,18 @@
                 <i class="fa fa-picture-o" aria-hidden="true" style="color: darkorange"></i>
                 <span class="nav-link-text">Image</span>
             </a>
-        </li>}
+        </li>
+}
 
                     @if (list_role.Contains("Admin"))
                     {
         <li class="nav-item">
-            <a class="nav-link" onclick="return _Register()">
+            <a class="nav-link Add" onclick="return _Register()">
                 <i class="ni ni-circle-08 text-pink"></i>
                 <span class="nav-link-text">Register</span>
             </a>
-        </li>}
+        </li>
+}
                 </ul>
                 <hr class="my-3">
 
@@ -104,6 +120,5 @@
         </div>
     </div>
 </nav>
-
 
 

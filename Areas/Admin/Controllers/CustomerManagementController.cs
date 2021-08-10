@@ -39,11 +39,18 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HttpGet]
         public JsonResult GetById(int CustomerId)
         {
-
             Customer customer = db.Customers.Where(x => x.Id == CustomerId).FirstOrDefault();
-            return Json(customer, JsonRequestBehavior.AllowGet);
-
-
+            CustomerViewModel customerView = new CustomerViewModel();
+            customerView.Id = customer.Id;
+            customerView.Customer_UserName = customer.Customer_UserName;
+            customerView.Customer_Password = customer.Customer_Password;
+            customerView.Customer_Phone = customer.Customer_Phone;
+            customerView.Customer_Name = customer.Customer_Name;
+            customerView.Customer_Email = customer.Customer_Email;
+            customerView.Customer_Comment = customer.Customer_Comment;
+            customerView.Customer_Avatar = customer.Customer_Avatar;
+            customerView.CompanyId = customer.CompanyId;
+            return Json(customerView, JsonRequestBehavior.AllowGet);
         }
 
         [HasPermission(Permission = "Customer_Eit")]
@@ -94,9 +101,9 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 smtp.Credentials = nc;
                 smtp.Send(m);
 
-                //ViewBag.Message = "Email sent successfully!";
+                
             };
-
+            TempData["message"] = "Send email successfully!";
             return RedirectToAction("CustomerIndex");
         }
     }

@@ -13,8 +13,8 @@ namespace _ExcellOn_.Areas.Admin.Model
         {
             this.Permission = Permission;
         }
-       
-        
+
+
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             var session_user = HttpContext.Current.Session["UserName"];
@@ -33,7 +33,13 @@ namespace _ExcellOn_.Areas.Admin.Model
                 return false;
             }
         }
-
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            filterContext.Result = new ViewResult
+            {
+                ViewName = "~/Areas/Admin/Views/_404_.cshtml"
+            };
+        }
         protected List<string> getPermission()
         {
             var list_permission = (List<string>)HttpContext.Current.Session["ListPermission"];

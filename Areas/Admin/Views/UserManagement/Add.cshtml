@@ -3,8 +3,8 @@
 
 <div class="main-content">
 
-    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(https://www.makemyassignments.com/blog/wp-content/uploads/2019/08/business-communication-tools-1024x574.png); background-size: cover; background-position: center top;">
-        <span class="mask bg-gradient-default opacity-8"></span>
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url('/Public/Image/city.jpg'); background-size: cover; background-position: center top;">
+        <span class="mask" style="opacity:0.6;background-color:black"></span>
         <div class="container-fluid d-flex align-items-center">
             <div class="row">
                 <div class="col-lg-7 col-md-10">
@@ -17,60 +17,7 @@
 
     <div class="container-fluid mt--7">
         <div class="row">
-            <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
-                <div class="card card-profile shadow">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-3 order-lg-2">
-                            <div class="card-profile-image">
-                                <img src="" class="rounded-circle" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                        <div class="d-flex justify-content-between">
-
-                        </div>
-                    </div>
-                    <div class="card-body pt-0 pt-md-4">
-                        <div class="row">
-                            <div class="col">
-                                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                                    <div>
-                                        <span class="heading"></span>
-                                        <span class="description">My Age</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading"></span>
-                                        <span class="description">Photos</span>
-                                    </div>
-                                    <div>
-                                        <span class="heading"></span>
-                                        <span class="description">Comments</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <h3>
-                                <span class="font-weight-light"></span>
-                            </h3>
-                            <div class="h5 font-weight-300">
-                                <i class="ni location_pin mr-2"></i>
-                            </div>
-                            <div class="h5 mt-4">
-                                <i class="ni business_briefcase-24 mr-2"></i>
-                            </div>
-                            <div>
-                                <i class="ni education_hat mr-2"></i>
-                            </div>
-                            <hr class="my-4">
-                            <p></p>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-8 order-xl-1">
+            <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
@@ -85,42 +32,65 @@
                             <h6 class="heading-small text-muted mb-4">User information</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
-                                    <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px">
-
+                                    <div class="col-lg-3">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-last-name">Full Name</label>
+                                            <input type="text" required name="User_FullName" class="form-control form-control-alternative">
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px;">
+
+                                    <div class="col-lg-3">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-first-name">Email Address</label>
+                                            <input type="text" name="User_Email" required class="form-control form-control-alternative">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-country">Telephone</label>
+                                            <input type="text" name="User_Phone" required class="form-control form-control-alternative">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 text-right" style="margin-bottom: 20px;">
                                         <p class="form-control-label">Avatar</p>
                                         <input name="AvatarUpload" type="file" class="btn btn-sm btn-primary col-lg-12">
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-username">Username</label>
                                             <input type="text" name="User_Name" class="form-control form-control-alternative">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-email">Password</label>
                                             <input type="password" required name="User_Password" class="form-control form-control-alternative">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-city">Age</label>
                                             <input type="number" required name="User_Age" class="form-control form-control-alternative">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+
+                                    <div class="col-lg-3">
                                         <div class="form-group focused">
-                                            <label class="form-control-label" for="input-last-name">Full Name</label>
-                                            <input type="text" required name="User_FullName" class="form-control form-control-alternative">
+                                            <label class="form-control-label" for="input-address">Department</label>
+                                            <select name="RoleId[]" class="select" multiple>
+                                                @foreach (var item in ViewBag.list_role)
+                                                {
+                                                    <option value="@item.Id">@item.Role_Name</option>
+                                                }
+                                            </select>
+
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" style="margin-bottom: 20px" for="input-address">Gender</label>
@@ -136,16 +106,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-md-6">
                                         <div class="form-group focused">
-                                            <label class="form-control-label" for="input-address">Department</label>
-                                            <select name="RoleId[]" class="select" multiple>
-                                                @foreach (var item in ViewBag.list_role)
-                                                {
-                                    <option value="@item.Id">@item.Role_Name</option>
-}
-                                            </select>
-
+                                            <label class="form-control-label" for="input-address">Address</label>
+                                            <input name="User_Address" required class="form-control form-control-alternative" type="text">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -156,35 +120,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr class="my-4">
-                            <h6 class="heading-small text-muted mb-4">Contact information</h6>
-                            <div class="pl-lg-4">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group focused">
-                                            <label class="form-control-label" for="input-address">Address</label>
-                                            <input name="User_Address" required class="form-control form-control-alternative" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group focused">
-                                            <label class="form-control-label" for="input-first-name">Email Address</label>
-                                            <input type="text" name="User_Email" required class="form-control form-control-alternative">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group focused">
-                                            <label class="form-control-label" for="input-country">Telephone</label>
-                                            <input type="text" name="User_Phone" required class="form-control form-control-alternative">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="my-4">
 
-                            <div class="pl-lg-4">
+                            <div class="pl-lg-4" style="float:right">
                                 <div class="form-group focused">
                                     <button type="submit" class="btn btn-info">Submit</button>
                                 </div>
@@ -208,11 +145,11 @@
 
 @section css{
     <style>
-        .select2-container--default .select2-selection--multiple .select2-selection__choice{
-            color: black!important;
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            color: black !important;
         }
     </style>
-    }
+}
 @section js{
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
@@ -220,7 +157,8 @@
         $('select').select2({
             placeholder: 'Role',
             tokenSeparators: [',', ' '],
-            
+
         });
     </script>
 }
+

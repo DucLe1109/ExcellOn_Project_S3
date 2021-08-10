@@ -84,7 +84,7 @@
                     <div class="row">
                         <div class="modal-body" style="padding: 50px">
                             <div class="row">
-                                <div class="col-md-6" style="display: none">
+                                <div class="col-md-6" style="display:none">
                                     <label>Id</label>
                                     <input id="Id_edit" class="form-control" readonly>
                                 </div>
@@ -137,37 +137,29 @@
                                 <div class="row">
                                     <div class="col-md-12" style="display:none">
                                         <div class="form-group">
-                                            @Html.TextBoxFor(model => model.To, new { @class = "form-control" })
+                                            @Html.TextBoxFor(model => model.To, new { @class = "form-control", required = "required" })
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Titile</label>
-                                            @Html.TextBoxFor(model => model.Subject, new { @class = "form-control" })
+                                            @Html.TextBoxFor(model => model.Subject, new { @class = "form-control", required = "required" })
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Content</label>
-                                            @Html.TextAreaFor(model => model.Body, new { cols = "5", rows = "6", @class = "form-control" })
+                                            @Html.TextAreaFor(model => model.Body, new { cols = "5", rows = "6", @class = "form-control", required = "required" })
                                         </div>
                                     </div>
+                                    <div class="mx-auto">
+                                        <div class="loader" style="display:none"></div>
+                                    </div>
                                 </div>
-
-
-
-
-
-
-
                             </div>
-                            <div class="modal-body">
-                                <div class="loader" style="display:none"></div>
-                            </div>
-
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Send Email</button>
+                                <button type="submit" id="send_email" onclick="return _send()" class="btn btn-primary">Send Email</button>
                             </div>
                         </div>
                     </div>
@@ -175,6 +167,12 @@
 
     <div class="row">
         <div class="col-xl-12">
+            @if (TempData["message"] != null)
+            {
+                <p class="alert alert-danger" style="font-weight: 600">
+                    @TempData["message"]
+                </p>
+            }
             <div class="table-responsive">
                 <table id="table_Customer" class="cell-border text-center align-items-center table-flush ">
                     <thead class="thead-light">
@@ -234,9 +232,8 @@
                         </div>
                     </div>
                 </td>
-            </tr>
-}
-    }
+            </tr>}
+                        }
                     </tbody>
                 </table>
 
@@ -272,7 +269,14 @@
 
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
     <script type="text/javascript">
-
+        function _send() {
+            if ($('#Subject').val() != "" && $('#Body').val() != "" && $('#To').val() != "") {
+                $('.loader').show();
+            } else {
+                alert("May be some information is null !");
+            }
+            
+        }
         function check_uncheck_checkbox(isChecked) {
             if (isChecked) {
                 $('input[name="sendEmail"]').each(function () {
@@ -331,6 +335,7 @@
                 type: "GET",
                 dataType: "json",
                 success: function (result) {
+                    console.log(result);
                     $('#Customer_Name_edit').val(result.Customer_Name);
                     $('#Customer_Phone_edit').val(result.Customer_Phone);
                     $('#Customer_Email_edit').val(result.Customer_Email);

@@ -1,0 +1,336 @@
+﻿
+@{Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";}
+
+@using _ExcellOn_.Areas.Admin.ViewModel
+@using _ExcellOn_.Models
+
+@{
+    List<Order_OrderDetail> list_order_orderdetail = ViewBag.list_order_orderdetail;
+
+}
+@section css{
+    <link href="~/Areas/Admin/Public/css/order.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/panel.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/button_move_top.css" rel="stylesheet" />
+}
+
+<div class="container" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+                <h6 class="h2 d-inline-block mb-0">Order Management</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="#">List</a></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+                <a class="btn btn-sm btn-neutral" href="/Admin/OrderManagement/OrderIndex">Reload</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    @if (list_order_orderdetail != null)
+    {
+        <div class="panel panel-primary" style="margin-top: 20px">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-7 ml-auto">
+                        <input class="form-control" onkeyup="return _search()" id="key_search" placeholder="Search by anything (Example: Order Code: 1, Started, Pending, Customer 1.....)" style="height: 80%;margin-top: 3px" type="text" />
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                @foreach (var item in list_order_orderdetail)
+                {
+                    <div class="col-12 col-md-12" style="padding-top:25px">
+                        <div class="row all_info">
+                            <div class="col-md-5">
+                                <div class="card mb-4" style="border: #ff006e 1px solid">
+                                    <div class="card-header py-3 text-center">
+                                        @if (item.Orders.Order_Status == 0)
+                                        {
+                                            <h5 class="mb-0">Order Code: @item.Orders.Id - Pending</h5>
+                                        }
+                                        else if (item.Orders.Order_Status == 1)
+                                        {
+                                            <h5 class="mb-0">Order Code: @item.Orders.Id -  Started</h5>
+                                        }
+                                        else if (item.Orders.Order_Status == 2)
+                                        {
+                                            <h5 class="mb-0">Order Code: @item.Orders.Id -  Completed</h5>
+                                        }
+
+                                    </div>
+                                    <div class="card-body" style="padding:5px 15px 25px 15px">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                                Created Date
+                                                <span>@item.Orders.Order_DateCreate</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                                Description
+                                                <span>@item.Orders.Order_Description</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3" style="border-bottom: 1px solid!important">
+                                                <div>
+                                                    <strong>Total amount</strong>
+                                                    <strong>
+                                                        <p class="mb-0">(including VAT)</p>
+                                                    </strong>
+                                                </div>
+                                                <span><strong>$@item.Orders.Order_TotalCost</strong></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                                Customer
+                                                <span>@item.Orders.Customer.Customer_Name - @item.Orders.Customer.Customer_Phone</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                                Email
+                                                <span>@item.Orders.Customer.Customer_Email</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7" style="padding-left: 0px">
+
+                                <div class="card mb-4" style="border: green 1px solid">
+                                    <div class="card-header py-3 text-center">
+                                        <h5 class="mb-0">Order Detail - Code </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            @foreach (var ord in item.List_OrderDetail)
+                                            {
+
+
+                                                if (item.List_OrderDetail.Count == 3)
+                                                {
+                                                    <div class="col-12 col-md-4">
+                                                        <div class="col-12" style="padding: 0px">
+                                                            <h2>@ord.Service.Service_Name - @ord.Id</h2>
+                                                        </div>
+                                                        <div class="col-12" style="padding: 0px">
+                                                            <!-- Data -->
+                                                            <p style=""><strong>@ord.OrderDetail_DateStart - @ord.OrderDetail_DateEnd</strong></p>
+                                                            <p>Number employee: @ord.OrderDetail_NumberOfPeople</p>
+                                                            @if (ord.OrderDetail_Status == 0)
+                                                            {
+                                                                <p style="font-weight: 600">Status: Pending</p>
+                                                            }
+                                                            else if (ord.OrderDetail_Status == 1)
+                                                            {
+                                                                <p style="font-weight: 600">Status: Started</p>
+                                                            }
+                                                            else if (ord.OrderDetail_Status == 2)
+                                                            {
+                                                                <p style="font-weight: 600">Status: Complete</p>
+                                                            }
+
+                                                            <div class="col-12">
+                                                                <div class="row">
+                                                                    <div class="dropdown" style="padding-left:0px">
+                                                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                            <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:black"></i>
+                                                                        </a>
+                                                                        <div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
+                                                                            <div class="btn-group dropdown-item" style="padding:0px">
+                                                                                <a onclick="return _Activate(@ord.Id)" href="#" style="font-size:11px" class="btn btn-primary">
+                                                                                    Activate
+                                                                                </a>
+                                                                                <a onclick="return _Activate(@ord.Id)" href="#" style="font-size:11px" class="btn btn-info">
+                                                                                    Complete
+                                                                                </a>
+                                                                                <a href="/Admin/ServiceManagement/Assign_Staff/@ord.Id" style="font-size:11px" class="btn btn-danger">
+                                                                                    Assign
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Data -->
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (item.List_OrderDetail.Count == 2)
+                                                {
+                                                    <div class="col-12 col-md-6">
+                                                        <div class="col-12" style="padding: 0px">
+                                                            <h2>@ord.Service.Service_Name - @ord.Id</h2>
+                                                        </div>
+                                                        <div class="col-12" style="padding: 0px">
+                                                            <!-- Data -->
+                                                            <p style=""><strong>@ord.OrderDetail_DateStart - @ord.OrderDetail_DateEnd</strong></p>
+                                                            <p>Number employee: @ord.OrderDetail_NumberOfPeople</p>
+                                                            @if (ord.OrderDetail_Status == 0)
+                                                            {
+                                                                <p style="font-weight: 600">Status: Pending</p>
+                                                            }
+                                                            else if (ord.OrderDetail_Status == 1)
+                                                            {
+                                                                <p style="font-weight: 600">Status: Started</p>
+                                                            }
+                                                            else if (ord.OrderDetail_Status == 2)
+                                                            {
+                                                                <p style="font-weight: 600">Status: Complete</p>
+                                                            }
+
+
+                                                            <div class="col-6">
+                                                                <div class="row">
+                                                                    <div class="col-4" style="padding-left:0px">
+                                                                        <a onclick="return _Activate(@ord.Id)" href="#" style="font-size:9px" class="btn btn-primary">
+                                                                            Activate
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="col-4" style="padding-left: 5px">
+                                                                        <a onclick="return _Activate(@ord.Id)" href="#" style="font-size:9px" class="btn btn-info">
+                                                                            Complete
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <a href="/Admin/ServiceManagement/Assign_Staff/@ord.Id" style="font-size:9px" class="btn btn-danger">
+                                                                            Assign
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <!-- Data -->
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (item.List_OrderDetail.Count == 1)
+                                                {
+                                                    <div class="col-12 col-md-12">
+                                                        <div class="col-12" style="padding: 0px">
+                                                            <h2>@ord.Service.Service_Name - @ord.Id</h2>
+                                                        </div>
+                                                        <div class="col-12" style="padding: 0px">
+                                                            <!-- Data -->
+                                                            <p style=""><strong>@ord.OrderDetail_DateStart - @ord.OrderDetail_DateEnd</strong></p>
+                                                            <p>Number employee: @ord.OrderDetail_NumberOfPeople</p>
+                                                            @if (ord.OrderDetail_Status == 0)
+                                                            {
+                                                                <p style="font-weight: 600">Status: Pending</p>
+                                                            }
+                                                            else if (ord.OrderDetail_Status == 1)
+                                                            {
+                                                                <p style="font-weight: 600">Status: Started</p>
+                                                            }
+                                                            else if (ord.OrderDetail_Status == 2)
+                                                            {
+                                                                <p style="font-weight: 600">Status: Complete</p>
+                                                            }
+
+
+                                                            <div class="col-6">
+                                                                <div class="row">
+                                                                    <div class="col-4" style="padding-left:0px">
+                                                                        <a onclick="return _Activate(@ord.Id)" href="#" style="font-size:9px" class="btn btn-primary">
+                                                                            Activate
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="col-4" style="padding-left: 5px">
+                                                                        <a onclick="return _Activate(@ord.Id)" href="#" style="font-size:9px" class="btn btn-info">
+                                                                            Complete
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <a href="/Admin/ServiceManagement/Assign_Staff/@ord.Id" style="font-size:9px" class="btn btn-danger">
+                                                                            Assign
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <!-- Data -->
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    }
+</div>
+
+
+<button onclick="topFunction()" style="background-color: transparent" id="btn_top" title="Go to top">
+    <img src="~/Public/Image/up-arrow (1).png" width="50" height="50" />
+
+</button>
+
+<script type="text/javascript">
+    window.onscroll = function () { scrollFunction() };
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("btn_top").style.display = "block";
+        } else {
+            document.getElementById("btn_top").style.display = "none";
+        }
+
+    }
+    function topFunction() {
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+    }
+    function _Activate(Id) {
+        $.ajax({
+            url: "/Admin/ServiceManagement/Activate?ord_id=" + Id,
+            contentType: "application/json;charset=utf-8",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                alert("Activate Succesfull. Please reload to update status");
+            },
+            error: function () {
+                alert("Unsuccessfully !");
+            }
+        });
+    }
+    function _Complete(Id) {
+        $.ajax({
+            url: "/Admin/ServiceManagement/Complete?ord_id=" + Id,
+            contentType: "application/json;charset=utf-8",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                alert("Complete Succesfull. Please reload to update status");
+            },
+            error: function () {
+                alert("Unsuccessfully !");
+            }
+        });
+    }
+    function _search() {
+        var key_search = $('#key_search').val().toLowerCase().trim();
+        var all_info = $('.all_info');
+        $.each(all_info, function () {
+            var info = $(this).text().toLowerCase();
+            if (info.includes(key_search) == false) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
+        if (key_search == "") {
+            $('.all_info').parent().show();
+        }
+    }
+</script>

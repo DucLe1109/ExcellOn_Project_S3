@@ -73,7 +73,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
             OrderDetail ord = db.OrderDetails.Where(x => x.Id == ord_id).FirstOrDefault();
             List<Staff> list_staff_free = orderDetail_Function.Take_List_Staff_Free(ord.Id);
-            var list_staff_append = (from x in list_staff_free select x).Skip(list_staff_was_append_count).Take(21);
+            var list_staff_append = (from x in list_staff_free select x).Skip(list_staff_was_append_count).Take(2);
             List<StaffViewModel> list_staff_vmd_free_append = new List<StaffViewModel>();
             foreach (var item in list_staff_append)
             {
@@ -94,7 +94,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 list_staff_vmd_free_append.Add(_new);
             }
 
-            if (list_staff_vmd_free_append.Count < 21)
+            if (list_staff_vmd_free_append.Count < 2)
             {
                 list_appendedStaff.isLoadMore = false;
                 list_appendedStaff.list_staff_append = list_staff_vmd_free_append;
@@ -287,12 +287,48 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return Json("/Admin/ServiceManagement/Assign_Staff/" + ord_id, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult Activate(int ord_id)
+        {
+            OrderDetail orderDetail = db.OrderDetails.Where(x => x.Id == ord_id).FirstOrDefault();
+            if (orderDetail != null)
+            {
+                orderDetail.OrderDetail_Status = 1;
+            }
+            db.SaveChanges();
+            return Json(orderDetail.Id, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult Complete(int ord_id)
+        {
+            OrderDetail orderDetail = db.OrderDetails.Where(x => x.Id == ord_id).FirstOrDefault();
+            if (orderDetail != null)
+            {
+                orderDetail.OrderDetail_Status = 2;
+            }
+            db.SaveChanges();
+            return Json(orderDetail.Id, JsonRequestBehavior.AllowGet);
+        }
+        
+        [HttpGet]
+        public JsonResult Reset(int ord_id)
+        {
+            OrderDetail orderDetail = db.OrderDetails.Where(x => x.Id == ord_id).FirstOrDefault();
+            if (orderDetail != null)
+            {
+                orderDetail.OrderDetail_Status = 0;
+            }
+            db.SaveChanges();
+            return Json(orderDetail.Id, JsonRequestBehavior.AllowGet);
+        }
+
         [HasPermission(Permission = "OrderDetail_List")]
         [HttpGet]
         public JsonResult GetOrderDetail(int Service_ID)
         {
 
-            List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.ServiceId == Service_ID).ToList();
+            List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.ServiceId == Service_ID && x.OrderDetail_Status != 3).OrderBy(x=>x.OrderDetail_Status).ToList();
             List<OrderDetailViewModel> list_ord_vm = new List<OrderDetailViewModel>();
             foreach (var item in list_ord)
             {

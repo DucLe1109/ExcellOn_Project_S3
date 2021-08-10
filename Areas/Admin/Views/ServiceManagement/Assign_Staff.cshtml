@@ -35,10 +35,17 @@
             <div class="container">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-3 mr-auto">
+                                <label>
+                                    <input type="checkbox" id="checkall" /> Select <span class="Count_Check"></span>
+                                </label>
+                            </div>
+                            <div class="col-5 ml-auto">
+                                <input class="form-control" onkeyup="return _search()" id="key_search" placeholder="Search" style="height: 80%;margin-top: 3px" type="text" />
+                            </div>
 
-                        <label>
-                            <input type="checkbox" id="checkall" /> Select <span class="Count_Check"></span>
-                        </label>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -50,17 +57,19 @@
                                             <span class="circle-image">
                                                 <img src="@item.Staff_Avatar" />
                                             </span>
-                                            &nbsp; @item.Staff_FullName
-                                            @if (item.Staff_Status == 0)
-                                            {<span style="margin-left:10px" class="badge badge-dot">
-                                                    <i class="bg-warning"></i>
-                                                    <span>Training</span>
-                                                </span>}
-                                            else
-                                            {<span style="margin-left:10px" class="badge badge-dot">
-                                                    <i class="bg-info"></i>
-                                                    <span>Professionnal</span>
-                                                </span>}
+                                            <span style="margin-left: 10px" class="info_staff">
+                                                @item.Staff_FullName
+                                                @if (item.Staff_Status == 0)
+                                                {<span style="margin-left:10px" class="badge badge-dot">
+                                                        <i class="bg-warning"></i>
+                                                        <span>Training</span>
+                                                    </span>}
+                                                else
+                                                {<span style="margin-left:10px" class="badge badge-dot">
+                                                        <i class="bg-info"></i>
+                                                        <span>Professionnal</span>
+                                                    </span>}
+                                            </span>
                                         </label>}
                                     @if (list_staff_append != null)
                                     {
@@ -71,17 +80,19 @@
                             <span class="circle-image">
                                 <img src="@item.Staff_Avatar" />
                             </span>
-                            &nbsp; @item.Staff_FullName
-                            @if (item.Staff_Status == 0)
-                            {<span style="margin-left:10px" class="badge badge-dot">
-                                    <i class="bg-warning"></i>
-                                    <span>Training</span>
-                                </span>}
-                            else
-                            {<span style="margin-left:10px" class="badge badge-dot">
-                                    <i class="bg-info"></i>
-                                    <span>Professionnal</span>
-                                </span>}
+                            <span style="margin-left: 10px" class="info_staff">
+                                @item.Staff_FullName
+                                @if (item.Staff_Status == 0)
+                                {<span style="margin-left:10px" class="badge badge-dot">
+                                        <i class="bg-warning"></i>
+                                        <span>Training</span>
+                                    </span>}
+                                else
+                                {<span style="margin-left:10px" class="badge badge-dot">
+                                        <i class="bg-info"></i>
+                                        <span>Professionnal</span>
+                                    </span>}
+                            </span>
                         </label>}
                 }
                                 </div>
@@ -90,7 +101,7 @@
 
                         <div class="row">
                             <div class="ml-auto" style="padding:15px">
-                                <button onclick="return _LoadMore()" class="btn btn-info loadmore"> Load more </button>
+                                <button onclick="return _LoadMore()" class="ml- auto btn btn-info loadmore"> Load more </button>
                             </div>
                         </div>
 
@@ -100,6 +111,8 @@
                                 <button type="button" onclick="return _SubmitAssignment()" class="btn btn-success">Submit</button>
                             </div>
                         </div>
+
+                        
                         @*<div class="col-md-6">
                                 <ul id="pages">
                                     <li class="pageInfo">Page 1 of 3</li>
@@ -131,11 +144,15 @@
 </div>
 
 
+<button onclick="topFunction()" style="background-color:transparent" id="btn_top" title="Go to top">
+    <img src="~/Public/Image/up-arrow (1).png" width="50" height="60" />
+</button>
 
 @section css{
     <link href="~/Areas/Admin/Public/Plugin_Table_HD/css/paging.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/css/panel.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/css/choose_staff.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/button_move_top.css" rel="stylesheet" />
 }
 
 @section js{
@@ -153,18 +170,31 @@
                 type: "GET",
                 dataType: "json",
                 success: function (result) {
+                    var count = parseInt(result.list_staff_append.length) + parseInt($('#list_staff_was_append_count').val());
+                    $('#list_staff_was_append_count').val(count);
+                    var html = '';
                     if (result.isLoadMore == false) {
                         $('.loadmore').hide();
-                        var html = '';
                         result.list_staff_append.forEach(value => {
-
                             html +=
                                 ' <label class="select__item">                           ' +
                                 '     <input onclick="return _CountChecked()" type="checkbox" value="' + value.Id + '" class="checkitem"> ' +
                                 '     <span class="circle-image">                        ' +
                                 '         <img src="' + value.Staff_Avatar + '" />                                 ' +
                                 '     </span>                                            ' +
-                            '     &nbsp;   ' + value.Staff_FullName + (value.Id == 0 ? '<span style="margin-left:10px" class="badge badge-dot"><i class="bg-warning"></i><span>Training</span></span>' : '<span style="margin-left:10px" class="badge badge-dot"><i class="bg-info"></i><span>Professional</span></span>')+ 
+                                '     <span style="margin-left: 10px" class="info_staff"> ' + value.Staff_FullName + (value.Id == 0 ? '<span class="badge badge-dot"><i class="bg-warning"></i><span>Training</span></span></span>' : '<span style="margin-left:10px" class="badge badge-dot"><i class="bg-info"></i><span>Professional</span></span></span>') +
+                                ' </label>                                               ';
+                        });
+                        $('.select').append(html);
+                    } else {
+                        result.list_staff_append.forEach(value => {
+                            html +=
+                                ' <label class="select__item">                           ' +
+                                '     <input onclick="return _CountChecked()" type="checkbox" value="' + value.Id + '" class="checkitem"> ' +
+                                '     <span class="circle-image">                        ' +
+                                '         <img src="' + value.Staff_Avatar + '" />                                 ' +
+                                '     </span>                                            ' +
+                                '     <span style="margin-left: 10px" class="info_staff"> ' + value.Staff_FullName + (value.Id == 0 ? '<span class="badge badge-dot"><i class="bg-warning"></i><span>Training</span></span></span>' : '<span style="margin-left:10px" class="badge badge-dot"><i class="bg-info"></i><span>Professional</span></span></span>') +
                                 ' </label>                                               ';
                         });
                         $('.select').append(html);
@@ -214,8 +244,34 @@
                 alert("The number of staff is greater than necessary number of employee !");
             }
         }
+        window.onscroll = function () { scrollFunction() };
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("btn_top").style.display = "block";
+            } else {
+                document.getElementById("btn_top").style.display = "none";
+            }
 
-         // Đã fix được bug sau khi next hoặc previous trang bị mất checked. (bằng cách đưa những checked vào session và chia các trường hợp thêm checked or bớt checked )
+        }
+        function topFunction() {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+        }
+        function _search() {
+            var key_search = $('#key_search').val().toLowerCase().trim();
+            var info_staff = $('.info_staff');
+            $.each(info_staff, function () {
+                var info = $(this).text().toLowerCase();
+                if (info.includes(key_search) == false) {
+                    $(this).parent().hide();
+                } else {
+                    $(this).parent().show();
+                }
+            });
+            if (key_search == "") {
+                $('.info_staff').parent().show();
+            }
+        }
+        // Đã fix được bug sau khi next hoặc previous trang bị mất checked. (bằng cách đưa những checked vào session và chia các trường hợp thêm checked or bớt checked )
         //function _LoadData(current_page, ord_id, total_page) {
         //    // Gửi list id của những staff đã được check. (Fix bug sau khi đổi trang bị mất những staff đã check)
         //    var input_checked = $('input[type="checkbox"][class="checkitem"]:checked');

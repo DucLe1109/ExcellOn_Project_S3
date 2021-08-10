@@ -11,8 +11,16 @@
 <nav class="navbar navbar-top navbar-expand" style="border-bottom: solid 2px; border-top: solid 2px">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <div onclick="return _HideShowNav()" style="cursor:pointer" id="nav_hide_show">
+                <div class="sidenav-toggler-inner">
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                </div>
+            </div>
             <!-- Search form -->
-            <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+            <form class="navbar-search navbar-search-dark form-inline" style="margin-left: 35px" id="navbar-search-main">
                 <div class="form-group mb-0">
                     <div class="input-group input-group-alternative input-group-merge">
                         <div class="input-group-prepend">
@@ -65,13 +73,8 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default  dropdown-menu-right ">
                         <div class="row shortcuts px-4">
-                            <a href="#!" class="col-4 shortcut-item">
-                                <span class="shortcut-media avatar rounded-circle bg-gradient-red">
-                                    <i class="ni ni-calendar-grid-58"></i>
-                                </span>
-                                <small>Calendar</small>
-                            </a>
-                            <a href="#!" class="col-4 shortcut-item">
+                            
+                            <a href="#" onclick="return _Customer()" class="col-4 shortcut-item">
                                 <span class="shortcut-media avatar rounded-circle bg-gradient-orange">
                                     <i class="ni ni-email-83"></i>
                                 </span>
@@ -83,24 +86,14 @@
                                 </span>
                                 <small>Payments</small>
                             </a>
-                            <a href="#!" class="col-4 shortcut-item">
-                                <span class="shortcut-media avatar rounded-circle bg-gradient-green">
-                                    <i class="ni ni-books"></i>
-                                </span>
-                                <small>Reports</small>
-                            </a>
+                            
                             <a href="#!" class="col-4 shortcut-item">
                                 <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
                                     <i class="ni ni-pin-3"></i>
                                 </span>
                                 <small>Maps</small>
                             </a>
-                            <a href="#!" class="col-4 shortcut-item">
-                                <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
-                                    <i class="ni ni-basket"></i>
-                                </span>
-                                <small>Shop</small>
-                            </a>
+                           
                         </div>
                     </div>
                 </li>
