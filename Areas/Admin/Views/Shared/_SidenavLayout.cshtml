@@ -1,6 +1,5 @@
 ﻿@{ List<string> list_permission = (List<string>)Session["ListPermission"];
-    List<string> list_role = (List<string>)Session["ListRole"];
-}
+    List<string> list_role = (List<string>)Session["ListRole"]; }
 <style>
     .nav-link {
         cursor: pointer;
@@ -14,8 +13,9 @@
     <div class="scrollbar-inner">
         <!-- Brand -->
         <div class="sidenav-header  align-items-center" style="z-index:2">
-            <a class="navbar-brand" href="javascript:void(0)">
-                <img src="~/Areas/Admin/Public/img/brand/blue.png" class="navbar-brand-img" alt="...">
+            <a class="navbar-brand" href="javascript:void(0)" style="padding-top: 23px!important;padding-left:0px;padding-bottom:22px;border-bottom: 1px solid white">
+                <img src="/Public/Image/th (12).jfif" class="navbar-brand-img rounded-circle" width="40" alt="...">
+                <span style="margin-left: 20px;color: fuchsia;font-weight: 800">EXCELL ON</span>
             </a>
         </div>
         <div class="navbar-inner" style="z-index:2">
@@ -23,7 +23,6 @@
             <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                 <!-- Nav items -->
                 <ul class="navbar-nav">
-
                     @if (list_permission.Contains("Admin") || list_role.Contains("Admin"))
                     {
         <li class="nav-item">
@@ -32,31 +31,6 @@
                 <span class="nav-link-text">Dashboard</span>
             </a>
         </li>}
-                    @if (list_role != null)
-                    {
-        <li class="nav-item">
-            <a class="nav-link MyProfile" onclick="return _Profile()">
-                <i class="ni ni-single-02 text-yellow"></i>
-                <span class="nav-link-text">My Profile</span>
-            </a>
-        </li>}
-                    @if (list_permission.Contains("Customer_List") || list_role.Contains("Admin"))
-                    {
-        <li class="nav-item">
-            <a class="nav-link CustomerIndex" onclick="return _Customer()">
-                <i class="ni ni-planet text-orange"></i>
-                <span class="nav-link-text">Customer</span>
-            </a>
-        </li>}
-                    @if (list_permission.Contains("Company_List") || list_role.Contains("Admin"))
-                    {
-        <li class="nav-item">
-            <a class="nav-link CompanyIndex" onclick="return _Company()">
-                <i class="fa fa-building-o" style="color:aqua" aria-hidden="true"></i>
-                <span class="nav-link-text">Company</span>
-            </a>
-        </li>
-}
                     @if (list_permission.Contains("Service_List") || list_role.Contains("Admin"))
                     {
         <li class="nav-item">
@@ -93,7 +67,23 @@
             </a>
         </li>
 }
-
+                    @if (list_permission.Contains("Customer_List") || list_role.Contains("Admin"))
+                    {
+        <li class="nav-item">
+            <a class="nav-link CustomerIndex" onclick="return _Customer()">
+                <i class="ni ni-planet text-orange"></i>
+                <span class="nav-link-text">Customer</span>
+            </a>
+        </li>}
+                    @if (list_permission.Contains("Company_List") || list_role.Contains("Admin"))
+                    {
+        <li class="nav-item">
+            <a class="nav-link CompanyIndex" onclick="return _Company()">
+                <i class="fa fa-building-o" style="color:aqua" aria-hidden="true"></i>
+                <span class="nav-link-text">Company</span>
+            </a>
+        </li>
+}
                     @if (list_permission.Contains("Image_List") || list_permission.Contains("Service_List") || list_role.Contains("Admin"))
                     {
         <li class="nav-item">
@@ -103,6 +93,14 @@
             </a>
         </li>
 }
+                    @if (list_role != null)
+                    {
+        <li class="nav-item">
+            <a class="nav-link MyProfile" onclick="return _Profile()">
+                <i class="ni ni-single-02 text-yellow"></i>
+                <span class="nav-link-text">My Profile</span>
+            </a>
+        </li>}
 
                     @if (list_role.Contains("Admin"))
                     {

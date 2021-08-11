@@ -33,7 +33,8 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return View(list_service);
 
         }
-        //
+
+        [HasPermission(Permission = "OrderDetail_Assign")]
         public ActionResult Assign_Staff(int id)
         {
             OrderDetail ord = db.OrderDetails.Where(x => x.Id == id).FirstOrDefault();
@@ -66,6 +67,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return View(ord);
         }
 
+        [HasPermission(Permission = "OrderDetail_Assign")]
         [HttpGet]
         public JsonResult LoadMore(int ord_id, int list_staff_was_append_count)
         {
@@ -257,6 +259,8 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         //    return Json(getItemObj_Return, JsonRequestBehavior.AllowGet);
         //}
 
+        [HasPermission(Permission = "OrderDetail_Assign")]
+        [HttpPost]
         public JsonResult SubmitAssignment(AssignmentSubmitViewModel request)
         {
             int ord_id = request.orderdetail_id;
@@ -287,6 +291,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return Json("/Admin/ServiceManagement/Assign_Staff/" + ord_id, JsonRequestBehavior.AllowGet);
         }
 
+        [HasPermission(Permission = "OrderDetail_Activate")]
         [HttpGet]
         public JsonResult Activate(int ord_id)
         {
@@ -299,6 +304,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return Json(orderDetail.Id, JsonRequestBehavior.AllowGet);
         }
 
+        [HasPermission(Permission = "OrderDetail_Complete")]
         [HttpGet]
         public JsonResult Complete(int ord_id)
         {
@@ -310,7 +316,8 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             db.SaveChanges();
             return Json(orderDetail.Id, JsonRequestBehavior.AllowGet);
         }
-        
+
+        [HasPermission(Permission = "OrderDetail_Reset")]
         [HttpGet]
         public JsonResult Reset(int ord_id)
         {
@@ -355,6 +362,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
 
         }
+
         [HasPermission(Permission = "Service_Add")]
         public ActionResult Add_Submit(Service request, HttpPostedFileBase FeatureImage, HttpPostedFileBase[] Service_AdditionalImage)
         {
@@ -400,6 +408,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
 
         }
+
         [HasPermission(Permission = "Service_Edit")]
         public ActionResult Edit_Submit(Service request, HttpPostedFileBase FeatureImage, HttpPostedFileBase[] Service_AdditionalImage)
         {
@@ -465,6 +474,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
 
         }
+
         [HasPermission(Permission = "Service_Edit")]
         public ActionResult Edit(int id)
         {

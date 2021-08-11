@@ -70,14 +70,9 @@
                                             <input type="password" required name="User_Password" class="form-control form-control-alternative">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group focused">
-                                            <label class="form-control-label" for="input-city">Age</label>
-                                            <input type="number" required name="User_Age" class="form-control form-control-alternative">
-                                        </div>
-                                    </div>
+                                   
 
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-address">Department</label>
                                             <select name="RoleId[]" class="select" multiple>
@@ -91,11 +86,11 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group focused">
                                             <label class="form-control-label" style="margin-bottom: 20px" for="input-address">Gender</label>
                                             <div>
-                                                <span style="margin-right: 150px">
+                                                <span style="margin-right: 100px">
                                                     <input type="radio" name="User_Gender" value="0">
                                                     <label class="form-control-label" for="input-last-name">Male</label>
                                                 </span>
@@ -106,7 +101,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-lg-2">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-city">Age</label>
+                                            <input type="number" required name="User_Age" class="form-control form-control-alternative">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-address">Address</label>
                                             <input name="User_Address" required class="form-control form-control-alternative" type="text">
@@ -147,6 +148,15 @@
     <style>
         .select2-container--default .select2-selection--multiple .select2-selection__choice {
             color: black !important;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--multiple, .select2-container--default .select2-selection--multiple {
+            height: 45px;
+            min-height: 40px;
+        }
+
+        span {
+            padding-top: 4px !important;
         }
     </style>
 }

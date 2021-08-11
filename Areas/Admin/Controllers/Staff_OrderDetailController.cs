@@ -1,4 +1,5 @@
-﻿using _ExcellOn_.Models;
+﻿using _ExcellOn_.Areas.Admin.Model;
+using _ExcellOn_.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
     {
         private Entities db = new Entities();
         // GET: Admin/Staff_OrderDetail
+        [HasPermission(Permission = "OrderDetail_List")]
         public ActionResult Staff_OrderDetailIndex()
         {
             var list_staff_orderdetail = db.Staff_OrderDetail.ToList();

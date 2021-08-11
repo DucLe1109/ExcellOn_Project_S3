@@ -170,6 +170,7 @@
     <Compile Include="Areas\Admin\ViewModel\GetItemObj_Return.cs" />
     <Compile Include="Areas\Admin\ViewModel\LoginViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\OrderDetailViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\OrderFilterViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\Order_OrderDetail.cs" />
     <Compile Include="Areas\Admin\ViewModel\RoleViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\SendEmailModel.cs" />
@@ -3039,13 +3040,13 @@
     <Content Include="Areas\Admin\Views\UserManagement\UserIndex.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\Add.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminHome\StartIndex.cshtml" />
     <Content Include="Areas\Admin\Views\CompanyManagement\CompanyIndex2.cshtml" />
     <Content Include="Areas\Admin\Views\ServiceManagement\Assign_Staff.cshtml" />
     <Content Include="Areas\Admin\Public\Plugin_Table_HD\js\jquery-1.10.2.min.map" />
-    <Content Include="Areas\Admin\Views\OrderManagement\OrderIndex.cshtml" />
-    <Content Include="Areas\Admin\Views\_404_.cshtml" />
     <Content Include="Areas\Admin\Views\OrderManagement\OrderIndex2.cshtml" />
+    <Content Include="Areas\Admin\Views\_404_.cshtml" />
+    <Content Include="Areas\Admin\Views\OrderManagement\OrderIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminHome\StartIndex.cshtml" />
     <None Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1-vsdoc.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.min.js" />
@@ -3226,7 +3227,11 @@
     <Content Include="Public\Image\Blog-Post-Graphic-How-to-design-the-perfect-MMS_gif.gif" />
     <Content Include="Public\Image\card-1.jpg" />
     <Content Include="Public\Image\city.jpg" />
+    <Content Include="Public\Image\logo-small.png" />
+    <Content Include="Public\Image\logo_sidenav.png" />
+    <Content Include="Public\Image\modern-company-logo-design-vector.jpg" />
     <Content Include="Public\Image\OIP.jfif" />
+    <Content Include="Public\Image\porsche-logo-950x1100.png" />
     <Content Include="Public\Image\sidebar-1.jpg" />
     <Content Include="Public\Image\sidebar-2.jpg" />
     <Content Include="Public\Image\sidebar-3.jpg" />
@@ -3770,7 +3775,6 @@
     <Content Include="Areas\Admin\Views\Shared\_MainLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_TopnavLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_SidenavLayout.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminHome\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\MyProfile.cshtml" />
     <Content Include="Areas\Admin\Views\CustomerManagement\CustomerIndex.cshtml" />
     <Content Include="Areas\Admin\Views\CompanyManagement\CompanyIndex.cshtml" />

@@ -10,18 +10,19 @@ using System.Web.Mvc;
 
 namespace _ExcellOn_.Areas.Admin.Controllers
 {
-    public class OrderManagementController : Controller
+    public class OrderManagementController : BaseController
     {
         private Entities db = new Entities();
         private OrderDetail_Function orderDetail_Function = new OrderDetail_Function();
 
+        [HasPermission(Permission = "Order_List")]
         public ActionResult OrderIndex()
         {
             //List<Order> list_or = db.Orders.Where(x=>x.Order_Status != 3).ToList();
             //return View(list_or);
             List<Order_OrderDetail> list_order_orderdetail = new List<Order_OrderDetail>();
 
-            List<Order> list_or = db.Orders.Where(x => x.Order_Status != 3).OrderBy(x=>x.Order_DateCreate).ToList();
+            List<Order> list_or = db.Orders.Where(x => x.Order_Status != 3).OrderByDescending(x=>x.Order_DateCreate).ToList();
             foreach (var item in list_or)
             {
                 Order_OrderDetail _new = new Order_OrderDetail();
@@ -33,8 +34,69 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 }
                 list_order_orderdetail.Add(_new);
             }
+            List<int> List_Order_Status_Id = new List<int>();
+            List_Order_Status_Id.Add(0);
+            List_Order_Status_Id.Add(1);
+            List_Order_Status_Id.Add(2);
             ViewBag.list_order_orderdetail = list_order_orderdetail;
-            return View("/Areas/Admin/Views/OrderManagement/OrderIndex2.cshtml");
+            ViewBag.List_Order_Status_Id = List_Order_Status_Id;
+            return View();
+        }
+
+        public ActionResult Filter(OrderFilterViewModel request)
+        {
+            List<Order_OrderDetail> list_order_orderdetail = new List<Order_OrderDetail>();
+            List<Order> list_or = new List<Order>();
+            List<int> List_Order_Status_Id = request.List_Order_Status_Id;
+            if (List_Order_Status_Id != null && List_Order_Status_Id.Count > 0)
+            {
+                foreach (var Id in List_Order_Status_Id)
+                {
+                    List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderByDescending(x=>x.Order_DateCreate).ToList();
+                    if (list_order != null)
+                    {
+                        foreach (var order in list_order)
+                        {
+                            list_or.Add(order);
+                        }
+                    }
+                }
+                foreach (var item in list_or)
+                {
+                    Order_OrderDetail _new = new Order_OrderDetail();
+                    _new.Orders = item;
+                    List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id && x.OrderDetail_Status != 3).ToList();
+                    if (list_ord != null)
+                    {
+                        _new.List_OrderDetail = list_ord;
+                    }
+                    list_order_orderdetail.Add(_new);
+                }
+                ViewBag.list_order_orderdetail = list_order_orderdetail;
+                ViewBag.List_Order_Status_Id = List_Order_Status_Id;
+                return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
+            }
+            else
+            {
+                List<Order_OrderDetail> list_order_orderdetail2 = new List<Order_OrderDetail>();
+
+                List<Order> list_or2 = db.Orders.Where(x => x.Order_Status != 3).OrderByDescending(x => x.Order_DateCreate).ToList();
+                foreach (var item in list_or2)
+                {
+                    Order_OrderDetail _new = new Order_OrderDetail();
+                    _new.Orders = item;
+                    List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id && x.OrderDetail_Status != 3).ToList();
+                    if (list_ord != null)
+                    {
+                        _new.List_OrderDetail = list_ord;
+                    }
+                    list_order_orderdetail2.Add(_new);
+                }
+                
+                ViewBag.list_order_orderdetail = list_order_orderdetail2;
+                ViewBag.List_Order_Status_Id = List_Order_Status_Id;
+                return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
+            }
         }
 
         [HttpPost]
@@ -464,18 +526,76 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             }
         }
 
+        [HasPermission(Permission = "Order_Delete")]
         [HttpGet]
         public JsonResult Delete(int OrderId)
         {
             Order order = db.Orders.Where(x => x.Id == OrderId).FirstOrDefault();
             List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == order.Id).ToList();
-            foreach (var item in list_ord)
+            if (list_ord != null)
             {
-                item.OrderDetail_Status = 3;
+                foreach (var item in list_ord)
+                {
+                    item.OrderDetail_Status = 3;
+                }
             }
             order.Order_Status = 3;
             db.SaveChanges();
             return Json("Delete successfully", JsonRequestBehavior.AllowGet);
+        }
+        
+        [HasPermission(Permission = "Order_Activate")]
+        [HttpGet]
+        public JsonResult Activate(int OrderId)
+        {
+            Order order = db.Orders.Where(x => x.Id == OrderId).FirstOrDefault();
+            List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == order.Id).ToList();
+            if (list_ord != null)
+            {
+                foreach (var item in list_ord)
+                {
+                    item.OrderDetail_Status = 1;
+                }
+            }
+            order.Order_Status = 1;
+            db.SaveChanges();
+            return Json("Activate successfully", JsonRequestBehavior.AllowGet);
+        }
+
+        [HasPermission(Permission = "Order_Complete")]
+        [HttpGet]
+        public JsonResult Complete(int OrderId)
+        {
+            Order order = db.Orders.Where(x => x.Id == OrderId).FirstOrDefault();
+            List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == order.Id).ToList();
+            if (list_ord != null)
+            {
+                foreach (var item in list_ord)
+                {
+                    item.OrderDetail_Status = 2;
+                }
+            } 
+            order.Order_Status = 2;
+            db.SaveChanges();
+            return Json("Complete successfully", JsonRequestBehavior.AllowGet);
+        }
+
+        [HasPermission(Permission = "Order_Complete")]
+        [HttpGet]
+        public JsonResult Reset(int OrderId)
+        {
+            Order order = db.Orders.Where(x => x.Id == OrderId).FirstOrDefault();
+            List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == order.Id).ToList();
+            if (list_ord != null)
+            {
+                foreach (var item in list_ord)
+                {
+                    item.OrderDetail_Status = 0;
+                }
+            }
+            order.Order_Status = 0;
+            db.SaveChanges();
+            return Json("Reset successfully", JsonRequestBehavior.AllowGet);
         }
     }
 }

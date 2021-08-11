@@ -52,18 +52,24 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             if (request != null && request.List_Permission_Id != null)
             {
                 List<PermissionRole> list_permissionRole = db.PermissionRoles.Where(x => x.RoleId == request.RoleId).ToList();
+                List<int> List_Permission_Id = request.List_Permission_Id;
                 foreach (var item in list_permissionRole)
                 {
-                    db.PermissionRoles.Remove(item);
+                    if (List_Permission_Id.Contains((int)item.PermissionId) == false)
+                    {
+                        db.PermissionRoles.Remove(item);
+                    }
                 }
-                int[] List_Permission_Id = request.List_Permission_Id;
-                int RoleId = request.RoleId;
-                for (int i = 0; i < List_Permission_Id.Length; i++)
+                
+                foreach(var item in List_Permission_Id)
                 {
-                    PermissionRole new_permissionRole = new PermissionRole();
-                    new_permissionRole.RoleId = RoleId;
-                    new_permissionRole.PermissionId = List_Permission_Id[i];
-                    db.PermissionRoles.Add(new_permissionRole);
+                    if (list_permissionRole.Exists(x=>x.PermissionId == item) == false)
+                    {
+                        PermissionRole _new = new PermissionRole();
+                        _new.PermissionId = item;
+                        _new.RoleId = request.RoleId;
+                        db.PermissionRoles.Add(_new);
+                    }
                 }
                 db.SaveChanges();
                 TempData["message"] = "Change Successfully !";

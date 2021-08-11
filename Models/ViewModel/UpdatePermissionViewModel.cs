@@ -8,6 +8,6 @@ namespace _ExcellOn_.Models.ViewModel
     public class UpdatePermissionViewModel
     {
         public int RoleId { get; set; }
-        public int[] List_Permission_Id { get; set; }
+        public List<int> List_Permission_Id { get; set; }
     }
 }
