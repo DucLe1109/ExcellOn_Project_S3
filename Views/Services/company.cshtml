@@ -16,35 +16,125 @@
             </div>
             <div class="content-sec-11">
               
-                    <div class="row">
-                        <div class="col-lg-12">
-                            @foreach (var i in Model)
+                <div class="row">
+                    @foreach (var i in Model)
+                    { 
+                        <div class="col-lg-4 col-md-6">
 
-                            {
-                                <div class="services-single d-flex p-sm-5 p-4">
-                                    <div class="service-icon mr-sm-4 mr-3">
-                                        <span class="fa fa-headphones" aria-hidden="true"></span>
-                                    </div>
-                                    <div class="services-content">
-                                        <h5><a href="services.html">@i.Company_Name</a></h5>
-                                        <p>
-                                            @i.Company_Address
-                                        </p>
-                                        <a href="#services" class="btn read-button d-flex align-items-center mt-4 p-0">
-                                            Read
-                                            More<i class="fa fa-angle-double-right ml-1" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
+
+                            
+                            <div class="services-single d-flex p-sm-5 p-4">
+                                <div class="service-icon mr-sm-4 mr-3">
+                                    <span class="fa fa-headphones" aria-hidden="true"></span>
                                 </div>
-                            }
+                                <div class="services-content">
+                                    <h5><a href="services.html">@i.Company_Name</a></h5>
+                                    <p style=" margin: 0 0 10px; font-size: 14px; font-weight: 400; color: #666; display: block; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 8; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; text-align: center;">
+                                        @i.Company_Description
+                                    </p>
+                                    <a href="#services" class="btn read-button d-flex align-items-center mt-4 p-0">
+                                        Read
+                                        More<i class="fa fa-angle-double-right ml-1" aria-hidden="true"></i>
+                                    </a>
+                                </div>
                             </div>
+                            
+                        </div>
+                        }
+
+                </div>
+                   
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+@*<section class="w3l-content-11-main">
+    <div class="content-design-11 py-5">
+        <div class="container py-md-5 py-4">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="section-heading text-center mb-sm-5 mb-4">
+                        <h3 class="title-style mb-2">We Provide Best Services</h3>
+                        <p class="lead">
+                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque,
+                            eaque ipsa quae ab illo inventore.
+                        </p>
                     </div>
-                
+                </div>
+            </div>
+            <div class="content-sec-11">
+                <div class="row">
+                    <div class="col-lg-6">
+                        
+                        </div>
+                   
+                    <div class="col-lg-6">
+                        <div class="services-single d-flex p-sm-5 p-4">
+                            <div class="service-icon mr-sm-4 mr-3">
+                                <span class="fa fa-bullhorn" aria-hidden="true"></span>
+                            </div>
+                            <div class="services-content">
+                                <h5><a href="services.html">Debt Collection</a></h5>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas magna at
+                                    porttitor vehicula nullam augue ipsum dolor.
+                                </p>
+                                <a href="#services" class="btn read-button d-flex align-items-center mt-4 p-0">
+                                    Read
+                                    More<i class="fa fa-angle-double-right ml-1" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="services-single d-flex p-sm-5 p-4">
+                            <div class="service-icon mr-sm-4 mr-3">
+                                <span class="fa fa-volume-control-phone" aria-hidden="true"></span>
+                            </div>
+                            <div class="services-content">
+                                <h5><a href="services.html">Lead Generation</a></h5>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas magna at
+                                    porttitor vehicula nullam augue ipsum dolor.
+                                </p>
+                                <a href="#services" class="btn read-button d-flex align-items-center mt-4 p-0">
+                                    Read
+                                    More<i class="fa fa-angle-double-right ml-1" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="services-single d-flex p-sm-5 p-4">
+                            <div class="service-icon mr-sm-4 mr-3">
+                                <span class="fa fa-handshake-o" aria-hidden="true"></span>
+                            </div>
+                            <div class="services-content">
+                                <h5><a href="services.html">IT Development</a></h5>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas magna at
+                                    porttitor vehicula nullam augue ipsum dolor.
+                                </p>
+                                <a href="#services" class="btn read-button d-flex align-items-center mt-4 p-0">
+                                    Read
+                                    More<i class="fa fa-angle-double-right ml-1" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-md-5 mt-4 text-center">
+                    <a class="btn btn-style-white btn-style-primary" href="services.html">Learn More Services</a>
+                </div>
             </div>
         </div>
     </div>
 </section>
-
+*@
 
 
 

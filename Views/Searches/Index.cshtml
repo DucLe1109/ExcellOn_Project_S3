@@ -1,0 +1,123 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/Manh/search/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="~/Content/Manh/search/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="~/Content/Manh/search/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/Content/Manh/search/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+    <link href="~/Content/Manh/search/css/main.css" rel="stylesheet" media="all">
+</head>
+<body>
+
+    @{
+        Layout = null;
+    }
+
+
+
+    <!-- Main CSS-->
+    
+    <div id="search" class="pop-overlay">
+        <div class="page-wrapper bg-img-1 p-t-200 p-b-120">
+            <div class="wrapper wrapper--w900">
+                <div class="card card-4">
+                    <div class="card-body">
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab1">
+                                <form method="POST" action="#">
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <label class="label">check-in:</label>
+                                                <input class="input--style-1" type="text" name="check-in" placeholder="mm/dd/yyyy" id="input-start">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <label class="label">check-out:</label>
+                                                <input class="input--style-1" type="text" name="check-out" placeholder="mm/dd/yyyy" id="input-end">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <label class="label">services:</label>
+                                                <div class="input-group-icon" id="js-select-special">
+                                                    <input class="input--style-1 input--style-1-small" type="text" name="traveller" value="1 Adult, 0 Children, 1 Room" disabled="disabled" id="info">
+                                                    <i class="zmdi zmdi-chevron-down input-icon"></i>
+                                                </div>
+                                                <div class="dropdown-select">
+                                                    <ul class="list-room">
+                                                        <li class="list-room__item">
+                                                            <span class="list-room__name">Room 1</span>
+                                                            <ul class="list-person">
+                                                                <li class="list-person__item">
+                                                                    <span class="name">Adults</span>
+                                                                    <div class="quantity quantity1">
+                                                                        <span class="minus">-</span>
+                                                                        <input class="inputQty" type="number" min="0" value="1">
+                                                                        <span class="plus">+</span>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="list-person__item">
+                                                                    <span class="name">Children</span>
+                                                                    <div class="quantity quantity2">
+                                                                        <span class="minus">-</span>
+                                                                        <input class="inputQty" type="number" min="0" value="0">
+                                                                        <span class="plus">+</span>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="list-room__footer">
+                                                        <a href="#" id="btn-add-room">Add room</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <button class="btn-submit" type="submit">search</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="close" href="#close">×</a>
+    </div>
+    <!-- //search popup -->
+
+
+</body>
+</html>
+<!-- Jquery JS-->
+<script src="~/Content/Manh/search/vendor/jquery/jquery.min.js"></script>
+<!-- Vendor JS-->
+<script src="~/Content/Manh/search/vendor/select2/select2.min.js"></script>
+<script src="~/Content/Manh/search/vendor/jquery-validate/jquery.validate.min.js"></script>
+<script src="~/Content/Manh/search/vendor/bootstrap-wizard/bootstrap.min.js"></script>
+<script src="~/Content/Manh/search/vendor/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="~/Content/Manh/search/vendor/datepicker/moment.min.js"></script>
+<script src="~/Content/Manh/search/vendor/datepicker/daterangepicker.js"></script>
+
+<!-- Main JS-->
+<script src="~/Content/Manh/search/js/global.js"></script>

@@ -17,28 +17,28 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HasPermission(Permission = "Staff_List")]
         public ActionResult StaffIndex()
         {
-            DateTime now = DateTime.Now;
+            //DateTime now = DateTime.Now;
             var list_staff = db.Staffs.ToList();
-            List<Staff_OrderDetail> list_staff_Orders = new List<Staff_OrderDetail>();
-            foreach (var item in list_staff)
-            {
-                Staff_OrderDetail staff_Order = db.Staff_OrderDetail.Where(x=>x.Staff_Id == item.Id).FirstOrDefault();
-                if (staff_Order != null)
-                {
-                    int interval_after = (int)(now - (DateTime)staff_Order.Date_End).TotalDays;
-                    int interval_first = (int)(now - (DateTime)staff_Order.Date_Start).TotalDays;
-                    if (interval_after > 0 || interval_first < 0)
-                    {
-                        item.Staff_Status = 0;
-                    }
-                    else
-                    {
-                        item.Staff_Status = 1;
-                    }
-                }
-                
-            }
-            db.SaveChanges();
+            //List<Staff_OrderDetail> list_staff_Orders = new List<Staff_OrderDetail>();
+            //foreach (var item in list_staff)
+            //{
+            //    Staff_OrderDetail staff_Order = db.Staff_OrderDetail.Where(x=>x.Staff_Id == item.Id).FirstOrDefault();
+            //    if (staff_Order != null)
+            //    {
+            //        int interval_after = (int)(now - (DateTime)staff_Order.Date_End).TotalDays;
+            //        int interval_first = (int)(now - (DateTime)staff_Order.Date_Start).TotalDays;
+            //        if (interval_after > 0 || interval_first < 0)
+            //        {
+            //            item.Staff_Status = 0;
+            //        }
+            //        else
+            //        {
+            //            item.Staff_Status = 1;
+            //        }
+            //    }
+
+            //}
+            //db.SaveChanges();
             ViewBag.list_staff = list_staff;
             return View();
 

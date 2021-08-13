@@ -6,17 +6,12 @@ using System.Web.Mvc;
 
 namespace _ExcellOn_.Controllers
 {
-    public class HomeController : Controller
+    public class SearchesController : Controller
     {
-        // GET: Home
+        // GET: Searches
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult Main()
-        {
-            return PartialView("Main");
-        }
-       
     }
 }

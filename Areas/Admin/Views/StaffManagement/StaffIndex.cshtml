@@ -34,7 +34,6 @@
                     <thead class="thead-light">
                         <tr>
                             <th style="font-size: 0.875rem">Avatar</th>
-                            <th style="font-size: 0.875rem">Status</th>
                             <th style="font-size: 0.875rem">Service</th>
                             <th style="font-size: 0.875rem">Full Name</th>
                             <th style="font-size: 0.875rem">Address</th>
@@ -57,21 +56,7 @@
                         </a>
                     </div>
                 </th>
-                <td>
-                    @if (item.Staff_Status == 1)
-                    {
-    <span class="badge badge-dot mr-4">
-        <i class="bg-warning"></i>
-        <span class="status"> Working </span>
-    </span> }
-else
-{
-<span class="badge badge-dot mr-4">
-    <i class="bg-info"></i>
-    <span class="status"> Free </span>
-</span>}
-
-                </td>
+                    
                 <td>
                     @item.Service.Service_Name
                 </td>
