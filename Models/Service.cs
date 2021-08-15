@@ -23,9 +23,9 @@ public partial class Service
 
         this.Images = new HashSet<Image>();
 
-        this.Staffs = new HashSet<Staff>();
-
         this.OrderDetails = new HashSet<OrderDetail>();
+
+        this.Staffs = new HashSet<Staff>();
 
     }
 
@@ -48,9 +48,9 @@ public partial class Service
 
     public virtual ICollection<Image> Images { get; set; }
 
-    public virtual ICollection<Staff> Staffs { get; set; }
-
     public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+
+    public virtual ICollection<Staff> Staffs { get; set; }
 
 }
 

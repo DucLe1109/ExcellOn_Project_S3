@@ -12,46 +12,46 @@
 namespace _ExcellOn_.Models
 {
 
-    using System;
+using System;
     using System.Collections.Generic;
+    
+public partial class UserInFo
+{
 
-    public partial class UserInFo
+    public UserInFo()
     {
 
-        public UserInFo()
-        {
-
-            this.UserRoles = new HashSet<UserRole>();
-
-        }
-
-
-        public int Id { get; set; }
-
-        public string User_Name { get; set; }
-
-        public string User_Password { get; set; }
-
-        public string User_Email { get; set; }
-
-        public Nullable<int> User_Gender { get; set; }
-
-        public Nullable<int> User_Age { get; set; }
-
-        public string User_Phone { get; set; }
-
-        public string User_Address { get; set; }
-
-        public string User_Avatar { get; set; }
-
-        public string User_FullName { get; set; }
-
-        public string User_AboutMe { get; set; }
-
-
-
-        public virtual ICollection<UserRole> UserRoles { get; set; }
+        this.UserRoles = new HashSet<UserRole>();
 
     }
+
+
+    public int Id { get; set; }
+
+    public string User_Name { get; set; }
+
+    public string User_Password { get; set; }
+
+    public string User_Email { get; set; }
+
+    public Nullable<int> User_Gender { get; set; }
+
+    public Nullable<int> User_Age { get; set; }
+
+    public string User_Phone { get; set; }
+
+    public string User_Address { get; set; }
+
+    public string User_Avatar { get; set; }
+
+    public string User_FullName { get; set; }
+
+    public string User_AboutMe { get; set; }
+
+
+
+    public virtual ICollection<UserRole> UserRoles { get; set; }
+
+}
 
 }

@@ -36,13 +36,13 @@ public partial class Order
 
     public Nullable<int> Order_Status { get; set; }
 
-    public Nullable<int> CustomerId { get; set; }
+    public int CustomerId { get; set; }
 
 
-
-    public virtual Customer Customer { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+
+    public virtual Customer Customer { get; set; }
 
 }
 

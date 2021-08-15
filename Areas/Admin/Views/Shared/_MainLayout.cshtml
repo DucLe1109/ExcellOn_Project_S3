@@ -17,6 +17,7 @@
     <!-- Argon CSS -->
     <link href="~/Areas/Admin/Public/css/argon.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     @RenderSection("css", false)
 </head>
 
@@ -27,7 +28,34 @@
     <div class="main-content" id="ducdz">
         @RenderPage("_TopnavLayout.cshtml")
         @RenderBody()
+
+        <footer class="footer pt-0" style="padding:50px 50px 30px 50px;margin-top: 50px">
+            <div class="row align-items-center justify-content-lg-between">
+                <div class="col-lg-6">
+                    <div class="copyright text-center  text-lg-left  text-muted">
+                        &copy; 2021 <a href="#" target="_blank">Excell On Team</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" target="_blank">Excell On Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" target="_blank">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" target="_blank">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" target="_blank">MIT License</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
     </div>
+    
     <!-- Argon Scripts -->
     <!-- Core -->
 
@@ -40,6 +68,8 @@
     <!-- Optional JS -->
     <script src="~/Areas/Admin/Public/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="~/Areas/Admin/Public/vendor/chart.js/dist/Chart.extension.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Argon JS -->
     <script src="~/Areas/Admin/Public/js/argon.js?v=1.2.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -100,7 +130,7 @@
                     $('.sidenav-toggler-line').css("background-color", "brown");
                 }
             });
-            
+
         }
     </script>
     @RenderSection("js", false)

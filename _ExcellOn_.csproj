@@ -171,9 +171,11 @@
     <Compile Include="Areas\Admin\ViewModel\LoginViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\OrderDetailViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\OrderFilterViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\OrderViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\Order_OrderDetail.cs" />
     <Compile Include="Areas\Admin\ViewModel\RoleViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\SendEmailModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\Service_OrderDetail.cs" />
     <Compile Include="Areas\Admin\ViewModel\StaffAssignmentViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\StaffViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\UserInfoViewModel.cs" />

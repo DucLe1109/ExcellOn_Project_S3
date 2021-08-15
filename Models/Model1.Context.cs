@@ -34,27 +34,27 @@ public partial class Entities : DbContext
 
     public DbSet<Company> Companies { get; set; }
 
-    public DbSet<Order> Orders { get; set; }
-
-    public DbSet<sysdiagram> sysdiagrams { get; set; }
-
     public DbSet<Customer> Customers { get; set; }
 
     public DbSet<Image> Images { get; set; }
 
-    public DbSet<Staff> Staffs { get; set; }
-
-    public DbSet<Service> Services { get; set; }
-
     public DbSet<OrderDetail> OrderDetails { get; set; }
 
-    public DbSet<Staff_OrderDetail> Staff_OrderDetail { get; set; }
+    public DbSet<Order> Orders { get; set; }
 
     public DbSet<Permission> Permissions { get; set; }
 
     public DbSet<PermissionRole> PermissionRoles { get; set; }
 
     public DbSet<Role> Roles { get; set; }
+
+    public DbSet<Service> Services { get; set; }
+
+    public DbSet<Staff> Staffs { get; set; }
+
+    public DbSet<Staff_OrderDetail> Staff_OrderDetail { get; set; }
+
+    public DbSet<sysdiagram> sysdiagrams { get; set; }
 
     public DbSet<UserInFo> UserInFoes { get; set; }
 

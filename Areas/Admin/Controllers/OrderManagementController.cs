@@ -22,18 +22,56 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             //return View(list_or);
             List<Order_OrderDetail> list_order_orderdetail = new List<Order_OrderDetail>();
 
-            List<Order> list_or = db.Orders.Where(x => x.Order_Status != 3).OrderByDescending(x=>x.Order_DateCreate).ToList();
+            List<Order> list_or = db.Orders.Where(x => x.Order_Status != 3).OrderByDescending(x => x.Order_DateCreate).ToList();
             foreach (var item in list_or)
             {
+                // Lấy dữ liệu bảng order và các bảng orderdetail tương ứng
                 Order_OrderDetail _new = new Order_OrderDetail();
-                _new.Orders = item;
-                List<OrderDetail> list_ord = db.OrderDetails.Where(x=>x.OrdersId == item.Id && x.OrderDetail_Status != 3).ToList();
+
+                List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id).ToList();
                 if (list_ord != null)
                 {
                     _new.List_OrderDetail = list_ord;
                 }
                 list_order_orderdetail.Add(_new);
+
+                // Kiểm tra nếu tất cả order detail có cùng trạng thái thì update trạng thái tương ứng của order
+                if (list_ord.Count > 0)
+                {
+                    int list_ord_count = list_ord.Count;
+                    int status_count = 0;
+                    var ord = list_ord.Take(1).ToList();
+                    OrderDetail _ord = new OrderDetail();
+                    foreach (var abc in ord)
+                    {
+                        _ord.Id = abc.Id;
+                        _ord.OrderDetail_Status = abc.OrderDetail_Status;
+                    }
+                    int status = (int)_ord.OrderDetail_Status;
+                    foreach (var item2 in list_ord)
+                    {
+                        if (item2.OrderDetail_Status == _ord.OrderDetail_Status)
+                        {
+                            status_count += 1;
+                        }
+                    }
+                    if (status_count == list_ord_count)
+                    {
+                        item.Order_Status = _ord.OrderDetail_Status;
+                    }
+                }
+                else
+                {
+                    item.Order_Status = 3;
+                }
+
+                // Sau khi cập nhật order status thì lấy những orderstatus có trạng thái chưa xóa
+                if (item.Order_Status != 3)
+                {
+                    _new.Orders = item;
+                }
             }
+            db.SaveChanges();
             List<int> List_Order_Status_Id = new List<int>();
             List_Order_Status_Id.Add(0);
             List_Order_Status_Id.Add(1);
@@ -45,14 +83,244 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
         public ActionResult Filter(OrderFilterViewModel request)
         {
+            DateTime date_start = request.date_start;
+            DateTime date_end = request.date_end;
+            int year_start_default = date_start.Year;
+            int year_end_default = date_end.Year;
+
             List<Order_OrderDetail> list_order_orderdetail = new List<Order_OrderDetail>();
             List<Order> list_or = new List<Order>();
             List<int> List_Order_Status_Id = request.List_Order_Status_Id;
             if (List_Order_Status_Id != null && List_Order_Status_Id.Count > 0)
             {
-                foreach (var Id in List_Order_Status_Id)
+                if (year_start_default != 1 && year_end_default != 1)
                 {
-                    List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderByDescending(x=>x.Order_DateCreate).ToList();
+                    foreach (var Id in List_Order_Status_Id)
+                    {
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderByDescending(x => x.Order_DateCreate).ToList();
+                        if (list_order != null)
+                        {
+                            foreach (var order in list_order)
+                            {
+                                DateTime order_datecreated = DateTime.Parse(order.Order_DateCreate);
+                                int interval_first = (int)(date_start - order_datecreated).TotalDays;
+                                int interval_after = (int)(date_end - order_datecreated).TotalDays;
+                                if (interval_first <= 0 && interval_after >= 0)
+                                {
+                                    list_or.Add(order);
+                                }
+                            }
+                        }
+                    }
+                    foreach (var item in list_or)
+                    {
+                        Order_OrderDetail _new = new Order_OrderDetail();
+                        _new.Orders = item;
+                        List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id).ToList();
+                        if (list_ord != null)
+                        {
+                            _new.List_OrderDetail = list_ord;
+                        }
+                        list_order_orderdetail.Add(_new);
+                    }
+                    ViewBag.list_order_orderdetail = list_order_orderdetail;
+                    ViewBag.List_Order_Status_Id = List_Order_Status_Id;
+                    return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
+                }
+                else if (year_start_default != 1)
+                {
+                    foreach (var Id in List_Order_Status_Id)
+                    {
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderByDescending(x => x.Order_DateCreate).ToList();
+                        if (list_order != null)
+                        {
+                            foreach (var order in list_order)
+                            {
+                                DateTime order_datecreated = DateTime.Parse(order.Order_DateCreate);
+                                int interval_first = (int)(date_start - order_datecreated).TotalDays;
+                                if (interval_first <= 0)
+                                {
+                                    list_or.Add(order);
+                                }
+                            }
+                        }
+                    }
+                    foreach (var item in list_or)
+                    {
+                        Order_OrderDetail _new = new Order_OrderDetail();
+                        _new.Orders = item;
+                        List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id).ToList();
+                        if (list_ord != null)
+                        {
+                            _new.List_OrderDetail = list_ord;
+                        }
+                        list_order_orderdetail.Add(_new);
+                    }
+                    ViewBag.list_order_orderdetail = list_order_orderdetail;
+                    ViewBag.List_Order_Status_Id = List_Order_Status_Id;
+                    return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
+                }
+                else if (year_end_default != 1)
+                {
+                    foreach (var Id in List_Order_Status_Id)
+                    {
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderByDescending(x => x.Order_DateCreate).ToList();
+                        if (list_order != null)
+                        {
+                            foreach (var order in list_order)
+                            {
+                                DateTime order_datecreated = DateTime.Parse(order.Order_DateCreate);
+                                int interval_after = (int)(date_end - order_datecreated).TotalDays;
+                                if (interval_after >= 0)
+                                {
+                                    list_or.Add(order);
+                                }
+                            }
+                        }
+                    }
+                    foreach (var item in list_or)
+                    {
+                        Order_OrderDetail _new = new Order_OrderDetail();
+                        _new.Orders = item;
+                        List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id).ToList();
+                        if (list_ord != null)
+                        {
+                            _new.List_OrderDetail = list_ord;
+                        }
+                        list_order_orderdetail.Add(_new);
+                    }
+                    ViewBag.list_order_orderdetail = list_order_orderdetail;
+                    ViewBag.List_Order_Status_Id = List_Order_Status_Id;
+                    return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
+                }
+                else
+                {
+                    foreach (var Id in List_Order_Status_Id)
+                    {
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderByDescending(x => x.Order_DateCreate).ToList();
+                        if (list_order != null)
+                        {
+                            foreach (var order in list_order)
+                            {
+                                list_or.Add(order);
+                            }
+                        }
+                    }
+                    foreach (var item in list_or)
+                    {
+                        Order_OrderDetail _new = new Order_OrderDetail();
+                        _new.Orders = item;
+                        List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id).ToList();
+                        if (list_ord != null)
+                        {
+                            _new.List_OrderDetail = list_ord;
+                        }
+                        list_order_orderdetail.Add(_new);
+                    }
+                    ViewBag.list_order_orderdetail = list_order_orderdetail;
+                    ViewBag.List_Order_Status_Id = List_Order_Status_Id;
+                    return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
+                }
+            }
+            else
+            {
+                if (year_end_default != 1 && year_start_default != 1)
+                {
+
+                    List<Order> list_order = db.Orders.OrderByDescending(x => x.Order_DateCreate).ToList();
+                    if (list_order != null)
+                    {
+                        foreach (var order in list_order)
+                        {
+                            DateTime order_datecreated = DateTime.Parse(order.Order_DateCreate);
+                            int interval_first = (int)(date_start - order_datecreated).TotalDays;
+                            int interval_after = (int)(date_end - order_datecreated).TotalDays;
+                            if (interval_first <= 0 && interval_after >= 0)
+                            {
+                                list_or.Add(order);
+                            }
+                        }
+                    }
+                    foreach (var item in list_or)
+                    {
+                        Order_OrderDetail _new = new Order_OrderDetail();
+                        _new.Orders = item;
+                        List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id).ToList();
+                        if (list_ord != null)
+                        {
+                            _new.List_OrderDetail = list_ord;
+                        }
+                        list_order_orderdetail.Add(_new);
+                    }
+                    ViewBag.list_order_orderdetail = list_order_orderdetail;
+                    ViewBag.List_Order_Status_Id = null;
+                    return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
+                }
+                else if (year_end_default != 1)
+                {
+
+                    List<Order> list_order = db.Orders.OrderByDescending(x => x.Order_DateCreate).ToList();
+                    if (list_order != null)
+                    {
+                        foreach (var order in list_order)
+                        {
+                            DateTime order_datecreated = DateTime.Parse(order.Order_DateCreate);
+                            int interval_after = (int)(date_end - order_datecreated).TotalDays;
+                            if (interval_after >= 0)
+                            {
+                                list_or.Add(order);
+                            }
+                        }
+                    }
+                    foreach (var item in list_or)
+                    {
+                        Order_OrderDetail _new = new Order_OrderDetail();
+                        _new.Orders = item;
+                        List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id).ToList();
+                        if (list_ord != null)
+                        {
+                            _new.List_OrderDetail = list_ord;
+                        }
+                        list_order_orderdetail.Add(_new);
+                    }
+                    ViewBag.list_order_orderdetail = list_order_orderdetail;
+                    ViewBag.List_Order_Status_Id = null;
+                    return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
+                }
+                else if (year_start_default != 1)
+                {
+
+                    List<Order> list_order = db.Orders.OrderByDescending(x => x.Order_DateCreate).ToList();
+                    if (list_order != null)
+                    {
+                        foreach (var order in list_order)
+                        {
+                            DateTime order_datecreated = DateTime.Parse(order.Order_DateCreate);
+                            int interval_first = (int)(date_start - order_datecreated).TotalDays;
+                            if (interval_first <= 0)
+                            {
+                                list_or.Add(order);
+                            }
+                        }
+                    }
+                    foreach (var item in list_or)
+                    {
+                        Order_OrderDetail _new = new Order_OrderDetail();
+                        _new.Orders = item;
+                        List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id).ToList();
+                        if (list_ord != null)
+                        {
+                            _new.List_OrderDetail = list_ord;
+                        }
+                        list_order_orderdetail.Add(_new);
+                    }
+                    ViewBag.list_order_orderdetail = list_order_orderdetail;
+                    ViewBag.List_Order_Status_Id = null;
+                    return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
+                }
+                else
+                {
+                    List<Order> list_order = db.Orders.Where(x => x.Order_Status != 3).OrderByDescending(x => x.Order_DateCreate).ToList();
                     if (list_order != null)
                     {
                         foreach (var order in list_order)
@@ -60,42 +328,21 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                             list_or.Add(order);
                         }
                     }
-                }
-                foreach (var item in list_or)
-                {
-                    Order_OrderDetail _new = new Order_OrderDetail();
-                    _new.Orders = item;
-                    List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id && x.OrderDetail_Status != 3).ToList();
-                    if (list_ord != null)
+                    foreach (var item in list_or)
                     {
-                        _new.List_OrderDetail = list_ord;
+                        Order_OrderDetail _new = new Order_OrderDetail();
+                        _new.Orders = item;
+                        List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id && x.OrderDetail_Status != 3).ToList();
+                        if (list_ord != null)
+                        {
+                            _new.List_OrderDetail = list_ord;
+                        }
+                        list_order_orderdetail.Add(_new);
                     }
-                    list_order_orderdetail.Add(_new);
+                    ViewBag.list_order_orderdetail = list_order_orderdetail;
+                    ViewBag.List_Order_Status_Id = List_Order_Status_Id;
+                    return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
                 }
-                ViewBag.list_order_orderdetail = list_order_orderdetail;
-                ViewBag.List_Order_Status_Id = List_Order_Status_Id;
-                return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
-            }
-            else
-            {
-                List<Order_OrderDetail> list_order_orderdetail2 = new List<Order_OrderDetail>();
-
-                List<Order> list_or2 = db.Orders.Where(x => x.Order_Status != 3).OrderByDescending(x => x.Order_DateCreate).ToList();
-                foreach (var item in list_or2)
-                {
-                    Order_OrderDetail _new = new Order_OrderDetail();
-                    _new.Orders = item;
-                    List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id && x.OrderDetail_Status != 3).ToList();
-                    if (list_ord != null)
-                    {
-                        _new.List_OrderDetail = list_ord;
-                    }
-                    list_order_orderdetail2.Add(_new);
-                }
-                
-                ViewBag.list_order_orderdetail = list_order_orderdetail2;
-                ViewBag.List_Order_Status_Id = List_Order_Status_Id;
-                return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
             }
         }
 
@@ -109,52 +356,48 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
             // Khởi tạo bảng Staff_OrderDetail. (Nếu chưa có bất kì đơn hàng chi tiết nào thì lấy luôn số lượng staff cần được thuê trong bảng Staff và khởi tạo đơn hàng chi tiết mới)
             List<Staff> list_Staff_free = db.Staffs.Where(x => x.Staff_OrderDetail.Count == 0 && x.ServiceId == Service_Id).ToList();
-            if (list_Staff_free.Count > 0)
+            int list_Staff_has_not_any_orderdetail_count = list_Staff_free.Count;
+            if (list_Staff_free.Count > 0 && list_Staff_free.Count >= Number_Of_Employee)
             {
-                if (list_Staff_free.Count >= Number_Of_Employee)
-                {
-                    OrderDetail new_OrderDetail = new OrderDetail();
-                    new_OrderDetail.OrderDetail_DateStart = Date_Start;
-                    new_OrderDetail.OrderDetail_DateEnd = Date_End;
-                    new_OrderDetail.OrderDetail_NumberOfPeople = Number_Of_Employee;
-                    new_OrderDetail.OrderDetail_Status = 0;
-                    new_OrderDetail.ServiceId = Service_Id;
-                    db.OrderDetails.Add(new_OrderDetail);
-                    int temp = 0;
-                    foreach (var item in list_Staff_free)
-                    {
-                        Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
-                        new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
-                        new_Staff_OrderDetail.Staff_Id = item.Id;
-                        new_Staff_OrderDetail.Date_Start = Date_Start;
-                        new_Staff_OrderDetail.Date_End = Date_End;
-                        db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
-                        temp += 1;
-                        if (temp == Number_Of_Employee)
-                        {
-                            break;
-                        }
-                    }
-                    if (Session["OrderDetail"] != null)
-                    {
-                        List<OrderDetail> session_orderdetail = (List<OrderDetail>)Session["OrderDetail"];
-                        session_orderdetail.Add(new_OrderDetail);
-                        Session["OrderDetail"] = session_orderdetail;
-                    }
-                    else
-                    {
-                        List<OrderDetail> session_orderdetail = new List<OrderDetail>();
-                        session_orderdetail.Add(new_OrderDetail);
-                        Session["OrderDetail"] = session_orderdetail;
-                    }
 
-                    return Json("/Admin/OrderManagement/Index", JsonRequestBehavior.AllowGet);
-                    //db.SaveChanges();
+                OrderDetail new_OrderDetail = new OrderDetail();
+                new_OrderDetail.OrderDetail_DateStart = Date_Start;
+                new_OrderDetail.OrderDetail_DateEnd = Date_End;
+                new_OrderDetail.OrderDetail_NumberOfPeople = Number_Of_Employee;
+                new_OrderDetail.OrderDetail_Status = 0;
+                new_OrderDetail.ServiceId = Service_Id;
+                db.OrderDetails.Add(new_OrderDetail);
+                int temp = 0;
+                foreach (var item in list_Staff_free)
+                {
+                    Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
+                    new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
+                    new_Staff_OrderDetail.Staff_Id = item.Id;
+                    new_Staff_OrderDetail.Date_Start = Date_Start;
+                    new_Staff_OrderDetail.Date_End = Date_End;
+                    db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
+                    temp += 1;
+                    if (temp == Number_Of_Employee)
+                    {
+                        break;
+                    }
+                }
+                if (Session["OrderDetail"] != null)
+                {
+                    List<OrderDetail> session_orderdetail = (List<OrderDetail>)Session["OrderDetail"];
+                    session_orderdetail.Add(new_OrderDetail);
+                    Session["OrderDetail"] = session_orderdetail;
                 }
                 else
                 {
-                    return Json("The Employee is greater than our Staff", JsonRequestBehavior.AllowGet);
+                    List<OrderDetail> session_orderdetail = new List<OrderDetail>();
+                    session_orderdetail.Add(new_OrderDetail);
+                    Session["OrderDetail"] = session_orderdetail;
                 }
+
+                return Json("/Admin/OrderManagement/Index", JsonRequestBehavior.AllowGet);
+                //db.SaveChanges();
+
             }
             // Nếu tất cả các Staff đều đã tham gia tối thiểu vào 1 OrderDetail thì phải xử lý trùng lặp ngày tháng trong này.
             else
@@ -196,6 +439,13 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 // TH1: đơn hàng không trùng ngày với các đơn đã lên.
                 if (_list_Staff_Not_free_service.Count == 0)
                 {
+                    if (list_Staff_has_not_any_orderdetail_count > 0)
+                    {
+                        foreach (var staff_has_not_any_orderdetail in list_Staff_free)
+                        {
+                            _list_Staff_free_service.Add(staff_has_not_any_orderdetail);
+                        }
+                    }
 
                     if (_list_Staff_free_service.Count >= Number_Of_Employee)
                     {
@@ -250,8 +500,9 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                     if (_list_Staff_Not_free_service.Count <= list_staff_have_inTable.Count)
                     {
                         var list_staff_free = list_staff_have_inTable.Except(_list_Staff_Not_free_service);
-                        int a = list_staff_free.Count();
-                        if (list_staff_free.Count() >= Number_Of_Employee)
+
+                        int a = list_staff_free.Count() + list_Staff_has_not_any_orderdetail_count;
+                        if (a >= Number_Of_Employee)
                         {
                             OrderDetail new_OrderDetail = new OrderDetail();
                             new_OrderDetail.OrderDetail_DateStart = Date_Start;
@@ -275,6 +526,24 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                                     break;
                                 }
                             }
+                            if (temp < Number_Of_Employee)
+                            {
+                                foreach (var item in list_Staff_free)
+                                {
+                                    Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
+                                    new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
+                                    new_Staff_OrderDetail.Staff_Id = item.Id;
+                                    new_Staff_OrderDetail.Date_Start = Date_Start;
+                                    new_Staff_OrderDetail.Date_End = Date_End;
+                                    db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
+                                    temp += 1;
+                                    if (temp == Number_Of_Employee)
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+
                             if (Session["OrderDetail"] != null)
                             {
                                 List<OrderDetail> session_orderdetail = (List<OrderDetail>)Session["OrderDetail"];
@@ -316,7 +585,10 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             new_Order.Order_Description = description;
             new_Order.Order_TotalCost = total_cost;
             new_Order.Order_Status = 0;
+            new_Order.CustomerId = 30;
             db.Orders.Add(new_Order);
+            db.SaveChanges();
+
             foreach (var item in list_ord)
             {
                 int Service_Id = (int)item.ServiceId;
@@ -325,40 +597,35 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 DateTime Date_End = (DateTime)item.OrderDetail_DateEnd;
 
                 // Create Order
+
                 List<Staff> list_Staff_free = db.Staffs.Where(x => x.Staff_OrderDetail.Count == 0 && x.ServiceId == Service_Id).ToList();
-                if (list_Staff_free.Count > 0)
+                int list_Staff_has_not_any_orderdetail_count = list_Staff_free.Count;
+                if (list_Staff_free.Count > 0 && list_Staff_free.Count >= Number_Of_Employee)
                 {
-                    if (list_Staff_free.Count >= Number_Of_Employee)
+                    OrderDetail new_OrderDetail = new OrderDetail();
+                    new_OrderDetail.OrderDetail_DateStart = Date_Start;
+                    new_OrderDetail.OrderDetail_DateEnd = Date_End;
+                    new_OrderDetail.OrderDetail_NumberOfPeople = Number_Of_Employee;
+                    new_OrderDetail.OrderDetail_Status = 0;
+                    new_OrderDetail.ServiceId = Service_Id;
+                    new_OrderDetail.OrdersId = new_Order.Id;
+                    db.OrderDetails.Add(new_OrderDetail);
+                    int temp = 0;
+                    foreach (var item2 in list_Staff_free)
                     {
-                        OrderDetail new_OrderDetail = new OrderDetail();
-                        new_OrderDetail.OrderDetail_DateStart = Date_Start;
-                        new_OrderDetail.OrderDetail_DateEnd = Date_End;
-                        new_OrderDetail.OrderDetail_NumberOfPeople = Number_Of_Employee;
-                        new_OrderDetail.OrderDetail_Status = 0;
-                        new_OrderDetail.ServiceId = Service_Id;
-                        new_OrderDetail.OrdersId = new_Order.Id;
-                        db.OrderDetails.Add(new_OrderDetail);
-                        int temp = 0;
-                        foreach (var item2 in list_Staff_free)
+                        Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
+                        new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
+                        new_Staff_OrderDetail.Staff_Id = item2.Id;
+                        new_Staff_OrderDetail.Date_Start = Date_Start;
+                        new_Staff_OrderDetail.Date_End = Date_End;
+                        db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
+                        temp += 1;
+                        if (temp == Number_Of_Employee)
                         {
-                            Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
-                            new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
-                            new_Staff_OrderDetail.Staff_Id = item2.Id;
-                            new_Staff_OrderDetail.Date_Start = Date_Start;
-                            new_Staff_OrderDetail.Date_End = Date_End;
-                            db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
-                            temp += 1;
-                            if (temp == Number_Of_Employee)
-                            {
-                                break;
-                            }
+                            break;
                         }
-                        db.SaveChanges();
                     }
-                    else
-                    {
-                        return Json("The Employee is greater than our Staff", JsonRequestBehavior.AllowGet);
-                    }
+                    db.SaveChanges();
                 }
                 // Nếu tất cả các Staff đều đã tham gia tối thiểu vào 1 OrderDetail thì phải xử lý trùng lặp ngày tháng trong này.
                 else
@@ -400,10 +667,17 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                     // TH1: đơn hàng không trùng ngày với các đơn đã lên.
                     if (_list_Staff_Not_free_service.Count == 0)
                     {
+                        if (list_Staff_has_not_any_orderdetail_count > 0)
+                        {
+                            foreach (var staff_has_not_any_orderdetail in list_Staff_free)
+                            {
+                                _list_Staff_free_service.Add(staff_has_not_any_orderdetail);
+                            }
+                        }
 
                         if (_list_Staff_free_service.Count >= Number_Of_Employee)
                         {
-                            
+
                             OrderDetail new_OrderDetail = new OrderDetail();
                             new_OrderDetail.OrderDetail_DateStart = Date_Start;
                             new_OrderDetail.OrderDetail_DateEnd = Date_End;
@@ -441,10 +715,10 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                         if (_list_Staff_Not_free_service.Count <= list_staff_have_inTable.Count)
                         {
                             var list_staff_free = list_staff_have_inTable.Except(_list_Staff_Not_free_service);
-                            int a = list_staff_free.Count();
-                            if (list_staff_free.Count() >= Number_Of_Employee)
+                            int a = list_staff_free.Count() + list_Staff_has_not_any_orderdetail_count;
+                            if (a >= Number_Of_Employee)
                             {
-                                
+
                                 OrderDetail new_OrderDetail = new OrderDetail();
                                 new_OrderDetail.OrderDetail_DateStart = Date_Start;
                                 new_OrderDetail.OrderDetail_DateEnd = Date_End;
@@ -468,8 +742,27 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                                         break;
                                     }
                                 }
+                                if (temp < Number_Of_Employee)
+                                {
+                                    foreach (var item3 in list_Staff_free)
+                                    {
+                                        Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
+                                        new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
+                                        new_Staff_OrderDetail.Staff_Id = item3.Id;
+                                        new_Staff_OrderDetail.Date_Start = Date_Start;
+                                        new_Staff_OrderDetail.Date_End = Date_End;
+                                        db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
+                                        temp += 1;
+                                        if (temp == Number_Of_Employee)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+
                                 db.SaveChanges();
                             }
+
                             else
                             {
                                 return Json("The Employee is greater than our Staff", JsonRequestBehavior.AllowGet);
@@ -532,24 +825,55 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         {
             Order order = db.Orders.Where(x => x.Id == OrderId).FirstOrDefault();
             List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == order.Id).ToList();
+            List<ViewModel.OrderDetailViewModel> list_ord_vmd = new List<ViewModel.OrderDetailViewModel>();
+            foreach (var item in list_ord)
+            {
+                ViewModel.OrderDetailViewModel _new = new ViewModel.OrderDetailViewModel();
+                _new.Id = item.Id;
+                _new.OrderDetail_DateEnd = item.OrderDetail_DateEnd;
+                _new.OrderDetail_DateStart = item.OrderDetail_DateStart;
+                _new.OrderDetail_NumberOfPeople = item.OrderDetail_NumberOfPeople;
+                _new.OrderDetail_Status = item.OrderDetail_Status;
+                _new.OrdersId = item.OrdersId;
+                _new.ServiceId = item.ServiceId;
+                list_ord_vmd.Add(_new);
+            }
             if (list_ord != null)
             {
                 foreach (var item in list_ord)
                 {
                     item.OrderDetail_Status = 3;
+                    List<Staff_OrderDetail> list_staff_ord = db.Staff_OrderDetail.Where(x => x.OrderDetail_Id == item.Id).ToList();
+                    foreach (var item2 in list_staff_ord)
+                    {
+                        db.Staff_OrderDetail.Remove(item2);
+                    }
                 }
             }
             order.Order_Status = 3;
             db.SaveChanges();
-            return Json("Delete successfully", JsonRequestBehavior.AllowGet);
+            return Json(list_ord_vmd, JsonRequestBehavior.AllowGet);
         }
-        
+
         [HasPermission(Permission = "Order_Activate")]
         [HttpGet]
         public JsonResult Activate(int OrderId)
         {
             Order order = db.Orders.Where(x => x.Id == OrderId).FirstOrDefault();
             List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == order.Id).ToList();
+            List<ViewModel.OrderDetailViewModel> list_ord_vmd = new List<ViewModel.OrderDetailViewModel>();
+            foreach (var item in list_ord)
+            {
+                ViewModel.OrderDetailViewModel _new = new ViewModel.OrderDetailViewModel();
+                _new.Id = item.Id;
+                _new.OrderDetail_DateEnd = item.OrderDetail_DateEnd;
+                _new.OrderDetail_DateStart = item.OrderDetail_DateStart;
+                _new.OrderDetail_NumberOfPeople = item.OrderDetail_NumberOfPeople;
+                _new.OrderDetail_Status = item.OrderDetail_Status;
+                _new.OrdersId = item.OrdersId;
+                _new.ServiceId = item.ServiceId;
+                list_ord_vmd.Add(_new);
+            }
             if (list_ord != null)
             {
                 foreach (var item in list_ord)
@@ -559,7 +883,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             }
             order.Order_Status = 1;
             db.SaveChanges();
-            return Json("Activate successfully", JsonRequestBehavior.AllowGet);
+            return Json(list_ord_vmd, JsonRequestBehavior.AllowGet);
         }
 
         [HasPermission(Permission = "Order_Complete")]
@@ -568,24 +892,50 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         {
             Order order = db.Orders.Where(x => x.Id == OrderId).FirstOrDefault();
             List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == order.Id).ToList();
+            List<ViewModel.OrderDetailViewModel> list_ord_vmd = new List<ViewModel.OrderDetailViewModel>();
+            foreach (var item in list_ord)
+            {
+                ViewModel.OrderDetailViewModel _new = new ViewModel.OrderDetailViewModel();
+                _new.Id = item.Id;
+                _new.OrderDetail_DateEnd = item.OrderDetail_DateEnd;
+                _new.OrderDetail_DateStart = item.OrderDetail_DateStart;
+                _new.OrderDetail_NumberOfPeople = item.OrderDetail_NumberOfPeople;
+                _new.OrderDetail_Status = item.OrderDetail_Status;
+                _new.OrdersId = item.OrdersId;
+                _new.ServiceId = item.ServiceId;
+                list_ord_vmd.Add(_new);
+            }
             if (list_ord != null)
             {
                 foreach (var item in list_ord)
                 {
                     item.OrderDetail_Status = 2;
                 }
-            } 
+            }
             order.Order_Status = 2;
             db.SaveChanges();
-            return Json("Complete successfully", JsonRequestBehavior.AllowGet);
+            return Json(list_ord_vmd, JsonRequestBehavior.AllowGet);
         }
 
-        [HasPermission(Permission = "Order_Complete")]
+        [HasPermission(Permission = "Order_Reset")]
         [HttpGet]
         public JsonResult Reset(int OrderId)
         {
             Order order = db.Orders.Where(x => x.Id == OrderId).FirstOrDefault();
             List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == order.Id).ToList();
+            List<ViewModel.OrderDetailViewModel> list_ord_vmd = new List<ViewModel.OrderDetailViewModel>();
+            foreach (var item in list_ord)
+            {
+                ViewModel.OrderDetailViewModel _new = new ViewModel.OrderDetailViewModel();
+                _new.Id = item.Id;
+                _new.OrderDetail_DateEnd = item.OrderDetail_DateEnd;
+                _new.OrderDetail_DateStart = item.OrderDetail_DateStart;
+                _new.OrderDetail_NumberOfPeople = item.OrderDetail_NumberOfPeople;
+                _new.OrderDetail_Status = item.OrderDetail_Status;
+                _new.OrdersId = item.OrdersId;
+                _new.ServiceId = item.ServiceId;
+                list_ord_vmd.Add(_new);
+            }
             if (list_ord != null)
             {
                 foreach (var item in list_ord)
@@ -595,7 +945,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             }
             order.Order_Status = 0;
             db.SaveChanges();
-            return Json("Reset successfully", JsonRequestBehavior.AllowGet);
+            return Json(list_ord_vmd, JsonRequestBehavior.AllowGet);
         }
     }
 }

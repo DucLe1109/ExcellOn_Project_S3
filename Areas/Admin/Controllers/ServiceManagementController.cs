@@ -75,7 +75,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
             OrderDetail ord = db.OrderDetails.Where(x => x.Id == ord_id).FirstOrDefault();
             List<Staff> list_staff_free = orderDetail_Function.Take_List_Staff_Free(ord.Id);
-            var list_staff_append = (from x in list_staff_free select x).Skip(list_staff_was_append_count).Take(2);
+            var list_staff_append = (from x in list_staff_free select x).Skip(list_staff_was_append_count).Take(21);
             List<StaffViewModel> list_staff_vmd_free_append = new List<StaffViewModel>();
             foreach (var item in list_staff_append)
             {
@@ -96,7 +96,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 list_staff_vmd_free_append.Add(_new);
             }
 
-            if (list_staff_vmd_free_append.Count < 2)
+            if (list_staff_vmd_free_append.Count < 21)
             {
                 list_appendedStaff.isLoadMore = false;
                 list_appendedStaff.list_staff_append = list_staff_vmd_free_append;
@@ -313,6 +313,35 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             {
                 orderDetail.OrderDetail_Status = 2;
             }
+            db.SaveChanges();
+            return Json(orderDetail.Id, JsonRequestBehavior.AllowGet);
+        }
+
+        [HasPermission(Permission = "OrderDetail_Delete")]
+        [HttpGet]
+        public JsonResult Delete_ord(int ord_id)
+        {
+            OrderDetail orderDetail = db.OrderDetails.Where(x => x.Id == ord_id).FirstOrDefault(); 
+            int interval = (int)((DateTime)orderDetail.OrderDetail_DateEnd - (DateTime)orderDetail.OrderDetail_DateStart).TotalDays;
+            if (orderDetail != null)
+            {
+                orderDetail.OrderDetail_Status = 3;
+            }
+
+            // Trừ total cost của order liên quan đến orderdetail bị xóa.
+            Order order = db.Orders.Where(x => x.Id == orderDetail.OrdersId).FirstOrDefault();
+            order.Order_TotalCost = order.Order_TotalCost - (orderDetail.Service.Service_Price * orderDetail.OrderDetail_NumberOfPeople * interval);
+            if (order.Order_TotalCost < 0)
+            {
+                order.Order_TotalCost = 0;
+            }
+            // Xóa các bản ghi trong bảng Staff_OrderDetail để cập nhật nhân sự còn đang rảnh.
+            List<Staff_OrderDetail> list_staff_ord = db.Staff_OrderDetail.Where(x => x.OrderDetail_Id == orderDetail.Id).ToList();
+            foreach (var items in list_staff_ord) {
+                db.Staff_OrderDetail.Remove(items);
+            }
+
+
             db.SaveChanges();
             return Json(orderDetail.Id, JsonRequestBehavior.AllowGet);
         }
