@@ -50,13 +50,11 @@
                         {
             <tr>
                 <th>
-                    <div class="media align-items-center">
-                        <a href="#" class="avatar rounded-circle mr-3">
-                            <img alt="Image placeholder" src="@item.Staff_Avatar">
-                        </a>
-                    </div>
+                    <a href="#" class="avatar rounded-circle">
+                        <img alt="Image placeholder" src="@item.Staff_Avatar">
+                    </a>
                 </th>
-                    
+
                 <td>
                     @item.Service.Service_Name
                 </td>
@@ -90,17 +88,15 @@ else
         <i class="bg-warning"></i>
         <span id="status_@item.Id">Training</span>
     </span>
-</td>
- }
-else
-{
+</td> }
+                else
+                {
 <td>
     <span class="badge badge-dot mr-4">
         <i class="bg-info"></i>
         <span id="status_@item.Id">Profession</span>
     </span>
-</td>
-}
+</td>}
                 <td class="text-right">
                     <div class="dropdown">
                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -117,8 +113,7 @@ else
                         </div>
                     </div>
                 </td>
-            </tr>
-}
+            </tr>}
 
 
                     </tbody>
@@ -137,6 +132,7 @@ else
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
     <link href="~/Areas/Admin/Public/DataTable/pagination.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/css/loader.css" rel="stylesheet" />
+    
 }
 @section js{
     <script type="text/javascript">
