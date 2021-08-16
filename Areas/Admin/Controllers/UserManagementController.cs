@@ -26,7 +26,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         //Add function 
         [HasPermission(Permission = "Admin")]
         [HttpGet]
-        public ActionResult Add()
+        public ActionResult AddUser()
         {
             var list_role = db.Roles.ToList();
             ViewBag.list_role = list_role;

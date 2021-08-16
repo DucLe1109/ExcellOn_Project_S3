@@ -81,6 +81,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return View();
         }
 
+        [HasPermission(Permission = "Order_List")]
         public ActionResult Filter(OrderFilterViewModel request)
         {
             DateTime date_start = request.date_start;
@@ -344,6 +345,29 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                     return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
                 }
             }
+        }
+
+        [HasPermission(Permission = "Order_List")]
+        public ActionResult Filter2(int OrderStatus)
+        {
+            List<Order_OrderDetail> list_order_orderdetail = new List<Order_OrderDetail>();
+            List<Order> list_or = db.Orders.Where(x => x.Order_Status == OrderStatus).ToList();
+            List<int> List_Order_Status_Id = new List<int>();
+            List_Order_Status_Id.Add(OrderStatus);
+            foreach (var item in list_or)
+            {
+                Order_OrderDetail _new = new Order_OrderDetail();
+                _new.Orders = item;
+                List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrdersId == item.Id).ToList();
+                if (list_ord != null)
+                {
+                    _new.List_OrderDetail = list_ord;
+                }
+                list_order_orderdetail.Add(_new);
+            }
+            ViewBag.list_order_orderdetail = list_order_orderdetail;
+            ViewBag.List_Order_Status_Id = List_Order_Status_Id;
+            return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
         }
 
         [HttpPost]

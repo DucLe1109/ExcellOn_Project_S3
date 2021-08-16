@@ -162,6 +162,7 @@
     <Compile Include="Areas\Admin\Model\Order_Interface\OrderDetail_Interface.cs" />
     <Compile Include="Areas\Admin\Model\Permission_Role_Function.cs" />
     <Compile Include="Areas\Admin\Model\HasPermissionAttribute.cs" />
+    <Content Include="Areas\Admin\Public\css\onTop.css" />
     <Content Include="Areas\Admin\Public\JdLomX\css\avzv.css" />
     <Compile Include="Areas\Admin\ViewModel\AppendedStaff.cs" />
     <Compile Include="Areas\Admin\ViewModel\AssignmentSubmitViewModel.cs" />
@@ -3068,7 +3069,7 @@
     <Content Include="Areas\Admin\Views\RoleManagement\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\RoleManagement\RoleIndex.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\UserIndex.cshtml" />
-    <Content Include="Areas\Admin\Views\UserManagement\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManagement\AddUser.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\CompanyManagement\CompanyIndex2.cshtml" />
     <Content Include="Areas\Admin\Views\ServiceManagement\Assign_Staff.cshtml" />
@@ -3077,6 +3078,9 @@
     <Content Include="Areas\Admin\Views\_404_.cshtml" />
     <Content Include="Areas\Admin\Views\OrderManagement\OrderIndex.cshtml" />
     <Content Include="Areas\Admin\Views\AdminHome\StartIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\StaffManagement\StaffFreeIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\CustomerManagement\CustomerInOrderIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\StaffManagement\StaffInWorkingIndex.cshtml" />
     <None Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1-vsdoc.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.min.js" />

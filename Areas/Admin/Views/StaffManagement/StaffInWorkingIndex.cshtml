@@ -2,7 +2,7 @@
     List<string> list_role = (List<string>)Session["ListRole"]; }
 @{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
 @using _ExcellOn_.Models
-@{ List<Staff> list_staff = ViewBag.list_staff; }
+@{ List<Staff> list_staff_working = ViewBag.list_staff_working; }
 <div class="container" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
     <div class="header-body">
         <div class="row align-items-center py-4">
@@ -48,9 +48,9 @@
                         </tr>
                     </thead>
                     <tbody class="list">
-                        @if (list_staff != null)
+                        @if (list_staff_working != null)
                         {
-                            foreach (var item in list_staff)
+                            foreach (var item in list_staff_working)
                             {
                         <tr>
                             <th>
@@ -124,6 +124,9 @@
                         </tr>
 }
     }
+
+
+
                     </tbody>
                 </table>
 
@@ -144,7 +147,7 @@
 }
 @section js{
     <script type="text/javascript">
-        $(document).ready(function () {
+    $(document).ready(function () {
             $('#table_Staff').DataTable({
                 "lengthMenu": [10, 15, 20, 30],
                 "pagingType": "full_numbers",
@@ -155,11 +158,10 @@
                     }
                 }
             });
-        });
-    </script>
+        });</script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
     <script type="text/javascript">
-        function _Delete(StaffId) {
+    function _Delete(StaffId) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -209,6 +211,5 @@
                     alert("Error !");
                 }
             });
-        }
-    </script>
+        }</script>
 }

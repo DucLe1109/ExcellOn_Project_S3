@@ -1,6 +1,7 @@
 ﻿using _ExcellOn_.Areas.Admin.Model;
 using _ExcellOn_.Areas.Admin.ViewModel;
 using _ExcellOn_.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -17,6 +18,26 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         public ActionResult CustomerIndex()
         {
             var list_customer = db.Customers.ToList();
+            ViewBag.list_customer = list_customer;
+            return View();
+        }
+        
+        [HasPermission(Permission = "Customer_List")]
+        public ActionResult CustomerInOrderIndex()
+        {
+            List<Order> list_order = db.Orders.Where(x => x.Order_Status != 3).ToList();
+            List<Customer> list_customer = new List<Customer>();
+            if (list_order != null)
+            {
+                foreach (var item in list_order)
+                {
+                    if (item.Customer != null)
+                    {
+                        list_customer.Add(item.Customer);
+                    }
+                }
+            }
+            
             ViewBag.list_customer = list_customer;
             return View();
         }

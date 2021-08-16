@@ -17,31 +17,58 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HasPermission(Permission = "Staff_List")]
         public ActionResult StaffIndex()
         {
-            //DateTime now = DateTime.Now;
             var list_staff = db.Staffs.ToList();
-            //List<Staff_OrderDetail> list_staff_Orders = new List<Staff_OrderDetail>();
-            //foreach (var item in list_staff)
-            //{
-            //    Staff_OrderDetail staff_Order = db.Staff_OrderDetail.Where(x=>x.Staff_Id == item.Id).FirstOrDefault();
-            //    if (staff_Order != null)
-            //    {
-            //        int interval_after = (int)(now - (DateTime)staff_Order.Date_End).TotalDays;
-            //        int interval_first = (int)(now - (DateTime)staff_Order.Date_Start).TotalDays;
-            //        if (interval_after > 0 || interval_first < 0)
-            //        {
-            //            item.Staff_Status = 0;
-            //        }
-            //        else
-            //        {
-            //            item.Staff_Status = 1;
-            //        }
-            //    }
-
-            //}
-            //db.SaveChanges();
             ViewBag.list_staff = list_staff;
             return View();
+        }
+        
+        [HasPermission(Permission = "Staff_List")]
+        public ActionResult StaffFreeIndex()
+        {
+            DateTime today = DateTime.Now;
+            DateTime future = today.AddDays(100);
+            OrderDetail_Function orderDetail_Function = new OrderDetail_Function();
+            List<Staff> list_staff_free_inbound = orderDetail_Function.Take_List_Staff_Free(1, today, future);
+            List<Staff> list_staff_free_outbound = orderDetail_Function.Take_List_Staff_Free(2, today, future);
+            List<Staff> list_staff_free_telemarketing = orderDetail_Function.Take_List_Staff_Free(3, today, future);
 
+            List<Staff> list_staff_free = new List<Staff>();
+            list_staff_free.AddRange(list_staff_free_inbound);
+            list_staff_free.AddRange(list_staff_free_outbound);
+            list_staff_free.AddRange(list_staff_free_telemarketing);
+            
+            ViewBag.list_staff_free = list_staff_free;
+            return View();
+        }
+
+        [HasPermission(Permission = "Staff_List")]
+        public ActionResult StaffInWorkingIndex()
+        {
+
+            List<Staff> _list_staff = db.Staffs.Where(x=>x.ServiceId != null).ToList();
+
+            DateTime today = DateTime.Now;
+            DateTime future = today.AddDays(100);
+            OrderDetail_Function orderDetail_Function = new OrderDetail_Function();
+            List<Staff> list_staff_free_inbound = orderDetail_Function.Take_List_Staff_Free(1, today, future);
+            List<Staff> list_staff_free_outbound = orderDetail_Function.Take_List_Staff_Free(2, today, future);
+            List<Staff> list_staff_free_telemarketing = orderDetail_Function.Take_List_Staff_Free(3, today, future);
+
+            List<Staff> list_staff_free = new List<Staff>();
+            list_staff_free.AddRange(list_staff_free_inbound);
+            list_staff_free.AddRange(list_staff_free_outbound);
+            list_staff_free.AddRange(list_staff_free_telemarketing);
+
+            List<Staff> list_staff_working = new List<Staff>();
+            foreach (var item in _list_staff)
+            {
+                if (list_staff_free.Exists(x=>x.Id == item.Id) == false)
+                {
+                    list_staff_working.Add(item);
+                }
+            }
+            ViewBag.list_staff_working = list_staff_working;
+            return View();
         }
 
         [HasPermission(Permission = "Staff_Add")]

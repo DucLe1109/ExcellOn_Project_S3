@@ -2,18 +2,26 @@
 @using _ExcellOn_.Models
 @{ List<Staff> list_staff = ViewBag.list_staff;
     List<Customer> list_customer = ViewBag.list_customer;
-    List<Order> list_order = ViewBag.list_order;
+    List<Order> list_order_completed = ViewBag.list_order_completed;
+    List<Order> list_order_started = ViewBag.list_order_started;
+    List<Order> list_order_pending = ViewBag.list_order_pending;
+    List<Staff> list_staff_free = ViewBag.list_staff_free;
 
     int list_staff_count = list_staff.Count;
+    int list_staff_free_count = list_staff_free.Count;
+    int list_staff_in_working_count = ViewBag.list_staff_in_working_count;
     int list_customer_count = list_customer.Count;
-    int list_order_count = list_order.Count;
+    int list_order_completed_count = list_order_completed.Count;
+    int list_order_started_count = list_order_started.Count;
+    int list_order_pending_count = list_order_pending.Count;
+
     float tunover = 0;
-    foreach (var item in list_order)
+    foreach (var item in list_order_completed)
     {
         tunover += (float)item.Order_TotalCost;
     }
     var _tunover = string.Format("{0:0,0}", tunover);
-    float customer_in_order = (float)list_order_count / (float)list_customer_count * 100;
+    float customer_in_order = (float)list_order_completed_count / (float)list_customer_count * 100;
     string _customer_in_order = String.Format("{0:0.00}", customer_in_order); }
 
 
@@ -34,13 +42,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl-6 col-md-6 _card_" onclick="return _GoToChart_Order_Tunover()" style="cursor:pointer">
                 <div class="card card-stats">
                     <!-- Card body -->
                     <div class="card-body card-box-shadow">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Tunorver</h5>
+                                <h5 class="card-title text-uppercase text-muted mb-0">Turnorver</h5>
                                 <span class="h2 font-weight-bold mb-0">$ @_tunover</span>
                             </div>
                             <div class="col-auto">
@@ -56,36 +64,38 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl-6 col-md-6 _card_" onclick="return _Cus_In_Order()" style="cursor:pointer">
                 <div class="card card-stats">
                     <!-- Card body -->
                     <div class="card-body card-box-shadow">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Num of Staff</h5>
-                                <span class="h2 font-weight-bold mb-0">@list_staff_count</span>
+                                <a href="/Admin/CustomerManagement/CustomerInOrderIndex"><h5 class="card-title text-uppercase text-muted mb-0">Customer in Order </h5></a>
+                                <span class="h4 mb-0">There was @list_customer_count customer have enjoyed our service </span>
                             </div>
                             <div class="col-auto">
-                                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                    <i class="ni ni-chart-pie-35"></i>
+                                <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                    <i class="ni ni-bold-down"></i>
                                 </div>
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-chevron-circle-up"></i> 0%</span>
-                            <span class="text-nowrap">Excell On Company</span>
+                            <span class="text-success mr-2"><i class="fa fa-caret-square-o-up"></i> @_customer_in_order%</span>
+                            <span class="text-nowrap">Compare with all customer have visited through website</span>
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-md-6">
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-md-6 _card_" onclick="return _Order_Pending()" style="cursor:pointer">
                 <div class="card card-stats">
                     <!-- Card body -->
                     <div class="card-body card-box-shadow">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Order</h5>
-                                <span class="h2 font-weight-bold mb-0">@list_order_count</span>
+                                <a href="/Admin/OrderManagement/Filter2?OrderStatus=0"><h5 class="card-title text-uppercase text-muted mb-0">Order Pending</h5></a>
+                                <span class="h2 font-weight-bold mb-0">@list_order_pending_count</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -100,14 +110,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl-4 col-md-6 _card_" onclick="return _Order_Started()" style="cursor: pointer">
                 <div class="card card-stats">
                     <!-- Card body -->
                     <div class="card-body card-box-shadow">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Customer</h5>
-                                <span class="h2 font-weight-bold mb-0">@list_customer_count</span>
+                                <a href="/Admin/OrderManagement/Filter2?OrderStatus=1"><h5 class="card-title text-uppercase text-muted mb-0">Order Started</h5></a>
+                                <span class="h2 font-weight-bold mb-0">@list_order_started_count</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -118,6 +128,97 @@
                         <p class="mt-3 mb-0 text-sm">
                             <span class="text-success mr-2"><i class="fa fa-caret-square-o-up"></i> @_customer_in_order%</span>
                             <span class="text-nowrap">Customer in Order</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 _card_" style="cursor: pointer" onclick="return _Order_Completed()">
+                <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body card-box-shadow">
+                        <div class="row">
+                            <div class="col">
+                                <a href="/Admin/OrderManagement/Filter2?OrderStatus=2"><h5 class="card-title text-uppercase text-muted mb-0">Order Completed</h5></a>
+                                <span class="h2 font-weight-bold mb-0">@list_order_completed_count</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                                    <i class="ni ni-book-bookmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 mb-0 text-sm">
+                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 2.24%</span>
+                            <span class="text-nowrap">Excell On Company</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-md-6 _card_" style="cursor: pointer" onclick="return _Staff_In_Working()">
+                <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body card-box-shadow">
+                        <div class="row">
+                            <div class="col">
+                                <a href="/Admin/StaffManagement/StaffInWorkingIndex"><h5 class="card-title text-uppercase text-muted mb-0">Staff in working</h5></a>
+                                <span class="h2 font-weight-bold mb-0">@list_staff_in_working_count</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                    <i class="ni ni-archive-2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 mb-0 text-sm">
+                            <span class="text-success mr-2"><i class="fa fa-arrow-right"></i></span>
+                            <span class="text-nowrap">Excell On Company</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 _card_" style="cursor: pointer" onclick="return _Staff_Free()">
+                <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body card-box-shadow">
+                        <div class="row">
+                            <div class="col">
+                                <a href="/Admin/StaffManagement/StaffFreeIndex"><h5 class="card-title text-uppercase text-muted mb-0">Free Staff</h5></a>
+                                <span class="h2 font-weight-bold mb-0">@list_staff_free_count</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                    <i class="ni ni-delivery-fast"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 mb-0 text-sm">
+                            <span class="text-success mr-2"><i class="fa fa-arrow-right"></i></span>
+                            <span class="text-nowrap">Excell On Company</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 _card_" style="cursor: pointer" onclick="return _Staff()">
+                <div class="card card-stats">
+                    <!-- Card body -->
+                    <div class="card-body card-box-shadow">
+                        <div class="row">
+                            <div class="col">
+                                <a href="/Admin/StaffManagement/StaffIndex"><h5 class="card-title text-uppercase text-muted mb-0">Total of Staff</h5></a>
+                                <span class="h2 font-weight-bold mb-0">@list_staff_count</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                    <i class="ni ni-chart-pie-35"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 mb-0 text-sm">
+                            <span class="text-success mr-2"><i class="fa fa-arrow-right"></i></span>
+                            <span class="text-nowrap">Excell On Company</span>
                         </p>
                     </div>
                 </div>
@@ -164,6 +265,7 @@
 
 </div>
 
+
 @section css{
     <style>
         canvas {
@@ -174,10 +276,14 @@
         .card-box-shadow {
             box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
         }
+
+            .card-box-shadow:hover {
+                box-shadow: none;
+                background-color: antiquewhite;
+            }
     </style>
 }
 @section js{
-
     <script type="text/javascript">
 
         // plugin màu nền cho chart
@@ -321,7 +427,7 @@
         });
 
 
-        // Thay đổi dữ liệu chart bằng cách xóa chart cũ bằng hàm destroy(). 
+        // Thay đổi dữ liệu chart bằng cách xóa chart cũ bằng hàm destroy().
         $('select').on('change', function (e) {
             var optionSelected = $("option:selected", this);
             var valueSelected = this.value;
@@ -333,7 +439,7 @@
                     var tunover = result.map(function (element) {
                         return element.Order_TotalCost;
                     });
- 
+
                     var Order_DateCreate = result.map(function (element) {
                         return element.Order_DateCreate;
                     });
@@ -404,6 +510,11 @@
             });
         });
 
+        //function scroll to element (example: to -> Chart_Order_Tunover)
+        function _GoToChart_Order_Tunover() {
+            $('html, body').animate({
+                scrollTop: $("#Chart_Order_Tunover").offset().top
+            }, 1000);
+        }
     </script>
-
 }

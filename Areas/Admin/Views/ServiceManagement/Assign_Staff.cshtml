@@ -144,21 +144,15 @@
 </div>
 
 
-<button onclick="topFunction()" style="background-color:transparent" id="btn_top" title="Go to top">
-    <img src="~/Public/Image/up-arrow (1).png" width="50" height="60" />
-</button>
-
 @section css{
     <link href="~/Areas/Admin/Public/Plugin_Table_HD/css/paging.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/css/panel.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/css/choose_staff.css" rel="stylesheet" />
-    <link href="~/Areas/Admin/Public/css/button_move_top.css" rel="stylesheet" />
 }
 
 @section js{
     <script type="text/javascript">
         var ord_id = $('#ord_id').val();
-
         $(document).ready(function () {
             _CountChecked();
         });
@@ -244,18 +238,6 @@
                 alert("The number of staff is greater than necessary number of employee !");
             }
         }
-        window.onscroll = function () { scrollFunction() };
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                document.getElementById("btn_top").style.display = "block";
-            } else {
-                document.getElementById("btn_top").style.display = "none";
-            }
-
-        }
-        function topFunction() {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-        }
         function _search() {
             var key_search = $('#key_search').val().toLowerCase().trim();
             var info_staff = $('.info_staff');
@@ -271,105 +253,6 @@
                 $('.info_staff').parent().show();
             }
         }
-        // Đã fix được bug sau khi next hoặc previous trang bị mất checked. (bằng cách đưa những checked vào session và chia các trường hợp thêm checked or bớt checked )
-        //function _LoadData(current_page, ord_id, total_page) {
-        //    // Gửi list id của những staff đã được check. (Fix bug sau khi đổi trang bị mất những staff đã check)
-        //    var input_checked = $('input[type="checkbox"][class="checkitem"]:checked');
-        //    var list_staff_id_checked = [];
-        //    for (var i = 0; i < input_checked.length; i++) {
-        //        list_staff_id_checked.push(parseInt($(input_checked[i]).val()));
-        //    }
-
-        //    var list_staff_ord = [];
-        //    var input_list_staff_ord = $('.list_staff_ord');
-        //    for (var i = 0; i < input_list_staff_ord.length; i++) {
-        //        list_staff_ord.push(parseInt($(input_list_staff_ord[i]).val()));
-        //    }
-
-        //    var GetItemObj = {
-        //        current_page: current_page,
-        //        ord_id: ord_id,
-        //        list_staff_id_checked: list_staff_id_checked
-        //    }
-        //    $.ajax({
-        //        url: "/Admin/ServiceManagement/GetItem",
-        //        contentType: "application/json;charset=utf-8",
-        //        type: "POST",
-        //        data: JSON.stringify(GetItemObj),
-        //        dataType: "json",
-        //        success: function (result) {
-
-        //            $('#current_page').val(current_page);
-        //            $('#current_textbox').val(current_page);
-        //            $('.pageInfo').text("Page " + current_page + " of " + total_page);
-        //            var html = "";
-        //            result.list_staff.forEach(value => {
-        //                if (list_staff_ord.indexOf(value.Id) < 0) {
-        //                    html +=
-        //                        ' <label class="select__item">                  ' +
-        //                        '     <input onclick="return _CountChecked()" type="checkbox" value="' + value.Id + '" class="checkitem"> ' +
-        //                        '         <span class="circle-image">           ' +
-        //                        '             <img src="' + value.Staff_Avatar + '" />' +
-        //                        '         </span>                               ' +
-        //                        '                 &nbsp; ' + value.Id +
-        //                        '             </label>                          ';
-        //                } else if (list_staff_ord.indexOf(value.Id) >= 0) {
-        //                    html +=
-        //                        ' <label class="select__item">                  ' +
-        //                        '     <input onclick="return _CountChecked()" type="checkbox" value = "' + value.Id + '"  checked class="checkitem"> ' +
-        //                        '         <span class="circle-image">           ' +
-        //                        '             <img src="' + value.Staff_Avatar + '" />' +
-        //                        '         </span>                               ' +
-        //                        '                 &nbsp; ' + value.Id +
-        //                        '             </label>                          ';
-        //                }
-        //            });
-        //            $('.select').html(html);
-        //            result.list_staff_id_checked.forEach(val => {
-        //                var checkitem_input = $('input[class = "checkitem"]');
-        //                for (var i = 0; i < checkitem_input.length; i++) {
-        //                    if ($(checkitem_input[i]).val() == val) {
-        //                        $(checkitem_input[i]).prop("checked", true);
-        //                    }
-        //                }
-        //            });
-
-        //            var input_checked = $('input[type="checkbox"][class="checkitem"]:checked');
-        //            $('.Count_Check').text("(" + input_checked.length + ")");
-        //        },
-        //        error: function (e) {
-        //            alert(e);
-        //        }
-
-        //    });
-        //}
-        //function _goNext() {
-        //    var ord_id = $('#ord_id').val()
-        //    var current_page = parseInt($('#current_page').val());
-        //    var total_page = $('#total_page').val();
-        //    if (current_page < total_page) {
-        //        current_page += 1;
-        //        _LoadData(current_page, ord_id, total_page);
-        //    }
-        //}
-        //function _goPrevious() {
-        //    var ord_id = $('#ord_id').val()
-        //    var current_page = parseInt($('#current_page').val());
-        //    var total_page = $('#total_page').val();
-        //    if (current_page > 1) {
-        //        current_page -= 1;
-        //        _LoadData(current_page, ord_id, total_page);
-        //    }
-        //}
-        //function _Indicate() {
-        //    var total_page = $('#total_page').val();
-        //    var ord_id = $('#ord_id').val()
-        //    var current_page = parseInt($('#current_textbox').val());
-        //    if (total_page >= current_page) {
-        //        _LoadData(current_page, ord_id, total_page);
-        //    }
-
-        //}
     </script>
 
     <script type="text/javascript">

@@ -16,12 +16,34 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HasPermission(Permission ="Admin")]
         public ActionResult DashboardIndex()
         {
-            var list_order = db.Orders.Where(x=>x.Order_Status == 2).ToList();
-            var list_customer = db.Customers.ToList();
-            var list_staff = db.Staffs.ToList();
-            ViewBag.list_order = list_order;
+            OrderDetail_Function orderDetail_Function = new OrderDetail_Function();
+            List<Order> list_order_completed = db.Orders.Where(x=>x.Order_Status == 2).ToList();
+            List<Order> list_order_started = db.Orders.Where(x => x.Order_Status == 1).ToList();
+            List<Order> list_order_pending = db.Orders.Where(x => x.Order_Status == 0).ToList();
+            List<Customer> list_customer = db.Customers.ToList();
+            List<Staff> list_staff = db.Staffs.ToList();
+
+            DateTime today = DateTime.Now;
+            DateTime future = today.AddDays(100);
+
+            List<Staff> list_staff_free_inbound = orderDetail_Function.Take_List_Staff_Free(1, today,future);
+            List<Staff> list_staff_free_outbound = orderDetail_Function.Take_List_Staff_Free(2, today,future);
+            List<Staff> list_staff_free_telemarketing = orderDetail_Function.Take_List_Staff_Free(3, today,future);
+
+            List<Staff> list_staff_free = new List<Staff>();
+            list_staff_free.AddRange(list_staff_free_inbound);
+            list_staff_free.AddRange(list_staff_free_outbound);
+            list_staff_free.AddRange(list_staff_free_telemarketing);
+
+            int list_staff_in_working_count = list_staff.Count - list_staff_free.Count;
+
+            ViewBag.list_order_completed = list_order_completed;
+            ViewBag.list_order_started = list_order_started;
+            ViewBag.list_order_pending = list_order_pending;
             ViewBag.list_customer = list_customer;
             ViewBag.list_staff = list_staff;
+            ViewBag.list_staff_free = list_staff_free;
+            ViewBag.list_staff_in_working_count = list_staff_in_working_count;
             return View();
         }
 

@@ -17,7 +17,7 @@
     <!-- Argon CSS -->
     <link href="~/Areas/Admin/Public/css/argon.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link href="~/Areas/Admin/Public/css/onTop.css" rel="stylesheet" />
     @RenderSection("css", false)
 </head>
 
@@ -33,29 +33,31 @@
             <div class="row align-items-center justify-content-lg-between">
                 <div class="col-lg-6">
                     <div class="copyright text-center  text-lg-left  text-muted">
-                        &copy; 2021 <a href="#" target="_blank">Excell On Team</a>
+                        &copy; 2021 <a style="color: blueviolet">Excell On Team</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" target="_blank">Excell On Team</a>
+                            <a class="nav-link" >Excell On Team</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link" target="_blank">About Us</a>
+                            <a class="nav-link" >About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link" target="_blank">Blog</a>
+                            <a class="nav-link" >Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link" target="_blank">MIT License</a>
+                            <a class="nav-link" >MIT License</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </footer>
     </div>
-    
+    <button onclick="topFunction()" style="background-color: transparent" id="btn_top" title="Go to top">
+        <img src="~/Public/Image/up-arrow (1).png" width="50" height="50" />
+    </button>
     <!-- Argon Scripts -->
     <!-- Core -->
 
@@ -115,10 +117,28 @@
             $(location).attr("href", "/Admin/UserManagement/UserIndex");
         }
         function _Register() {
-            $(location).attr("href", "/Admin/UserManagement/Add");
+            $(location).attr("href", "/Admin/UserManagement/AddUser");
         }
         function _Order() {
             $(location).attr("href", "/Admin/OrderManagement/OrderIndex");
+        }
+        function _Cus_In_Order() {
+            $(location).attr("href", "/Admin/CustomerManagement/CustomerInOrderIndex");
+        }
+        function _Order_Pending() {
+            $(location).attr("href", "/Admin/OrderManagement/Filter2?OrderStatus=0");
+        }
+        function _Order_Started() {
+            $(location).attr("href", "/Admin/OrderManagement/Filter2?OrderStatus=1");
+        }
+        function _Order_Completed() {
+            $(location).attr("href", "/Admin/OrderManagement/Filter2?OrderStatus=2");
+        }
+        function _Staff_In_Working() {
+            $(location).attr("href", "/Admin/StaffManagement/StaffInWorkingIndex");
+        }
+        function _Staff_Free() {
+            $(location).attr("href", "/Admin/StaffManagement/StaffFreeIndex");
         }
         function _HideShowNav() {
             $('.sidenav').toggle("fast", function () {
@@ -131,6 +151,19 @@
                 }
             });
 
+        }
+
+        window.onscroll = function () { scrollFunction() };
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("btn_top").style.display = "block";
+            } else {
+                document.getElementById("btn_top").style.display = "none";
+            }
+
+        }
+        function topFunction() {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
         }
     </script>
     @RenderSection("js", false)

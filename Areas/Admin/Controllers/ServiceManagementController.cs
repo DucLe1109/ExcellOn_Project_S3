@@ -40,25 +40,25 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             OrderDetail ord = db.OrderDetails.Where(x => x.Id == id).FirstOrDefault();
             List<Staff_OrderDetail> list_id_staff_ord = db.Staff_OrderDetail.Where(x => x.OrderDetail_Id == id).ToList();
             List<Staff> list_staff_this_ord = new List<Staff>();
-            foreach (var item in list_id_staff_ord) {
+            foreach (var item in list_id_staff_ord)
+            {
                 Staff _staff = db.Staffs.Where(x => x.Id == item.Staff_Id).FirstOrDefault();
                 list_staff_this_ord.Add(_staff);
             }
             int list_staff_this_ord_count = list_staff_this_ord.Count;
-            
+
             if (list_staff_this_ord_count < 21)
             {
                 int list_staff_free_add_count = 21 - list_staff_this_ord_count;
                 List<Staff> list_staff_free = orderDetail_Function.Take_List_Staff_Free(id);
                 List<Staff> list_staff_append = new List<Staff>();
-                if (list_staff_free.Count >= list_staff_free_add_count)
+
+                var _list_staff_free = list_staff_free.Take(list_staff_free_add_count);
+                foreach (var item in _list_staff_free)
                 {
-                    var _list_staff_free = list_staff_free.Take(list_staff_free_add_count);
-                    foreach (var item in _list_staff_free)
-                    {
-                        list_staff_append.Add(item);
-                    }
+                    list_staff_append.Add(item);
                 }
+
                 ViewBag.list_staff_this_ord = list_staff_this_ord;
                 ViewBag.list_staff_append = list_staff_append;
                 return View(ord);
@@ -106,7 +106,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 list_appendedStaff.isLoadMore = true;
                 list_appendedStaff.list_staff_append = list_staff_vmd_free_append;
             }
-            return Json(list_appendedStaff,JsonRequestBehavior.AllowGet);
+            return Json(list_appendedStaff, JsonRequestBehavior.AllowGet);
         }
         //
         //public JsonResult GetTotalPage(int items, int ord_id)
@@ -321,7 +321,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HttpGet]
         public JsonResult Delete_ord(int ord_id)
         {
-            OrderDetail orderDetail = db.OrderDetails.Where(x => x.Id == ord_id).FirstOrDefault(); 
+            OrderDetail orderDetail = db.OrderDetails.Where(x => x.Id == ord_id).FirstOrDefault();
             int interval = (int)((DateTime)orderDetail.OrderDetail_DateEnd - (DateTime)orderDetail.OrderDetail_DateStart).TotalDays;
             if (orderDetail != null)
             {
@@ -337,7 +337,8 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             }
             // Xóa các bản ghi trong bảng Staff_OrderDetail để cập nhật nhân sự còn đang rảnh.
             List<Staff_OrderDetail> list_staff_ord = db.Staff_OrderDetail.Where(x => x.OrderDetail_Id == orderDetail.Id).ToList();
-            foreach (var items in list_staff_ord) {
+            foreach (var items in list_staff_ord)
+            {
                 db.Staff_OrderDetail.Remove(items);
             }
 
@@ -364,7 +365,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         public JsonResult GetOrderDetail(int Service_ID)
         {
 
-            List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.ServiceId == Service_ID && x.OrderDetail_Status != 3).OrderBy(x=>x.OrderDetail_Status).ToList();
+            List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.ServiceId == Service_ID && x.OrderDetail_Status != 3).OrderBy(x => x.OrderDetail_Status).ToList();
             List<OrderDetailViewModel> list_ord_vm = new List<OrderDetailViewModel>();
             foreach (var item in list_ord)
             {
