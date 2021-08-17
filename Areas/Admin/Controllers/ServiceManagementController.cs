@@ -93,6 +93,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 _new.Staff_Phone = item.Staff_Phone;
                 _new.Staff_Status = item.Staff_Status;
                 _new.Staff_UserName = item.Staff_UserName;
+                _new.Staff_OrderDetail = item.Staff_OrderDetail.Count;
                 list_staff_vmd_free_append.Add(_new);
             }
 
@@ -387,10 +388,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HasPermission(Permission = "Service_Add")]
         public ActionResult Add()
         {
-
             return View();
-
-
         }
 
         [HasPermission(Permission = "Service_Add")]
@@ -434,6 +432,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 }
             }
             db.SaveChanges();
+            TempData["message"] = "Create successfully";
             return RedirectToAction("ServiceIndex");
 
 
@@ -494,10 +493,12 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 }
 
                 db.SaveChanges();
+                TempData["message"] = "Create successfully";
                 return RedirectToAction("ServiceIndex");
             }
             else
             {
+                TempData["message"] = "This action is null !";
                 return RedirectToAction("ServiceIndex");
             }
 

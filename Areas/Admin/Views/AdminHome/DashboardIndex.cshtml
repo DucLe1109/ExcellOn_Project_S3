@@ -14,7 +14,7 @@
     int list_order_completed_count = list_order_completed.Count;
     int list_order_started_count = list_order_started.Count;
     int list_order_pending_count = list_order_pending.Count;
-
+    int list_order_count = list_order_started_count + list_order_pending_count + list_order_completed_count;
     float tunover = 0;
     foreach (var item in list_order_completed)
     {
@@ -22,6 +22,13 @@
     }
     var _tunover = string.Format("{0:0,0}", tunover);
     float customer_in_order = (float)list_order_completed_count / (float)list_customer_count * 100;
+    float _orderpending_percent = ((float)list_order_pending_count / (float)list_order_count) * 100;
+    float _orderstarted_percent = ((float)list_order_started_count / (float)list_order_count) * 100;
+    float _ordercompleted_percent = ((float)list_order_completed_count / (float)list_order_count) * 100;
+
+    string orderpending_percent = String.Format("{0:0.00}", _orderpending_percent);
+    string orderstarted_percent = String.Format("{0:0.00}", _orderstarted_percent);
+    string ordercompleted_percent = String.Format("{0:0.00}", _ordercompleted_percent);
     string _customer_in_order = String.Format("{0:0.00}", customer_in_order); }
 
 
@@ -81,7 +88,7 @@
                         </div>
                         <p class="mt-3 mb-0 text-sm">
                             <span class="text-success mr-2"><i class="fa fa-caret-square-o-up"></i> @_customer_in_order%</span>
-                            <span class="text-nowrap">Compare with all customer have visited through website</span>
+                            <span class="text-nowrap">Calculted by Number Order / Number Customer</span>
                         </p>
                     </div>
                 </div>
@@ -104,7 +111,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 5.24%</span>
+                            <span class="text-success mr-2"><i class="fa fa-first-order"></i> @orderpending_percent%</span>
                             <span class="text-nowrap">Excell On Company</span>
                         </p>
                     </div>
@@ -126,7 +133,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-caret-square-o-up"></i> @_customer_in_order%</span>
+                            <span class="text-success mr-2"><i class="fa fa-caret-square-o-right"></i> @orderstarted_percent %</span>
                             <span class="text-nowrap">Customer in Order</span>
                         </p>
                     </div>
@@ -148,7 +155,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 2.24%</span>
+                            <span class="text-success mr-2"><i class="fa fa-hand-o-right"></i> @ordercompleted_percent%</span>
                             <span class="text-nowrap">Excell On Company</span>
                         </p>
                     </div>
@@ -173,7 +180,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-arrow-right"></i></span>
+                            <span class="text-success mr-2"><i class="fa fa-address-card"></i></span>
                             <span class="text-nowrap">Excell On Company</span>
                         </p>
                     </div>
@@ -195,7 +202,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-arrow-right"></i></span>
+                            <span class="text-success mr-2"><i class="fa fa-address-book"></i></span>
                             <span class="text-nowrap">Excell On Company</span>
                         </p>
                     </div>
@@ -217,7 +224,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-arrow-right"></i></span>
+                            <span class="text-success mr-2"><i class="fa fa-address-card-o"></i></span>
                             <span class="text-nowrap">Excell On Company</span>
                         </p>
                     </div>
@@ -264,7 +271,9 @@
     </div>
 
 </div>
-
+<button onclick="topFunction()" style="background-color: transparent" id="btn_top" title="Go to top">
+    <img src="~/Public/Image/up-arrow (1).png" width="50" height="50" />
+</button>
 
 @section css{
     <style>

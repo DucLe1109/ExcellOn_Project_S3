@@ -5,7 +5,10 @@
 @using _ExcellOn_.Models
 @{ List<Staff> list_staff_this_ord = ViewBag.list_staff_this_ord;
     List<Staff> list_staff_append = ViewBag.list_staff_append;
-    int list_staff_was_append_count = list_staff_append.Count; }
+    if (list_staff_append != null)
+    {
+        int list_staff_was_append_count = list_staff_append.Count;
+    } }
 @{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";}
 @* dùng cho phân trang ajax
     foreach (var item in list_id_staff_ord)
@@ -63,12 +66,15 @@
                                                 {<span style="margin-left:10px" class="badge badge-dot">
                                                         <i class="bg-warning"></i>
                                                         <span>Training</span>
-                                                    </span>}
-                                                else
-                                                {<span style="margin-left:10px" class="badge badge-dot">
-                                                        <i class="bg-info"></i>
-                                                        <span>Professionnal</span>
-                                                    </span>}
+                                                    </span>
+                                                                        <span> - Project (@item.Staff_OrderDetail.Count)</span> }
+                                                                                        else
+                                                                                        {<span style="margin-left:10px" class="badge badge-dot">
+                                                                                                <i class="bg-info"></i>
+                                                                                                <span>Pro</span>
+                                                                                            </span>
+                                                                                                                <span> - Project (@item.Staff_OrderDetail.Count)</span>}
+
                                             </span>
                                         </label>}
                                     @if (list_staff_append != null)
@@ -86,12 +92,14 @@
                                 {<span style="margin-left:10px" class="badge badge-dot">
                                         <i class="bg-warning"></i>
                                         <span>Training</span>
-                                    </span>}
-                                else
-                                {<span style="margin-left:10px" class="badge badge-dot">
-                                        <i class="bg-info"></i>
-                                        <span>Professionnal</span>
-                                    </span>}
+                                    </span>
+                                                            <span> - Project (@item.Staff_OrderDetail.Count)</span> }
+                                                                                else
+                                                                                {<span style="margin-left:10px" class="badge badge-dot">
+                                                                                        <i class="bg-info"></i>
+                                                                                        <span>Pro</span>
+                                                                                    </span>
+                                                                                                            <span> - Project (@item.Staff_OrderDetail.Count)</span>}
                             </span>
                         </label>}
                 }
@@ -112,7 +120,7 @@
                             </div>
                         </div>
 
-                        
+
                         @*<div class="col-md-6">
                                 <ul id="pages">
                                     <li class="pageInfo">Page 1 of 3</li>
@@ -139,10 +147,18 @@
     <input type="number" style="display:none" id="total_page" />
     @*<input type="number" style="display:none" value="1" id="current_page" />*@
 
-    <input type="number" style="display:none" value="@list_staff_was_append_count" id="list_staff_was_append_count" />
+    @if (list_staff_append != null)
+    {
+<input type="number" style="display:none" value="@list_staff_append.Count" id="list_staff_was_append_count" /> }
+            else
+            {
+<input type="number" style="display:none" value="0" id="list_staff_was_append_count" />}
+
 
 </div>
-
+<button onclick="topFunction()" style="background-color: transparent" id="btn_top" title="Go to top">
+    <img src="~/Public/Image/up-arrow (1).png" width="50" height="50" />
+</button>
 
 @section css{
     <link href="~/Areas/Admin/Public/Plugin_Table_HD/css/paging.css" rel="stylesheet" />
@@ -164,6 +180,7 @@
                 type: "GET",
                 dataType: "json",
                 success: function (result) {
+                    console.log(result);
                     var count = parseInt(result.list_staff_append.length) + parseInt($('#list_staff_was_append_count').val());
                     $('#list_staff_was_append_count').val(count);
                     var html = '';
@@ -176,7 +193,7 @@
                                 '     <span class="circle-image">                        ' +
                                 '         <img src="' + value.Staff_Avatar + '" />                                 ' +
                                 '     </span>                                            ' +
-                                '     <span style="margin-left: 10px" class="info_staff"> ' + value.Staff_FullName + (value.Id == 0 ? '<span class="badge badge-dot"><i class="bg-warning"></i><span>Training</span></span></span>' : '<span style="margin-left:10px" class="badge badge-dot"><i class="bg-info"></i><span>Professional</span></span></span>') +
+                                '     <span style="margin-left: 10px" class="info_staff"> ' + value.Staff_FullName + (value.Id == 0 ? '<span style="margin-left:10px" class="badge badge-dot"><i class="bg-warning"></i><span>Training</span></span><span> - Project (' + value.Staff_OrderDetail + ')</span>' : '<span style="margin-left:10px" class="badge badge-dot"><i class="bg-info"></i><span>Pro</span></span><span> - Project (' + value.Staff_OrderDetail + ')</span>') +
                                 ' </label>                                               ';
                         });
                         $('.select').append(html);
@@ -188,7 +205,7 @@
                                 '     <span class="circle-image">                        ' +
                                 '         <img src="' + value.Staff_Avatar + '" />                                 ' +
                                 '     </span>                                            ' +
-                                '     <span style="margin-left: 10px" class="info_staff"> ' + value.Staff_FullName + (value.Id == 0 ? '<span class="badge badge-dot"><i class="bg-warning"></i><span>Training</span></span></span>' : '<span style="margin-left:10px" class="badge badge-dot"><i class="bg-info"></i><span>Professional</span></span></span>') +
+                                '     <span style="margin-left: 10px" class="info_staff"> ' + value.Staff_FullName + (value.Id == 0 ? '<span style="margin-left:10px" class="badge badge-dot"><i class="bg-warning"></i><span>Training</span></span><span> - Project (' + value.Staff_OrderDetail + ')</span>' : '<span style="margin-left:10px" class="badge badge-dot"><i class="bg-info"></i><span>Pro</span></span><span> - Project (' + value.Staff_OrderDetail + ')</span>') +
                                 ' </label>                                               ';
                         });
                         $('.select').append(html);

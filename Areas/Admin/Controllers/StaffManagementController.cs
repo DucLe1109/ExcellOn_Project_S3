@@ -118,7 +118,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             }
             db.Staffs.Add(new_staff);
             db.SaveChanges();
-
+            TempData["message"] = "Create successfully";
             return Redirect("/Admin/StaffManagement/StaffIndex");
 
         }
@@ -131,8 +131,6 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             ViewBag.list_service = list_service;
             Staff staff = db.Staffs.Where(x => x.Id == id).FirstOrDefault();
             return View(staff);
-
-
         }
 
         [HasPermission(Permission = "Staff_Edit")]
@@ -175,6 +173,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 }
 
                 db.SaveChanges();
+                TempData["message"] = "Update successfully";
             }
             return Redirect("/Admin/StaffManagement/StaffIndex");
 

@@ -22,7 +22,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
-                                <img src="" class="rounded-circle" />
+                                <img src="@Model.User_Avatar" class="rounded-circle" />
                             </div>
                         </div>
                     </div>
@@ -52,19 +52,19 @@
                         </div>
                         <div class="text-center">
                             <h3>
-                                <span class="font-weight-light"></span>
+                                @Model.User_FullName<span class="font-weight-light">, @Model.User_Age</span>
                             </h3>
                             <div class="h5 font-weight-300">
-                                <i class="ni location_pin mr-2"></i>
+                                <i class="ni location_pin mr-2"></i>@Model.User_Address
                             </div>
                             <div class="h5 mt-4">
-                                <i class="ni business_briefcase-24 mr-2"></i>
+                                <i class="ni business_briefcase-24 mr-2"></i>@Model.User_Email
                             </div>
                             <div>
-                                <i class="ni education_hat mr-2"></i>
+                                <i class="ni education_hat mr-2"></i>@Model.User_Phone
                             </div>
                             <hr class="my-4">
-                            <p></p>
+                            <p>@Model.User_AboutMe</p>
 
                         </div>
                     </div>
@@ -200,9 +200,8 @@
                             <hr class="my-4">
 
                             <div class="pl-lg-4">
-                                <div class="form-group focused">
-                                    <button type="submit" class="btn btn-info">Submit</button>
-                                </div>
+                                    <a href="/Admin/UserManagement/UserIndex" class="btn btn-danger">Close</a>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
                     </div>

@@ -27,9 +27,16 @@
 
 
 <div class="container" style="margin-top: 30px;padding-bottom: 40px">
-
     <div class="row">
         <div class="col-xl-12">
+
+            @if (@TempData["message"] != null)
+            {
+                <p class="alert alert-danger" style="font-weight:bold">
+                    @TempData["message"]
+                </p>
+            }
+
             <div class="table-responsive">
                 <table id="table_Staff" class="cell-border text-center align-items-center table-flush ">
                     <thead class="thead-light">
@@ -52,85 +59,81 @@
                         {
                             foreach (var item in list_staff)
                             {
-                        <tr>
-                            <th>
-                                <a href="#" class="avatar rounded-circle">
-                                    <img alt="Image placeholder" src="@item.Staff_Avatar">
-                                </a>
-                            </th>
-                            <td>
-                                @item.Staff_FullName
-                            </td>
-                            <td>
-                                @item.Service.Service_Name
-                            </td>
-                            <td>
-                                @item.Staff_OrderDetail.Count
-                            </td>
-                            <td>
-                                @item.Staff_Address
-                            </td>
-                            <td>
-                                @item.Staff_Phone
-                            </td>
-                            <td>
-                                @item.Staff_Age
-                            </td>
-                            <td>
-                                @if (item.Staff_Gender == 1)
-                                {
-                        <span>Female</span> }
-                    else
+            <tr>
+                <th>
+                    <a href="#" class="avatar rounded-circle">
+                        <img alt="Image placeholder" src="@item.Staff_Avatar">
+                    </a>
+                </th>
+                <td>
+                    @item.Staff_FullName
+                </td>
+                <td>
+                    @item.Service.Service_Name
+                </td>
+                <td>
+                    @item.Staff_OrderDetail.Count
+                </td>
+                <td>
+                    @item.Staff_Address
+                </td>
+                <td>
+                    @item.Staff_Phone
+                </td>
+                <td>
+                    @item.Staff_Age
+                </td>
+                <td>
+                    @if (item.Staff_Gender == 1)
                     {
-                        <span>Male</span>}
-                            </td>
-                            <td>
-                                @item.Staff_Email
-                            </td>
-                            @if (item.Staff_Status == 0)
+        <span>Female</span> }
+    else
+    {
+        <span>Male</span>}
+                </td>
+                <td>
+                    @item.Staff_Email
+                </td>
+                @if (item.Staff_Status == 0)
+                {
+        <td>
+            <span class="badge badge-dot mr-4">
+                <i class="bg-warning"></i>
+                <span id="status_@item.Id">Training</span>
+            </span>
+        </td> }
+                            else
                             {
-                        <td>
-                            <span class="badge badge-dot mr-4">
-                                <i class="bg-warning"></i>
-                                <span id="status_@item.Id">Training</span>
-                            </span>
-                        </td>
- }
-                    else
-                    {
-                        <td>
-                            <span class="badge badge-dot mr-4">
-                                <i class="bg-info"></i>
-                                <span id="status_@item.Id">Profession</span>
-                            </span>
-                        </td>
-}
-                            <td class="text-right">
-                                <div class="dropdown">
-                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        @if (list_permission.Contains("Staff_Edit") || list_role.Contains("Admin"))
-                                        {<a class="dropdown-item" href="/Admin/StaffManagement/Edit/@item.Id">Edit</a>}
-                                        @if (list_permission.Contains("Staff_Status") || list_role.Contains("Admin"))
-                                        {<a class="dropdown-item" onclick="return _ChangeStatus(@item.Id)" style="cursor: pointer">Change Status</a>}
-                                        @if (list_permission.Contains("Staff_Delete") || list_role.Contains("Admin"))
-                                        {<a class="dropdown-item" onclick="return _Delete(@item.Id)" style="cursor: pointer" id="@item.Id">Delete</a>}
+        <td>
+            <span class="badge badge-dot mr-4">
+                <i class="bg-info"></i>
+                <span id="status_@item.Id">Profession</span>
+            </span>
+        </td>}
+                <td class="text-right">
+                    <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            @if (list_permission.Contains("Staff_Edit") || list_role.Contains("Admin"))
+                            {<a class="dropdown-item" href="/Admin/StaffManagement/Edit/@item.Id">Edit</a>}
+                            @if (list_permission.Contains("Staff_Status") || list_role.Contains("Admin"))
+                            {<a class="dropdown-item" onclick="return _ChangeStatus(@item.Id)" style="cursor: pointer">Change Status</a>}
+                            @if (list_permission.Contains("Staff_Delete") || list_role.Contains("Admin"))
+                            {<a class="dropdown-item" onclick="return _Delete(@item.Id)" style="cursor: pointer" id="@item.Id">Delete</a>}
 
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-}
-    }
+                        </div>
+                    </div>
+                </td>
+            </tr>}
+                        }
                     </tbody>
                 </table>
 
             </div>
 
         </div>
-
     </div>
 
 </div>

@@ -32,5 +32,7 @@ namespace _ExcellOn_.Areas.Admin.ViewModel
         public string Staff_AboutMe { get; set; }
 
         public Nullable<int> ServiceId { get; set; }
+
+        public int Staff_OrderDetail { get; set; }
     }
 }

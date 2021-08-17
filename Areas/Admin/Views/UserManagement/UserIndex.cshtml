@@ -16,7 +16,7 @@
                 </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-                <a href="/Admin/UserManagement/Add" class="btn btn-sm btn-neutral">Add New</a>
+                <a href="/Admin/UserManagement/AddUser" target="_blank" class="btn btn-sm btn-neutral">Add New</a>
                 <a class="btn btn-sm btn-neutral" href="/Admin/UserManagement/UserIndex">Reload</a>
             </div>
         </div>
@@ -107,7 +107,7 @@
                                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="/Admin/UserManagement/Edit/@item.Id">Edit</a>
+                                            <a class="dropdown-item" href="/Admin/UserManagement/Edit/@item.Id" target="_blank">Edit</a>
                                             <a class="dropdown-item" onclick="return _Delete(@item.Id)" style="cursor: pointer" id="@item.Id">Delete</a>
                                         </div>
                                     </div>
