@@ -92,32 +92,31 @@
                             Search
                             <i style="font-size: 14px" class="fa fa-search" aria-hidden="true"></i>
                         </button>
-                            
+
                     </li>
 
                     <!-- //search button -->
                 </ul>
-                
+
             </div>
 
         </nav>
     </div>
 </header>
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" >
-        <div class="modal-content" style="box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
-">
+    <div class="modal-dialog modal-lg" style="height:auto">
+        <div class="modal-content" style="box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px">
             <div class="modal-header">
-                <h2 class="modal-title" id="myModalLabel">YOU CAN SEARCH FOR ALL SERVICE</h2>
-                <button type="button" class="close fa fa-close" style="color:white" data-dismiss="modal" aria-hidden="true"></button>
+                <h2 class="modal-title" style="font-weight: 600;color: #17a2b8" id="myModalLabel">YOU CAN SEARCH FOR ALL SERVICE</h2>
+                <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
             </div>
             <form method="post" action="/Searches/Search" style="padding: 20px">
-                <div class="row">
-                    <div class="col-md-4">
+                <div class="row" style="font-weight: 600">
+                    <div class="col-md-3">
                         <label>Date Start</label>
                         <input class="form-control" name="Date_Start" value="@Request["Date_Start"]" type="date" placeholder="Date-Start" />
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label>Date End</label>
                         <input class="form-control" name="Date_End" value="@Request["Date_End"]" type="date" placeholder="Date-End" />
                     </div>
@@ -129,12 +128,19 @@
                             <option value="3">Tele Marketing</option>
                         </select>
                     </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-info" id="search" onclick="return _Search()" type="submit" style="margin-top: 33px;width:100%;float: right">
+                            <i style="font-size: 14px" class="fa fa-search" aria-hidden="true"></i>
+                            Search
+                        </button>
+                    </div>
+                    <div class="col-md-6" id="loader" style="margin-top: 20px;margin-left: 40px;display:none">
+                        <div class="loader" style="float:right"></div>
+                    </div>
                 </div>
-                @*<button class="btn btn-primary" type="submit" style="margin-top: 23px;float: right"> Search </button>*@
             </form>
         </div>
     </div>
 </div>
-
 
 

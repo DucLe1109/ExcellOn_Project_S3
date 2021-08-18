@@ -91,7 +91,38 @@ namespace _ExcellOn_.Controllers
                 return View("~/Views/Customer/Login.cshtml");
             }
         }
-        
+
+        [HttpPost]
+        public JsonResult LoginAjax(SignInViewModel modelSignIn)
+        {
+            if (modelSignIn.UserName != null && modelSignIn.Password != null)
+            {
+                Customer cus = db.Customers.Where(x => x.Customer_UserName == modelSignIn.UserName).FirstOrDefault();
+                if (cus != null)
+                {
+                    bool test = BCrypt.Net.BCrypt.Verify(modelSignIn.Password, cus.Customer_Password);
+                    if (test)
+                    {
+
+                        Session["CustomerName"] = cus;
+
+                        return Json("Successfull",JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json("Account or Password is not correct !", JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    return Json("Account or Password is not correct !", JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json("Account or Password is not correct !", JsonRequestBehavior.AllowGet);
+            }
+        }
         // Function Logout
         public ActionResult Logout()
         {

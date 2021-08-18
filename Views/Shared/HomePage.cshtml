@@ -5,15 +5,14 @@
 
 <head>
 
-    <link href="//fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet">
+    <link href="//fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/Manh/assets/css/style-starter.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <!-- Icons -->
     <link rel="stylesheet" href="~/Areas/Admin/Public/vendor/nucleo/css/nucleo.css" type="text/css">
     <link rel="stylesheet" href="~/Areas/Admin/Public/css/argon.css?v=1.2.0" type="text/css">
     <link rel="stylesheet" href="~/Content/Manh/assets/css/style-starter.css">
-    <link href="~/Content/Duc/search.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/loader.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -74,6 +73,11 @@
         $('select').select2({
             tokenSeparators: [',', ' ']
         });
+    </script>
+    <script type="text/javascript">
+        function _Search() {
+            $('#loader').show();
+        }
     </script>
     @RenderSection("js", false)
 

@@ -1,0 +1,170 @@
+﻿@using _ExcellOn_.Models
+@model List<_ExcellOn_.Models.OrderDetail>
+@{
+    Layout = null;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="~/Areas/Admin/Public/ShoppingCart/shopping_cart.css" rel="stylesheet" />
+    <style>
+        table, td, th {
+        }
+
+        table {
+            width: 100%;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="card">
+        <div class="row">
+
+            @*// Cart*@
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col">
+                            <h4><b>Order Detail</b></h4>
+                        </div>
+                        @if (Model != null)
+                        {
+                            <div class="col align-self-center text-right text-muted">@Model.Count items</div>
+                        }
+                    </div>
+                </div>
+                @{
+                    float _total_cost = 0;
+
+
+}
+
+                <div class="row border-bottom">
+                    <div class="row main align-items-center">
+                        <table class="table text-center">
+                            <tr>
+                                <th>Your service </th>
+                                <th>Interval</th>
+                                <th>Number of Employee</th>
+                                <th>Price (&euro;)</th>
+                                <th></th>
+                            </tr>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    Entities db = new Entities();
+                                    Service service = db.Services.Where(x => x.Id == item.ServiceId).FirstOrDefault();
+                                    DateTime date_start = (DateTime)item.OrderDetail_DateStart;
+                                    DateTime date_end = (DateTime)item.OrderDetail_DateEnd;
+                                    int total_day = (int)(date_end - date_start).TotalDays;
+                                    float total_cost = (float)total_day * (float)service.Service_Price * (float)item.OrderDetail_NumberOfPeople;
+                                    string date_start_string = date_start.ToString("MM/dd/yyyy");
+                                    string date_end_string = date_end.ToString("MM/dd/yyyy");
+                                    _total_cost += total_cost;
+                                    <tr>
+                                        <td>
+                                            <p>@service.Service_Name</p>
+                                            <img class="img-fluid" style="width: 150px; height:150px;border-radius: 20px" src="@service.Service_Image">
+                                        </td>
+                                        <td><div class=""> @date_start_string - @date_end_string </div></td>
+                                        <td><a href="#" class="border">@item.OrderDetail_NumberOfPeople</a></td>
+                                        <td> @total_cost </td>
+                                        <td> <span class="close" id="@item.Id" style="cursor:pointer" onclick="return _remove(@item.Id)">&#10005;</span></td>
+                                    </tr>
+                                }
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-md-4 summary">
+                <div>
+                    <h5><b>Summary</b></h5>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6" style="padding-left:0;">TOTAT COST (&euro;)</div>
+                    <div class="col-md-6 text-right">
+                        <input style="background:transparent;border:none;padding-top: 0px;margin-left:50px" type="number" class="total_cost" readonly value="@_total_cost" />
+                    </div>
+                </div>
+
+                <p>GIVE CODE</p> <input id="code" placeholder="Enter your code">
+
+                <button class="btn btn-primary" onclick="return _GiveCode()">Apply</button>
+
+                <p class="alert-text text-danger text-center" id="discount" style="margin-top: 20px;font-size: 14px;display: none"> Your bill is discount 1% </p>
+
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding-top: 20px">
+                    <div class="col-md-6" style="padding-left:0px;padding-right: 0px">
+                        <div class="col">TOTAL PRICE (&euro;)</div>
+                    </div>
+                    <div class="col-md-6">
+                        <input style="background:transparent;border:none;padding-top: 0px;margin-left:50px;font-weight: bold" type="number" class="total_cost" readonly value="@_total_cost" />
+                    </div>
+
+                </div> <button class="btn" onclick="return _CheckOut()">CHECKOUT</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        function _remove(ID) {
+            $.ajax({
+                url: "/Customer2/RemoveItem?OrderDetail_ID=" + ID,
+                contentType: "application/json;charset=utf-8",
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    $('#' + ID).parent().parent().remove();
+                    $('.total_cost').val($('.total_cost').val() - result);
+                },
+                error: function () {
+
+                }
+            });
+        }
+        function _GiveCode() {
+            var a = ($('#code').val() == "huyducdeptrai");
+            if (a) {
+                $('.total_cost').val($('.total_cost').val() - $('.total_cost').val() * 0.01);
+                $('#discount').show();
+            }
+            var b = ($('#code').val() == "huyducratdeptrai");
+            if (b) {
+                $('.total_cost').val($('.total_cost').val() - $('.total_cost').val() * 0.03);
+                $('#discount').show();
+            }
+            //if () {
+            //
+            //}
+        }
+        function _CheckOut() {
+            $.ajax({
+                url: "/Admin/OrderManagement/SubmitOrder",
+                contentType: "application/json;charset=utf-8",
+                type: "GET",
+                data: { total_cost : $('.total_cost').val(), description : "abc"},
+                dataType: "json",
+                success: function (result) {
+                    alert(result);
+                },
+                error: function () {
+
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
+

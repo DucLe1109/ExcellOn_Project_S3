@@ -4059,6 +4059,7 @@
     <Content Include="Views\Services\DetailStaff.cshtml" />
     <Content Include="Views\Services\detailteam1.cshtml" />
     <Content Include="Views\Services\registerservice.cshtml" />
+    <Content Include="Views\Customer2\OrderIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\MVCC\v16\" />
