@@ -11,6 +11,8 @@ namespace _ExcellOn_.Models
         public string name { get; set; }
         public string avt { get; set; }
         public string des { get; set; }
+        public int age { get; set; }
+        public int gender { get; set; }
       
     }
 }

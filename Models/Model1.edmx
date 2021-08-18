@@ -38,6 +38,20 @@
           <Property Name="Image_link" Type="text" />
           <Property Name="ServiceId" Type="int" />
         </EntityType>
+        <EntityType Name="MyCompany">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" />
+          <Property Name="Image" Type="text" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Address" Type="varchar" MaxLength="255" />
+          <Property Name="TaxIdentificationNumber" Type="varchar" MaxLength="255" />
+          <Property Name="MyMission" Type="ntext" />
+          <Property Name="MyVision" Type="ntext" />
+          <Property Name="MyTarget" Type="ntext" />
+        </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -308,6 +322,7 @@
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MyCompany" EntityType="Self.MyCompany" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
@@ -435,6 +450,7 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
+          <EntitySet Name="MyCompanies" EntityType="Model.MyCompany" />
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -759,6 +775,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="MyCompany">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TaxIdentificationNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="MyMission" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MyVision" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MyTarget" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -930,6 +960,21 @@
               <MappingFragment StoreEntitySet="UserRole">
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MyCompanies">
+            <EntityTypeMapping TypeName="Model.MyCompany">
+              <MappingFragment StoreEntitySet="MyCompany">
+                <ScalarProperty Name="MyTarget" ColumnName="MyTarget" />
+                <ScalarProperty Name="MyVision" ColumnName="MyVision" />
+                <ScalarProperty Name="MyMission" ColumnName="MyMission" />
+                <ScalarProperty Name="TaxIdentificationNumber" ColumnName="TaxIdentificationNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

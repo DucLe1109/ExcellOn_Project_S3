@@ -181,20 +181,18 @@ namespace _ExcellOn_.Controllers
 
             List<Staff> staff = db.Staffs.ToList();
             List<Service> services = db.Services.ToList();
+            
             //List<DietPlan> dietPlans = db.DietPlans.ToList();
             var Res = from o in staff
                       join w in services on o.ServiceId equals w.Id where o.ServiceId==id && o.Staff_Status==1
-                     
-
-
                        select new ResultTeam()
                       {
                           id =o.Id,
                           name = o.Staff_FullName,
                           avt = o.Staff_Avatar,
                           des = o.Staff_AboutMe,
-                          
-                         
+                          age = (int)o.Staff_Age,
+                          gender=(int)o.Staff_Gender              
                       };
             return View(Res);
 
@@ -217,7 +215,9 @@ namespace _ExcellOn_.Controllers
                           name = o.Staff_FullName,
                           avt = o.Staff_Avatar,
                           des = o.Staff_AboutMe,
-                         
+                          age = (int)o.Staff_Age,
+                          gender = (int)o.Staff_Gender
+
                       };
             return View(Res);
 

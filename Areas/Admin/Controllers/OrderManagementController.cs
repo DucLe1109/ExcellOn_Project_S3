@@ -22,7 +22,8 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             //return View(list_or);
             List<Order_OrderDetail> list_order_orderdetail = new List<Order_OrderDetail>();
 
-            List<Order> list_or = db.Orders.Where(x => x.Order_Status != 3).OrderByDescending(x => x.Order_DateCreate).ToList();
+            List<Order> list_or = db.Orders.Where(x => x.Order_Status != 3).OrderBy(x => x.Order_Status).ToList();
+            int count = 0;
             foreach (var item in list_or)
             {
                 // Lấy dữ liệu bảng order và các bảng orderdetail tương ứng
@@ -70,6 +71,11 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 {
                     _new.Orders = item;
                 }
+                count += 1;
+                if (count >= 15)
+                {
+                    break;
+                }
             }
             db.SaveChanges();
             List<int> List_Order_Status_Id = new List<int>();
@@ -98,7 +104,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 {
                     foreach (var Id in List_Order_Status_Id)
                     {
-                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderByDescending(x => x.Order_DateCreate).ToList();
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderBy(x => x.Order_Status).ToList();
                         if (list_order != null)
                         {
                             foreach (var order in list_order)
@@ -132,7 +138,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 {
                     foreach (var Id in List_Order_Status_Id)
                     {
-                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderByDescending(x => x.Order_DateCreate).ToList();
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderBy(x => x.Order_Status).ToList();
                         if (list_order != null)
                         {
                             foreach (var order in list_order)
@@ -165,7 +171,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 {
                     foreach (var Id in List_Order_Status_Id)
                     {
-                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderByDescending(x => x.Order_DateCreate).ToList();
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderBy(x => x.Order_Status).ToList();
                         if (list_order != null)
                         {
                             foreach (var order in list_order)
@@ -198,7 +204,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 {
                     foreach (var Id in List_Order_Status_Id)
                     {
-                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderByDescending(x => x.Order_DateCreate).ToList();
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderBy(x => x.Order_Status).ToList();
                         if (list_order != null)
                         {
                             foreach (var order in list_order)
@@ -228,7 +234,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 if (year_end_default != 1 && year_start_default != 1)
                 {
 
-                    List<Order> list_order = db.Orders.OrderByDescending(x => x.Order_DateCreate).ToList();
+                    List<Order> list_order = db.Orders.OrderBy(x => x.Order_Status).ToList();
                     if (list_order != null)
                     {
                         foreach (var order in list_order)
@@ -260,7 +266,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 else if (year_end_default != 1)
                 {
 
-                    List<Order> list_order = db.Orders.OrderByDescending(x => x.Order_DateCreate).ToList();
+                    List<Order> list_order = db.Orders.OrderBy(x => x.Order_Status).ToList();
                     if (list_order != null)
                     {
                         foreach (var order in list_order)
@@ -291,7 +297,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 else if (year_start_default != 1)
                 {
 
-                    List<Order> list_order = db.Orders.OrderByDescending(x => x.Order_DateCreate).ToList();
+                    List<Order> list_order = db.Orders.OrderBy(x => x.Order_Status).ToList();
                     if (list_order != null)
                     {
                         foreach (var order in list_order)
@@ -321,7 +327,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 }
                 else
                 {
-                    List<Order> list_order = db.Orders.Where(x => x.Order_Status != 3).OrderByDescending(x => x.Order_DateCreate).ToList();
+                    List<Order> list_order = db.Orders.Where(x => x.Order_Status != 3).OrderBy(x => x.Order_Status).ToList();
                     if (list_order != null)
                     {
                         foreach (var order in list_order)

@@ -180,7 +180,10 @@
     <Compile Include="Areas\Admin\ViewModel\StaffAssignmentViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\StaffViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\UserInfoViewModel.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\Customer2Controller.cs" />
+    <Compile Include="Controllers\CustomerBaseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchesController.cs" />
@@ -211,6 +214,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MyCompany.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Order.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -249,8 +255,10 @@
     </Compile>
     <Compile Include="Models\ViewModel\EmployRequest.cs" />
     <Compile Include="Models\ViewModel\list_ordViewModel.cs" />
+    <Compile Include="Models\ViewModel\List_Staff_Free_Of_Service.cs" />
     <Compile Include="Models\ViewModel\OrderDetailViewModel.cs" />
     <Compile Include="Models\ViewModel\SearchRequest.cs" />
+    <Compile Include="Models\ViewModel\SearchRequest2.cs" />
     <Compile Include="Models\ViewModel\SignInViewModel.cs" />
     <Compile Include="Models\ViewModel\SignUpViewModel.cs" />
     <Compile Include="Models\ViewModel\UpdatePermissionViewModel.cs" />
@@ -2896,6 +2904,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Duc\_search.css" />
     <Content Include="Content\Manh\assets\css\style-starter.css" />
     <Content Include="Content\Manh\assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Manh\assets\images\4.jpg" />
@@ -2938,6 +2947,7 @@
     <Content Include="Content\Manh\searches\js\extention\custom-materialize.js" />
     <Content Include="Content\Manh\searches\js\extention\flatpickr.js" />
     <Content Include="Content\Manh\searches\js\main.js" />
+    <Content Include="Content\Manh\searchresult.css" />
     <Content Include="Content\Manh\team\css\bootstrap.css" />
     <Content Include="Content\Manh\team\css\pe-icon-7-stroke.css" />
     <Content Include="Content\Manh\team\css\rotating-card.css" />
@@ -2951,6 +2961,7 @@
     <Content Include="Content\Manh\team\images\tim_logo.png" />
     <Content Include="Content\Manh\team\js\bootstrap.min.js" />
     <Content Include="Content\Manh\team\js\jquery-1.10.2.js" />
+    <Content Include="Content\Son\assets\css\searchresult.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -4038,6 +4049,16 @@
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Shared\HomePage.cshtml" />
     <Content Include="Views\Shared\Main.cshtml" />
+    <Content Include="Views\About\HomeAbout.cshtml" />
+    <Content Include="Views\About\Index.cshtml" />
+    <Content Include="Views\Home\InfoNumber.cshtml" />
+    <Content Include="Views\Customer2\MyProfileCustomer.cshtml" />
+    <Content Include="Views\Customer2\OrderDetailIndex.cshtml" />
+    <Content Include="Views\Customer2\OrderListIndex.cshtml" />
+    <Content Include="Views\Searches\Search.cshtml" />
+    <Content Include="Views\Services\DetailStaff.cshtml" />
+    <Content Include="Views\Services\detailteam1.cshtml" />
+    <Content Include="Views\Services\registerservice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\MVCC\v16\" />
@@ -4047,6 +4068,7 @@
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Areas\Admin\Views\Image\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\CustomerBase\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

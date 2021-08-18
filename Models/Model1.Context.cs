@@ -60,6 +60,8 @@ public partial class Entities : DbContext
 
     public DbSet<UserRole> UserRoles { get; set; }
 
+    public DbSet<MyCompany> MyCompanies { get; set; }
+
 }
 
 }

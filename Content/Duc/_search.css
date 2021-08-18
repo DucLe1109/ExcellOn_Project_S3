@@ -1,0 +1,39 @@
+﻿.modal-dialog {
+    max-width: 100%;
+    margin: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    display: flex;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    color: black !important;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple, .select2-container--default .select2-selection--multiple {
+    height: 40px;
+    min-height: 40px;
+}
+
+.selection span {
+    padding-top: 1px !important;
+}
+
+.dropdown-menu {
+    padding: 0px !important;
+}
+
+.show {
+    top: 5px !important;
+}
+.modal-backdrop {
+    opacity: 0.8 !important;
+}
+/*
+    ================================
+        Best Viewed In Full Page
+    ================================
+*/

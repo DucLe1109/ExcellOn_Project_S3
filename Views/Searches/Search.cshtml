@@ -1,0 +1,133 @@
+﻿@using _ExcellOn_.Models
+@using _ExcellOn_.Models.ViewModel
+@{
+    List<List_Staff_Free_Of_Service> List_list_Staff_Free_Of_Services = ViewBag.list_Staff_Free_Of_Services;
+    List<int> List_Service_Id = ViewBag.List_Service_Id;
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <link rel="stylesheet" href="~/Content/Son/assets/css/searchresult.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container" style="margin-top: 30px;padding-bottom:60px">
+        <div class="row">
+            <div class="col-md-12">
+                <hgroup class="mb20">
+                    <h1>Search Results</h1>
+                    <h2 class="lead">
+                        <strong class="text-excell-color">@List_list_Staff_Free_Of_Services.Count</strong> results were found for the <strong class="text-excell-color">Searching</strong> service
+                    </h2>
+                </hgroup>
+            </div>
+            <div class="col-md-12">
+                <form method="post" action="/Searches/Search" style="padding: 20px">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Date Start</label>
+                            <input class="form-control" name="Date_Start" value="@Request["Date_Start"]" type="date" placeholder="Date-Start" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>Date End</label>
+                            <input class="form-control" name="Date_End" value="@Request["Date_End"]" type="date" placeholder="Date-End" />
+                        </div>
+                        <div class="col-md-4">
+                            <label>Service</label>
+                            <select name="List_Service_Id[]" multiple class="form-control select">
+                                @if (List_Service_Id != null)
+                                {
+                                    <option value="1" @(List_Service_Id.Contains(1) ? "selected" : "")>In Bound</option>
+                                    <option value="2" @(List_Service_Id.Contains(2) ? "selected" : "")>Out Bound</option>
+                                    <option value="3" @(List_Service_Id.Contains(3) ? "selected" : "")>Tele Marketing</option>
+                                }
+                                else
+                                {
+                                    <option value="1">In Bound</option>
+                                    <option value="2">Out Bound</option>
+                                    <option value="3">Tele Marketing</option>
+                                }
+
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn btn-danger" href="/" style="margin-top: 23px;float: right; margin-left: 20px"> Home</a>
+                            <button class="btn btn-primary" type="submit" style="margin-top: 23px;float: right"> Search </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        @if (List_list_Staff_Free_Of_Services != null)
+        {
+            foreach (var list_Staff_Free_Of_Services in List_list_Staff_Free_Of_Services)
+            {
+                DateTime date_start = (DateTime)list_Staff_Free_Of_Services.Date_Start;
+                DateTime date_end = (DateTime)list_Staff_Free_Of_Services.Date_Start;
+                string _date_start = date_start.ToString("MM/dd/yyyy");
+                string _date_end = date_end.ToString("MM/dd/yyyy");
+
+                <section class="col-xs-12 col-sm-6 col-md-12">
+                    <article class="search-result row">
+                        <div class="col-xs-12 col-sm-12 col-md-3">
+                            <a href="#" title="In-bound" class="thumbnail">
+                                <img src="@list_Staff_Free_Of_Services.service.Service_Image"
+                                     alt="Lorem ipsum" />
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <ul class="meta-search">
+                                <li><i class="glyphicon glyphicon-calendar"></i> <span> Date-Start: @_date_start</span></li>
+                                <li><i class="glyphicon glyphicon-calendar"></i> <span> Date-Start: @_date_end</span></li>
+                                <li><i class="glyphicon glyphicon-user"></i> <span> Number of staffs: @list_Staff_Free_Of_Services.list_staff_free_count</span></li>
+                                <li><i class="glyphicon glyphicon-collapse-up"></i> <span> Name: @list_Staff_Free_Of_Services.service.Service_Name</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <ul class="meta-search">
+                                <li><i class="glyphicon glyphicon-tag"></i> <span>Tax: Included</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <ul class="meta-search">
+                                <li><i class="glyphicon glyphicon-gift"></i> <span>Price offer: $@list_Staff_Free_Of_Services.service.Service_Price</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-3">
+                            <ul class="meta-search">
+                                <li><i class="glyphicon glyphicon-usd"></i> <span>Money Back Guarantee</span></li>
+                            </ul>
+                        </div>
+                        <span class="clearfix borda"></span>
+                    </article>
+                </section>
+            }
+
+        }
+
+        <div class="col-md-12" style="margin-top:30px">
+            <hgroup class="mb20">
+                <h1>Reference Search Results</h1>
+                <h2 class="lead">
+                    <strong class="text-excell-color">3</strong> results were found for the <strong class="text-excell-color">In-bound</strong> service
+                </h2>
+            </hgroup>
+        </div>
+
+    </div>
+    <script>
+        $('select').select2({
+            tokenSeparators: [',', ' ']
+        });</script>
+</body>
+</html>

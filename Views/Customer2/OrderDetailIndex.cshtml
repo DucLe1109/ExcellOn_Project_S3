@@ -1,0 +1,183 @@
+﻿@using _ExcellOn_.Areas.Admin.ViewModel
+@using _ExcellOn_.Models
+@model List<_ExcellOn_.Models.OrderDetail>
+@{
+
+    List<Order_OrderDetail> list_order_orderdetail = ViewBag.list_order_orderdetail;
+    List<int> List_Order_Status_Id = ViewBag.List_Order_Status_Id;
+}
+@{
+    ViewBag.Title = "OrderListIndex";
+    Layout = "~/Views/Shared/HomePage.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Order Detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="~/Areas/Admin/Public/css/panel.css" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="inner-banner">
+        <section class="w3l-breadcrumb">
+            <div class="container">
+                <h4 class="inner-text-title font-weight-bold text-white mb-sm-3 mb-2">My Order</h4>
+                <ul class="breadcrumbs-custom-path">
+                    <li><a href="/">Home</a></li>
+                    <li class="active"><span class="fa fa-chevron-right mx-2" aria-hidden="true"></span> Detail Order</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <!-- Copy toàn bộ thẻ div class container -->
+    <div class="container" style="margin-top: 100px;margin-bottom: 100px">
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                    <i class="fa fa-search-plus pull-left icon"></i>
+                    <h3>ORDER DETAIL</h3>
+                </div>
+                <hr>
+                @foreach (var item in list_order_orderdetail)
+                {
+                    <div class="row" style="font-size: 14px">
+                        <div class="col-xs-12 col-md-3 col-lg-3">
+                            <div class="panel panel-primary" style="min-height: 220px">
+                                <div class="panel-heading">Billing Details</div>
+                                <div class="panel-body" style="word-wrap: break-word">
+                                    <strong>Customer: </strong><span>@item.Orders.Customer.Customer_Name</span><br>
+                                    <strong>Phone: </strong><span>@item.Orders.Customer.Customer_Phone</span><br>
+                                    <strong>Email: </strong><span>@item.Orders.Customer.Customer_Email</span><br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-3 col-lg-3">
+                            <div class="panel panel-success" style="min-height: 220px">
+                                <div class="panel-heading">Company Information</div>
+                                <div class="panel-body" style="word-wrap: break-word">
+                                    <strong>Name: </strong><span>@item.Orders.Customer.Company.Company_Name</span><br>
+                                    <strong>Phone: </strong><span>@item.Orders.Customer.Company.Company_Phone</span><br>
+                                    <strong>Email: </strong><span>@item.Orders.Customer.Company.Company_Email</span><br>
+                                    <strong>Address: </strong><span>@item.Orders.Customer.Company.Company_Address</span><br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-3 col-lg-3">
+                            <div class="panel panel-info" style="min-height: 220px">
+                                <div class="panel-heading">Order Information</div>
+                                <div class="panel-body" style="word-wrap: break-word">
+                                    <strong>Created Date: </strong><span>@item.Orders.Order_DateCreate</span><br>
+                                    <strong>Description: </strong><span>@item.Orders.Order_Description </span><br>
+                                    <strong>Total amount: </strong><span>$@item.Orders.Order_TotalCost</span><br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-3 col-lg-3">
+                            <div class="panel panel-warning" style="min-height: 220px">
+                                <div class="panel-heading">Payment Information</div>
+                                <div class="panel-body" style="word-wrap: break-word">
+                                    <strong>Method: </strong><span> Visa/ Mastercard</span><br>
+                                    <strong>Bank name: </strong><span> N/A</span><br>
+                                    <strong>Owner: </strong><span> Le Huy Duc</span><br>
+                                    <strong>Card Number: </strong><span>***** 431</span> <br>
+                                    <strong>Exp Date: </strong><span> 8/9/2026</span><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 50px">
+                        <div class="col-md-12">
+                            <div class="panel panel-info" style="min-height: 220px">
+                                <div class="panel-heading" style="padding: 20px">
+                                    <h3 class="text-center"><strong class="heading_order">Order summary</strong></h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive" style="width: 100%">
+                                        <table class="table" style="padding: 10px;text-align:center">
+                                            <thead>
+                                                <tr>
+                                                    <td class="list_item"><strong>Service Name</strong></td>
+                                                    <td class="list_item"><strong>Code</strong></td>
+                                                    <td class="list_item"><strong>Order Start</strong></td>
+                                                    <td class="list_item"><strong>Order End</strong></td>
+                                                    <td class="list_item"><strong>Number of Staff</strong></td>
+                                                    <td class="list_item"><strong>Price</strong></td>
+                                                    <td class="list_item"><strong>Status</strong></td>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var ord in item.List_OrderDetail)
+                                                {
+                                                    int interval = (int)((DateTime)ord.OrderDetail_DateEnd - (DateTime)ord.OrderDetail_DateStart).TotalDays;
+                                                    float price = (float)(interval * ord.OrderDetail_NumberOfPeople * ord.Service.Service_Price);
+                                                    <tr>
+                                                        <td class="list_item_order">@ord.Service.Service_Name</td>
+                                                        <td class="list_item_order">@ord.Id</td>
+                                                        <td class="list_item_order">@ord.OrderDetail_DateStart.Value.ToString("MM/dd/yyyy")</td>
+                                                        <td class="list_item_order">@ord.OrderDetail_DateEnd.Value.ToString("MM/dd/yyyy")</td>
+                                                        <td class="list_item_order">@ord.OrderDetail_NumberOfPeople</td>
+                                                        @if (ord.OrderDetail_Status == 0)
+                                                        {
+                                                            <td class="list_item_order" style="font-weight: 600">Pending</td>
+                                                        }
+                                                        else if (ord.OrderDetail_Status == 1)
+                                                        {
+                                                            <td class="list_item_order" style="font-weight: 600">Started</td>
+                                                        }
+                                                        else if (ord.OrderDetail_Status == 2)
+                                                        {
+                                                            <td class="list_item_order" style="font-weight: 600">Completed</td>
+                                                        }
+                                                        <td>$ @price</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="highrow"></td>
+                                                    <td class="highrow"></td>
+                                                    <td class="highrow"></td>
+                                                    <td class="highrow"></td>
+                                                    <td class="highrow"></td>
+                                                    <td class="highrow text-center"><strong>Subtotal</strong></td>
+                                                    <td class="highrow"><span>$@item.Orders.Order_TotalCost</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 60px" class="emptyrow"><i class="fa fa-barcode iconbig"></i></td>
+                                                    <td class="emptyrow"></td>
+                                                    <td class="emptyrow"></td>
+                                                    <td class="emptyrow"></td>
+                                                    <td class="emptyrow"></td>
+                                                    <td class="emptyrow text-center"><strong>Total</strong></td>
+                                                    <td class="emptyrow"><span>$@item.Orders.Order_TotalCost</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+</html>

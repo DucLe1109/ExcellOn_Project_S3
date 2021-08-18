@@ -38,34 +38,44 @@
                             <h4 class="text-center">@i.name</h4>
                             <p class="text-center">@i.des</p>
 
-                            <div class="stats-container">
-                                <div class="stats">
-                                    <h4>235</h4>
+                            <div class="stats-container" >
+                                <div class="stats"style="display: block; float: left; width: 50%; text-align: center;">
+                                    <h4>@i.age</h4>
                                     <p>
-                                        Followers
+                                        Age
                                     </p>
                                 </div>
-                                <div class="stats">
-                                    <h4>114</h4>
+                                <div class="stats" style="display: block; float: left; width: 50%; text-align: center;">
+                                    @if (i.gender == 1)
+
+                                    {
+                                        <h4>Male</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4>Female</h4>
+                                    }
+
+
                                     <p>
-                                        Following
+                                        Gender
                                     </p>
                                 </div>
-                                <div class="stats">
+                                @*<div class="stats">
                                     <h4>35</h4>
                                     <p>
                                         Projects
                                     </p>
-                                </div>
+                                </div>*@
                             </div>
 
                         </div>
                     </div>
                     <div class="footer">
                         <div class="social-links text-center">
-                            <a href="https://creative-tim.com" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
-                            <a href="https://creative-tim.com" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
-                            <a href="https://creative-tim.com" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                            <a href="#" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
+                            <a href="#" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
+                            <a href="#" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
                         </div>
                     </div>
                 </div> <!-- end back panel -->

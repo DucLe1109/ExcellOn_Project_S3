@@ -18,93 +18,6 @@
 <link href='~/Content/Manh/team/css/bootstrap.css' rel='stylesheet' />
 
 <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-@*<script src="~/Content/Manh/assets/js/bootstrap.min.js"></script>*@
-@*<style>
-        body {
-            margin-top: 100px;
-        }
-
-        .navbar-default .navbar-nav > li > a {
-            padding: 15px 15px;
-            margin: 5px 0;
-        }
-
-        .navbar-default {
-            padding: 10px 0;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-color: transparent;
-            box-shadow: 0 0px 13px rgba(0,0,0,.2);
-        }
-
-        .btn-info,
-        .btn-info:hover,
-        .btn-info:focus {
-            color: #FFF !important;
-            background-color: #00bbff !important;
-            border-color: #00bbff !important;
-        }
-
-        .btn-info {
-            opacity: .8;
-            transition: all 0.1s;
-            -webkit-transition: all 0.1s;
-        }
-
-            .btn-info:hover,
-            .btn-info:focus {
-                opacity: 1;
-            }
-    </style>*@
-@*<section class="w3l-team py-5">
-        <div class="container py-md-5 py-4">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="section-heading text-center mb-sm-5 mb-4">
-                        <h3 class="title-style mb-2">Meet our lovely team</h3>
-                        <p class="lead">
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque,
-                            eaque ipsa quae ab illo inventore.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="row text-center">
-                @foreach (var i in Model)
-                {
-                    <div class="col-md-4">
-                        <div class="team-block-single">
-                            <div class="team-grids">
-                                <a href="#team-single">
-                                    <a href="@Url.Action("DetailStaff","Services",new {id = i.id })"><img src="@i.avt" class="img-fluid" alt=""></a>
-                                    <div class="team-info">
-                                        <div class="social-icons-section">
-                                            <a class="fac" href="#facebook">
-                                                <span class="fa fa-facebook"></span>
-                                            </a>
-                                            <a class="twitter mx-2" href="#twitter">
-                                                <span class="fa fa-twitter"></span>
-                                            </a>
-                                            <a class="google" href="#google-plus">
-                                                <span class="fa fa-google-plus"></span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="team-bottom-block p-4">
-
-                                <h5 class="member mb-1"><a href="@Url.Action("DetailStaff","Services",new {id = i.id })">@i.name</a></h5>
-                                <a href="@Url.Action("DetailStaff","Services",new {id = i.id })">
-                                    <small>@i.des</small>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                }
-                  </div>
-
-        </div>
-    </section>*@
 <section class="w3l-team py-5">
     <div class="container py-md-5 py-4">
         <div class="row justify-content-center">
@@ -150,34 +63,44 @@
                                         <h4 class="text-center">@i.name</h4>
                                         <p class="text-center">@i.des</p>
 
-                                        <div class="stats-container">
-                                            <div class="stats">
-                                                <h4>235</h4>
+                                        <div class="stats-container" >
+                                            <div class="stats" style="display: block; float: left; width: 50%; text-align: center;">
+                                                @if (i.gender == 1)
+
+                                                {
+                                                    <h4>Male</h4>
+                                                }
+                                                else
+                                                {
+                                                    <h4>Female</h4>
+                                                }
+
+                                                
                                                 <p>
-                                                    Followers
+                                                   Gender
                                                 </p>
                                             </div>
-                                            <div class="stats">
-                                                <h4>114</h4>
+                                            <div class="stats" style="display: block; float: left; width: 50%; text-align: center;">
+                                                <h4>@i.age</h4>
                                                 <p>
-                                                    Following
+                                                    Age
                                                 </p>
                                             </div>
-                                            <div class="stats">
+                                            @*<div class="stats">
                                                 <h4>35</h4>
                                                 <p>
                                                     Projects
                                                 </p>
-                                            </div>
+                                            </div>*@
                                         </div>
 
                                     </div>
                                 </div>
                                 <div class="footer">
                                     <div class="social-links text-center">
-                                        <a href="https://creative-tim.com" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
-                                        <a href="https://creative-tim.com" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
-                                        <a href="https://creative-tim.com" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                                        <a href="#" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
+                                        <a href="#" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
+                                        <a href="#" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
                                     </div>
                                 </div>
                             </div> <!-- end back panel -->

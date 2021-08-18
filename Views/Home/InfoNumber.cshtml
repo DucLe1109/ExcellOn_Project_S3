@@ -1,0 +1,61 @@
+﻿@using _ExcellOn_.Models
+@{
+    ViewBag.Title = "InfoNumber";
+    Layout = null;
+}
+@{
+    List<Staff> list_staff = ViewBag.list_staff;
+    List<Customer> list_customer = ViewBag.list_customer;
+    List<Order> list_order = ViewBag.list_order;
+
+    int list_staff_count = list_staff.Count;
+    int list_customer_count = list_customer.Count;
+    int list_order_count = list_order.Count;
+}
+<section class="w3_stats py-5" id="stats">
+    <div class="container py-md-5 py-4">
+        <div class="w3-stats text-center py-md-4">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="section-heading text-center mb-sm-5 mb-4">
+                        <h3 class="title-style text-white mb-2">Our Amazing Statistics</h3>
+                        <p class="lead text-white">
+                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque,
+                            eaque ipsa quae ab illo inventore.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-4 col-6">
+                    <div class="counter">
+                        <span class="fa fa-users"></span>
+                        <div class="timer count-title count-number mt-3" data-to="@list_customer_count" data-speed="1500"></div>
+                        <p class="count-text">Customer</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6">
+                    <div class="counter">
+                        <span class="fa fa-quote-left"></span>
+                        <div class="timer count-title count-number mt-3" data-to="@list_order_count" data-speed="1500"></div>
+                        <p class="count-text">Order</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6 mt-md-0 mt-5">
+                    <div class="counter">
+                        <span class="fa fa-users"></span>
+                        <div class="timer count-title count-number mt-3" data-to="@list_staff_count" data-speed="1500"></div>
+                        <p class="count-text">Staff</p>
+                    </div>
+                </div>
+                @*<div class="col-md-3 col-6 mt-md-0 mt-5">
+                        <div class="counter">
+                            <span class="fa fa-trophy"></span>
+                            <div class="timer count-title count-number mt-3" data-to="10630" data-speed="1500"></div>
+                            <p class="count-text">Win awards</p>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</section>
