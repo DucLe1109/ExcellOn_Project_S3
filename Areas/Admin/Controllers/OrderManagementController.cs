@@ -18,12 +18,11 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HasPermission(Permission = "Order_List")]
         public ActionResult OrderIndex()
         {
-            //List<Order> list_or = db.Orders.Where(x=>x.Order_Status != 3).ToList();
-            //return View(list_or);
             List<Order_OrderDetail> list_order_orderdetail = new List<Order_OrderDetail>();
 
-            List<Order> list_or = db.Orders.Where(x => x.Order_Status != 3).OrderBy(x => x.Order_Status).ToList();
+            List<Order> list_or = db.Orders.Where(x => x.Order_Status != 3).ToList();
             int count = 0;
+            list_or.Reverse();
             foreach (var item in list_or)
             {
                 // Lấy dữ liệu bảng order và các bảng orderdetail tương ứng
@@ -104,7 +103,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 {
                     foreach (var Id in List_Order_Status_Id)
                     {
-                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderBy(x => x.Order_Status).ToList();
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).ToList();
                         if (list_order != null)
                         {
                             foreach (var order in list_order)
@@ -119,6 +118,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                             }
                         }
                     }
+                    list_or.Reverse();
                     foreach (var item in list_or)
                     {
                         Order_OrderDetail _new = new Order_OrderDetail();
@@ -138,7 +138,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 {
                     foreach (var Id in List_Order_Status_Id)
                     {
-                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderBy(x => x.Order_Status).ToList();
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).ToList();
                         if (list_order != null)
                         {
                             foreach (var order in list_order)
@@ -152,6 +152,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                             }
                         }
                     }
+                    list_or.Reverse();
                     foreach (var item in list_or)
                     {
                         Order_OrderDetail _new = new Order_OrderDetail();
@@ -171,7 +172,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 {
                     foreach (var Id in List_Order_Status_Id)
                     {
-                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderBy(x => x.Order_Status).ToList();
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).ToList();
                         if (list_order != null)
                         {
                             foreach (var order in list_order)
@@ -185,6 +186,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                             }
                         }
                     }
+                    list_or.Reverse();
                     foreach (var item in list_or)
                     {
                         Order_OrderDetail _new = new Order_OrderDetail();
@@ -204,7 +206,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                 {
                     foreach (var Id in List_Order_Status_Id)
                     {
-                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).OrderBy(x => x.Order_Status).ToList();
+                        List<Order> list_order = db.Orders.Where(x => x.Order_Status == Id).ToList();
                         if (list_order != null)
                         {
                             foreach (var order in list_order)
@@ -213,6 +215,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                             }
                         }
                     }
+                    list_or.Reverse();
                     foreach (var item in list_or)
                     {
                         Order_OrderDetail _new = new Order_OrderDetail();

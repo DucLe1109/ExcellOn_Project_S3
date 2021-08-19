@@ -2904,6 +2904,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Duc\ProfileCard.css" />
     <Content Include="Content\Duc\_search.css" />
     <Content Include="Content\Manh\assets\css\style-starter.css" />
     <Content Include="Content\Manh\assets\fonts\fontawesome-webfont.svg" />
@@ -3266,6 +3267,9 @@
     <Content Include="Public\Image\2021_06_15_17_02_IMG_0768.JPG" />
     <Content Include="Public\Image\2021_06_15_17_03_IMG_0771.JPG" />
     <Content Include="Public\Image\95-telemarketing.jpg" />
+    <Content Include="Public\Image\a10.jfif" />
+    <Content Include="Public\Image\a17.jfif" />
+    <Content Include="Public\Image\a4.jfif" />
     <Content Include="Public\Image\artop.png" />
     <Content Include="Public\Image\ava.gif" />
     <Content Include="Public\Image\avt.png" />

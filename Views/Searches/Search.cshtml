@@ -23,16 +23,81 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .dropdown-item span {
+            cursor: pointer;
+        }
 
+            .dropdown-item span a {
+                text-decoration: none;
+            }
+
+        .dropdown-item:hover {
+            background-color: aquamarine;
+        }
+
+        .current_user:hover {
+            background-color: transparent !important;
+        }
+
+        .dropdown-toggle:hover {
+            background-color: transparent !important;
+            border: none;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container" style="margin-top: 30px;padding-bottom:60px">
-        <div class="row" style="border-bottom: 1px solid blue;margin-bottom: 30px">
+    <div class="container-fluid" style="margin-top: 30px;padding-left:100px;padding-right:100px; font-size: 1.5rem!important">
+        <div class="row" style="border-bottom: 1px solid blue;margin-bottom: 30px;padding-bottom: 10px">
             <ul class="nav nav-tabs" style="float:right;border: none">
-                <li role="presentation"><a href="#">Home</a></li>
-                <li role="presentation"><a href="#">Profile</a></li>
-                <li role="presentation"><a href="#">Messages</a></li>
+                <li role="presentation"><a href="@Url.Action("Index","Home")">Home</a></li>
+                <li role="presentation"><a href="@Url.Action("Index","About")">Abouts</a></li>
+                <li role="presentation"><a href="@Url.Action("service","Services")">Service</a></li>
+                <li role="presentation"><a href="@Url.Action("Index","Contact")">Contact Us</a></li>
+                @if (cus != null)
+                {
+                    <li role="presentation" class="dropdown current_user">
+                        <a style="max-height:42px" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <div style="margin-top:-15px">
+                                <img src="@cus.Customer_Avatar" style="width: 50px;height:50px;border-radius: 50%" />
+                                Customer1 <span class="caret"></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item" style="padding: 10px">
+                                <span style="margin-right: 20px;margin-left:10px">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                </span>
+                                <span>
+                                    <a href="@Url.Action("MyProfileCustomer","Customer2")">My profile</a>
+                                </span>
+
+                            </li>
+                            <li class="dropdown-item" style="padding: 10px;border-bottom: 1px solid">
+                                <span style="margin-right: 20px;margin-left:10px">
+                                    <i class="glyphicon glyphicon-gift"></i>
+                                </span>
+                                <span>
+                                    <a href="@Url.Action("OrderListIndex","Customer2")">My Order</a>
+                                </span>
+
+                            </li>
+                            <li class="dropdown-item" style="padding: 10px">
+                                <span style="margin-right: 20px;margin-left:10px">
+                                    <i class="glyphicon glyphicon-log-in"></i>
+                                </span>
+                                <span>
+                                    <a href="@Url.Action("Logout","Customer")">Logout</a>
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li role="presentation"><a data-toggle="modal" data-target="#myModal2" class="btn">Login</a></li>
+                }
                 <li role="presentation" id="cart">
                     <a href="/Customer2/OrderIndex" target="_blank">
                         <i style="font-size:20px" class="fa fa-shopping-bag" aria-hidden="true"></i>
@@ -48,42 +113,39 @@
                 </li>
             </ul>
         </div>
+
         <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" style="width: 60%">
-                <div class="modal-content">
+            <div class="modal-dialog" style="width: 60%;">
+                <div class="modal-content" style="border-radius: 10px">
                     <div class="modal-header bg-primary">
                         <h3 class="modal-title" style="color: white;font-weight:bold" id="myModalLabel">SUBMIT YOUR ORDER</h3>
-                        <button type="button" class="close fa fa-close" style="color: white" data-dismiss="modal" aria-hidden="true"></button>
                     </div>
                     <div class="form">
                         <div class="row">
                             <div class="modal-body" style="padding: 50px">
                                 <div class="row">
-                                    <div class="col-md-6" style="display:none">
+                                    <div class="col-md-12" style="display:none">
                                         <label>Service_Id</label>
                                         <input type="number" readonly value="" id="Service_Id" class="form-control">
                                     </div>
-                                    <div class="col-md-4">
+
+                                    <div class="col-md-6">
                                         <label>Service</label>
-                                        <input type="text" readonly id="Service_Name" class="form-control">
+                                        <input type="text" required readonly id="Service_Name" class="form-control">
                                     </div>
-                                    <div class="col-md-4">
-                                        <label>Date Start</label>
-                                        <input type="date" id="Date_Start" class="form-control">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>Date End</label>
-                                        <input type="date" id="Date_End" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 15px">
                                     <div class="col-md-6">
                                         <label>Number of Employee</label>
-                                        <input type="number" id="Number_Of_Employee" class="form-control">
+                                        <input type="number" required id="Number_Of_Employee" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:20px">
+                                    <div class="col-md-6">
+                                        <label>Date Start</label>
+                                        <input type="date" required id="Date_Start" value="@Request["Date_Start"]" class="form-control">
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Description</label>
-                                        <input id="Description" class="form-control">
+                                        <label>Date End</label>
+                                        <input type="date" required id="Date_End" value="@Request["Date_End"]" class="form-control">
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 30px">
@@ -183,6 +245,7 @@
                 </form>
             </div>
         </div>
+
         @if (List_list_Staff_Free_Of_Services != null)
         {
             foreach (var list_Staff_Free_Of_Services in List_list_Staff_Free_Of_Services)
@@ -196,8 +259,8 @@
                 float sale_of = ((float)sale_price / (float)list_Staff_Free_Of_Services.service.Service_Price) * 100;
                 string _sale_of = string.Format("{0:0.00}", sale_of);
 
-                <section class="col-xs-12 col-sm-6 col-md-12">
-                    <article class="search-result row" style="font-size: 15px;">
+                <section class="col-xs-12 col-sm-6 col-md-12" style="font-size: 1.8rem!important">
+                    <article class="search-result row">
                         <div class="col-xs-12 col-sm-12 col-md-3">
                             <a href="#" title="In-bound" class="thumbnail">
                                 <img src="@list_Staff_Free_Of_Services.service.Service_Image"
@@ -281,8 +344,8 @@
                 float sale_of = ((float)sale_price / (float)list_Staff_Free_Of_Services.service.Service_Price) * 100;
                 string _sale_of = string.Format("{0:0.00}", sale_of);
 
-                <section class="col-xs-12 col-sm-6 col-md-12">
-                    <article class="search-result row" style="font-size: 15px">
+                <section class="col-xs-12 col-sm-6 col-md-12" style="font-size: 1.8rem!important">
+                    <article class="search-result row">
                         <div class="col-xs-12 col-sm-12 col-md-3">
                             <a href="#" title="In-bound" class="thumbnail">
                                 <img src="@list_Staff_Free_Of_Services.service.Service_Image"
@@ -328,7 +391,7 @@
                                     }
                                     else
                                     {
-                                        <button data-toggle="modal" data-target="#myModal2"  class="btn btn-info">
+                                        <button data-toggle="modal" data-target="#myModal2" class="btn btn-info">
                                             <i class="glyphicon glyphicon-log-in" style="color:white!important"></i>
                                             Login
                                         </button>
@@ -344,6 +407,13 @@
 
 
     </div>
+    <div class="container-fluid" style="background-color: antiquewhite;margin-top: 60px">
+        <p class="container" style="font-weight: 600; font-size: 1.5rem">
+            © 2021  Exell On. All rights reserved. Design by Exell On
+        </p>
+
+    </div>
+
     <script type="text/javascript">
 
         function _Book(Service_Id) {
@@ -367,29 +437,33 @@
                 Date_End: $("#Date_End").val(),
                 Description: $("#Description").val()
             }
+            var Number_Of_Employee = parseInt($("#Number_Of_Employee").val());
+            if (Number_Of_Employee > 0) {
+                $.ajax({
+                    url: "/Customer2/CreateOrder",
+                    contentType: "application/json;charset=utf-8",
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "The Employee is greater than our Staff") {
+                            alert(result);
+                        } else {
+                            var count = parseInt($('#order_count').text());
+                            count += 1;
+                            $('#order_count').text(count);
+                            $('#myModal1').modal('hide');
+                            alert("Successful");
+                        }
+                    },
+                    error: function () {
 
-            $.ajax({
-                url: "/Customer2/CreateOrder",
-                contentType: "application/json;charset=utf-8",
-                type: "POST",
-                data: JSON.stringify(data),
-                dataType: "json",
-                success: function (result) {
-                    if (result == "The Employee is greater than our Staff") {
-                        alert(result);
-                    } else {
-                        var count = parseInt($('#order_count').text());
-                        count += 1;
-                        $('#order_count').text(count);
-                        $('#myModal1').modal('hide');
-                        alert("Successful");
                     }
-                },
-                error: function () {
+                });
+            } else {
+                alert("Some infomation can't be null ");
+            }
 
-                }
-
-            });
         }
 
         function _Login() {
@@ -405,7 +479,7 @@
                 dataType: "json",
                 success: function (result) {
                     if (result == "Successfull") {
-                        window.location.href = "/Searches/search";
+                        window.location.href = window.location.href;
                     } else {
                         alert("Account or Password is not correct !");
                     }

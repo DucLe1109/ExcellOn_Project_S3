@@ -14,72 +14,74 @@
         <div class="container">
             <h4 class="inner-text-title font-weight-bold text-white mb-sm-3 mb-2">Top Quality Services</h4>
             <ul class="breadcrumbs-custom-path">
-                <li><a href="/">Home</a></li>
-                <li class="active"><span class="fa fa-chevron-right mx-2" aria-hidden="true"></span>Services</li>
+                <li><a href="/" style="text-decoration: none">Home</a></li>
+                <li>
+                    <span class="fa fa-chevron-right mx-2" aria-hidden="true">
+                    </span>
+                    <span style="font-weight: 700;color:white">
+                        Services
+                    </span>
+                </li>
             </ul>
         </div>
     </div>
 </div>
-<!-- //inner banner -->
-<!-- service 3 grids -->
-@*<section class="w3l-service-3 py-5">*@
-    <div class="w3l-grids-block-5 py-5">
-        <div class="container py-md-5 py-4">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="section-heading text-center mb-sm-5 mb-4">
-                        <h3 class="title-style mb-2">Our Service</h3>
-                        <p class="lead">
-                            We provide the best services to bring great experiences to our customers
-                        </p>
-                    </div>
+
+<div class="w3l-grids-block-5 py-5">
+    <div class="container py-md-5 py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="section-heading text-center mb-sm-5 mb-4">
+                    <h3 class="title-style mb-2">Our Service</h3>
+                    <p class="lead">
+                        We provide the best services to bring great experiences to our customers
+                    </p>
                 </div>
             </div>
-            <div class="row">
-                @foreach (var s in Model)
-                {
+        </div>
+        <div class="row">
+            @foreach (var s in Model)
+            {
 
-                    <a href="@Url.Action("detailservice","Services",new {id=s.Id})">
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="blog-card-single">
-                                <div class="grids5-info">
-                                    <a href="#blog"><img src="@s.Service_Image" alt="" /></a>
-                                    <div class="blog-info">
-                                        @* <button style="background-color:red;color:white"><a href="blog-single" style="color:white">Book Now</a></button>*@
-                                        <h4><a href="@Url.Action("detailservice","Services",new {id=s.Id})">@s.Service_Name (Only @s.Service_Price$ / 1 Person)</a></h4>
-                                        <p class="content" style=" margin: 0 0 10px; font-size: 14px; font-weight: 400; color: #666; display: block; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; text-align: center;"> @Html.Raw(@s.Service_Description)</p>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <ul class="admin-list d-flex align-items-center justify-content-between">
-                                        <li>
-                                            <a href="#blog">
-                                                <span class="fa fa-user-circle"
-                                                      aria-hidden="true"></span>
-                                                Admin
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("detailservice","Services",new {id=s.Id})">
-                                                <i class="fa fa-angle-double-right ml-1" aria-hidden="true"></i>
-                                                Read
-                                                More
-                                            </a>
-                                        </li>
-                                    </ul>
+                <a href="@Url.Action("detailservice","Services",new {id=s.Id})">
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="blog-card-single">
+                            <div class="grids5-info">
+                                <img src="@s.Service_Image" width="420" height="300" alt="" />
+                                <div class="blog-info" style="min-height: 225px">
+                                    @* <button style="background-color:red;color:white"><a href="blog-single" style="color:white">Book Now</a></button>*@
+                                    <h4><a href="@Url.Action("detailservice","Services",new {id=s.Id})">@s.Service_Name (Only @s.Service_Price$ / 1 Person)</a></h4>
+                                    <p class="content" style=" margin: 0 0 10px; font-size: 14px; font-weight: 400; color: #666; display: block; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; text-align: center;"> @Html.Raw(@s.Service_Description)</p>
                                 </div>
                             </div>
+                            <div class="card-footer">
+                                <ul class="admin-list d-flex align-items-center justify-content-between">
+                                    <li>
+                                        <a href="#blog">
+                                            <span class="fa fa-user-circle"
+                                                  aria-hidden="true"></span>
+                                            Admin
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("detailservice","Services",new {id=s.Id})">
+                                            <i class="fa fa-angle-double-right ml-1" aria-hidden="true"></i>
+                                            Read
+                                            More
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        </a>
-                        }
-                </div>
+                    </div>
+                </a>
+            }
         </div>
+    </div>
 </div>
-<!-- service 3 grids -->
-<!-- services section -->
+
 @Html.Action("company")
-<!-- //services section -->
-<!-- call section -->
+
 <section class="w3l-call-to-action-6">
     <div class="call-sec-style py-5">
         <div class="container py-md-4 py-3">
@@ -105,82 +107,3 @@
         </div>
     </div>
 </section>
-
-
-
-<!--<div class="w3l-grids-block-5 py-5">
-        <div class="container py-md-5 py-4">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="section-heading text-center mb-sm-5 mb-4">
-                        <h3 class="title-style mb-2">Our Latest Blog</h3>
-                        <p class="lead">
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque,
-                            eaque ipsa quae ab illo inventore.
-                        </p>
-                    </div>
-                </div>
-            </div>
-           
-                <div class="col-lg-4 col-sm-6 mt-sm-0 mt-4">
-                    <div class="blog-card-single">
-                        <div class="grids5-info">
-                            <a href="#blog"><img src="~/Content/Manh/assets/images/blog3.jpg" alt="" /></a>
-                            <div class="blog-info">
-                                <h5>November 6, 2020 - <a href="blog-single">New</a></h5>
-                                <h4><a href="#blog">It's enim ad minim aute</a></h4>
-                                <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <ul class="admin-list d-flex align-items-center justify-content-between">
-                                <li>
-                                    <a href="#blog">
-                                        <span class="fa fa-user-circle"
-                                              aria-hidden="true"></span>
-                                        Admin
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#blog">
-                                        <span class="fa fa-comments" aria-hidden="true"></span>3
-                                        Comments
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mt-lg-0 mt-4">
-                    <div class="blog-card-single">
-                        <div class="grids5-info">
-                            <a href="#blog"><img src="~/Content/Manh/assets/images/blog2.jpg" alt="" /></a>
-                            <div class="blog-info">
-                                <h5>November 7, 2020 - <a href="blog-single">New</a></h5>
-                                <h4><a href="#blog">Ullamco laboris nisi uts</a></h4>
-                                <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <ul class="admin-list d-flex align-items-center justify-content-between">
-                                <li>
-                                    <a href="#blog">
-                                        <span class="fa fa-user-circle"
-                                              aria-hidden="true"></span>
-                                        Admin
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#blog">
-                                        <span class="fa fa-comments" aria-hidden="true"></span>5
-                                        Comments
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
-<!-- //blog section -->

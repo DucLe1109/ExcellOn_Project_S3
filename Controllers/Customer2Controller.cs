@@ -156,7 +156,6 @@ namespace _ExcellOn_.Controllers
                 }
 
                 return Json("/Customer2/OrderIndex", JsonRequestBehavior.AllowGet);
-                //db.SaveChanges();
 
             }
             // Nếu tất cả các Staff đều đã tham gia tối thiểu vào 1 OrderDetail thì phải xử lý trùng lặp ngày tháng trong này.
@@ -336,16 +335,32 @@ namespace _ExcellOn_.Controllers
         }
 
         [HttpGet]
-        public JsonResult SubmitOrder(float total_cost, string description)
+        public JsonResult SubmitOrder(float total_cost, string Description, string Company_Name, string Company_Phone, string Company_Email, string Company_Address)
         {
-
+            Customer cus = (Customer)Session["CustomerName"];
+            Company company = db.Companies.Where(x=>x.Company_Email == Company_Email).FirstOrDefault();
+            if (company == null)
+            {
+                Company _new = new Company();
+                _new.Company_Address = Company_Address;
+                _new.Company_Name = Company_Name;
+                _new.Company_Phone = Company_Phone;
+                _new.Company_Email = Company_Email;
+                db.Companies.Add(_new);
+                cus.Company = _new;
+            }
+            else
+            {
+                cus.Company = company;
+            }
+    
             List<OrderDetail> list_ord = (List<OrderDetail>)Session["OrderDetail"];
             Order new_Order = new Order();
             new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
-            new_Order.Order_Description = description;
+            new_Order.Order_Description = Description;
             new_Order.Order_TotalCost = total_cost;
             new_Order.Order_Status = 0;
-            new_Order.CustomerId = 30;
+            new_Order.CustomerId = cus.Id;
             db.Orders.Add(new_Order);
             db.SaveChanges();
 
@@ -355,9 +370,7 @@ namespace _ExcellOn_.Controllers
                 int Number_Of_Employee = (int)item.OrderDetail_NumberOfPeople;
                 DateTime Date_Start = (DateTime)item.OrderDetail_DateStart;
                 DateTime Date_End = (DateTime)item.OrderDetail_DateEnd;
-
                 // Create Order
-
                 List<Staff> list_Staff_free = db.Staffs.Where(x => x.Staff_OrderDetail.Count == 0 && x.ServiceId == Service_Id).ToList();
                 int list_Staff_has_not_any_orderdetail_count = list_Staff_free.Count;
                 if (list_Staff_free.Count > 0 && list_Staff_free.Count >= Number_Of_Employee)
@@ -535,6 +548,8 @@ namespace _ExcellOn_.Controllers
                     }
                 }
             }
+
+            Session["OrderDetail"] = null;
             return Json("Create Order Successfully", JsonRequestBehavior.AllowGet);
 
         }

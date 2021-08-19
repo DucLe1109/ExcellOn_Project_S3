@@ -5,19 +5,6 @@
 }
 
 @model IEnumerable<_ExcellOn_.Models.ResultTeam>
-
-
-<link href="~/Content/Manh/team/css/pe-icon-7-stroke.css" rel="stylesheet" />
-
-<!--     <link href='css/ct-navbar.css' rel='stylesheet' /> -->
-<link href='~/Content/Manh/team/css/rotating-card.css' rel='stylesheet' />
-
-<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-
-<link href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-<link href='~/Content/Manh/team/css/bootstrap.css' rel='stylesheet' />
-
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 <section class="w3l-team py-5">
     <div class="container py-md-5 py-4">
         <div class="row justify-content-center">
@@ -30,96 +17,90 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-10 col-sm-offset-1">
+        <div class="row">
             @foreach (var i in Model.Take(3))
             {
-                <div class="col-md-4 col-sm-6">
-                    <div class="card-container">
-                        <div class="card">
-                            <div class="front">
-                                <div class="cover">
-                                    <img src="~/Content/Manh/team/images/rotating_card_thumb3.png" />
-                                </div>
-                                <div class="user">
-                                    <img class="img-circle" src="@i.avt" />
-                                </div>
-                                <div class="content">
-                                    <div class="main">
-                                        <h3 class="name">@i.name</h3>
-                                        <p class="profession">Senior Leader</p>
-                                        <p class="text-center"></p>
-                                    </div>
-                                    <div class="footer">
-                                        <i class="fa fa-mail-forward"></i> Auto Rotation
-                                    </div>
-                                </div>
-                            </div> <!-- end front panel -->
-                            <div class="back">
-                                <div class="header">
-                                    <h5 class="motto">"To be or not to be, this is my awesome motto!"</h5>
-                                </div>
-                                <div class="content">
-                                    <div class="main">
-                                        <h4 class="text-center">@i.name</h4>
-                                        <p class="text-center">@i.des</p>
-
-                                        <div class="stats-container" >
-                                            <div class="stats" style="display: block; float: left; width: 50%; text-align: center;">
-                                                @if (i.gender == 1)
-
-                                                {
-                                                    <h4>Male</h4>
-                                                }
-                                                else
-                                                {
-                                                    <h4>Female</h4>
-                                                }
-
-                                                
-                                                <p>
-                                                   Gender
-                                                </p>
-                                            </div>
-                                            <div class="stats" style="display: block; float: left; width: 50%; text-align: center;">
-                                                <h4>@i.age</h4>
-                                                <p>
-                                                    Age
-                                                </p>
-                                            </div>
-                                            @*<div class="stats">
-                                                <h4>35</h4>
-                                                <p>
-                                                    Projects
-                                                </p>
-                                            </div>*@
-                                        </div>
-
-                                    </div>
+            <div class="col-6 col-md-4">
+                <div class="card-container">
+                    <div class="card">
+                        <div class="front">
+                            <div class="cover">
+                                <img src="~/Content/Manh/team/images/rotating_card_thumb3.png" />
+                            </div>
+                            <div class="user">
+                                <img class="img-circle" src="@i.avt" />
+                            </div>
+                            <div class="content">
+                                <div class="main">
+                                    <h3 class="name">@i.name</h3>
+                                    <p class="profession">Senior Leader</p>
+                                    <p class="text-center"></p>
                                 </div>
                                 <div class="footer">
-                                    <div class="social-links text-center">
-                                        <a href="#" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
-                                        <a href="#" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
-                                        <a href="#" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
-                                    </div>
+                                    <i class="fa fa-mail-forward"></i> Auto Rotation
                                 </div>
-                            </div> <!-- end back panel -->
-                        </div> <!-- end card -->
-                    </div> <!-- end card-container -->
+                            </div>
+                        </div> <!-- end front panel -->
+                        <div class="back">
+                            <div class="header">
+                                <h5 class="motto">"To be or not to be, this is my awesome motto!"</h5>
+                            </div>
+                            <div class="content">
+                                <div class="main">
+                                    <h4 class="text-center">@i.name</h4>
+                                    <p class="text-center">@i.des</p>
+
+                                    <div class="stats-container">
+                                        <div class="stats" style="display: block; float: left; width: 50%; text-align: center;">
+                                            @if (i.gender == 1)
+
+                                            {
+                                                <h4>Male</h4>
+                                            }
+                                            else
+                                            {
+                                                <h4>Female</h4>
+                                            }
+
+
+                                            <p>
+                                                Gender
+                                            </p>
+                                        </div>
+                                        <div class="stats" style="display: block; float: left; width: 50%; text-align: center;">
+                                            <h4>@i.age</h4>
+                                            <p>
+                                                Age
+                                            </p>
+                                        </div>
+                                        @*<div class="stats">
+                                    <h4>35</h4>
+                                    <p>
+                                        Projects
+                                    </p>
+                                </div>*@
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="footer">
+                                <div class="social-links text-center">
+                                    <a href="#" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
+                                    <a href="#" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
+                                    <a href="#" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                                </div>
+                            </div>
+                        </div> <!-- end back panel -->
+                    </div>
                 </div>
+            </div>
+                   
             }
 
-
-
-
-        <div class="col-12 center">
             
             @Html.Action("detailteam1")
-
-
-            
         </div>
-        </div>
+    </div>
 </section>
 
 
@@ -135,34 +116,34 @@
         <div class="space-200"></div>
     </div>*@
 @*<script src="~/Content/Manh/team/js/jquery-1.10.2.js" type="text/javascript"></script>
-<script src="~/Content/Manh/team/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Content/Manh/team/js/bootstrap.min.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-    $().ready(function () {
-        $('[rel="tooltip"]').tooltip();
+    <script type="text/javascript">
+        $().ready(function () {
+            $('[rel="tooltip"]').tooltip();
 
-        $('a.scroll-down').click(function (e) {
-            e.preventDefault();
-            scroll_target = $(this).data('href');
-            $('html, body').animate({
-                scrollTop: $(scroll_target).offset().top - 60
-            }, 1000);
+            $('a.scroll-down').click(function (e) {
+                e.preventDefault();
+                scroll_target = $(this).data('href');
+                $('html, body').animate({
+                    scrollTop: $(scroll_target).offset().top - 60
+                }, 1000);
+            });
+
         });
 
-    });
-
-    function rotateCard(btn) {
-        var $card = $(btn).closest('.card-container');
-        console.log($card);
-        if ($card.hasClass('hover')) {
-            $card.removeClass('hover');
-        } else {
-            $card.addClass('hover');
+        function rotateCard(btn) {
+            var $card = $(btn).closest('.card-container');
+            console.log($card);
+            if ($card.hasClass('hover')) {
+                $card.removeClass('hover');
+            } else {
+                $card.addClass('hover');
+            }
         }
-    }
 
 
-</script>*@
+    </script>*@
 
 
 

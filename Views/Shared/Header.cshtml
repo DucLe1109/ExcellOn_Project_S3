@@ -13,10 +13,7 @@
                        aria-hidden="true"></i>Excell On
                 </a>
             </h1>
-            <!-- if logo is image enable this
-            <a class="navbar-brand" href="#index.html">
-                <img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
-            </a> -->
+            
             <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse"
                     data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -26,7 +23,7 @@
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav ml-lg-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="btn nav-link" href="@Url.Action("Index","Home")">Home</a>
                     </li>
                     <li class="nav-item">
@@ -54,7 +51,7 @@
                         }
                         else
                         {
-                            <li class="nav-item dropdown">
+                            <li class="nav-item active dropdown">
                                 <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div class="media align-items-center" style="margin-top: -7px; ">
                                         <span class="avatar avatar-sm rounded-circle">
@@ -88,7 +85,7 @@
                         }
                     }
                     <li class="nav-item active open-modal" data-open="modal1">
-                        <button type="button" class="btn nav-link" data-toggle="modal" data-target=".bd-example-modal-lg">
+                        <button type="button" style="font-weight: 700" class="btn nav-link" data-toggle="modal" data-target=".bd-example-modal-lg">
                             Search
                             <i style="font-size: 14px" class="fa fa-search" aria-hidden="true"></i>
                         </button>

@@ -129,14 +129,13 @@
             });
         }
         function _GiveCode() {
+            var count = 0;
             a = ($('#code').val() == "huyducdeptrai");
-            if (a) {
+            if (a && count < 1) {
                 $('.total_cost').val($('.total_cost').val() - $('.total_cost').val() * 0.01);
                 $('#discount').show();
+                count += 1;
             }
-            //if () {
-            //
-            //}
         }
         function _CheckOut() {
             $.ajax({
