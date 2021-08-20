@@ -8,15 +8,15 @@
     {
         cus = db.Customers.Where(x => x.Id == _cus.Id).FirstOrDefault();
     }
-
+    List<OrderDetail> list_ord = (List<OrderDetail>)Session["OrderDetail"];
 }
 <header id="site-header" class="fixed-top">
     <div class="container">
         <nav class="navbar navbar-expand-lg stroke">
             <h1>
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="@Url.Action("Index","Home")">
                     <i class="fa fa-headphones mr-1"
-                       aria-hidden="true"></i>Call Center
+                       aria-hidden="true"></i> Call Center
                 </a>
             </h1>
 
@@ -33,14 +33,41 @@
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
+                        <a class="nav-link" href="@Url.Action("Index","About")">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="services.html">Services</a>
+                        <a class="nav-link" href="@Url.Action("Index","Services")">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact Us</a>
+                        <a class="nav-link" href="@Url.Action("Index","Contact")">Contact Us</a>
                     </li>
+                    <li>
+                        <a data-toggle="modal" data-target=".bd-example-modal-lg" class="btn nav-link" title="search">
+                            <span class="fa fa-search"
+                                  aria-hidden="true" style="margin-right: 10px"></span> Search
+                        </a>
+                    </li>
+
+                    @if (list_ord != null && cus != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer2/OrderIndex" target="_blank">
+                                <i style="font-size:20px" class="fa fa-shopping-bag" aria-hidden="true">
+                                    <span style="position: relative;top:-15px;left:-2px;background-color:#777;padding:5px;color:white;border-radius:80%;font-weight: 600;font-size:0.8rem" id="order_count" class="nav-link badge badge-light">@list_ord.Count</span>
+                                </i>
+                            </a>
+                        </li>
+                    }
+                    else if (list_ord == null && cus != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer2/OrderIndex" target="_blank">
+                                <i style="font-size:20px" class="fa fa-shopping-bag" aria-hidden="true">
+                                    <span style="position: relative;top:-15px;left:-2px;background-color:#777;padding:5px;color:white;border-radius:80%;font-weight: 600;font-size:0.8rem" id="order_count" class="nav-link badge badge-light">0</span>
+                                </i>
+                            </a>
+                        </li>
+                    }
                     @if (cus != null)
                     {
                         <li class="nav-item dropdown">
@@ -81,21 +108,15 @@
                             <a class="nav-link" href="@Url.Action("Login", "Customer")">Login</a>
                         </li>
                     }
-                    <li>
-                        <a data-toggle="modal" data-target=".bd-example-modal-lg" class="btn nav-link" title="search">
-                            <span class="fa fa-search"
-                                  aria-hidden="true" style="margin-right: 10px"></span> Search
-                        </a>
-                    </li>
                 </ul>
             </div>
             <!-- toggle switch for light and dark theme -->
-            <div class="cont-ser-position" style="padding-bottom:10px">
+            <div class="cont-ser-position">
                 <nav class="navigation">
                     <div class="theme-switch-wrapper">
                         <label class="theme-switch" for="checkbox">
                             <input type="checkbox" id="checkbox">
-                            <div class="mode-container">
+                            <div class="mode-container" style="margin-left:20px">
                                 <i class="gg-sun"></i>
                                 <i class="gg-moon"></i>
                             </div>

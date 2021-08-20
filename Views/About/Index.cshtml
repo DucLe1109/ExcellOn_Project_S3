@@ -1,72 +1,19 @@
-﻿@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/HomePage.cshtml";
+﻿@model _ExcellOn_.Models.MyCompany
+@{
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
-@model IEnumerable<_ExcellOn_.Models.MyCompany>
 
 <div class="inner-banner">
-    <div class="w3l-breadcrumb">
+    <section class="w3l-breadcrumb">
         <div class="container">
-            <h4 class="inner-text-title font-weight-bold text-white mb-sm-3 mb-2">Few Words About Us </h4>
+            <h4 class="inner-text-title font-weight-bold text-white mb-sm-3 mb-2">About Us</h4>
             <ul class="breadcrumbs-custom-path">
-                <li><a href="/" style="text-decoration: none">Home</a></li>
-                <li>
-                    <span class="fa fa-chevron-right mx-2" aria-hidden="true">
-                    </span>
-                    <span style="font-weight: 700;color:white">
-                        About
-                    </span>
-                </li>
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><span class="fa fa-chevron-right mx-2" aria-hidden="true"></span>About Us</li>
             </ul>
         </div>
-    </div>
+    </section>
 </div>
-
-@*<section class="about-section py-5">
-        <div class="container py-lg-5 pt-3">
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="about-single p-3 d-flex justify-content-between">
-                        <div class="about-icon mr-4">
-                            <i class="fa fa-headphones" aria-hidden="true"></i>
-                        </div>
-                        <div class="about-content">
-                            <h5 class="mb-3">Any Questions</h5>
-                            <p>
-                                Excell-On boasts a young, dynamic, professional and qualified customer service staff.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="about-single p-3 d-flex justify-content-between">
-                        <div class="about-icon mr-4">
-                            <i class="fa fa-laptop" aria-hidden="true"></i>
-                        </div>
-                        <div class="about-content">
-                            <h5 class="mb-3">Online Support</h5>
-                            <p>
-                                Always online to take care of customers in the best way.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="about-single p-3 d-flex justify-content-between">
-                        <div class="about-icon mr-4">
-                            <i class="fa fa-phone" aria-hidden="true"></i>
-                        </div>
-                        <div class="about-content">
-                            <h5 class="mb-3">24/7 Call Center</h5>
-                            <p>
-                                As long as customers want, we are always there.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>*@
 
 <section class="about-section py-5">
     <div class="container py-lg-5 pt-3">
@@ -77,7 +24,7 @@
                         <i class="fa fa-headphones" aria-hidden="true"></i>
                     </div>
                     <div class="about-content">
-                        <h5 class="mb-3">Any Questions</h5>
+                        <h5 class="mb-3" style="font-size:1.4rem">Any Questions</h5>
                         <p>
                             Sed ut perspiciatis unde omnis iste natus error sit accusa ntium dolor emque
                             laudan.
@@ -91,7 +38,7 @@
                         <i class="fa fa-laptop" aria-hidden="true"></i>
                     </div>
                     <div class="about-content">
-                        <h5 class="mb-3">Online Support</h5>
+                        <h5 class="mb-3" style="font-size:1.4rem">Online Support</h5>
                         <p>
                             Sed ut perspiciatis unde omnis iste natus error sit accusa ntium dolor emque
                             laudan.
@@ -105,7 +52,7 @@
                         <i class="fa fa-phone" aria-hidden="true"></i>
                     </div>
                     <div class="about-content">
-                        <h5 class="mb-3">24/7 Call Center</h5>
+                        <h5 class="mb-3" style="font-size:1.4rem">24/7 Call Center</h5>
                         <p>
                             Sed ut perspiciatis unde omnis iste natus error sit accusa ntium dolor emque
                             laudan.
@@ -117,26 +64,65 @@
     </div>
 </section>
 
+<!-- about-2 section -->
 <section class="w3l-about-2 pb-5">
     <div class="container pb-md-5 pb-4">
         <div class="row align-items-center justify-content-between">
-            @foreach (var sa in Model)
-            {
-                <div class="col-lg-6 about-2-secs-left pr-lg-5">
-                    <h3 class="title-style mb-sm-3 mb-2">@sa.Title</h3>
-                    <p>
-                        @sa.Description
-                    </p>
-                    <div class="mt-4">
-                        <a class="btn btn-style-white btn-style-primary" href="@Url.Action("service","Services")">View Our Services</a>
-                    </div>
+            <div class="col-lg-6 about-2-secs-left pr-lg-5">
+                <h3 class="title-style mb-sm-3 mb-2">@Model.Title</h3>
+                <p>
+                    @Model.MyTarget
+                </p>
+                <ul class="list-about-2 mt-sm-4 mt-3">
+                    <li class="py-1">
+                        <i class="fa fa-check-square-o mr-2" aria-hidden="true"></i>Ut enim ad minim
+                        veniam
+                    </li>
+                    <li class="py-2">
+                        <i class="fa fa-check-square-o mr-2" aria-hidden="true"></i>Quis nostrud
+                        exercitation
+                        ullamco
+                        laboris
+                    </li>
+                    <li class="py-1">
+                        <i class="fa fa-check-square-o mr-2" aria-hidden="true"></i>Nisi ut aliquip ex
+                        ea commodo
+                        consequat
+                    </li>
+                </ul>
+                <div class="mt-4">
+                    <a class="btn-style-white btn-style-primary" style="border: 1px solid red" href="#">View Our Services</a>
                 </div>
-                <div class="col-lg-6 about-2-secs-right mt-lg-0 mt-5">
-                    <img src="@sa.Image" alt="" class="img-fluid img-responsive" />
-                </div>
-            }
+            </div>
+            <div class="col-lg-6 about-2-secs-right mt-lg-0 mt-5">
+                <img src="@Model.Image" alt="" class="img-fluid img-responsive" />
+            </div>
         </div>
     </div>
 </section>
+<!-- //about-2 section -->
 
+<!-- team section -->
+@Html.Action("Section_Team","Team")
+<!-- team section -->
 
+<!-- image with content section -->
+<section class="w3l-image-content">
+    <div class="row no-gutters align-items-center">
+        <div class="col-md-7 img-content-1">
+            <img src="/Content/Template/assets/images/image.jpg" class="img-fluid" alt="" />
+        </div>
+        <div class="col-md-5 p-lg-5 p-md-3 p-4 my-md-0 my-3 text-center  img-content-2">
+            <h4 class="heading-styles">
+                <i class="fa fa-quote-left mr-2" aria-hidden="true"></i> Sed ut pers piciatis
+                unde omnis iste natus error sit voluptatem
+                totam rem aperiam, eaque ipsa quae ab illo inventore.
+            </h4>
+        </div>
+    </div>
+</section>
+<!-- image with content section -->
+
+<!-- Customer Feedback section -->
+@Html.Action("Section_Customer", "Customer")
+<!-- Customer Feedback section -->

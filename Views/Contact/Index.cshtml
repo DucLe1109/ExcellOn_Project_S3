@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/HomePage.cshtml";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
 <div class="inner-banner">
@@ -41,7 +41,7 @@
                         <div class="contact-icon d-flex align-items-center">
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                             <div class="ml-3">
-                                <h5 class="contact-text">Visit Us:</h5>
+                                <h5 class="contact-text" style="font-size:1.1rem">Visit Us:</h5>
                                 <a>8 Ton That Thuyet </a>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                         <div class="contact-icon d-flex align-items-center">
                             <i class="fa fa-phone" aria-hidden="true"></i>
                             <div class="ml-3">
-                                <h5 class="contact-text">Call Us:</h5>
+                                <h5 class="contact-text" style="font-size:1.1rem">Call Us:</h5>
                                 <a href="tel:+12 23456790">+84904926015</a>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                         <div class="contact-icon d-flex align-items-center">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                             <div class="ml-3">
-                                <h5 class="contact-text">Mail Us:</h5>
+                                <h5 class="contact-text" style="font-size:1.1rem">Mail Us:</h5>
                                 <a href="mailto:info@example.com">sales@excellon.vn</a>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                    class="contact-input" />
                         </div>
                         <div class="col-md-6">
-                            <input type="email" name="email" id="email" placeholder="Your Email id"
+                            <input type="email" name="email" id="email" placeholder="Your Email"
                                    class="contact-input" required />
                             <input type="text" name="subject" id="subject" placeholder="Subject"
                                    class="contact-input" />
@@ -89,7 +89,7 @@
                     <textarea class="contact-textarea" name="content" id="content"
                               placeholder="Type your message here" required></textarea>
                     <div class="text-right">
-                        <button class="btn btn-primary">Submit Now</button>
+                        <button class="btn btn-style-white btn-style-primary">Submit Now</button>
                     </div>
                 </form>
             </div>

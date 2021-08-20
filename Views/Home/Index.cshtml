@@ -23,13 +23,14 @@
                     @myCompany.MyTarget
                 </p>
                 <div class="mt-5">
-                    <a class="btn btn-style-white" href="#">View Our Service</a>
+                    <a class="btn-style-white" style="padding-left: 20px;padding-right: 20px;padding-top:12px;padding-bottom:12px;border-radius: 6px;border: 1px white solid" href="@Url.Action("Index","Services")">View Our Service</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 <!-- //banner section -->
+
 <!-- about -->
 <section class="w3l-features-photo-7 py-5">
     <div class="container py-md-5 py-4">
@@ -47,12 +48,12 @@
                 <div class="row feat_top mt-4 pt-lg-3">
                     <div class="col-6 w3l-features-photo-7-box">
                         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                        <h5 class="w3l-feature-text my-2">Our Mission</h5>
+                        <h5 class="w3l-feature-text my-2" style="font-size:1.6rem">Our Mission</h5>
                         <p>@myCompany.MyMission</p>
                     </div>
                     <div class="col-6 w3l-features-photo-7-box">
                         <i class="fa fa-angellist" aria-hidden="true"></i>
-                        <h5 class="w3l-feature-text my-2">Our Vision</h5>
+                        <h5 class="w3l-feature-text my-2" style="font-size:1.6rem">Our Vision</h5>
                         <p>@myCompany.MyVision</p>
                     </div>
                 </div>
@@ -64,68 +65,9 @@
     </div>
 </section>
 <!-- //about -->
-<!-- services section -->
-<section class="w3l-content-11-main">
-    <div class="content-design-11 py-5">
-        <div class="container py-md-5 py-4">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="section-heading text-center mb-sm-5 mb-4">
-                        <h3 class="title-style mb-2">We Provide Best Services</h3>
-                        <p class="lead">
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque,
-                            eaque ipsa quae ab illo inventore.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="content-sec-11">
-                <div class="row">
-                    @foreach (var service in list_service)
-                    {
 
+@Html.Action("Section_Service", "Services")
 
-                        <div class="col-lg-4">
-                            <div class="services-single d-flex p-sm-5 p-4" style="min-height: 330px">
-                                <div class="service-icon mr-sm-4 mr-3">
-                                    @if (service.Service_Name == "Tele Marketing")
-                                    {
-                                        <span class="fa fa-headphones" aria-hidden="true"></span>
-                                    }
-                                    else if (service.Service_Name == "In-bound")
-                                    {
-                                        <span class="fa fa-bullhorn" aria-hidden="true"></span>
-                                    }
-                                    else if (service.Service_Name == "Out-bound")
-                                    {
-                                        <span class="fa fa-volume-control-phone" aria-hidden="true"></span>
-                                    }
-
-                                </div>
-                                <div class="services-content">
-                                    <h5 style="min-height: 80px"><a href="services.html">@service.Service_Name - Service</a></h5>
-                                    <p style="min-height: 150px">
-                                        @service.Service_Description.Substring(0, 100)
-                                    </p>
-                                    <a href="#services" class="btn read-button d-flex align-items-center mt-4 p-0">
-                                        Read
-                                        More<i class="fa fa-angle-double-right ml-1" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    }
-
-                </div>
-
-                <div class="mt-md-5 mt-4 text-center">
-                    <a class="btn btn-style-white btn-style-primary" href="services.html">Learn More Services</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- //services section -->
 <!-- stats -->
 <section class="w3_stats py-5" id="stats">
     <div class="container py-md-5 py-4">
@@ -175,168 +117,9 @@
     </div>
 </section>
 <!-- //stats -->
-<!-- customers section -->
-<section class="w3l-customer-block py-5">
-    <div class="container py-md-5 py-4">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="section-heading text-center mb-sm-5 mb-4">
-                    <h3 class="title-style mb-2">Testimonials</h3>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            @foreach (var cus in list_customer.Take(3))
-            {
-                <div class="col-md-4 mt-md-0 mt-5">
-                    <div class="customer-single pr-lg-4">
-                        <blockquote style="min-height: 120px">
-                            @cus.Customer_Comment.Substring(0,100) .....
-                        </blockquote>
-                        <div class="customer-img d-flex align-items-center mt-4">
-                            <img src="@cus.Customer_Avatar" style="width:100px;height: 100px" class="img-fluid mr-3" alt="" />
-                            <div class="customer-info">
-                                <h6>@cus.Customer_Name</h6>
-                                <small class="mb-0">@cus.Customer_Email</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</section>
-<!-- //customers section -->
-<!-- blog section -->
-<div class="w3l-grids-block-5 py-5">
-    <div class="container py-md-5 py-4">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="section-heading text-center mb-sm-5 mb-4">
-                    <h3 class="title-style mb-2">Our Latest Blog</h3>
-                    <p class="lead">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque,
-                        eaque ipsa quae ab illo inventore.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-sm-6">
-                <div class="blog-card-single">
-                    <div class="grids5-info">
-                        <a href="#blog"><img src="/Content/Template/assets/images/blog1.jpg" alt="" /></a>
-                        <div class="blog-info">
-                            <h5>November 3, 2020 - <a href="blog-single">New</a></h5>
-                            <h4><a href="#blog">Donec sed teus enime</a></h4>
-                            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <ul class="admin-list d-flex align-items-center justify-content-between">
-                            <li>
-                                <a href="#blog">
-                                    <span class="fa fa-user-circle"
-                                          aria-hidden="true"></span>
-                                    Admin
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#blog">
-                                    <span class="fa fa-comments" aria-hidden="true"></span>7
-                                    Comments
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6 mt-sm-0 mt-4">
-                <div class="blog-card-single">
-                    <div class="grids5-info">
-                        <a href="#blog"><img src="/Content/Template/assets/images/blog3.jpg" alt="" /></a>
-                        <div class="blog-info">
-                            <h5>November 6, 2020 - <a href="blog-single">New</a></h5>
-                            <h4><a href="#blog">It's enim ad minim aute</a></h4>
-                            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <ul class="admin-list d-flex align-items-center justify-content-between">
-                            <li>
-                                <a href="#blog">
-                                    <span class="fa fa-user-circle"
-                                          aria-hidden="true"></span>
-                                    Admin
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#blog">
-                                    <span class="fa fa-comments" aria-hidden="true"></span>3
-                                    Comments
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6 mt-lg-0 mt-4">
-                <div class="blog-card-single">
-                    <div class="grids5-info">
-                        <a href="#blog"><img src="/Content/Template/assets/images/blog2.jpg" alt="" /></a>
-                        <div class="blog-info">
-                            <h5>November 7, 2020 - <a href="blog-single">New</a></h5>
-                            <h4><a href="#blog">Ullamco laboris nisi uts</a></h4>
-                            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <ul class="admin-list d-flex align-items-center justify-content-between">
-                            <li>
-                                <a href="#blog">
-                                    <span class="fa fa-user-circle"
-                                          aria-hidden="true"></span>
-                                    Admin
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#blog">
-                                    <span class="fa fa-comments" aria-hidden="true"></span>5
-                                    Comments
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- //blog section -->
-<!-- call section -->
-<section class="w3l-call-to-action-6">
-    <div class="call-sec-style py-5">
-        <div class="container py-md-4 py-3">
-            <div class="row align-items-center">
-                <div class="col-md-5 col-float-lt">
-                    <h3 class="title-big">Contact us now!</h3>
-                    <p>For new era, EXCELL ON SERVICE</p>
-                </div>
-                <div class="col-md-7 float-rt text-md-right align-items-center mt-md-0 mt-4">
-                    <ul class="buttons">
-                        <li class="phone-sec">
-                            <span class="fa fa-volume-control-phone mr-1"
-                                  aria-hidden="true"></span>
-                            <a class="call-style-w3" href="tel:+1(23) 456 789 0000">+(84) 961 503 893</a>
-                        </li>
-                        <li class="green">Or</li>
-                        <li>
-                            <a href="#" class="btn btn-style-white btn-style-primary">Get in touch</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- //call section -->
+
+@Html.Action("Section_Customer","Customer")
+
+@Html.Action("Section_Blog", "Blog")
+
+@Html.Action("Section_Contact", "Contact")

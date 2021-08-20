@@ -130,6 +130,9 @@ namespace _ExcellOn_.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        
+        public ActionResult Section_Customer()
+        {
+            return PartialView(db.Customers.ToList());
+        }
     }
 }

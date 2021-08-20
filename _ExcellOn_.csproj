@@ -182,6 +182,7 @@
     <Compile Include="Areas\Admin\ViewModel\StaffViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\UserInfoViewModel.cs" />
     <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\Customer2Controller.cs" />
     <Compile Include="Controllers\CustomerBaseController.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchesController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -4002,37 +4004,27 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Customer\Login.cshtml" />
-    <Content Include="Views\Home\abv.cshtml" />
-    <Content Include="Views\Services\company.cshtml" />
-    <Content Include="Views\Services\Create.cshtml" />
-    <Content Include="Views\Services\Delete.cshtml" />
-    <Content Include="Views\Services\Details.cshtml" />
-    <Content Include="Views\Services\detailservice.cshtml" />
-    <Content Include="Views\Services\detailteam.cshtml" />
-    <Content Include="Views\Services\Edit.cshtml" />
-    <Content Include="Views\Services\feedback.cshtml" />
-    <Content Include="Views\Services\Index.cshtml" />
-    <Content Include="Views\Services\service.cshtml" />
     <Content Include="Views\Searches\Index.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
-    <Content Include="Views\About\HomeAbout.cshtml" />
-    <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Home\InfoNumber.cshtml" />
     <Content Include="Views\Customer2\MyProfileCustomer.cshtml" />
     <Content Include="Views\Customer2\OrderDetailIndex.cshtml" />
     <Content Include="Views\Customer2\OrderListIndex.cshtml" />
     <Content Include="Views\Searches\Search.cshtml" />
-    <Content Include="Views\Services\DetailStaff.cshtml" />
-    <Content Include="Views\Services\detailteam1.cshtml" />
-    <Content Include="Views\Services\registerservice.cshtml" />
     <Content Include="Views\Customer2\OrderIndex.cshtml" />
     <Content Include="Views\Shared\_MainLayout.cshtml" />
     <Content Include="Views\Shared\_HeaderLayout.cshtml" />
     <Content Include="Views\Shared\_FooterLayout.cshtml" />
+    <Content Include="Views\Services\Section_Service.cshtml" />
+    <Content Include="Views\Contact\Section_Contact.cshtml" />
+    <Content Include="Views\Blog\Section_Blog.cshtml" />
+    <Content Include="Views\Customer\Section_Customer.cshtml" />
+    <Content Include="Views\About\Index.cshtml" />
+    <Content Include="Views\Team\Section_Team.cshtml" />
+    <Content Include="Views\Services\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\MVCC\v16\" />

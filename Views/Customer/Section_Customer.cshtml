@@ -1,0 +1,38 @@
+﻿<!-- customers section -->
+
+    @model List<_ExcellOn_.Models.Customer>
+
+<section class="w3l-customer-block py-5">
+    <div class="container py-md-5 py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="section-heading text-center mb-sm-5 mb-4">
+                    <h3 class="title-style mb-2">Feedback our Customer</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        @if (Model!=null) {
+            foreach (var cus in Model.Take(3))
+            {
+                <div class="col-md-4 mt-md-0 mt-5">
+                    <div class="customer-single pr-lg-4">
+                        <blockquote style="min-height: 120px">
+                            @cus.Customer_Comment.Substring(0, 100) .....
+                        </blockquote>
+                        <div class="customer-img d-flex align-items-center mt-4">
+                            <img src="@cus.Customer_Avatar" style="width:100px;height: 100px" class="img-fluid mr-3" alt="" />
+                            <div class="customer-info">
+                                <h6 style="font-size:1.3rem">@cus.Customer_Name</h6>
+                                <small class="mb-0" style="font-size: 0.9rem">@cus.Customer_Email</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+    }
+
+        </div>
+    </div>
+</section>
+<!-- //customers section -->

@@ -1,5 +1,6 @@
 ﻿.select2-container--default .select2-selection--multiple .select2-selection__choice {
-    color: black !important;
+    color: white !important;
+    background: #11cdef;
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple, .select2-container--default .select2-selection--multiple {
@@ -31,7 +32,7 @@
 }
 
 .selection span {
-    padding-top: 5px !important;
+    padding-top: 1.5px !important;
 }
 
 .show {

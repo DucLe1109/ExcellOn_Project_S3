@@ -11,10 +11,17 @@ namespace _ExcellOn_.Controllers
 {
     public class ContactController : Controller
     {
+        public ActionResult Section_Contact()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Index(string fullName, string email, string phone, string subject, string content)
         {

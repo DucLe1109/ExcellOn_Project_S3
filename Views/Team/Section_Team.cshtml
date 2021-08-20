@@ -1,0 +1,113 @@
+﻿
+@using _ExcellOn_.Models
+@{
+    UserInFo admin = ViewBag.admin;
+    UserInFo CEO = ViewBag.CEO;
+    UserInFo Manager = ViewBag.Manager;
+}
+<section class="w3l-team py-5">
+    <div class="container py-md-5 py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="section-heading text-center mb-sm-5 mb-4">
+                    <h3 class="title-style mb-2">Meet our lovely team</h3>
+                    <p class="lead">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque,
+                        eaque ipsa quae ab illo inventore.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            @if (CEO != null)
+            {
+                <div class="col-md-4">
+                    <div class="team-block-single">
+                        <div class="team-grids">
+                            <a href="#team-single">
+                                <img src="@CEO.User_Avatar" class="img-fluid" alt="">
+                                <div class="team-info">
+                                    <div class="social-icons-section">
+                                        <a class="fac" href="#facebook">
+                                            <span class="fa fa-facebook"></span>
+                                        </a>
+                                        <a class="twitter mx-2" href="#twitter">
+                                            <span class="fa fa-twitter"></span>
+                                        </a>
+                                        <a class="google" href="#google-plus">
+                                            <span class="fa fa-google-plus"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="team-bottom-block p-4">
+                            <h5 class="member mb-1"><a href="#team">@CEO.User_FullName</a></h5>
+                            <small>CEO of Company</small>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (admin != null)
+            {
+                <div class="col-md-4 mt-md-0 mt-5">
+                    <div class="team-block-single active">
+                        <div class="team-grids active">
+                            <a href="#team-single">
+                                <img src="@admin.User_Avatar" class="img-fluid" alt="">
+                                <div class="team-info">
+                                    <div class="social-icons-section">
+                                        <a class="fac" href="#facebook">
+                                            <span class="fa fa-facebook"></span>
+                                        </a>
+                                        <a class="twitter mx-2" href="#twitter">
+                                            <span class="fa fa-twitter"></span>
+                                        </a>
+                                        <a class="google" href="#google-plus">
+                                            <span class="fa fa-google-plus"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="team-bottom-block p-4">
+                            <h5 class="member mb-1 active"><a href="#team">@admin.User_FullName</a></h5>
+                            <small>Director</small>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Manager != null)
+            {
+                <div class="col-md-4 mt-md-0 mt-5">
+                    <div class="team-block-single">
+                        <div class="team-grids">
+                            <a href="#team-single">
+                                <img src="@Manager.User_Avatar" class="img-fluid" alt="">
+                                <div class="team-info">
+                                    <div class="social-icons-section">
+                                        <a class="fac" href="#facebook">
+                                            <span class="fa fa-facebook"></span>
+                                        </a>
+                                        <a class="twitter mx-2" href="#twitter">
+                                            <span class="fa fa-twitter"></span>
+                                        </a>
+                                        <a class="google" href="#google-plus">
+                                            <span class="fa fa-google-plus"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="team-bottom-block p-4">
+                            <h5 class="member mb-1"><a href="#team">@Manager.User_FullName</a></h5>
+                            <small>Manager of Company</small>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+<!-- //team setion -->

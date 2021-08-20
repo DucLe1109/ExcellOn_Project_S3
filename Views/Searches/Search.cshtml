@@ -100,18 +100,23 @@
                 }
                 <li role="presentation" id="cart">
                     <a href="/Customer2/OrderIndex" target="_blank">
-                        <i style="font-size:20px" class="fa fa-shopping-bag" aria-hidden="true"></i>
+
                         @if (list_ord != null)
                         {
-                            <span id="order_count" class="badge badge-light">@list_ord.Count</span>
+                        <i style="font-size:20px" class="fa fa-shopping-bag" aria-hidden="true">
+                            <span id="order_count" style="position: relative;top:-15px;left:-4px;background-color:#777;padding:7px;color:white;border-radius:70%;font-weight: 600;font-size: 1.3rem" class="badge badge-light">@list_ord.Count</span>
+                        </i>
+
                         }
                         else
                         {
-                            <span id="order_count" class="badge badge-light">0</span>
+                            <i style="font-size:20px" class="fa fa-shopping-bag" aria-hidden="true">
+                                <span id="order_count" style="position: relative;top:-15px;left:-4px;background-color:#777;padding:7px;border-radius: 70%;color:white;font-weight: 600;font-size: 1.3rem" class="badge badge-light">0</span>
+                            </i>
                         }
                     </a>
-                </li>
-            </ul>
+
+                </ul>
         </div>
 
         <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-hidden="true">
