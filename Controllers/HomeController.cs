@@ -13,22 +13,17 @@ namespace _ExcellOn_.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View();
-        }
-        public ActionResult Main()
-        {
-            return PartialView("Main");
-        }
-        public ActionResult InfoNumber()
-        {
-            var list_order = db.Orders.Where(x => x.Order_Status == 2).ToList();
-            var list_customer = db.Customers.ToList();
             var list_staff = db.Staffs.ToList();
-            ViewBag.list_order = list_order;
-            ViewBag.list_customer = list_customer;
+            var list_orderdetail = db.OrderDetails.ToList();
+            var list_customer = db.Customers.ToList();
+            var list_service = db.Services.ToList();
+            var myCompany = db.MyCompanies.FirstOrDefault();
+            ViewBag.myCompany = myCompany;
+            ViewBag.list_service = list_service;
             ViewBag.list_staff = list_staff;
+            ViewBag.list_orderdetail = list_orderdetail;
+            ViewBag.list_customer = list_customer;
             return View();
         }
-
     }
 }

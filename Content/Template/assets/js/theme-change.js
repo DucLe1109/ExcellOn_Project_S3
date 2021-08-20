@@ -19,4 +19,4 @@ function switchTheme(e) {
     }    
 }
 
-toggleSwitch.addEventListener('change', switchTheme, true);
+toggleSwitch.addEventListener('change', switchTheme, false);

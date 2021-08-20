@@ -19,11 +19,12 @@ namespace _ExcellOn_.Controllers
         public ActionResult MyProfileCustomer()
         {
             Customer cus = (Customer)Session["CustomerName"];
-            if (cus == null)
+            Customer _cus = db.Customers.Where(x => x.Id == cus.Id).FirstOrDefault();
+            if (_cus == null)
             {
                 return HttpNotFound();
             }
-            return View(cus);
+            return View(_cus);
 
         }
         //Function Update information for Customer

@@ -479,7 +479,7 @@
                 dataType: "json",
                 success: function (result) {
                     if (result == "Successfull") {
-                        window.location.href = window.location.href;
+                        history.go(0);
                     } else {
                         alert("Account or Password is not correct !");
                     }

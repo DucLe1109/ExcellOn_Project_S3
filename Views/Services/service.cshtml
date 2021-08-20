@@ -50,7 +50,7 @@
                                 <img src="@s.Service_Image" width="420" height="300" alt="" />
                                 <div class="blog-info" style="min-height: 225px">
                                     @* <button style="background-color:red;color:white"><a href="blog-single" style="color:white">Book Now</a></button>*@
-                                    <h4><a href="@Url.Action("detailservice","Services",new {id=s.Id})">@s.Service_Name (Only @s.Service_Price$ / 1 Person)</a></h4>
+                                    <h4><a href="@Url.Action("detailservice","Services",new {id=s.Id})">@s.Service_Name (Only @s.Service_Price$ / 1 Person / Day)</a></h4>
                                     <p class="content" style=" margin: 0 0 10px; font-size: 14px; font-weight: 400; color: #666; display: block; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; text-align: center;"> @Html.Raw(@s.Service_Description)</p>
                                 </div>
                             </div>

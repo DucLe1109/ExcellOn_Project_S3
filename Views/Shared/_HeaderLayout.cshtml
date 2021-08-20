@@ -1,0 +1,149 @@
+﻿<!--header-->
+@using _ExcellOn_.Models
+@{
+    Entities db = new Entities();
+    Customer cus = null;
+    Customer _cus = (Customer)Session["CustomerName"];
+    if (_cus != null)
+    {
+        cus = db.Customers.Where(x => x.Id == _cus.Id).FirstOrDefault();
+    }
+
+}
+<header id="site-header" class="fixed-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg stroke">
+            <h1>
+                <a class="navbar-brand" href="index.html">
+                    <i class="fa fa-headphones mr-1"
+                       aria-hidden="true"></i>Call Center
+                </a>
+            </h1>
+
+            <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse"
+                    data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav ml-lg-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact Us</a>
+                    </li>
+                    @if (cus != null)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link pr-0" style="padding:0px" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="media align-items-center" style="margin-top: -7px; ">
+                                    <span>
+                                        <img alt="Image placeholder" style="border-radius: 50%; width:50px;height: 50px" src="@cus.Customer_Avatar">
+                                    </span>
+                                    <div class="media-body  ml-2  d-none d-lg-block">
+                                        <span class="mb-0 text-sm  font-weight-bold">@cus.Customer_Name</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" style="position: absolute; left: 6px;top:auto!important">
+                                <div class="dropdown-header noti-title">
+                                    <h6 class="text-overflow m-0">Welcome!</h6>
+                                </div>
+                                <a class="dropdown-item" href="@Url.Action("MyProfileCustomer","Customer2")">
+                                    <i class="ni ni-single-02"></i>
+                                    <span>My profile</span>
+                                </a>
+                                <a class="dropdown-item" href="@Url.Action("OrderListIndex","Customer2")">
+                                    <i class="ni ni-shop"></i>
+                                    <span>My Order</span>
+                                </a>
+
+                                <div class="dropdown-divider"></div>
+                                <a onclick="return _Logout()" class="dropdown-item">
+                                    <i class="ni ni-user-run"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Login", "Customer")">Login</a>
+                        </li>
+                    }
+                    <li>
+                        <a data-toggle="modal" data-target=".bd-example-modal-lg" class="btn nav-link" title="search">
+                            <span class="fa fa-search"
+                                  aria-hidden="true" style="margin-right: 10px"></span> Search
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- toggle switch for light and dark theme -->
+            <div class="cont-ser-position">
+                <nav class="navigation">
+                    <div class="theme-switch-wrapper">
+                        <label class="theme-switch" for="checkbox">
+                            <input type="checkbox" id="checkbox">
+                            <div class="mode-container">
+                                <i class="gg-sun"></i>
+                                <i class="gg-moon"></i>
+                            </div>
+                        </label>
+                    </div>
+                </nav>
+            </div>
+            <!-- //toggle switch for light and dark theme -->
+        </nav>
+    </div>
+</header>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="height:auto">
+        <div class="modal-content" style="box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px">
+            <div class="modal-header">
+                <h2 class="modal-title" style="font-weight: 600;color: #17a2b8" id="myModalLabel">YOU CAN SEARCH FOR ALL SERVICE</h2>
+                <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <form method="post" action="/Searches/Search" style="padding: 20px">
+                <div class="row" style="font-weight: 600">
+                    <div class="col-md-3">
+                        <label>Date Start</label>
+                        <input class="form-control" name="Date_Start" value="@Request["Date_Start"]" type="date" placeholder="Date-Start" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Date End</label>
+                        <input class="form-control" name="Date_End" value="@Request["Date_End"]" type="date" placeholder="Date-End" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Service</label>
+                        <select name="List_Service_Id[]" multiple class="form-control">
+                            <option value="1">In Bound</option>
+                            <option value="2">Out Bound</option>
+                            <option value="3">Tele Marketing</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-info" id="search" onclick="return _Search()" type="submit" style="margin-top: 33px;width:100%;float: right">
+                            <i style="font-size: 14px" class="fa fa-search" aria-hidden="true"></i>
+                            Search
+                        </button>
+                    </div>
+                    <div class="col-md-6" id="loader" style="margin-top: 20px;margin-left: 40px;display:none">
+                        <div class="loader" style="float:right"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
