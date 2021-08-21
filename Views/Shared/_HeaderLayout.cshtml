@@ -86,17 +86,17 @@
                                     <h6 class="text-overflow m-0">Welcome!</h6>
                                 </div>
                                 <a class="dropdown-item" href="@Url.Action("MyProfileCustomer","Customer2")">
-                                    <i class="fa fa-user"></i>
+                                    <i class="fa fa-user" style="margin-right: 16px;"></i>
                                     <span>My profile</span>
                                 </a>
                                 <a class="dropdown-item" href="@Url.Action("OrderListIndex","Customer2")">
-                                    <i class="fa fa-first-order"></i>
+                                    <i class="fa fa-first-order" style="margin-right: 15px"></i>
                                     <span>My Order</span>
                                 </a>
 
                                 <div class="dropdown-divider"></div>
                                 <a onclick="return _Logout()" class="dropdown-item">
-                                    <i class="fa fa-sign-out"></i>
+                                    <i class="fa fa-sign-out" style="margin-right: 15px"></i>
                                     <span>Logout</span>
                                 </a>
                             </div>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="col-md-4">
                         <label>Service</label>
-                        <select name="List_Service_Id[]" multiple class="form-control">
+                        <select name="List_Service_Id[]" multiple class="form-control select_search">
                             <option value="1">In Bound</option>
                             <option value="2">Out Bound</option>
                             <option value="3">Tele Marketing</option>

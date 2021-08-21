@@ -1,0 +1,107 @@
+﻿@model List<_ExcellOn_.Models.Staff>
+@using _ExcellOn_.Models
+@{
+    var list_staff_pro = Model.Where(x => x.Staff_Status == 1).Take(3);
+    var list_staff_training = Model.Where(x => x.Staff_Status == 0).Take(4);
+}
+
+<section>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="section-heading text-center mb-sm-5 mb-4">
+                <h3 class="title-style mb-2">Service's Staffs</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in list_staff_pro)
+                {
+                    <div class="col-md-4 col-xs-6">
+                        <div style="border: 1px solid black;width: 100%;border-radius: 15px;padding: 8px;background-color: #fff;position: relative;height: auto">
+                            <div class="upper"> <img src="https://i.imgur.com/Qtrsrk5.jpg" class="img-fluid"> </div>
+                            <div class="user text-center">
+                                <div class="profile"> <img src="@item.Staff_Avatar" class="rounded-circle" width="80"> </div>
+                            </div>
+                            <div class="mt-5 text-center">
+                                <h4 class="mb-0">@item.Staff_FullName</h4>
+                                <span class="text-muted d-block mb-2">
+                                    @item.Staff_Phone
+                                </span>
+                                @if (@item.Staff_AboutMe.Length >= 100)
+                                {
+                                    <p class="text-center pl-2 pr-2 pb-2" style="min-height:110px">
+                                        @item.Staff_AboutMe.Substring(0, 100) ....
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="text-center">
+                                        @item.Staff_AboutMe
+                                    </p>
+                                }
+                                <button class="btn btn-danger" style="border-radius: 20px">Master</button>
+                                <div class="d-flex justify-content-between align-items-center mt-4 px-4">
+                                    <div class="stats">
+                                        <h6 class="mb-0">Age</h6> <span>@item.Staff_Age</span>
+                                    </div>
+
+                                    <div class="stats">
+                                        <h6 class="mb-0">Code</h6> <span>@item.Id</span>
+                                    </div>
+                                    <div class="stats">
+                                        <h6 class="mb-0">Projects</h6> <span>@item.Staff_OrderDetail.Count</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row mt-5">
+                @foreach (var item in list_staff_training)
+                {
+                    <div class="col-md-3 col-xs-6">
+                        <div class="rounded" style="width: 100%; border: none; border-radius: 14px !important">
+                            <div class=" d-block justify-content-center">
+                                <div class="area1 p-3 py-5"> </div>
+                                <div class="area2 p- text-center px-3">
+                                    <div class="image mr-3">
+                                        <img src="@item.Staff_Avatar" height="80" class="rounded-circle" width="80" />
+                                        <h4 class=" name mt-3 ">@item.Staff_FullName</h4>
+                                        <p class="information mt-1 text-center"> @item.Staff_Phone </p>
+                                        <a class="btn btn-info mt-1 text-center text-white" style="border-radius: 20px"> Professional </a>
+                                        @if (item.Staff_AboutMe.Length >= 115)
+                                        {
+                                            <p class="information mt-3 text-center" style="min-height: 140px"> @item.Staff_AboutMe.Substring(0, 115) ... </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="information mt-3 text-justify"> @item.Staff_AboutMe </p>
+                                        }
+
+                                        <div class="d-flex justify-content-center mt-3">
+                                            <ul class="list-icons" style="width: 100%">
+                                                <li style="padding:10px;margin-right:10px" class="facebook"> <i class="fa fa-facebook"></i></li>
+                                                <li style="padding:10px;margin-right:10px" class="youtube"> <i class="fa fa-youtube"></i></li>
+                                                <li style="padding:10px;margin-right:10px" class="instagram"> <i class="fa fa-instagram"></i></li>
+                                                <li style="padding:10px;margin-right:10px" class="whatsapp"> <i class="fa fa-whatsapp"></i></li>
+                                                <li style="padding:10px;margin-right:10px" class="pinterest"> <i class="fa fa-pinterest"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+   
+</section>
+

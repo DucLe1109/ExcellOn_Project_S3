@@ -2908,7 +2908,24 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Duc\ProfileCard.css" />
+    <Content Include="Content\Duc\StaffProfile1.css" />
+    <Content Include="Content\Duc\StaffProfile2.css" />
     <Content Include="Content\Duc\_search.css" />
+    <Content Include="Content\Manh\assets\css\fontawesome.css" />
+    <Content Include="Content\Manh\assets\css\owl.css" />
+    <Content Include="Content\Manh\assets\css\style.css" />
+    <Content Include="Content\Manh\assets\js\custom.js" />
+    <Content Include="Content\Manh\assets\js\owl.js" />
+    <Content Include="Content\Manh\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\Manh\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\Manh\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Content\Manh\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\Manh\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\Manh\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\Manh\vendor\jquery\jquery.js" />
+    <Content Include="Content\Manh\vendor\jquery\jquery.min.js" />
+    <Content Include="Content\Manh\vendor\jquery\jquery.slim.js" />
+    <Content Include="Content\Manh\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Content\Son\assets\css\searchresult.css" />
     <Content Include="Content\Template\assets\css\style-starter.css" />
     <Content Include="Content\Template\assets\fonts\fontawesome-webfont.svg" />
@@ -3066,6 +3083,14 @@
     <Content Include="Content\Template\assets\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\Template\assets\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\Template\assets\fonts\FontAwesome.otf" />
+    <Content Include="Content\Manh\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\Manh\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Content\Manh\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Content\Manh\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Content\Manh\vendor\bootstrap\js\bootstrap.js.map" />
+    <Content Include="Content\Manh\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Content\Manh\vendor\jquery\jquery.min.map" />
+    <Content Include="Content\Manh\vendor\jquery\jquery.slim.min.map" />
     <None Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1-vsdoc.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.min.js" />
@@ -4025,6 +4050,9 @@
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Team\Section_Team.cshtml" />
     <Content Include="Views\Services\Index.cshtml" />
+    <Content Include="Views\Services\Detail.cshtml" />
+    <Content Include="Views\Services\Section_Image.cshtml" />
+    <Content Include="Views\Services\Section_Staff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\MVCC\v16\" />

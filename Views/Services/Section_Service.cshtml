@@ -19,7 +19,7 @@
                 <div class="row">
                     @foreach (var service in Model)
                     {
-                        <div class="col-lg-4">
+                        <div class="col-lg-12">
                             <div class="services-single d-flex p-sm-5 p-4" style="min-height: 330px">
                                 <div class="service-icon mr-sm-4 mr-3">
                                     @if (service.Service_Name == "Tele Marketing")
@@ -37,19 +37,10 @@
 
                                 </div>
                                 <div class="services-content">
-                                    <h5 style="min-height: 80px;font-size:1.3rem"><a href="#">@service.Service_Name - Service</a></h5>
-                                    @if (service.Service_Description.Length >= 120)
-                                    {
-                                        <p style="min-height: 150px">
-                                            @service.Service_Description.Substring(0, 120) ..........
-                                        </p>
-                                    }
-                                    else
-                                    {
-                                        <p style="min-height: 150px">
-                                            @service.Service_Description
-                                        </p>
-                                    }
+                                    <h5 style="min-height: 80px;font-size:1.3rem"><a href="@Url.Action("Detail","Services", new { id = service.Id})">@service.Service_Name - Service</a></h5>
+                                    <p style="min-height: 100px">
+                                        @service.Service_Description
+                                    </p>
                                     <a href="#services" class="btn read-button d-flex align-items-center mt-4 p-0">
                                         Read
                                         More<i class="fa fa-angle-double-right ml-1" aria-hidden="true"></i>

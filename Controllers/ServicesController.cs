@@ -19,10 +19,25 @@ namespace _ExcellOn_.Controllers
         {
             return View();
         }
+        
+        public ActionResult Detail(int id)
+        {
+            return View(db.Services.Find(id));
+        }
 
         public ActionResult Section_Service()
         {
             return PartialView(db.Services.ToList());
+        }
+
+        public ActionResult Section_Image(int id)
+        {
+            return PartialView(db.Images.Where(x => x.ServiceId == id).ToList());
+        }
+
+        public ActionResult Section_Staff(int id)
+        {
+            return PartialView(db.Staffs.Where(x => x.ServiceId == id).ToList());
         }
     }
 }
