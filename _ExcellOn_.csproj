@@ -4053,6 +4053,7 @@
     <Content Include="Views\Services\Detail.cshtml" />
     <Content Include="Views\Services\Section_Image.cshtml" />
     <Content Include="Views\Services\Section_Staff.cshtml" />
+    <Content Include="Views\Searches\Search2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\MVCC\v16\" />
