@@ -19,7 +19,7 @@ namespace _ExcellOn_.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View("~/Views/Searches/Search2.cshtml");
+            return View();
         }
 
         [HttpPost]
