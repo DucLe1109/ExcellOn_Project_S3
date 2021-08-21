@@ -50,6 +50,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             newCustomer.Customer_Email = customerObj.Customer_Email;
             newCustomer.Customer_Name = customerObj.Customer_Name;
             newCustomer.Customer_Phone = customerObj.Customer_Phone;
+            newCustomer.Customer_Gender = customerObj.Customer_Gender;
             newCustomer.Customer_Comment = customerObj.Customer_Comment;
             db.Customers.Add(newCustomer);
             db.SaveChanges();
@@ -69,6 +70,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             customerView.Customer_Name = customer.Customer_Name;
             customerView.Customer_Email = customer.Customer_Email;
             customerView.Customer_Comment = customer.Customer_Comment;
+            customerView.Customer_Gender = (int)customer.Customer_Gender;
             customerView.Customer_Avatar = customer.Customer_Avatar;
             customerView.CompanyId = customer.CompanyId;
             return Json(customerView, JsonRequestBehavior.AllowGet);
@@ -78,27 +80,27 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult Update(Customer customerObj)
         {
-
             Customer customer = db.Customers.Where(x => x.Id == customerObj.Id).FirstOrDefault();
             customer.Customer_Name = customerObj.Customer_Name;
             customer.Customer_Phone = customerObj.Customer_Phone;
             customer.Customer_Email = customerObj.Customer_Email;
             customer.Customer_Comment = customerObj.Customer_Comment;
+            customer.Customer_Gender = customerObj.Customer_Gender;
             db.SaveChanges();
             return Json("/Admin/CustomerManagement/CustomerIndex", JsonRequestBehavior.AllowGet);
 
         }
 
-        [HasPermission(Permission = "Customer_Delete")]
-        [HttpGet]
-        public JsonResult Delete(int CustomerId)
-        {
-            Customer customer = db.Customers.Where(x => x.Id == CustomerId).FirstOrDefault();
-            db.Customers.Remove(customer);
-            db.SaveChanges();
-            return Json("/Admin/CustomerManagement/CustomerIndex", JsonRequestBehavior.AllowGet);
+        //[HasPermission(Permission = "Customer_Delete")]
+        //[HttpGet]
+        //public JsonResult Delete(int CustomerId)
+        //{
+        //    Customer customer = db.Customers.Where(x => x.Id == CustomerId).FirstOrDefault();
+        //    db.Customers.Remove(customer);
+        //    db.SaveChanges();
+        //    return Json("/Admin/CustomerManagement/CustomerIndex", JsonRequestBehavior.AllowGet);
 
-        }
+        //}
         
         [HasPermission(Permission = "Customer_List")]
         [HttpPost]

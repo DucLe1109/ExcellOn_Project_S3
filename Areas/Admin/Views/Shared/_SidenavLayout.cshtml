@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                 <!-- Nav items -->
                 <ul class="navbar-nav">
-                    @if (list_permission.Contains("Admin") || list_role.Contains("Admin"))
+                    @if (list_permission.Contains("Admin") || list_role.Contains("Admin") || list_role.Contains("CEO") || list_role.Contains("Manager"))
                     {
         <li class="nav-item">
             <a class="nav-link active DashboardIndex" onclick="return _Dashboard()">

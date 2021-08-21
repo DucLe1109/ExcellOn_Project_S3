@@ -17,7 +17,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            
+            Session["UserName"] = null;
             return View();
         }
 
@@ -44,7 +44,14 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                         List<string> list_role = function.TakeRole(User);
                         Session["ListRole"] = list_role;
 
-                        return View("/Areas/Admin/Views/AdminHome/StartIndex.cshtml");
+                        if (list_role.Contains("Admin"))
+                        {
+                            return Redirect("/Admin/AdminHome/DashboardIndex");
+                        }
+                        else
+                        {
+                            return Redirect("/Admin/UserManagement/MyProfile");
+                        }
                     }
                     else
                     {

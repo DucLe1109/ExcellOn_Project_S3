@@ -379,6 +379,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return View("/Areas/Admin/Views/OrderManagement/OrderIndex.cshtml");
         }
 
+        [HasPermission(Permission = "Order_Create")]
         [HttpPost]
         public JsonResult CreateOrder(EmployRequest employRequest)
         {
@@ -608,18 +609,107 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             //
         }
 
-        [HttpGet]
-        public JsonResult SubmitOrder(float total_cost, string description)
-        {
 
-            List<OrderDetail> list_ord = (List<OrderDetail>)Session["OrderDetail"];
+        [HasPermission(Permission = "Order_Create")]
+        [HttpGet]
+        public JsonResult SubmitOrder(float total_cost, string Company_Description,string Customer_Description,int Customer_Gender, string Company_Name, string Company_Phone, string Company_Email, string Company_Address,string Customer_Name,string Customer_Phone,string Customer_Email)
+        {
+            Company company = db.Companies.Where(x => x.Company_Email == Company_Email).FirstOrDefault();
+
             Order new_Order = new Order();
-            new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
-            new_Order.Order_Description = description;
-            new_Order.Order_TotalCost = total_cost;
-            new_Order.Order_Status = 0;
-            new_Order.CustomerId = 30;
-            db.Orders.Add(new_Order);
+            Customer cus = db.Customers.Where(x => x.Customer_Email == Customer_Email).FirstOrDefault();
+            if (cus != null && company != null)
+            {
+                new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
+                new_Order.Order_Description = Customer_Description;
+                new_Order.Order_TotalCost = total_cost;
+                new_Order.Order_Status = 0;
+                new_Order.CustomerId = cus.Id;
+                cus.Company = company;
+                db.Orders.Add(new_Order);
+            }
+            else if (cus == null && company == null)
+            {
+                Customer _new = new Customer();
+                _new.Customer_UserName = Customer_Phone;
+                _new.Customer_Name = Customer_Name;
+                _new.Customer_Password = BCrypt.Net.BCrypt.HashPassword(Customer_Phone);
+                _new.Customer_Email = Customer_Email;
+                _new.Customer_Phone = Customer_Phone;
+                _new.Customer_Gender = Customer_Gender;
+                if (Customer_Gender == 0)
+                {
+                    _new.Customer_Avatar = "/Public/Image/a17.jfif";
+                }
+                else
+                {
+                    _new.Customer_Avatar = "/Public/Image/1761894.png";
+                }
+                db.Customers.Add(_new);
+
+                Company _newCompany = new Company();
+                _newCompany.Company_Address = Company_Address;
+                _newCompany.Company_Description = Company_Description;
+                _newCompany.Company_Email = Company_Email;
+                _newCompany.Company_Name = Company_Name;
+                _newCompany.Company_Phone = Company_Phone;
+                db.Companies.Add(_newCompany);
+
+                _new.Company = _newCompany;
+
+                new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
+                new_Order.Order_Description = Customer_Description;
+                new_Order.Order_TotalCost = total_cost;
+                new_Order.Order_Status = 0;
+                new_Order.CustomerId = _new.Id;
+                db.Orders.Add(new_Order);
+            }
+            else if (cus != null && company == null)
+            {
+                Company _newCompany = new Company();
+                _newCompany.Company_Address = Company_Address;
+                _newCompany.Company_Description = Company_Description;
+                _newCompany.Company_Email = Company_Email;
+                _newCompany.Company_Name = Company_Name;
+                _newCompany.Company_Phone = Company_Phone;
+                cus.Company = _newCompany;
+                db.Companies.Add(_newCompany);
+
+                new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
+                new_Order.Order_Description = Customer_Description;
+                new_Order.Order_TotalCost = total_cost;
+                new_Order.Order_Status = 0;
+                new_Order.CustomerId = cus.Id;
+                db.Orders.Add(new_Order);
+            }
+            else if (cus == null && company != null)
+            {
+                Customer _new = new Customer();
+                _new.Customer_UserName = Customer_Phone;
+                _new.Customer_Name = Customer_Name;
+                _new.Customer_Password = BCrypt.Net.BCrypt.HashPassword(Customer_Phone);
+                _new.Customer_Email = Customer_Email;
+                _new.Customer_Phone = Customer_Phone;
+                _new.Customer_Gender = Customer_Gender;
+                _new.Company = company;
+                if (Customer_Gender == 0)
+                {
+                    _new.Customer_Avatar = "/Public/Image/a17.jfif";
+                }
+                else
+                {
+                    _new.Customer_Avatar = "/Public/Image/1761894.png";
+                }
+                
+                db.Customers.Add(_new);
+                new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
+                new_Order.Order_Description = Customer_Description;
+                new_Order.Order_TotalCost = total_cost;
+                new_Order.Order_Status = 0;
+                new_Order.CustomerId = _new.Id;
+                db.Orders.Add(new_Order);
+            }
+            List<OrderDetail> list_ord = (List<OrderDetail>)Session["OrderDetail"];
             db.SaveChanges();
 
             foreach (var item in list_ord)
@@ -808,10 +898,12 @@ namespace _ExcellOn_.Areas.Admin.Controllers
                     }
                 }
             }
+            Session["OrderDetail"] = null;
             return Json("Create Order Successfully", JsonRequestBehavior.AllowGet);
 
         }
 
+        [HasPermission(Permission = "Order_Create")]
         [HttpGet]
         public JsonResult RemoveItem(int OrderDetail_ID)
         {
@@ -829,16 +921,22 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return Json(cost_remove, JsonRequestBehavior.AllowGet);
 
         }
-        public ActionResult form_search()
-        {
-            return View();
-        }
-        public ActionResult Search(SearchRequest searchRequest)
-        {
-            List<Staff> list_Staff_free = orderDetail_Function.Take_List_Staff_Free(searchRequest);
-            ViewBag.free_staff = list_Staff_free.Count;
-            return View();
-        }
+
+        //[HasPermission(Permission = "Order_List")]
+        //public ActionResult form_search()
+        //{
+        //    return View();
+        //}
+
+        //[HasPermission(Permission = "Order_List")]
+        //public ActionResult Search(SearchRequest searchRequest)
+        //{
+        //    List<Staff> list_Staff_free = orderDetail_Function.Take_List_Staff_Free(searchRequest);
+        //    ViewBag.free_staff = list_Staff_free.Count;
+        //    return View();
+        //}
+
+        [HasPermission(Permission = "Order_Create")]
         public ActionResult Index()
         {
             List<OrderDetail> list_ord = (List<OrderDetail>)Session["OrderDetail"];

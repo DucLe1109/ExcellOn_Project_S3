@@ -53,9 +53,19 @@
                                     <input id="Customer_Email" class="form-control">
                                 </div>
                                 <div class="col-md-6" style="margin-top: 15px">
-                                    <label>Comment</label>
-                                    <input id="Customer_Comment" class="form-control">
+                                    <label>Gender</label>
+                                    <select id="Customer_Gender" class="form-control">
+                                        <option value="0">Male</option>
+                                        <option value="1">Female</option>
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top: 15px">
+                                    <label>Comment</label>
+                                    <textarea id="Customer_Comment" class="form-control"></textarea>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -103,8 +113,17 @@
                                     <input id="Customer_Email_edit" class="form-control">
                                 </div>
                                 <div class="col-md-6" style="margin-top: 15px">
+                                    <label>Gender</label>
+                                    <select class="form-control" id="Customer_Gender_edit">
+                                        <option value="0">Male</option>
+                                        <option value="1">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top: 15px">
                                     <label>Comment</label>
-                                    <input id="Customer_Comment_edit" class="form-control">
+                                    <textarea id="Customer_Comment_edit" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -182,6 +201,7 @@
                             </th>
                             <th style="font-size: 0.875rem" scope="col" class="sort">Avatar</th>
                             <th style="font-size: 0.875rem" scope="col" class="sort">Name</th>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Gender</th>
                             <th style="font-size: 0.875rem" scope="col" class="sort">Phone</th>
                             <th style="font-size: 0.875rem" scope="col" class="sort">Email</th>
                             <th style="font-size: 0.875rem" scope="col" class="sort">Comment</th>
@@ -204,6 +224,9 @@
                     @item.Customer_Name
                 </td>
                 <td>
+                    <span>@(item.Customer_Gender == 1? "Female" : "Male")</span>
+                </td>
+                <td>
                     <span class="badge badge-dot mr-4">
                         <i class="bg-warning"></i>
                         <span class="status">@item.Customer_Phone</span>
@@ -224,9 +247,6 @@
                             @if (list_permission.Contains("Customer_Edit") || list_role.Contains("Admin"))
                             {
         <a class="dropdown-item" data-toggle="modal" data-target="#myModal2" href="#" onclick="return _GetById(@item.Id)">Edit</a>}
-                            @if (list_permission.Contains("Customer_Delete") || list_role.Contains("Admin"))
-                            {
-        <a class="dropdown-item" style="cursor: pointer" onclick="return _Delete(@item.Id)" id="@item.Id">Delete</a>}
                         </div>
                     </div>
                 </td>
@@ -303,9 +323,12 @@
         }
 
         function _Add() {
+            var gender = $('#Customer_Gender option:selected');
+           
             $('.block_loader').show();
             var customerObj = {
                 Customer_Name: $('#Customer_Name').val(),
+                Customer_Gender: gender.val(),
                 Customer_Comment: $('#Customer_Comment').val(),
                 Customer_Phone: $('#Customer_Phone').val(),
                 Customer_Email: $('#Customer_Email').val()
@@ -333,10 +356,10 @@
                 type: "GET",
                 dataType: "json",
                 success: function (result) {
-                    console.log(result);
                     $('#Customer_Name_edit').val(result.Customer_Name);
                     $('#Customer_Phone_edit').val(result.Customer_Phone);
                     $('#Customer_Email_edit').val(result.Customer_Email);
+                    $('#Customer_Gender_edit').val(result.Customer_Gender).change();
                     $('#Customer_Comment_edit').val(result.Customer_Comment);
                     $('#Id_edit').val(result.Id);
                 },
@@ -347,14 +370,17 @@
         }
 
         function _Update() {
+            var gender = $('#Customer_Gender_edit option:selected');            
             $('.block_loader').show();
             var customerObj = {
                 Id: $('#Id_edit').val(),
                 Customer_Name: $('#Customer_Name_edit').val(),
                 Customer_Phone: $('#Customer_Phone_edit').val(),
                 Customer_Email: $('#Customer_Email_edit').val(),
+                Customer_Gender: gender.val(),
                 Customer_Comment: $('#Customer_Comment_edit').val()
             }
+            console.log($('#Customer_Comment_edit').text());
             $.ajax({
                 url: "/Admin/CustomerManagement/Update",
                 contentType: "application/json;charset=utf-8",
@@ -371,38 +397,38 @@
             });
         }
 
-        function _Delete(CustomerId) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "/Admin/CustomerManagement/Delete?CustomerId=" + CustomerId,
-                        contentType: "application/json;charset=utf-8",
-                        type: "GET",
-                        dataType: "json",
-                        success: function (result) {
-                            $('#' + CustomerId).parent().parent().parent().parent().remove();
-                            Swal.fire(
-                                'Deleted!',
-                                'Your file has been deleted.',
-                                'success'
-                            )
-                        },
-                        error: function () {
-                            alert("Error !");
-                        }
-                    });
+        //function _Delete(CustomerId) {
+        //    Swal.fire({
+        //        title: 'Are you sure?',
+        //        text: "You won't be able to revert this!",
+        //        icon: 'warning',
+        //        showCancelButton: true,
+        //        confirmButtonColor: '#3085d6',
+        //        cancelButtonColor: '#d33',
+        //        confirmButtonText: 'Yes, delete it!'
+        //    }).then((result) => {
+        //        if (result.isConfirmed) {
+        //            $.ajax({
+        //                url: "/Admin/CustomerManagement/Delete?CustomerId=" + CustomerId,
+        //                contentType: "application/json;charset=utf-8",
+        //                type: "GET",
+        //                dataType: "json",
+        //                success: function (result) {
+        //                    $('#' + CustomerId).parent().parent().parent().parent().remove();
+        //                    Swal.fire(
+        //                        'Deleted!',
+        //                        'Your file has been deleted.',
+        //                        'success'
+        //                    )
+        //                },
+        //                error: function () {
+        //                    alert("Error !");
+        //                }
+        //            });
 
-                }
-            });
-        }
+        //        }
+        //    });
+        //}
     </script>
 
 }

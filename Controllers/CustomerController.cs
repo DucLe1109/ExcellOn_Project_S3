@@ -53,6 +53,7 @@ namespace _ExcellOn_.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            Session["CustomerName"] = null;
             return View("~/Views/Customer/Login.cshtml");
         }
 

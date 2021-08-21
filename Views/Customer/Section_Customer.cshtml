@@ -15,10 +15,15 @@
         @if (Model!=null) {
             foreach (var cus in Model.Take(3))
             {
-                <div class="col-md-4 mt-md-0 mt-5">
+
+
+<div class="col-md-4 mt-md-0 mt-5">
                     <div class="customer-single pr-lg-4">
                         <blockquote style="min-height: 120px">
-                            @cus.Customer_Comment.Substring(0, 100) .....
+                            @if (cus.Customer_Comment != null)
+                            {
+                            <span>@cus.Customer_Comment.Substring(0, 100).....</span>
+                            }
                         </blockquote>
                         <div class="customer-img d-flex align-items-center mt-4">
                             <img src="@cus.Customer_Avatar" style="width:100px;height: 100px" class="img-fluid mr-3" alt="" />

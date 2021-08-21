@@ -3268,6 +3268,7 @@
     <Content Include="Public\Image\a10.jfif" />
     <Content Include="Public\Image\a17.jfif" />
     <Content Include="Public\Image\a4.jfif" />
+    <Content Include="Public\Image\abcdef.jpg" />
     <Content Include="Public\Image\artop.png" />
     <Content Include="Public\Image\ava.gif" />
     <Content Include="Public\Image\avt.png" />

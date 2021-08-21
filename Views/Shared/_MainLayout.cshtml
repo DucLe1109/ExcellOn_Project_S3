@@ -200,6 +200,30 @@
         function _Logout() {
             $(location).attr("href", "/Customer/Logout");
         }
+        function _Login() {
+            var request = {
+                UserName: $('#UserName').val(),
+                Password: $('#Password').val()
+            }
+            $.ajax({
+                url: "/Customer/LoginAjax",
+                contentType: "application/json;charset=utf-8",
+                type: "POST",
+                data: JSON.stringify(request),
+                dataType: "json",
+                success: function (result) {
+                    if (result == "Successfull") {
+                        history.go(0);
+                    } else {
+                        alert("Account or Password is not correct !");
+                    }
+                },
+                error: function (e) {
+                    alert(e);
+                }
+
+            });
+        }
     </script>
 
     @RenderSection("js", false)

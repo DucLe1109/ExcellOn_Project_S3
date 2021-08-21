@@ -7,104 +7,198 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="~/Areas/Admin/Public/ShoppingCart/shopping_cart.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/panel.css" rel="stylesheet" />
+    <link href="~/Content/Duc/ProfileCard.css" rel="stylesheet" />
     <style>
-        table, td, th {
+        tr td p {
+            margin-bottom: 0px
         }
 
         table {
             width: 100%;
         }
+
+        .total_cost {
+            background: transparent;
+            border: none;
+            width: 100px;
+            float: right;
+            padding-top: 0px;
+            margin-left: 50px;
+            font-weight: 600;
+        }
+
+        ._total_cost {
+            background: transparent;
+            border: none;
+            width: 100px;
+            float: right;
+            padding-top: 0px;
+            margin-left: 50px;
+            font-weight: 600;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-    <div class="card">
+    <div class="card" style="max-width: 1300px; height: auto; margin-top: 80px; margin-bottom: 80px">
         <div class="row">
 
             @*// Cart*@
-            <div class="col-md-8 cart">
+            <div class="col-md-8 cart" style="height: auto;margin-bottom: 60px">
                 <div class="title">
                     <div class="row">
-                        <div class="col">
-                            <h4><b>Order Detail</b></h4>
+                        <div class="col-3">
+                            <h4 style="font-weight: 600"><b>Order Detail</b></h4>
                         </div>
-                        <div class="col align-self-center text-right text-muted">@Model.Count items</div>
+                        @if (Model != null)
+                        {
+                            <div class="col-2" style="font-size: 1.2rem">@Model.Count items</div>
+                        }
                     </div>
                 </div>
                 @{
                     float _total_cost = 0;
                 }
 
-                <div class="row border-bottom">
+                <div class="row">
                     <div class="row main align-items-center">
                         <table class="table text-center">
                             <tr>
                                 <th>Your service </th>
                                 <th>Interval</th>
-                                <th>Number of Employee</th>
-                                <th>Price (&euro;)</th>
+                                <th>Employee</th>
+                                <th>Price employee/day ($)</th>
+                                <th>Subtotal  ($)</th>
                                 <th></th>
                             </tr>
-                            @foreach (var item in Model)
+                            @if (Model != null)
                             {
-                                Entities db = new Entities();
-                                Service service = db.Services.Where(x => x.Id == item.ServiceId).FirstOrDefault();
-                                DateTime date_start = (DateTime)item.OrderDetail_DateStart;
-                                DateTime date_end = (DateTime)item.OrderDetail_DateEnd;
-                                int total_day = (int)(date_end - date_start).TotalDays;
-                                float total_cost = (float)total_day * (float)service.Service_Price * (float)item.OrderDetail_NumberOfPeople;
-                                string date_start_string = date_start.ToString("MM/dd/yyyy");
-                                string date_end_string = date_end.ToString("MM/dd/yyyy");
-                                _total_cost += total_cost;
-                                <tr>
-                                    <td>
-                                        <p>@service.Service_Name</p>
-                                        <img class="img-fluid" style="width: 150px; height:150px;border-radius: 20px" src="@service.Service_Image">
-                                    </td>
-                                    <td><div class=""> @date_start_string - @date_end_string </div></td>
-                                    <td><a href="#" class="border">@item.OrderDetail_NumberOfPeople</a></td>
-                                    <td> @total_cost </td>
-                                    <td> <span class="close" id="@item.Id" style="cursor:pointer" onclick="return _remove(@item.Id)">&#10005;</span></td>
-                                </tr>
+                                foreach (var item in Model)
+                                {
+                                    Entities db = new Entities();
+                                    Service service = db.Services.Where(x => x.Id == item.ServiceId).FirstOrDefault();
+                                    DateTime date_start = (DateTime)item.OrderDetail_DateStart;
+                                    DateTime date_end = (DateTime)item.OrderDetail_DateEnd;
+                                    int total_day = (int)(date_end - date_start).TotalDays;
+                                    float total_cost = (float)total_day * (float)service.Service_Price * (float)item.OrderDetail_NumberOfPeople;
+                                    string date_start_string = date_start.ToString("MM/dd/yyyy");
+                                    string date_end_string = date_end.ToString("MM/dd/yyyy");
+                                    _total_cost += total_cost;
+                                    <tr>
+                                        <td>
+                                            <p>@service.Service_Name</p>
+                                        </td>
+                                        <td><div class=""> @date_start_string - @date_end_string </div></td>
+                                        <td>@item.OrderDetail_NumberOfPeople</td>
+                                        <td>@service.Service_Price</td>
+                                        <td> @total_cost </td>
+                                        <td> <span class="close" id="@item.Id" style="cursor:pointer" onclick="return _remove(@item.Id)">&#10005;</span></td>
+                                    </tr>
+                                }
                             }
+
                         </table>
                     </div>
                 </div>
 
-
-
-                <div class="back-to-shop"><a class="text-muted" href="/Admin/ServiceManagement/ServiceIndex">&leftarrow; Back to shop</a></div>
-            </div>
-
-            @*// CheckOut*@
-            <div class="col-md-4 summary">
-                <div>
-                    <h5><b>Summary</b></h5>
-                </div>
-                <hr>
                 <div class="row">
-                    <div class="col-md-6" style="padding-left:0;">TOTAT COST (&euro;)</div>
-                    <div class="col-md-6 text-right">
-                        <input style="background:transparent;border:none;padding-top: 0px;margin-left:50px" type="number" class="total_cost" readonly value="@_total_cost" />
+                    <div class="col-6">
+                        <div class="card" style="width: 100%">
+                            <div class="card-header bg-info text-white">
+                                CUSTOMER INFORMATION
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label>Name</label>
+                                        <input class="form-control" id="Customer_Name" type="text" />
+                                    </div>
+                                    <div class="col-12">
+                                        <label>Phone</label>
+                                        <input class="form-control" id="Customer_Phone" type="text" />
+                                    </div>
+                                    <div class="col-12">
+                                        <label>Email</label>
+                                        <input class="form-control" id="Customer_Email" type="text" />
+                                    </div>
+                                    <div class="col-12">
+                                        <label>Gender</label>
+                                        <select id="Customer_Gender" class="form-control">
+                                            <option value="0">Male</option>
+                                            <option value="1">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label>Description</label>
+                                        <textarea class="form-control" id="Customer_Description" ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card" style="width: 100%">
+                            <div class="card-header bg-info text-white">
+                                COMPANY INFORMATION
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label>Company Name</label>
+                                        <input class="form-control" id="Company_Name" type="text" />
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Phone</label>
+                                        <input class="form-control" id="Company_Phone" type="text" />
+                                    </div>
+                                    <div class="col-12">
+                                        <label>Address</label>
+                                        <input class="form-control" id="Company_Address" type="text" />
+                                    </div>
+                                    <div class="col-12">
+                                        <label>Email</label>
+                                        <input class="form-control" id="Company_Email" type="text" />
+                                    </div>
+                                    <div class="col-12">
+                                        <label>Description</label>
+                                        <textarea class="form-control" id="Company_Description" > </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 summary" style="font-size: 1.1rem;">
+                <div style="margin-bottom: 40px">
+                    <h5 style="font-weight: 600"><b>Summary</b></h5>
+                </div>
+
+                <div class="row" style="margin-bottom: 30px">
+                    <div class="col-md-6" style="padding-left:0;">TOTAT COST ($)</div>
+                    <div class="col-md-6">
+                        <p class="_total_cost">@_total_cost</p>
                     </div>
                 </div>
 
-                <p>GIVE CODE</p> <input id="code" placeholder="Enter your code">
+                <p style="margin-bottom: 30px">GIVE CODE</p> <input id="code" placeholder="Enter your code">
 
-                <button class="btn btn-primary" onclick="return _GiveCode()">Apply</button>
+                <button class="btn btn-primary" onclick="return _GiveCode()" style="margin-bottom: 15px">Apply</button>
 
                 <p class="alert-text text-danger text-center" id="discount" style="margin-top: 20px;font-size: 14px;display: none"> Your bill is discount 1% </p>
+                <p class="alert-text text-danger text-center" id="discount2" style="margin-top: 20px;font-size: 14px;display: none"> Your bill is discount 3% </p>
 
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding-top: 20px">
                     <div class="col-md-6" style="padding-left:0px;padding-right: 0px">
-                        <div class="col">TOTAL PRICE (&euro;)</div>
+                        <div class="col">TOTAL PRICE ($)</div>
                     </div>
                     <div class="col-md-6">
-                        <input style="background:transparent;border:none;padding-top: 0px;margin-left:50px;font-weight: bold" type="number" class="total_cost" readonly value="@_total_cost" />
+                        <p class="total_cost">@_total_cost</p>
                     </div>
 
                 </div> <button class="btn" onclick="return _CheckOut()">CHECKOUT</button>
@@ -113,9 +207,10 @@
     </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript">
+        var count = 0;
         function _remove(ID) {
             $.ajax({
-                url: "/Admin/OrderManagement/RemoveItem?OrderDetail_ID=" + ID,
+                url: "/Customer2/RemoveItem?OrderDetail_ID=" + ID,
                 contentType: "application/json;charset=utf-8",
                 type: "GET",
                 dataType: "json",
@@ -129,26 +224,55 @@
             });
         }
         function _GiveCode() {
-            var count = 0;
-            a = ($('#code').val() == "huyducdeptrai");
-            if (a && count < 1) {
-                $('.total_cost').val($('.total_cost').val() - $('.total_cost').val() * 0.01);
+            var a = ($('#code').val() == "huyducdeptrai");
+            if (a && count < 2 && count != 1) {
+                var total_cost = parseInt($('._total_cost').text());
+                total_cost = total_cost - total_cost * 0.01;
+                $('.total_cost').text(total_cost);
                 $('#discount').show();
                 count += 1;
             }
+            var b = ($('#code').val() == "huyducratdeptrai");
+            if (b && count < 2 && count != 1) {
+                var total_cost = parseInt($('._total_cost').text());
+                total_cost = total_cost - total_cost * 0.03;
+                $('.total_cost').text(total_cost);
+                $('#discount2').show();
+                count += 1;
+            }
+            //if () {
+            //
+            //}
         }
         function _CheckOut() {
+            var gender_selected = $('select option:selected');
+            var Customer_Gender = parseInt(gender_selected.val());
+            var data = {
+                total_cost: parseInt($('.total_cost').text()),
+                Customer_Description: $('#Customer_Description').val(),
+                Company_Description: $('#Company_Description').val(),
+                Company_Name: $('#Company_Name').val(),
+                Company_Phone: $('#Company_Phone').val(),
+                Company_Email: $('#Company_Email').val(),
+                Company_Address: $('#Company_Address').val(),
+                Customer_Name: $('#Customer_Name').val(),
+                Customer_Phone: $('#Customer_Phone').val(),
+                Customer_Email: $('#Customer_Email').val(),
+                Customer_Gender: Customer_Gender
+            };
+            console.log(data);
             $.ajax({
                 url: "/Admin/OrderManagement/SubmitOrder",
                 contentType: "application/json;charset=utf-8",
                 type: "GET",
-                data: { total_cost : $('.total_cost').val(), description : "abc"},
+                data: data,
                 dataType: "json",
                 success: function (result) {
-                    alert(result);
+                    alert("Create Successful !")
+                    history.go(-1);
                 },
-                error: function () {
-
+                error: function (e) {
+                    console.log(e);
                 }
             });
         }

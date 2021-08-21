@@ -1,7 +1,10 @@
 ﻿@model _ExcellOn_.Models.UserInFo
+@using _ExcellOn_.Models
 @{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
-@{ List<string> list_permission = (List<string>)Session["ListPermission"];
-    List<string> list_role = (List<string>)Session["ListRole"]; }
+@{ Entities db = new Entities();
+    List<string> list_permission = (List<string>)Session["ListPermission"];
+    List<string> list_role = (List<string>)Session["ListRole"];
+    List<UserRole> list_user_role = db.UserRoles.Where(x => x.UserId == Model.Id).ToList(); }
 @if (Model.User_Name != null && Model.User_Password != null)
 {
 <div class="main-content">
@@ -67,7 +70,19 @@
                                 <i class="ni education_hat mr-2"></i>@Model.User_Phone
                             </div>
                             <hr class="my-4">
-                            <p>@Model.User_AboutMe</p>
+                            @foreach (var item in list_role)
+                            {
+                                if (list_role.Count == 1)
+                                {
+                                    <span>@item</span>
+                    }
+                                else
+                                {
+                                    <span> @item, </span>
+                                }
+
+                            }
+
 
                         </div>
                     </div>
@@ -141,18 +156,17 @@
                                     </div>
                                     @if (list_permission.Contains("Admin") || list_role.Contains("Admin"))
                                     {
-                                        <div class="col-lg-6">
-                                            <div class="form-group focused">
-                                                <label class="form-control-label" for="input-address">Department</label>
-                                                <select name="ServiceId" class="form-control form-control-alternative">
-                                                    @foreach (var item in ViewBag.list_role)
-                                                    {
-                                <option value="@item.Id">@item.Role_Name</option>}
-                                                </select>
+                    <div class="col-lg-6">
+                        <div class="form-group focused">
+                            <label class="form-control-label" for="input-address">Department</label>
+                            <select name="ServiceId" class="form-control form-control-alternative">
+                                @foreach (var item in ViewBag.list_role)
+                                {
+            <option value="@item.Id">@item.Role_Name</option>}
+                            </select>
 
-                                            </div>
-                                        </div>
-                                    }
+                        </div>
+                    </div>}
                                     <div class="col-md-12">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="input-address">About Me</label>

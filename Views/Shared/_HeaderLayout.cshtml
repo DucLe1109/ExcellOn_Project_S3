@@ -53,7 +53,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/Customer2/OrderIndex" target="_blank">
                                 <i style="font-size:20px" class="fa fa-shopping-bag" aria-hidden="true">
-                                    <span style="position: relative;top:-15px;left:-2px;background-color:#777;padding:5px;color:white;border-radius:80%;font-weight: 600;font-size:0.8rem" id="order_count" class="nav-link badge badge-light">@list_ord.Count</span>
+                                    <span style="position: relative;top:-15px;left:-2px;background-color:#777;color:white;border-radius:80%;font-weight: 600;font-size:0.8rem" id="order_count" class="nav-link badge badge-light">@list_ord.Count</span>
                                 </i>
                             </a>
                         </li>
@@ -63,7 +63,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/Customer2/OrderIndex" target="_blank">
                                 <i style="font-size:20px" class="fa fa-shopping-bag" aria-hidden="true">
-                                    <span style="position: relative;top:-15px;left:-2px;background-color:#777;padding:5px;color:white;border-radius:80%;font-weight: 600;font-size:0.8rem" id="order_count" class="nav-link badge badge-light">0</span>
+                                    <span style="position: relative;top:-15px;left:-2px;background-color:#777;color:white;border-radius:80%;font-weight: 600;font-size:0.8rem" id="order_count" class="nav-link badge badge-light">0</span>
                                 </i>
                             </a>
                         </li>
@@ -105,7 +105,7 @@
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Login", "Customer")">Login</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#Modal_Login" href="#">Login</a>
                         </li>
                     }
                 </ul>
@@ -130,7 +130,7 @@
 </header>
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="height:auto">
+    <div class="modal-dialog modal-lg" id="modal-dialog2" style="height:auto">
         <div class="modal-content" style="box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px">
             <div class="modal-header">
                 <h2 class="modal-title" style="font-weight: 600;color: #17a2b8" id="myModalLabel">YOU CAN SEARCH FOR ALL SERVICE</h2>
@@ -165,6 +165,40 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Modal_Login" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel" style="font-weight: 600">Login Modal</h4>
+                <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="form">
+                <div class="row">
+                    <div class="modal-body" style="padding: 50px">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label style="font-weight: 600">User Name</label>
+                                <input id="UserName" type="text" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label style="font-weight: 600">Password</label>
+                                <input id="Password" type="password" class="form-control">
+                            </div>
+                            <div class="col-6 mx-auto" style="margin-top: 20px;display:none">
+                                <div class="loader mx-auto" style="height: 30px; width: 30px"></div>
+                            </div>
+                            <div class="col-12" style="margin-top:20px">
+                                <button type="button" style="float:right" class="btn btn-info" onclick="return _Login();">Login</button>
+                                <a href="/CustomerLogin" style="float:right;margin-right:10px;padding: 5.5px" class="btn btn-dark">SignUp</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -14,6 +14,7 @@ namespace _ExcellOn_.Areas.Admin.ViewModel
         public string Customer_Phone { get; set; }
 
         public string Customer_Email { get; set; }
+        public int Customer_Gender { get; set; }
 
         public string Customer_UserName { get; set; }
 
