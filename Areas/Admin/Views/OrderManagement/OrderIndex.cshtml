@@ -116,7 +116,7 @@
 
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @if (item.Orders.Order_Status == 99)
+                                                    @if (item.Orders.Order_Status != 0)
                                                     {
                                                         <a href="/Admin/Banking/DetailBanking2/@item.Orders.Id" style="float: right"> <i class="fa fa-edit"></i> Detail</a>
                                                     }
