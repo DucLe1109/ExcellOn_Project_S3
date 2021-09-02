@@ -1,8 +1,14 @@
 ﻿@using _ExcellOn_.Models
 @model List<_ExcellOn_.Models.OrderDetail>
 @{
+    Entities db_ = new Entities();
     Layout = null;
-    Customer cus = (Customer)Session["CustomerName"];
+    Customer cus = new Customer();
+    Customer _cus = (Customer)Session["CustomerName"];
+    if (_cus != null)
+    {
+        cus = db_.Customers.Find(_cus.Id);
+    }
 }
 
 <html xmlns="http://www.w3.org/1999/xhtml">
