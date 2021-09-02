@@ -3,10 +3,11 @@
 <html lang="en">
 
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Call Center - Business Category Bootstrap Responsive Website Template - Home : W3Layouts</title>
+    <title>Excell On</title>
     <!-- google-fonts -->
     <link href="//fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet">
@@ -24,12 +25,23 @@
     <link href="~/Areas/Admin/Public/css/loader.css" rel="stylesheet" />
     <link href="~/Content/Duc/_search.css" rel="stylesheet" />
 
+    @*jquery datepicker css*@
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        .active {
+            text-decoration: underline;
+        }
+    </style>
+    <link href="~/Areas/Admin/Public/css/OnLoad.css" rel="stylesheet" />
     @RenderSection("css", false)
 
 </head>
 
 <body>
-
+    <div class="loader2">
+        <span class="fas fa-spinner xoay icon"></span>
+    </div>
     @RenderPage("_HeaderLayout.cshtml")
 
     @RenderBody()
@@ -42,7 +54,7 @@
         <span class="fa fa-level-up" aria-hidden="true"></span>
     </button>
     <script type="text/javascript">
-        $('select').select2({
+        $('.select_search').select2({
             tokenSeparators: [',', ' ']
         });
         function _Search() {
@@ -147,6 +159,27 @@
                 removalDelay: 300,
                 mainClass: 'my-mfp-slide-bottom'
             });
+
+            $('#Date_Start').datepicker({
+                minDate: 0,
+                dateFormat: "dd/M/yy"
+            });
+            $('#Date_End').datepicker({
+                minDate: 0,
+                dateFormat: "dd/M/yy"
+            });
+            var current_url = location.pathname;
+
+            $('.nav-link').each(function () {
+                if ($(this).attr('href') == current_url) {
+                    $(this).parent().addClass("active");
+                } else {
+                    $(this).parent().removeClass("active");
+                }
+
+            });
+
+
         });
     </script>
     <!-- //magnific popup -->
@@ -225,7 +258,13 @@
             });
         }
     </script>
-
+    <script type="text/javascript">
+        $(window).on('load', function (event) {
+            $('body').removeClass('preloading');
+            /*$('.load').delay(80).fadeOut('fast');*/
+                       $('.loader2').delay(100).fadeOut('fast');
+        });
+    </script>
     @RenderSection("js", false)
 </body>
 

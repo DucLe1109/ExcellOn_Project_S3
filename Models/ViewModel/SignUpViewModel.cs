@@ -12,5 +12,6 @@ namespace _ExcellOn_.Models.ViewModel
         public string Email { get; set; }
         public string Telephone { get; set; }
         public string FullName { get; set; }
+        public int Gender { get; set; }
     }
 }

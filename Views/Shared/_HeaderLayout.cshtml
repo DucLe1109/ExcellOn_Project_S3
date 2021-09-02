@@ -9,6 +9,7 @@
         cus = db.Customers.Where(x => x.Id == _cus.Id).FirstOrDefault();
     }
     List<OrderDetail> list_ord = (List<OrderDetail>)Session["OrderDetail"];
+    var List_Service_Id = Request["List_Service_Id[]"];
 }
 <header id="site-header" class="fixed-top">
     <div class="container">
@@ -16,7 +17,7 @@
             <h1>
                 <a class="navbar-brand" href="@Url.Action("Index","Home")">
                     <i class="fa fa-headphones mr-1"
-                       aria-hidden="true"></i> Call Center
+                       aria-hidden="true"></i> Excell On
                 </a>
             </h1>
 
@@ -29,7 +30,7 @@
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav ml-lg-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
@@ -140,18 +141,27 @@
                 <div class="row" style="font-weight: 600">
                     <div class="col-md-3">
                         <label>Date Start</label>
-                        <input class="form-control" name="Date_Start" value="@Request["Date_Start"]" type="date" placeholder="Date-Start" />
+                        <input class="form-control" id="Date_Start" name="Date_Start" value="@Request["Date_Start"]" type="text" />
                     </div>
                     <div class="col-md-3">
                         <label>Date End</label>
-                        <input class="form-control" name="Date_End" value="@Request["Date_End"]" type="date" placeholder="Date-End" />
+                        <input class="form-control" id="Date_End" name="Date_End"  value="@Request["Date_End"]" type="text" />
                     </div>
                     <div class="col-md-4">
                         <label>Service</label>
                         <select name="List_Service_Id[]" multiple class="form-control select_search">
-                            <option value="1">In Bound</option>
-                            <option value="2">Out Bound</option>
-                            <option value="3">Tele Marketing</option>
+                            @if (List_Service_Id != null)
+                            {
+                                <option value="1" @(List_Service_Id.Contains("1") ? "selected" : "")>In Bound</option>
+                                <option value="2" @(List_Service_Id.Contains("2") ? "selected" : "")>Out Bound</option>
+                                <option value="3" @(List_Service_Id.Contains("3") ? "selected" : "")>Tele Marketing</option>
+                            }
+                            else
+                            {
+                                <option value="1">In Bound</option>
+                                <option value="2">Out Bound</option>
+                                <option value="3">Tele Marketing</option>
+                            }
                         </select>
                     </div>
                     <div class="col-md-2">

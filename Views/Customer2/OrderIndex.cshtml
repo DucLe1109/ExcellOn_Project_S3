@@ -87,8 +87,8 @@
                                     DateTime date_end = (DateTime)item.OrderDetail_DateEnd;
                                     int total_day = (int)(date_end - date_start).TotalDays;
                                     float total_cost = (float)total_day * (float)service.Service_Price * (float)item.OrderDetail_NumberOfPeople;
-                                    string date_start_string = date_start.ToString("MM/dd/yyyy");
-                                    string date_end_string = date_end.ToString("MM/dd/yyyy");
+                                    string date_start_string = date_start.ToString("dd/MMM/yyyy");
+                                    string date_end_string = date_end.ToString("dd/MMM/yyyy");
                                     _total_cost += total_cost;
                                     <tr>
                                         <td>
@@ -238,7 +238,8 @@
                         <p class="total_cost">@_total_cost</p>
                     </div>
 
-                </div> <button class="btn" onclick="return _CheckOut()">CHECKOUT</button>
+                </div>
+                <button class="btn" onclick="return _CheckOut()">CHECKOUT</button>
             </div>
         </div>
     </div>
@@ -298,7 +299,12 @@
                 data: data,
                 dataType: "json",
                 success: function (result) {
-                    window.location.href = "/Customer2/OrderListIndex";
+                    if (result == "Create Order Successfully") {
+                        window.location.href = "/Customer2/OrderListIndex";
+                    }
+                    else {
+                        alert(result);
+                    }
                 },
                 error: function (e) {
                     console.log(e);

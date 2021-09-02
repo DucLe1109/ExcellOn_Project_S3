@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Banking">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DateCreate" Type="date" />
+    <Property Name="Money" Type="float" />
+    <Property Name="Deleted" Type="int" />
+    <Property Name="Status" Type="int" />
+    <Property Name="OrderId" Type="int" />
+    <Property Name="CustomerId" Type="int" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Company_Name" Type="varchar" MaxLength="255" />
+    <Property Name="Company_Phone" Type="varchar" MaxLength="255" />
+    <Property Name="Company_Address" Type="varchar" MaxLength="255" />
+    <Property Name="Company_Email" Type="varchar" MaxLength="255" />
+    <Property Name="Company_Description" Type="text" />
+    <Property Name="Deleted" Type="int" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Customer_Name" Type="varchar" MaxLength="255" />
+    <Property Name="Customer_Phone" Type="varchar" MaxLength="255" />
+    <Property Name="Customer_Email" Type="varchar" MaxLength="255" />
+    <Property Name="Customer_UserName" Type="varchar" MaxLength="255" />
+    <Property Name="Customer_Password" Type="varchar" MaxLength="255" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="Customer_Comment" Type="text" />
+    <Property Name="Customer_Avatar" Type="text" />
+    <Property Name="Customer_Gender" Type="int" />
+    <Property Name="Deleted" Type="int" />
+  </EntityType>
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Image_link" Type="text" />
+    <Property Name="ServiceId" Type="int" />
+  </EntityType>
+  <EntityType Name="MyCompany">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="255" />
+    <Property Name="Image" Type="text" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="Address" Type="varchar" MaxLength="255" />
+    <Property Name="TaxIdentificationNumber" Type="varchar" MaxLength="255" />
+    <Property Name="MyMission" Type="ntext" />
+    <Property Name="MyVision" Type="ntext" />
+    <Property Name="MyTarget" Type="ntext" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderDetail_DateStart" Type="datetime" />
+    <Property Name="OrderDetail_DateEnd" Type="datetime" />
+    <Property Name="OrderDetail_Status" Type="int" />
+    <Property Name="OrderDetail_NumberOfPeople" Type="int" />
+    <Property Name="ServiceId" Type="int" />
+    <Property Name="OrdersId" Type="int" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Order_DateCreate" Type="varchar" MaxLength="50" />
+    <Property Name="Order_Description" Type="text" />
+    <Property Name="Order_TotalCost" Type="float" />
+    <Property Name="Order_Status" Type="int" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Permission_Name" Type="varchar" MaxLength="255" />
+    <Property Name="Parent_id" Type="int" />
+    <Property Name="Key_code" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="PermissionRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PermissionId" Type="int" />
+    <Property Name="RoleId" Type="int" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role_Name" Type="varchar" MaxLength="255" />
+    <Property Name="Role_Description" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Service_Name" Type="varchar" MaxLength="255" />
+    <Property Name="Service_Price" Type="float" />
+    <Property Name="Service_Description" Type="text" />
+    <Property Name="Service_SaleStatus" Type="int" />
+    <Property Name="Service_Image" Type="text" />
+    <Property Name="Service_PriceSale" Type="float" />
+    <Property Name="Deleted" Type="int" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Staff_UserName" Type="varchar" MaxLength="255" />
+    <Property Name="Staff_Password" Type="varchar" MaxLength="255" />
+    <Property Name="Staff_Email" Type="varchar" MaxLength="255" />
+    <Property Name="Staff_Gender" Type="int" />
+    <Property Name="Staff_Age" Type="int" />
+    <Property Name="Staff_Status" Type="int" />
+    <Property Name="Staff_Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Staff_Address" Type="varchar" MaxLength="255" />
+    <Property Name="Staff_Avatar" Type="text" />
+    <Property Name="Staff_FullName" Type="varchar" MaxLength="255" />
+    <Property Name="Staff_AboutMe" Type="text" />
+    <Property Name="ServiceId" Type="int" />
+    <Property Name="Deleted" Type="int" />
+  </EntityType>
+  <EntityType Name="Staff_OrderDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date_Start" Type="datetime" />
+    <Property Name="Date_End" Type="datetime" />
+    <Property Name="Staff_Id" Type="int" />
+    <Property Name="OrderDetail_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="UserInFo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_Name" Type="varchar" MaxLength="255" />
+    <Property Name="User_Password" Type="varchar" MaxLength="255" />
+    <Property Name="User_Email" Type="varchar" MaxLength="255" />
+    <Property Name="User_Gender" Type="int" />
+    <Property Name="User_Age" Type="int" />
+    <Property Name="User_Phone" Type="varchar" MaxLength="50" />
+    <Property Name="User_Address" Type="varchar" MaxLength="255" />
+    <Property Name="User_Avatar" Type="text" />
+    <Property Name="User_FullName" Type="varchar" MaxLength="255" />
+    <Property Name="User_AboutMe" Type="text" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="RoleId" Type="int" />
+  </EntityType>
+  <Association Name="FK__Banking__Custome__370627FE">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Banking" Type="Self.Banking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Banking">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Banking__OrderId__361203C5">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+    <End Role="Banking" Type="Self.Banking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Banking">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customer__Compan__4C364F0E">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Image__ServiceId__6CA31EA0">
+    <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+    <End Role="Image" Type="Self.Image" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Image">
+        <PropertyRef Name="ServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__Order__6319B466">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="OrdersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__Servi__6225902D">
+    <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="ServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__Customer__5F492382">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Permissio__Permi__0C1BC9F9">
+    <End Role="Permission" Type="Self.Permission" Multiplicity="0..1" />
+    <End Role="PermissionRole" Type="Self.PermissionRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permission">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PermissionRole">
+        <PropertyRef Name="PermissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Permissio__RoleI__0D0FEE32">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="PermissionRole" Type="Self.PermissionRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PermissionRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Staff__ServiceId__73501C2F">
+    <End Role="Service" Type="Self.Service" Multiplicity="0..1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="ServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Staff_Ord__Order__7720AD13">
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="0..1" />
+    <End Role="Staff_OrderDetail" Type="Self.Staff_OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staff_OrderDetail">
+        <PropertyRef Name="OrderDetail_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Staff_Ord__Staff__762C88DA">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="Staff_OrderDetail" Type="Self.Staff_OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staff_OrderDetail">
+        <PropertyRef Name="Staff_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserRole__RoleId__0EF836A4">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserRole__UserId__0E04126B">
+    <End Role="UserInFo" Type="Self.UserInFo" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInFo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="Banking" EntityType="Self.Banking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MyCompany" EntityType="Self.MyCompany" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PermissionRole" EntityType="Self.PermissionRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Staff_OrderDetail" EntityType="Self.Staff_OrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserInFo" EntityType="Self.UserInFo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Banking__Custome__370627FE" Association="Self.FK__Banking__Custome__370627FE">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Banking" EntitySet="Banking" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Banking__OrderId__361203C5" Association="Self.FK__Banking__OrderId__361203C5">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Banking" EntitySet="Banking" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customer__Compan__4C364F0E" Association="Self.FK__Customer__Compan__4C364F0E">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Image__ServiceId__6CA31EA0" Association="Self.FK__Image__ServiceId__6CA31EA0">
+      <End Role="Service" EntitySet="Service" />
+      <End Role="Image" EntitySet="Image" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__Order__6319B466" Association="Self.FK__OrderDeta__Order__6319B466">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__Servi__6225902D" Association="Self.FK__OrderDeta__Servi__6225902D">
+      <End Role="Service" EntitySet="Service" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__Customer__5F492382" Association="Self.FK__Orders__Customer__5F492382">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Permissio__Permi__0C1BC9F9" Association="Self.FK__Permissio__Permi__0C1BC9F9">
+      <End Role="Permission" EntitySet="Permission" />
+      <End Role="PermissionRole" EntitySet="PermissionRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Permissio__RoleI__0D0FEE32" Association="Self.FK__Permissio__RoleI__0D0FEE32">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="PermissionRole" EntitySet="PermissionRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Staff__ServiceId__73501C2F" Association="Self.FK__Staff__ServiceId__73501C2F">
+      <End Role="Service" EntitySet="Service" />
+      <End Role="Staff" EntitySet="Staff" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Staff_Ord__Order__7720AD13" Association="Self.FK__Staff_Ord__Order__7720AD13">
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+      <End Role="Staff_OrderDetail" EntitySet="Staff_OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Staff_Ord__Staff__762C88DA" Association="Self.FK__Staff_Ord__Staff__762C88DA">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="Staff_OrderDetail" EntitySet="Staff_OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRole__RoleId__0EF836A4" Association="Self.FK__UserRole__RoleId__0EF836A4">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRole__UserId__0E04126B" Association="Self.FK__UserRole__UserId__0E04126B">
+      <End Role="UserInFo" EntitySet="UserInFo" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -146,6 +146,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminHomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BankingController.cs" />
     <Compile Include="Areas\Admin\Controllers\CartController.cs" />
     <Compile Include="Areas\Admin\Controllers\CompanyManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerManagementController.cs" />
@@ -153,6 +154,9 @@
     <Compile Include="Areas\Admin\Controllers\RoleManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\ServiceManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Staff2Controller.cs" />
+    <Compile Include="Areas\Admin\Controllers\StaffBaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StaffController.cs" />
     <Compile Include="Areas\Admin\Controllers\StaffManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\Staff_OrderDetailController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
@@ -162,11 +166,14 @@
     <Compile Include="Areas\Admin\Model\Order_Interface\OrderDetail_Interface.cs" />
     <Compile Include="Areas\Admin\Model\Permission_Role_Function.cs" />
     <Compile Include="Areas\Admin\Model\HasPermissionAttribute.cs" />
+    <Content Include="Areas\Admin\Public\css\OnLoad.css" />
     <Content Include="Areas\Admin\Public\css\onTop.css" />
-    <Content Include="Areas\Admin\Public\css\preloader.css" />
+    <Content Include="Areas\Admin\Public\css\Login.css" />
     <Content Include="Areas\Admin\Public\JdLomX\css\avzv.css" />
     <Compile Include="Areas\Admin\ViewModel\AppendedStaff.cs" />
     <Compile Include="Areas\Admin\ViewModel\AssignmentSubmitViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModel\BankingFilter.cs" />
+    <Compile Include="Areas\Admin\ViewModel\CompanyViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\CustomerViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModel\GetItemObj.cs" />
     <Compile Include="Areas\Admin\ViewModel\GetItemObj_Return.cs" />
@@ -193,6 +200,9 @@
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Banking.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Company.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -268,8 +278,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include=".gitattributes" />
-    <Content Include=".gitignore" />
     <Content Include="Areas\Admin\Public\avatar\user1.png" />
     <Content Include="Areas\Admin\Public\avatar\user2.png" />
     <Content Include="Areas\Admin\Public\avatar\user3.png" />
@@ -339,6 +347,7 @@
     <Content Include="Areas\Admin\Public\js\components\vendor\nouislider.min.js" />
     <Content Include="Areas\Admin\Public\js\components\vendor\scrollbar.js" />
     <Content Include="Areas\Admin\Public\js\components\vendor\scrollbar.min.js" />
+    <Content Include="Areas\Admin\Public\js\Login.js" />
     <Content Include="Areas\Admin\Public\js\Order.js" />
     <Content Include="Areas\Admin\Public\Plugin_Table_HD\css\pagination.css" />
     <Content Include="Areas\Admin\Public\Plugin_Table_HD\css\paging.css" />
@@ -2814,6 +2823,16 @@
     <Content Include="Areas\Admin\Public\vendor\sweetalert2\dist\sweetalert2.all.min.js" />
     <Content Include="Areas\Admin\Public\vendor\sweetalert2\dist\sweetalert2.min.css" />
     <Content Include="Areas\Admin\Public\vendor\sweetalert2\dist\sweetalert2.min.js" />
+    <Content Include="Areas\Admin\Script_HuyDuc\AdminHome\AdminHome.js" />
+    <Content Include="Areas\Admin\Script_HuyDuc\Banking\ManageBanking.js" />
+    <Content Include="Areas\Admin\Script_HuyDuc\Company\CRUD.js" />
+    <Content Include="Areas\Admin\Script_HuyDuc\Customer\Customer.js" />
+    <Content Include="Areas\Admin\Script_HuyDuc\Order\CreateOrder.js" />
+    <Content Include="Areas\Admin\Script_HuyDuc\Order\ManageOrder.js" />
+    <Content Include="Areas\Admin\Script_HuyDuc\Role\CRUD.js" />
+    <Content Include="Areas\Admin\Script_HuyDuc\Service\Assign_Staff.js" />
+    <Content Include="Areas\Admin\Script_HuyDuc\Service\CRUD.js" />
+    <Content Include="Areas\Admin\Script_HuyDuc\Staff\ManageStaff.js" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\BCrypt.Net-Next.dll" />
@@ -2907,6 +2926,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Duc\Carousel.css" />
+    <Content Include="Content\Duc\Profile.css" />
     <Content Include="Content\Duc\ProfileCard.css" />
     <Content Include="Content\Duc\StaffProfile1.css" />
     <Content Include="Content\Duc\StaffProfile2.css" />
@@ -3077,8 +3098,6 @@
     <Content Include="Areas\Admin\Views\ImageManagement\ImageIndex.cshtml" />
     <Content Include="Areas\Admin\Views\Cart\Index.cshtml" />
     <Content Include="Areas\Admin\Views\OrderManagement\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\OrderManagement\Search.cshtml" />
-    <Content Include="Areas\Admin\Views\OrderManagement\form_search.cshtml" />
     <Content Include="Areas\Admin\Views\StaffManagement\StaffIndex.cshtml" />
     <Content Include="Areas\Admin\Views\StaffManagement\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\StaffManagement\Add.cshtml" />
@@ -3091,7 +3110,6 @@
     <Content Include="Areas\Admin\Views\UserManagement\UserIndex.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\AddUser.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\CompanyManagement\CompanyIndex2.cshtml" />
     <Content Include="Areas\Admin\Views\ServiceManagement\Assign_Staff.cshtml" />
     <Content Include="Areas\Admin\Public\Plugin_Table_HD\js\jquery-1.10.2.min.map" />
     <Content Include="Areas\Admin\Views\OrderManagement\OrderIndex2.cshtml" />
@@ -3111,6 +3129,16 @@
     <Content Include="Content\Manh\assets\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\Manh\assets\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\Manh\assets\fonts\FontAwesome.otf" />
+    <Content Include="Areas\Admin\Views\Staff\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Staff2\MyProfile.cshtml" />
+    <Content Include="Areas\Admin\Views\Staff2\MyOrder.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Login2.cshtml" />
+    <Content Include="Areas\Admin\Views\CustomerManagement\CustomerDeletedIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\CompanyManagement\CompanyDeletedIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\StaffManagement\StaffDeletedIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Banking\DetailBanking.cshtml" />
+    <Content Include="Areas\Admin\Views\Banking\BankingIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Banking\BankingDeletedIndex.cshtml" />
     <None Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1-vsdoc.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.js" />
     <Content Include="packages\jQuery.3.4.1\Content\Scripts\jquery-3.4.1.min.js" />
@@ -3301,6 +3329,7 @@
     <Content Include="Public\Image\inbound3.jfif" />
     <Content Include="Public\Image\inbound4.jfif" />
     <Content Include="Public\Image\inbound5.jfif" />
+    <Content Include="Public\Image\loader.gif" />
     <Content Include="Public\Image\logo-small.png" />
     <Content Include="Public\Image\logo_sidenav.png" />
     <Content Include="Public\Image\modern-company-logo-design-vector.jpg" />
@@ -4059,7 +4088,6 @@
     <Content Include="Views\Customer2\MyProfileCustomer.cshtml" />
     <Content Include="Views\Customer2\OrderDetailIndex.cshtml" />
     <Content Include="Views\Customer2\OrderListIndex.cshtml" />
-    <Content Include="Views\Searches\Search.cshtml" />
     <Content Include="Views\Customer2\OrderIndex.cshtml" />
     <Content Include="Views\Shared\_MainLayout.cshtml" />
     <Content Include="Views\Shared\_HeaderLayout.cshtml" />
@@ -4074,15 +4102,19 @@
     <Content Include="Views\Services\Detail.cshtml" />
     <Content Include="Views\Services\Section_Image.cshtml" />
     <Content Include="Views\Services\Section_Staff.cshtml" />
-    <Content Include="Views\Searches\Search2.cshtml" />
+    <Content Include="Views\Customer2\PaymentWithPaypal.cshtml" />
+    <Content Include="Views\Searches\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\MVCC\v16\" />
     <Folder Include=".vs\_ExcellOn_\v16\" />
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Public\css\NewFolder1\" />
+    <Folder Include="Areas\Admin\Script_HuyDuc\Staff_OrderDetail\" />
+    <Folder Include="Areas\Admin\Script_HuyDuc\User\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Areas\Admin\Views\Image\" />
+    <Folder Include="Areas\Admin\Views\StaffBase\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\CustomerBase\" />
   </ItemGroup>

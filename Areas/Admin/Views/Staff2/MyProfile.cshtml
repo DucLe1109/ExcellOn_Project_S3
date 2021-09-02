@@ -1,0 +1,251 @@
+﻿@model _ExcellOn_.Models.Staff
+
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
+
+@if (Model.Staff_UserName != null && Model.Staff_Password != null)
+{
+    <div class="main-content">
+
+        <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url('/Public/Image/city.jpg'); background-size: cover; background-position: center top;">
+            <span class="mask" style="opacity:0.6;background-color:black"></span>
+            <div class="container-fluid d-flex align-items-center">
+                <div class="row">
+                    <div class="col-lg-7 col-md-10">
+                        <h1 class="display-2 text-white">Hello @Model.Staff_FullName</h1>
+                        <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid mt--7">
+            <div class="row">
+                <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                    <div class="card card-profile shadow">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-3 order-lg-2">
+                                <div class="card-profile-image">
+                                    <img src="@Url.Content(Model.Staff_Avatar)" id="MyAvatar" class="rounded-circle" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                            <div class="d-flex justify-content-between">
+
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pt-md-4">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                                        <div>
+                                            <span class="heading">2568</span>
+                                            <span class="description">Friends</span>
+                                        </div>
+                                        <div>
+                                            <span class="heading">10</span>
+                                            <span class="description">Photos</span>
+                                        </div>
+                                        <div>
+                                            <span class="heading">1324</span>
+                                            <span class="description">Comments</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h3>
+                                    @Model.Staff_FullName<span class="font-weight-light">, @Model.Staff_Age</span>
+                                </h3>
+                                <div class="h5 font-weight-300">
+                                    <i class="ni location_pin mr-2"></i>@Model.Staff_Address
+                                </div>
+                                <div class="h5 mt-4">
+                                    <i class="ni business_briefcase-24 mr-2"></i>@Model.Staff_Email
+                                </div>
+                                <div>
+                                    <i class="ni education_hat mr-2"></i>@Model.Staff_Phone
+                                </div>
+                                <hr class="my-4">
+                                <span>@Model.Staff_AboutMe</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8 order-xl-1">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">My Account</h3>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form action="/Admin/Staff2/Update_Profile" method="post" id="FormDetail" enctype="multipart/form-data">
+                                <h6 class="heading-small text-muted mb-4">User information</h6>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px">
+
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px;">
+                                            <p class="form-control-label">Avatar</p>
+                                            <input name="AvatarUpload" type="file" id="Avatar" class="btn btn-sm btn-primary col-lg-12">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-username">Username</label>
+                                                <input type="text" name="Staff_UserName" readonly class="form-control form-control-alternative" value="@Model.Staff_UserName">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Password</label>
+                                                <input type="password" name="Staff_Password" class="form-control form-control-alternative">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-city">Age</label>
+                                                <input type="number" name="Staff_Age" class="form-control form-control-alternative" value="@Model.Staff_Age">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-last-name">Full Name</label>
+                                                <input type="text" name="Staff_FullName" class="form-control form-control-alternative" value="@Model.Staff_FullName">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" style="margin-bottom: 20px" for="input-address">Gender</label>
+                                                <div>
+                                                    <span style="margin-right: 150px">
+                                                        <input @(Model.Staff_Gender == 0 ? "checked" : "") type="radio" name="Staff_Gender" value="0">
+                                                        <label class="form-control-label" for="input-last-name">Male</label>
+                                                    </span>
+                                                    <span>
+                                                        <input @(Model.Staff_Gender == 1 ? "checked" : "") type="radio" name="Staff_Gender" value="1">
+                                                        <label class="form-control-label" for="input-last-name">Female</label><br>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-address">About Me</label>
+                                                <textarea name="Staff_AboutMe" class="form-control form-control-alternative" rows="10">@Model.Staff_AboutMe</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-address">Address</label>
+                                                <input name="Staff_Address" class="form-control form-control-alternative" value="@Model.Staff_Address" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-first-name">Email Address</label>
+                                                <input type="text" name="Staff_Email" class="form-control form-control-alternative" value="@Model.Staff_Email">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-country">Telephone</label>
+                                                <input type="text" name="Staff_Phone" class="form-control form-control-alternative" value="@Model.Staff_Phone">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+
+                                <div class="pl-lg-4">
+                                    <div class="form-group focused">
+                                        <button type="submit" class="btn btn-info">Edit profile</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="row align-items-center justify-content-xl-between">
+            <div class="col-xl-6 m-auto text-center">
+                <div class="copyright">
+
+                </div>
+            </div>
+        </div>
+    </footer>
+}
+@section js{
+    <script>
+        $(document).ready(function () {
+            $("#FormDetail").submit(function (submitEvent) {
+
+                // get the file name, possibly with path (depends on browser)
+                var filename = $("#Avatar").val();
+
+                // Use a regular expression to trim everything before final dot
+                var extension = filename.replace(/^.*\./, '');
+
+                // Iff there is no dot anywhere in filename, we would have extension == filename,
+                // so we account for this possibility now
+                if (extension == filename) {
+                    extension = '';
+                } else {
+                    // if there is an extension, we convert to lower case
+                    // (N.B. this conversion will not effect the value of the extension
+                    // on the file upload.)
+                    extension = extension.toLowerCase();
+                }
+
+                switch (extension) {
+                    case 'jpg':
+                    case 'jpeg':
+                    case 'png':
+                    case 'jfif':
+                        // uncomment the next line to allow the form to submitted in this case:
+                        //          break;
+                        break;
+                    default:
+                        // Cancel the form submission
+                        alert("File is not valid !");
+                        submitEvent.preventDefault();
+                }
+
+            });
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#MyAvatar').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#Avatar").change(function () {
+            readURL(this);
+        });
+    </script>
+}

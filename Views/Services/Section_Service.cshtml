@@ -41,7 +41,7 @@
                                     <p style="min-height: 100px">
                                         @service.Service_Description
                                     </p>
-                                    <a href="#services" class="btn read-button d-flex align-items-center mt-4 p-0">
+                                    <a href="@Url.Action("Detail","Services", new { id = service.Id})" class="btn read-button d-flex align-items-center mt-4 p-0">
                                         Read
                                         More<i class="fa fa-angle-double-right ml-1" aria-hidden="true"></i>
                                     </a>

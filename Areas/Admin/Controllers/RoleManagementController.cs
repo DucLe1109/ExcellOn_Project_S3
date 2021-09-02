@@ -14,6 +14,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
     {
         private Entities db = new Entities();
         // GET: Admin/RoleManagement
+        
         [HasPermission(Permission ="Admin")]
         public ActionResult RoleIndex()
         {
@@ -45,6 +46,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return View();
 
         }
+        
         [HasPermission(Permission = "Admin")]
         [HttpPost]
         public ActionResult Submit_Edit(UpdatePermissionViewModel request)

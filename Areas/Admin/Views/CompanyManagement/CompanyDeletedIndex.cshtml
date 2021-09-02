@@ -1,0 +1,227 @@
+﻿@{ List<string> list_permission = (List<string>)Session["ListPermission"];
+    List<string> list_role = (List<string>)Session["ListRole"]; }
+@{ Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml"; }
+@model List<_ExcellOn_.Models.Company>
+<div class="container" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+                <h6 class="h2 d-inline-block mb-0">Company Management</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item"><a href="/Admin/CompanyManagement/CompanyDeletedIndex"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="/Admin/CompanyManagement/CompanyDeletedIndex">Tables</a></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+                @if (list_permission.Contains("Company_Add") || list_role.Contains("Admin"))
+                {
+                    <a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#myModal1">Add New</a>}
+
+                <a class="btn btn-sm btn-neutral" href="/Admin/CompanyManagement/CompanyDeletedIndex">Reload</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container" style="margin-top: 30px;padding-bottom: 40px">
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 150%">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="myModalLabel">Compose News Company</h2>
+                    <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="form">
+                    <div class="row">
+                        <div class="modal-body" style="padding: 50px">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Name</label>
+                                    <input id="Company_Name" class="form-control" placeholder="Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Phone</label>
+                                    <input id="Company_Phone" class="form-control" placeholder="Phone">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" style="margin-top: 15px">
+                                    <label>Email</label>
+                                    <input id="Company_Email" class="form-control" placeholder="Email">
+                                </div>
+                                <div class="col-md-6" style="margin-top: 15px">
+                                    <label>Address</label>
+                                    <input id="Company_Address" class="form-control" placeholder="Address">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top: 15px">
+                                    <label>Description</label>
+                                    <textarea id="Company_Description" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 block_loader" style="display: none">
+                        <div style="float:right;width: 55%">
+                            <div class="loader"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer col-md-12">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                        <button type="button" class="btn btn-primary" onclick="return _Add();">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 150%">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Compose News Company</h4>
+                    <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="form">
+                    <div class="row">
+                        <div class="modal-body" style="padding: 50px">
+                            <div class="row">
+                                <div class="col-md-6" style="display: none">
+                                    <label>Id</label>
+                                    <input id="Id_edit" class="form-control" placeholder="Id" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Name</label>
+                                    <input id="Company_Name_edit" class="form-control" placeholder="Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Phone</label>
+                                    <input id="Company_Phone_edit" class="form-control" placeholder="Phone">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" style="margin-top: 15px">
+                                    <label>Email</label>
+                                    <input id="Company_Email_edit" class="form-control" placeholder="Email">
+                                </div>
+                                <div class="col-md-6" style="margin-top: 15px">
+                                    <label>Address</label>
+                                    <input id="Company_Address_edit" class="form-control" placeholder="Address">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top: 15px">
+                                    <label>Description</label>
+                                    <textarea id="Company_Description_edit" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="loader" style="display:none"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="return _Update();">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="table-responsive">
+                <table id="table_Company" class="cell-border text-center align-items-center table-flush ">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Name</th>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Phone</th>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Address</th>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Email</th>
+                            <th style="font-size: 0.875rem" scope="col" class="sort">Description</th>
+                            <th style="font-size: 0.875rem" scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th>
+                                        <div class="media align-items-center">
+                                            <a href="#" class="avatar rounded-circle mr-3">
+                                                <img alt="Image placeholder" src="~/Public/Image/building.jpg">
+                                            </a>
+                                            <div class="media-body">
+                                                <span class="name mb-0 text-sm" id="Company_Name_@item.Id">@item.Company_Name</span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <span id="Company_Phone_@item.Id">@item.Company_Phone</span>
+                                    </td>
+                                    <td class="">
+                                        <span class="badge badge-dot mr-4">
+                                            <i class="bg-warning"></i>
+                                            <span class="status" id="Company_Address_@item.Id">@item.Company_Address</span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span id="Company_Email_@item.Id">@item.Company_Email</span>
+                                    </td>
+                                    <td class="Description">
+                                        <span id="Company_Description_@item.Id">@item.Company_Description</span>
+                                    </td>
+                                    <td>
+                                        <button id="@item.Id" style="padding: 5px 8px" onclick="return _Reset(@item.Id)" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <link href="~/Areas/Admin/Public/DataTable/pagination.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/loader.css" rel="stylesheet" />
+}
+@section js{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table_Company').DataTable({
+                "lengthMenu": [10, 15, 20, 30],
+                "pagingType": "full_numbers",
+                language: {
+                    paginate: {
+                        next: '<i class="fa fa-fw fa-long-arrow-right">',
+                        previous: '<i class="fa fa-fw fa-long-arrow-left">'
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script src="~/Areas/Admin/Script_HuyDuc/Company/CRUD.js"></script>
+}

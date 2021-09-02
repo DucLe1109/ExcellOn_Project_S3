@@ -1,4 +1,5 @@
 ﻿
+using _ExcellOn_.Areas.Admin.Model;
 using _ExcellOn_.Areas.Admin.ViewModel;
 using _ExcellOn_.Models;
 using _ExcellOn_.Models.ViewModel;
@@ -36,6 +37,7 @@ namespace _ExcellOn_.Controllers
             {
                 customer.Customer_Email = CurrentCustomer.Customer_Email;
                 customer.Customer_Name = CurrentCustomer.Customer_Name;
+                customer.Customer_Gender = CurrentCustomer.Customer_Gender;
                 if (CurrentCustomer.Customer_Password != null)
                 {
                     customer.Customer_Password = BCrypt.Net.BCrypt.HashPassword(CurrentCustomer.Customer_Password);
@@ -76,14 +78,14 @@ namespace _ExcellOn_.Controllers
         public ActionResult OrderListIndex()
         {
             Customer customer = (Customer)Session["CustomerName"];
-            List<Order> order = db.Orders.Where(x => x.CustomerId == customer.Id).OrderBy(x => x.Order_Status).ToList();
+            List<Order> order = db.Orders.Where(x => x.CustomerId == customer.Id).ToList();
+            order.Reverse();
             return View(order);
         }
         //Order Detail Customer
-        public ActionResult OrderDetailIndex(string id)
+        public ActionResult OrderDetailIndex(int id)
         {
-            int id_1 = int.Parse(id);
-            var TTOrderDetail = db.OrderDetails.Where(e => e.OrdersId == id_1).Select(e => e.OrdersId).ToList();
+            var TTOrderDetail = db.OrderDetails.Where(e => e.OrdersId == id).Select(e => e.OrdersId).ToList();
             List<Order_OrderDetail> list_order_orderdetail = new List<Order_OrderDetail>();
 
             List<Order> list_or = db.Orders.Where(x => x.Order_Status != 3 && TTOrderDetail.Contains(x.Id)).OrderByDescending(x => x.Order_DateCreate).ToList();
@@ -110,235 +112,54 @@ namespace _ExcellOn_.Controllers
         [HttpPost]
         public JsonResult CreateOrder(EmployRequest employRequest)
         {
+            OrderDetail_Function orderDetail_Function = new OrderDetail_Function();
             int Service_Id = employRequest.Service_Id;
             int Number_Of_Employee = employRequest.Number_Of_Employee;
+            DateTime today = DateTime.Now;
             DateTime Date_Start = employRequest.Date_Start;
             DateTime Date_End = employRequest.Date_End;
 
-            // Khởi tạo bảng Staff_OrderDetail. (Nếu chưa có bất kì đơn hàng chi tiết nào thì lấy luôn số lượng staff cần được thuê trong bảng Staff và khởi tạo đơn hàng chi tiết mới)
-            List<Staff> list_Staff_free = db.Staffs.Where(x => x.Staff_OrderDetail.Count == 0 && x.ServiceId == Service_Id).ToList();
-            int list_Staff_has_not_any_orderdetail_count = list_Staff_free.Count;
-            if (list_Staff_free.Count > 0 && list_Staff_free.Count >= Number_Of_Employee)
+            if ((today - Date_Start).TotalDays <= 0 && (Date_End - Date_Start).TotalDays > 0 && (Date_End-Date_Start).TotalDays > 0)
             {
-
-                OrderDetail new_OrderDetail = new OrderDetail();
-                new_OrderDetail.OrderDetail_DateStart = Date_Start;
-                new_OrderDetail.OrderDetail_DateEnd = Date_End;
-                new_OrderDetail.OrderDetail_NumberOfPeople = Number_Of_Employee;
-                new_OrderDetail.OrderDetail_Status = 0;
-                new_OrderDetail.ServiceId = Service_Id;
-                db.OrderDetails.Add(new_OrderDetail);
-                int temp = 0;
-                foreach (var item in list_Staff_free)
+                List<Staff> list_staff_free = orderDetail_Function.Take_List_Staff_Free(Service_Id, Date_Start, Date_End);
+                if (list_staff_free.Count >= Number_Of_Employee)
                 {
-                    Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
-                    new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
-                    new_Staff_OrderDetail.Staff_Id = item.Id;
-                    new_Staff_OrderDetail.Date_Start = Date_Start;
-                    new_Staff_OrderDetail.Date_End = Date_End;
-                    db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
-                    temp += 1;
-                    if (temp == Number_Of_Employee)
+                    OrderDetail new_OrderDetail = new OrderDetail();
+                    new_OrderDetail.OrderDetail_DateStart = Date_Start;
+                    new_OrderDetail.OrderDetail_DateEnd = Date_End;
+                    new_OrderDetail.OrderDetail_NumberOfPeople = Number_Of_Employee;
+                    new_OrderDetail.OrderDetail_Status = 0;
+                    new_OrderDetail.ServiceId = Service_Id;
+
+                    if (Session["OrderDetail"] != null)
                     {
-                        break;
+                        List<OrderDetail> session_orderdetail = (List<OrderDetail>)Session["OrderDetail"];
+                        session_orderdetail.Add(new_OrderDetail);
+                        Session["OrderDetail"] = session_orderdetail;
                     }
+                    else
+                    {
+                        List<OrderDetail> session_orderdetail = new List<OrderDetail>();
+                        session_orderdetail.Add(new_OrderDetail);
+                        Session["OrderDetail"] = session_orderdetail;
+                    }
+                    return Json("Create successfully !", JsonRequestBehavior.AllowGet);
                 }
-                if (Session["OrderDetail"] != null)
-                {
-                    List<OrderDetail> session_orderdetail = (List<OrderDetail>)Session["OrderDetail"];
-                    session_orderdetail.Add(new_OrderDetail);
-                    Session["OrderDetail"] = session_orderdetail;
-                }
-                else
-                {
-                    List<OrderDetail> session_orderdetail = new List<OrderDetail>();
-                    session_orderdetail.Add(new_OrderDetail);
-                    Session["OrderDetail"] = session_orderdetail;
-                }
-
-                return Json("/Customer2/OrderIndex", JsonRequestBehavior.AllowGet);
-
+                return Json("The Employee is greater than our Staff", JsonRequestBehavior.AllowGet);
             }
-            // Nếu tất cả các Staff đều đã tham gia tối thiểu vào 1 OrderDetail thì phải xử lý trùng lặp ngày tháng trong này.
             else
             {
-                var list_Staff_OrderDetail = db.Staff_OrderDetail.ToList();
-                List<Staff> _list_Staff_free = new List<Staff>(); // Danh sách những Staff không bị trùng lịch với đơn đặt hàng mới 
-                List<Staff> _list_Staff_Not_free = new List<Staff>(); //  Danh sách những Staff bị trùng lịch với đơn đặt hàng mới 
-                foreach (var item in list_Staff_OrderDetail)
-                {
-                    if ((((Date_Start - (DateTime)item.Date_End).TotalDays > 0) && ((Date_Start - (DateTime)item.Date_Start).TotalDays > 0)) || (((Date_End - (DateTime)item.Date_Start).TotalDays < 0) && ((Date_End - (DateTime)item.Date_Start).TotalDays < 0)))
-                    {
-                        Staff free_staff = db.Staffs.Where(x => x.Id == item.Staff_Id).FirstOrDefault();
-                        if (_list_Staff_free.Exists(x => x.Id == free_staff.Id))
-                        {
-                            // không add những staff đã lặp lại
-                        }
-                        else
-                        {
-                            _list_Staff_free.Add(free_staff);
-                        }
-
-                    }
-                    else
-                    {
-                        Staff free_staff = db.Staffs.Where(x => x.Id == item.Staff_Id).FirstOrDefault();
-                        if (_list_Staff_Not_free.Exists(x => x.Id == free_staff.Id))
-                        {
-                            // không add những staff đã lặp lại
-                        }
-                        else
-                        {
-                            _list_Staff_Not_free.Add(free_staff);
-                        }
-                    }
-                }
-                List<Staff> _list_Staff_free_service = _list_Staff_free.Where(x => x.ServiceId == Service_Id).ToList(); //  Danh sách những Staff không bị trùng lịch với đơn đặt hàng mới lọc theo loại dịch vụ
-                List<Staff> _list_Staff_Not_free_service = _list_Staff_Not_free.Where(x => x.ServiceId == Service_Id).ToList(); //  Danh sách những Staff bị trùng lịch với đơn đặt hàng mới lọc theo loại dịch vụ
-
-                // TH1: đơn hàng không trùng ngày với các đơn đã lên.
-                if (_list_Staff_Not_free_service.Count == 0)
-                {
-                    if (list_Staff_has_not_any_orderdetail_count > 0)
-                    {
-                        foreach (var staff_has_not_any_orderdetail in list_Staff_free)
-                        {
-                            _list_Staff_free_service.Add(staff_has_not_any_orderdetail);
-                        }
-                    }
-
-                    if (_list_Staff_free_service.Count >= Number_Of_Employee)
-                    {
-                        OrderDetail new_OrderDetail = new OrderDetail();
-                        new_OrderDetail.OrderDetail_DateStart = Date_Start;
-                        new_OrderDetail.OrderDetail_DateEnd = Date_End;
-                        new_OrderDetail.OrderDetail_NumberOfPeople = Number_Of_Employee;
-                        new_OrderDetail.OrderDetail_Status = 0;
-                        new_OrderDetail.ServiceId = Service_Id;
-                        db.OrderDetails.Add(new_OrderDetail);
-                        int temp = 0;
-                        foreach (var item in _list_Staff_free_service)
-                        {
-                            Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
-                            new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
-                            new_Staff_OrderDetail.Staff_Id = item.Id;
-                            new_Staff_OrderDetail.Date_Start = Date_Start;
-                            new_Staff_OrderDetail.Date_End = Date_End;
-                            db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
-                            temp += 1;
-                            if (temp == Number_Of_Employee)
-                            {
-                                break;
-                            }
-                        }
-                        if (Session["OrderDetail"] != null)
-                        {
-                            List<OrderDetail> session_orderdetail = (List<OrderDetail>)Session["OrderDetail"];
-                            session_orderdetail.Add(new_OrderDetail);
-                            Session["OrderDetail"] = session_orderdetail;
-                        }
-                        else
-                        {
-                            List<OrderDetail> session_orderdetail = new List<OrderDetail>();
-                            session_orderdetail.Add(new_OrderDetail);
-                            Session["OrderDetail"] = session_orderdetail;
-                        }
-                        return Json("/Customer2/OrderIndex", JsonRequestBehavior.AllowGet);
-                        // Lưu dữ liệu vào db
-                        //db.SaveChanges();
-                    }
-                    else
-                    {
-                        return Json("The Employee is greater than our Staff", JsonRequestBehavior.AllowGet);
-                        // num of employee is greater than free staff. 
-                    }
-                }
-                // Th2: đơn hàng mới trùng với các đơn đã lên.
-                else
-                {
-                    List<Staff> list_staff_have_inTable = db.Staffs.Where(x => x.ServiceId == Service_Id).ToList();
-                    if (_list_Staff_Not_free_service.Count <= list_staff_have_inTable.Count)
-                    {
-                        var list_staff_free = list_staff_have_inTable.Except(_list_Staff_Not_free_service);
-
-                        int a = list_staff_free.Count() + list_Staff_has_not_any_orderdetail_count;
-                        if (a >= Number_Of_Employee)
-                        {
-                            OrderDetail new_OrderDetail = new OrderDetail();
-                            new_OrderDetail.OrderDetail_DateStart = Date_Start;
-                            new_OrderDetail.OrderDetail_DateEnd = Date_End;
-                            new_OrderDetail.OrderDetail_NumberOfPeople = Number_Of_Employee;
-                            new_OrderDetail.OrderDetail_Status = 0;
-                            new_OrderDetail.ServiceId = Service_Id;
-                            db.OrderDetails.Add(new_OrderDetail);
-                            int temp = 0;
-                            foreach (var item in list_staff_free)
-                            {
-                                Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
-                                new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
-                                new_Staff_OrderDetail.Staff_Id = item.Id;
-                                new_Staff_OrderDetail.Date_Start = Date_Start;
-                                new_Staff_OrderDetail.Date_End = Date_End;
-                                db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
-                                temp += 1;
-                                if (temp == Number_Of_Employee)
-                                {
-                                    break;
-                                }
-                            }
-                            if (temp < Number_Of_Employee)
-                            {
-                                foreach (var item in list_Staff_free)
-                                {
-                                    Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
-                                    new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
-                                    new_Staff_OrderDetail.Staff_Id = item.Id;
-                                    new_Staff_OrderDetail.Date_Start = Date_Start;
-                                    new_Staff_OrderDetail.Date_End = Date_End;
-                                    db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
-                                    temp += 1;
-                                    if (temp == Number_Of_Employee)
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (Session["OrderDetail"] != null)
-                            {
-                                List<OrderDetail> session_orderdetail = (List<OrderDetail>)Session["OrderDetail"];
-                                session_orderdetail.Add(new_OrderDetail);
-                                Session["OrderDetail"] = session_orderdetail;
-                            }
-                            else
-                            {
-                                List<OrderDetail> session_orderdetail = new List<OrderDetail>();
-                                session_orderdetail.Add(new_OrderDetail);
-                                Session["OrderDetail"] = session_orderdetail;
-                            }
-                            return Json("/Customer2/OrderIndex", JsonRequestBehavior.AllowGet);
-                            //db.SaveChanges();
-                        }
-                        else
-                        {
-                            return Json("The Employee is greater than our Staff", JsonRequestBehavior.AllowGet);
-                            // Không đủ Staff để cho thuê
-                        }
-                    }
-                    else
-                    {
-                        return Json("The Employee is greater than our Staff", JsonRequestBehavior.AllowGet);
-                        // Không đủ staff để cho thuê
-                    }
-                }
+                return Json(404, JsonRequestBehavior.AllowGet);
             }
-            //
+            
         }
 
         [HttpGet]
         public JsonResult SubmitOrder(float total_cost, string Description, string Company_Name, string Company_Phone, string Company_Email, string Company_Address)
         {
+            OrderDetail_Function orderDetail_Function = new OrderDetail_Function();
             Customer cus = (Customer)Session["CustomerName"];
+            Customer _cus = db.Customers.Where(x => x.Id == cus.Id).FirstOrDefault();
             Company company = db.Companies.Where(x=>x.Company_Email == Company_Email).FirstOrDefault();
             if (company == null)
             {
@@ -347,111 +168,39 @@ namespace _ExcellOn_.Controllers
                 _new.Company_Name = Company_Name;
                 _new.Company_Phone = Company_Phone;
                 _new.Company_Email = Company_Email;
+                _cus.Company = _new;
                 db.Companies.Add(_new);
-                cus.Company = _new;
             }
             else
             {
-                cus.Company = company;
+                _cus.Company = company;
             }
     
             List<OrderDetail> list_ord = (List<OrderDetail>)Session["OrderDetail"];
-            Order new_Order = new Order();
-            new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
-            new_Order.Order_Description = Description;
-            new_Order.Order_TotalCost = total_cost;
-            new_Order.Order_Status = 0;
-            new_Order.CustomerId = cus.Id;
-            db.Orders.Add(new_Order);
-            db.SaveChanges();
 
-            foreach (var item in list_ord)
+            if (list_ord != null)
             {
-                int Service_Id = (int)item.ServiceId;
-                int Number_Of_Employee = (int)item.OrderDetail_NumberOfPeople;
-                DateTime Date_Start = (DateTime)item.OrderDetail_DateStart;
-                DateTime Date_End = (DateTime)item.OrderDetail_DateEnd;
-                // Create Order
-                List<Staff> list_Staff_free = db.Staffs.Where(x => x.Staff_OrderDetail.Count == 0 && x.ServiceId == Service_Id).ToList();
-                int list_Staff_has_not_any_orderdetail_count = list_Staff_free.Count;
-                if (list_Staff_free.Count > 0 && list_Staff_free.Count >= Number_Of_Employee)
+                Order new_Order = new Order();
+                new_Order.Order_DateCreate = DateTime.Now.ToString("MMMM/dd/yyyy");
+                new_Order.Order_Description = Description;
+                new_Order.Order_TotalCost = total_cost;
+                new_Order.Order_Status = 0;
+                new_Order.CustomerId = _cus.Id;
+                db.Orders.Add(new_Order);
+                db.SaveChanges();
+
+                if (list_ord != null)
                 {
-                    OrderDetail new_OrderDetail = new OrderDetail();
-                    new_OrderDetail.OrderDetail_DateStart = Date_Start;
-                    new_OrderDetail.OrderDetail_DateEnd = Date_End;
-                    new_OrderDetail.OrderDetail_NumberOfPeople = Number_Of_Employee;
-                    new_OrderDetail.OrderDetail_Status = 0;
-                    new_OrderDetail.ServiceId = Service_Id;
-                    new_OrderDetail.OrdersId = new_Order.Id;
-                    db.OrderDetails.Add(new_OrderDetail);
-                    int temp = 0;
-                    foreach (var item2 in list_Staff_free)
+                    foreach (var item in list_ord)
                     {
-                        Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
-                        new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
-                        new_Staff_OrderDetail.Staff_Id = item2.Id;
-                        new_Staff_OrderDetail.Date_Start = Date_Start;
-                        new_Staff_OrderDetail.Date_End = Date_End;
-                        db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
-                        temp += 1;
-                        if (temp == Number_Of_Employee)
-                        {
-                            break;
-                        }
-                    }
-                    db.SaveChanges();
-                }
-                // Nếu tất cả các Staff đều đã tham gia tối thiểu vào 1 OrderDetail thì phải xử lý trùng lặp ngày tháng trong này.
-                else
-                {
-                    var list_Staff_OrderDetail = db.Staff_OrderDetail.ToList();
-                    List<Staff> _list_Staff_free = new List<Staff>(); // Danh sách những Staff không bị trùng lịch với đơn đặt hàng mới 
-                    List<Staff> _list_Staff_Not_free = new List<Staff>(); //  Danh sách những Staff bị trùng lịch với đơn đặt hàng mới 
-                    foreach (var item2 in list_Staff_OrderDetail)
-                    {
-                        if ((((Date_Start - (DateTime)item2.Date_End).TotalDays > 0) && ((Date_Start - (DateTime)item2.Date_Start).TotalDays > 0)) || (((Date_End - (DateTime)item2.Date_Start).TotalDays < 0) && ((Date_End - (DateTime)item2.Date_Start).TotalDays < 0)))
-                        {
-                            Staff free_staff = db.Staffs.Where(x => x.Id == item2.Staff_Id).FirstOrDefault();
-                            if (_list_Staff_free.Exists(x => x.Id == free_staff.Id))
-                            {
-                                // không add những staff đã lặp lại
-                            }
-                            else
-                            {
-                                _list_Staff_free.Add(free_staff);
-                            }
+                        int Service_Id = (int)item.ServiceId;
+                        int Number_Of_Employee = (int)item.OrderDetail_NumberOfPeople;
+                        DateTime Date_Start = (DateTime)item.OrderDetail_DateStart;
+                        DateTime Date_End = (DateTime)item.OrderDetail_DateEnd;
+                        List<Staff> list_staff_free = orderDetail_Function.Take_List_Staff_Free(Service_Id, Date_Start, Date_End);
 
-                        }
-                        else
+                        if (list_staff_free.Count >= Number_Of_Employee)
                         {
-                            Staff free_staff = db.Staffs.Where(x => x.Id == item2.Staff_Id).FirstOrDefault();
-                            if (_list_Staff_Not_free.Exists(x => x.Id == free_staff.Id))
-                            {
-                                // không add những staff đã lặp lại
-                            }
-                            else
-                            {
-                                _list_Staff_Not_free.Add(free_staff);
-                            }
-                        }
-                    }
-                    List<Staff> _list_Staff_free_service = _list_Staff_free.Where(x => x.ServiceId == Service_Id).ToList(); //  Danh sách những Staff không bị trùng lịch với đơn đặt hàng mới lọc theo loại dịch vụ
-                    List<Staff> _list_Staff_Not_free_service = _list_Staff_Not_free.Where(x => x.ServiceId == Service_Id).ToList(); //  Danh sách những Staff bị trùng lịch với đơn đặt hàng mới lọc theo loại dịch vụ
-
-                    // TH1: đơn hàng không trùng ngày với các đơn đã lên.
-                    if (_list_Staff_Not_free_service.Count == 0)
-                    {
-                        if (list_Staff_has_not_any_orderdetail_count > 0)
-                        {
-                            foreach (var staff_has_not_any_orderdetail in list_Staff_free)
-                            {
-                                _list_Staff_free_service.Add(staff_has_not_any_orderdetail);
-                            }
-                        }
-
-                        if (_list_Staff_free_service.Count >= Number_Of_Employee)
-                        {
-
                             OrderDetail new_OrderDetail = new OrderDetail();
                             new_OrderDetail.OrderDetail_DateStart = Date_Start;
                             new_OrderDetail.OrderDetail_DateEnd = Date_End;
@@ -461,7 +210,7 @@ namespace _ExcellOn_.Controllers
                             new_OrderDetail.OrdersId = new_Order.Id;
                             db.OrderDetails.Add(new_OrderDetail);
                             int temp = 0;
-                            foreach (var item2 in _list_Staff_free_service)
+                            foreach (var item2 in list_staff_free)
                             {
                                 Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
                                 new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
@@ -482,79 +231,198 @@ namespace _ExcellOn_.Controllers
                             return Json("The Employee is greater than our Staff", JsonRequestBehavior.AllowGet);
                         }
                     }
-                    // Th2: đơn hàng mới trùng với các đơn đã lên.
-                    else
-                    {
-                        List<Staff> list_staff_have_inTable = db.Staffs.Where(x => x.ServiceId == Service_Id).ToList();
-                        if (_list_Staff_Not_free_service.Count <= list_staff_have_inTable.Count)
-                        {
-                            var list_staff_free = list_staff_have_inTable.Except(_list_Staff_Not_free_service);
-                            int a = list_staff_free.Count() + list_Staff_has_not_any_orderdetail_count;
-                            if (a >= Number_Of_Employee)
-                            {
+                }
+                Session["OrderDetail"] = null;
+                return Json("Create Order Successfully", JsonRequestBehavior.AllowGet);
+            }
+            
+            return Json("You don't have any order !", JsonRequestBehavior.AllowGet);
 
-                                OrderDetail new_OrderDetail = new OrderDetail();
-                                new_OrderDetail.OrderDetail_DateStart = Date_Start;
-                                new_OrderDetail.OrderDetail_DateEnd = Date_End;
-                                new_OrderDetail.OrderDetail_NumberOfPeople = Number_Of_Employee;
-                                new_OrderDetail.OrderDetail_Status = 0;
-                                new_OrderDetail.ServiceId = Service_Id;
-                                new_OrderDetail.OrdersId = new_Order.Id;
-                                db.OrderDetails.Add(new_OrderDetail);
-                                int temp = 0;
-                                foreach (var item2 in list_staff_free)
+        }
+
+        [HttpPost]
+        public JsonResult Update_OrderDetail(OrderDetail ord, int service_id)
+        {
+            DateTime today = DateTime.Now;
+            DateTime Date_Start = (DateTime)ord.OrderDetail_DateStart;
+            DateTime Date_End = (DateTime)ord.OrderDetail_DateEnd;
+            int Num = (int)ord.OrderDetail_NumberOfPeople;
+
+            if ((today - Date_Start).TotalDays <= 0 && (Date_End - Date_Start).TotalDays > 0 && (Date_End - Date_Start).TotalDays > 0 && Num > 0) {
+                OrderDetail_Function orderDetail_Function = new OrderDetail_Function();
+                OrderDetail ord_for_edit = db.OrderDetails.Where(x => x.Id == ord.Id).FirstOrDefault();
+                // Th1: Update các thông tin dịch vụ cũ.
+                if (ord_for_edit.Service.Id == service_id)
+                {
+
+                    OrderDetail ord_old = db.OrderDetails.Where(x => x.Id == ord.Id).FirstOrDefault();
+                    if (ord_old != null)
+                    {
+                        DateTime date_start = (DateTime)ord.OrderDetail_DateStart;
+                        DateTime date_end = (DateTime)ord.OrderDetail_DateEnd;
+
+                        // TH1: update đơn hàng chỉ thay đổi số lượng người thuê mà không thay đổi ngày bắt đầu - kết thúc nên có thể lấy đếm cả số lượng nhân viên đã gán cho đơn hàng trước đấy
+                        if ((int)((DateTime)ord_old.OrderDetail_DateStart - date_start).TotalDays == 0 && (int)((DateTime)ord_old.OrderDetail_DateEnd - date_end).TotalDays == 0)
+                        {
+                            List<Staff_OrderDetail> staff_OrderDetails = db.Staff_OrderDetail.Where(x => x.OrderDetail_Id == ord_old.Id).ToList();
+                            List<Staff> list_staff_free_before_edit = orderDetail_Function.Take_List_Staff_Free(ord_old.Service.Id, date_start, date_end);
+                            // Nếu số nhân viên đã được gán cho đơn hàng cũ + số nhân viên còn rảnh cho đơn hàng mới > số nhân viên update thì có thể update đơn hàng
+                            // Phải xóa các nhân viên cũ đã được gán cho đơn hàng cũ và tạo mới lại
+                            if ((list_staff_free_before_edit.Count + staff_OrderDetails.Count) >= ord.OrderDetail_NumberOfPeople)
+                            {
+                                foreach (var item in staff_OrderDetails)
                                 {
-                                    Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
-                                    new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
-                                    new_Staff_OrderDetail.Staff_Id = item2.Id;
-                                    new_Staff_OrderDetail.Date_Start = Date_Start;
-                                    new_Staff_OrderDetail.Date_End = Date_End;
-                                    db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
-                                    temp += 1;
-                                    if (temp == Number_Of_Employee)
+                                    db.Staff_OrderDetail.Remove(item);
+                                }
+                            }
+                            db.SaveChanges();
+                            List<Staff> list_staff_free_for_update = orderDetail_Function.Take_List_Staff_Free(ord_old.Service.Id, date_start, date_end);
+                            if (list_staff_free_for_update.Count >= ord.OrderDetail_NumberOfPeople)
+                            {
+                                OrderDetail _new_ord = new OrderDetail();
+                                _new_ord.OrderDetail_DateStart = date_start;
+                                _new_ord.OrderDetail_DateEnd = date_end;
+                                _new_ord.OrderDetail_Status = 0;
+                                _new_ord.OrderDetail_NumberOfPeople = ord.OrderDetail_NumberOfPeople;
+                                _new_ord.Service = ord_old.Service;
+                                _new_ord.Order = ord_old.Order;
+
+                                Order order = ord_old.Order;
+                                order.Order_TotalCost = order.Order_TotalCost - (ord_old.Service.Service_Price * ord_old.OrderDetail_NumberOfPeople * (int)((DateTime)ord_old.OrderDetail_DateEnd - (DateTime)ord_old.OrderDetail_DateStart).TotalDays);
+                                order.Order_TotalCost = order.Order_TotalCost + (_new_ord.Service.Service_Price * _new_ord.OrderDetail_NumberOfPeople * (int)((DateTime)_new_ord.OrderDetail_DateEnd - (DateTime)_new_ord.OrderDetail_DateStart).TotalDays);
+                                db.OrderDetails.Add(_new_ord);
+                                db.OrderDetails.Remove(ord_old);
+                                int count = 0;
+                                foreach (var item in list_staff_free_for_update)
+                                {
+                                    Staff_OrderDetail staff_OrderDetail = new Staff_OrderDetail();
+                                    staff_OrderDetail.Date_Start = date_start;
+                                    staff_OrderDetail.Date_End = date_end;
+                                    staff_OrderDetail.OrderDetail_Id = _new_ord.Id;
+                                    staff_OrderDetail.Staff_Id = item.Id;
+                                    db.Staff_OrderDetail.Add(staff_OrderDetail);
+                                    count += 1;
+                                    if (count == ord.OrderDetail_NumberOfPeople)
                                     {
                                         break;
                                     }
                                 }
-                                if (temp < Number_Of_Employee)
-                                {
-                                    foreach (var item3 in list_Staff_free)
-                                    {
-                                        Staff_OrderDetail new_Staff_OrderDetail = new Staff_OrderDetail();
-                                        new_Staff_OrderDetail.OrderDetail_Id = new_OrderDetail.Id;
-                                        new_Staff_OrderDetail.Staff_Id = item3.Id;
-                                        new_Staff_OrderDetail.Date_Start = Date_Start;
-                                        new_Staff_OrderDetail.Date_End = Date_End;
-                                        db.Staff_OrderDetail.Add(new_Staff_OrderDetail);
-                                        temp += 1;
-                                        if (temp == Number_Of_Employee)
-                                        {
-                                            break;
-                                        }
-                                    }
-                                }
-
                                 db.SaveChanges();
                             }
-
                             else
                             {
-                                return Json("The Employee is greater than our Staff", JsonRequestBehavior.AllowGet);
+                                return Json("The Staff is not sufficient for this order !", JsonRequestBehavior.AllowGet);
                             }
                         }
+                        // TH2: Update đơn hàng thay đổi ngày bắt đầu và kết thúc nên không thể tính cả các nhân viên đã được gán cho đơn hàng trước đấy
                         else
                         {
-                            return Json("The Employee is greater than our Staff", JsonRequestBehavior.AllowGet);
+                            List<Staff> list_staff_free_for_update = orderDetail_Function.Take_List_Staff_Free(ord_old.Service.Id, date_start, date_end);
+                            if (list_staff_free_for_update.Count >= ord.OrderDetail_NumberOfPeople)
+                            {
+                                List<Staff_OrderDetail> staff_OrderDetails_old = db.Staff_OrderDetail.Where(x => x.OrderDetail_Id == ord.Id).ToList();
+                                foreach (var item in staff_OrderDetails_old)
+                                {
+                                    db.Staff_OrderDetail.Remove(item);
+                                }
+                                OrderDetail _new_ord = new OrderDetail();
+                                _new_ord.OrderDetail_DateStart = date_start;
+                                _new_ord.OrderDetail_DateEnd = date_end;
+                                _new_ord.OrderDetail_Status = 0;
+                                _new_ord.OrderDetail_NumberOfPeople = ord.OrderDetail_NumberOfPeople;
+                                _new_ord.Service = ord_old.Service;
+                                _new_ord.Order = ord_old.Order;
+
+                                Order order = ord_old.Order;
+                                order.Order_TotalCost = order.Order_TotalCost - (ord_old.Service.Service_Price * ord_old.OrderDetail_NumberOfPeople * (int)((DateTime)ord_old.OrderDetail_DateEnd - (DateTime)ord_old.OrderDetail_DateStart).TotalDays);
+                                order.Order_TotalCost = order.Order_TotalCost + (_new_ord.Service.Service_Price * _new_ord.OrderDetail_NumberOfPeople * (int)((DateTime)_new_ord.OrderDetail_DateEnd - (DateTime)_new_ord.OrderDetail_DateStart).TotalDays);
+                                db.OrderDetails.Add(_new_ord);
+                                db.OrderDetails.Remove(ord_old);
+                                int count = 0;
+                                foreach (var item in list_staff_free_for_update)
+                                {
+                                    Staff_OrderDetail staff_OrderDetail = new Staff_OrderDetail();
+                                    staff_OrderDetail.Date_Start = date_start;
+                                    staff_OrderDetail.Date_End = date_start;
+                                    staff_OrderDetail.OrderDetail_Id = _new_ord.Id;
+                                    staff_OrderDetail.Staff_Id = item.Id;
+                                    db.Staff_OrderDetail.Add(staff_OrderDetail);
+                                    count += 1;
+                                    if (count == ord.OrderDetail_NumberOfPeople)
+                                    {
+                                        break;
+                                    }
+                                }
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                return Json("The Staff is not sufficient for this order !", JsonRequestBehavior.AllowGet);
+                            }
                         }
                     }
+                    else
+                    {
+                        return Json(404, JsonRequestBehavior.AllowGet);
+                    }
+                    return Json("Update successfully", JsonRequestBehavior.AllowGet);
+                }
+                // Th2: Update thành dịch vụ mới
+                else
+                {
+                    DateTime date_start = (DateTime)ord.OrderDetail_DateStart;
+                    DateTime date_end = (DateTime)ord.OrderDetail_DateEnd;
+                    int NumberOfPeople = (int)ord.OrderDetail_NumberOfPeople;
+                    List<Staff> list_staff_free = orderDetail_Function.Take_List_Staff_Free(service_id, date_start, date_end);
+                    if (list_staff_free.Count >= NumberOfPeople)
+                    {
+                        List<Staff_OrderDetail> staff_OrderDetails = db.Staff_OrderDetail.Where(x => x.OrderDetail_Id == ord.Id).ToList();
+                        foreach (var item in staff_OrderDetails)
+                        {
+                            db.Staff_OrderDetail.Remove(item);
+                        }
+                        OrderDetail ord_old = db.OrderDetails.Where(x => x.Id == ord.Id).FirstOrDefault();
+                        Order order = ord_old.Order;
+                        order.Order_TotalCost = order.Order_TotalCost - (ord_old.Service.Service_Price * ord_old.OrderDetail_NumberOfPeople * (int)((DateTime)ord_old.OrderDetail_DateEnd - (DateTime)ord_old.OrderDetail_DateStart).TotalDays);
+                        db.OrderDetails.Remove(ord_old);
+
+                        OrderDetail new_ord = new OrderDetail();
+                        new_ord.OrderDetail_Status = 0;
+                        new_ord.OrderDetail_DateStart = date_start;
+                        new_ord.OrderDetail_DateEnd = date_end;
+                        new_ord.OrderDetail_NumberOfPeople = NumberOfPeople;
+                        new_ord.Order = order;
+                        Service service = db.Services.Where(x => x.Id == service_id).FirstOrDefault();
+                        new_ord.Service = service;
+                        db.OrderDetails.Add(new_ord);
+                        order.Order_TotalCost = order.Order_TotalCost + (new_ord.Service.Service_Price * new_ord.OrderDetail_NumberOfPeople * (int)((DateTime)new_ord.OrderDetail_DateEnd - (DateTime)new_ord.OrderDetail_DateStart).TotalDays);
+                        int count = 0;
+                        foreach (var item in list_staff_free)
+                        {
+                            Staff_OrderDetail staff_OrderDetail = new Staff_OrderDetail();
+                            staff_OrderDetail.Date_Start = date_start;
+                            staff_OrderDetail.Date_End = date_end;
+                            staff_OrderDetail.OrderDetail_Id = new_ord.Id;
+                            staff_OrderDetail.Staff_Id = item.Id;
+                            db.Staff_OrderDetail.Add(staff_OrderDetail);
+                            count += 1;
+                            if (count == ord.OrderDetail_NumberOfPeople)
+                            {
+                                break;
+                            }
+                        }
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        return Json("The Staff is not sufficient for this order !", JsonRequestBehavior.AllowGet);
+                    }
+                    return Json("Update successfully", JsonRequestBehavior.AllowGet);
                 }
             }
-
-            Session["OrderDetail"] = null;
-            return Json("Create Order Successfully", JsonRequestBehavior.AllowGet);
+            return Json(404, JsonRequestBehavior.AllowGet);
 
         }
-
         public ActionResult OrderIndex()
         {
             List<OrderDetail> list_ord = (List<OrderDetail>)Session["OrderDetail"];
@@ -579,6 +447,45 @@ namespace _ExcellOn_.Controllers
             Session["OrderDetail"] = list_ord;
             return Json(cost_remove, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public ActionResult PaymentWithPaypal()
+        {
+            return View();
+        }
+
+        public JsonResult PayPal(Banking request)
+        {
+            if (request != null)
+            {
+                Banking new_banking = new Banking();
+                new_banking.Status = 0;
+                new_banking.Deleted = 0;
+                Customer _cus = db.Customers.Where(x => x.Id == request.CustomerId).FirstOrDefault();
+                if (_cus != null)
+                {
+                    new_banking.Customer = _cus;
+                }
+                Order or = db.Orders.Where(x => x.Id == request.OrderId).FirstOrDefault();
+                List<OrderDetail> ord = db.OrderDetails.Where(x => x.OrdersId == or.Id).ToList();
+                if (or != null)
+                {
+                    or.Order_Status = 99; // Status Ready
+                    if (ord != null)
+                    {
+                        foreach (var item in ord) {
+                            item.OrderDetail_Status = 99;
+                        }
+                    }
+                    new_banking.Order = or;
+                }
+                new_banking.Money = request.Money;
+                new_banking.DateCreate = DateTime.Now;
+                db.Bankings.Add(new_banking);
+                db.SaveChanges();
+                return Json("Update successfully", JsonRequestBehavior.AllowGet);
+            }
+            return Json(404, JsonRequestBehavior.AllowGet);
         }
     }
 }

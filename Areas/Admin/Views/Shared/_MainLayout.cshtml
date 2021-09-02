@@ -18,16 +18,28 @@
     <link href="~/Areas/Admin/Public/css/argon.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="~/Areas/Admin/Public/css/onTop.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/panel.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Public/css/OnLoad.css" rel="stylesheet" />
+    
+
     @RenderSection("css", false)
 </head>
 
 <body>
+
+    @*<div class="loader">
+            <span class="fas fa-spinner xoay icon"></span>
+        </div>*@
+
+    <div class="load">
+        <img src="~/Public/Image/loader.gif">
+    </div> 
     <!-- Sidenav -->
     @RenderPage("_SidenavLayout.cshtml")
     <!-- Main content -->
     <div class="main-content" id="ducdz">
         @RenderPage("_TopnavLayout.cshtml")
-        
+
         @RenderBody()
 
         <footer class="footer pt-0" style="padding:50px 50px 30px 50px;margin-top: 50px">
@@ -40,16 +52,16 @@
                 <div class="col-lg-6">
                     <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                         <li class="nav-item">
-                            <a class="nav-link" >Excell On Team</a>
+                            <a class="nav-link">Excell On Team</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" >About Us</a>
+                            <a class="nav-link">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" >Blog</a>
+                            <a class="nav-link">Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" >MIT License</a>
+                            <a class="nav-link">MIT License</a>
                         </li>
                     </ul>
                 </div>
@@ -81,63 +93,11 @@
             });
             $('.' + page).addClass("active");
         });
-        function _Profile() {
-            $(location).attr("href", "/Admin/UserManagement/MyProfile");
+
+        function _Redirect(url) {
+            $(location).attr("href", url);
         }
-        function _Logout() {
-            $(location).attr("href", "/Admin/User/Logout");
-        }
-        function _Dashboard() {
-            $(location).attr("href", "/Admin/AdminHome/DashboardIndex");
-        }
-        function _Customer() {
-            $(location).attr("href", "/Admin/CustomerManagement/CustomerIndex");
-        }
-        function _Company() {
-            $(location).attr("href", "/Admin/CompanyManagement/CompanyIndex");
-        }
-        function _Service() {
-            $(location).attr("href", "/Admin/ServiceManagement/ServiceIndex");
-        }
-        function _Service2() {
-            $(location).attr("href", "/Admin/ServiceManagement/ServiceIndex2");
-        }
-        function _Image() {
-            $(location).attr("href", "/Admin/ImageManagement/ImageIndex");
-        }
-        function _Staff() {
-            $(location).attr("href", "/Admin/StaffManagement/StaffIndex");
-        }
-        function _Authorize() {
-            $(location).attr("href", "/Admin/RoleManagement/RoleIndex");
-        }
-        function _UserManagement() {
-            $(location).attr("href", "/Admin/UserManagement/UserIndex");
-        }
-        function _Register() {
-            $(location).attr("href", "/Admin/UserManagement/AddUser");
-        }
-        function _Order() {
-            $(location).attr("href", "/Admin/OrderManagement/OrderIndex");
-        }
-        function _Cus_In_Order() {
-            $(location).attr("href", "/Admin/CustomerManagement/CustomerInOrderIndex");
-        }
-        function _Order_Pending() {
-            $(location).attr("href", "/Admin/OrderManagement/Filter2?OrderStatus=0");
-        }
-        function _Order_Started() {
-            $(location).attr("href", "/Admin/OrderManagement/Filter2?OrderStatus=1");
-        }
-        function _Order_Completed() {
-            $(location).attr("href", "/Admin/OrderManagement/Filter2?OrderStatus=2");
-        }
-        function _Staff_In_Working() {
-            $(location).attr("href", "/Admin/StaffManagement/StaffInWorkingIndex");
-        }
-        function _Staff_Free() {
-            $(location).attr("href", "/Admin/StaffManagement/StaffFreeIndex");
-        }
+
         function _HideShowNav() {
             $('.sidenav').toggle("fast", function () {
                 if ($('.sidenav').is(":visible") == false) {
@@ -163,6 +123,13 @@
         function topFunction() {
             $('html, body').animate({ scrollTop: 0 }, 'slow');
         }
+    </script>
+    <script type="text/javascript">
+        $(window).on('load', function (event) {
+            $('body').removeClass('preloading');
+            $('.load').delay(80).fadeOut('fast');
+            /*           $('.loader').delay(1000).fadeOut('fast');*/
+        });
     </script>
     @RenderSection("js", false)
 </body>

@@ -1,6 +1,6 @@
 ﻿<!-- customers section -->
 
-    @model List<_ExcellOn_.Models.Customer>
+@model List<_ExcellOn_.Models.Customer>
 
 <section class="w3l-customer-block py-5">
     <div class="container py-md-5 py-4">
@@ -12,30 +12,35 @@
             </div>
         </div>
         <div class="row">
-        @if (Model!=null) {
-            foreach (var cus in Model.Take(3))
+            @if (Model != null)
             {
+                foreach (var cus in Model.Take(3))
+                {
 
 
-<div class="col-md-4 mt-md-0 mt-5">
-                    <div class="customer-single pr-lg-4">
-                        <blockquote style="min-height: 120px">
-                            @if (cus.Customer_Comment != null)
-                            {
-                            <span>@cus.Customer_Comment.Substring(0, 100).....</span>
-                            }
-                        </blockquote>
-                        <div class="customer-img d-flex align-items-center mt-4">
-                            <img src="@cus.Customer_Avatar" style="width:100px;height: 100px" class="img-fluid mr-3" alt="" />
-                            <div class="customer-info">
-                                <h6 style="font-size:1.3rem">@cus.Customer_Name</h6>
-                                <small class="mb-0" style="font-size: 0.9rem">@cus.Customer_Email</small>
+                    <div class="col-md-4 mt-md-0 mt-5">
+                        <div class="customer-single pr-lg-4">
+                            <blockquote style="padding: 10px 20px; margin: 0 0 20px; border-left: 5px solid #eeeeee; min-height: 140px">
+                                @if (cus.Customer_Comment != null)
+                                {
+                                    if (cus.Customer_Comment.Length >= 100)
+                                    {
+                                        <span>@cus.Customer_Comment.Substring(0, 100)....</span>
+                                    }
+
+                                }
+                            </blockquote>
+                            <div class="customer-img d-flex align-items-center mt-4">
+                                <img src="@cus.Customer_Avatar" style="width:100px;height: 100px" class="img-fluid mr-3" alt="" />
+                                <div class="customer-info">
+                                    <h6 style="font-size:1.3rem">@cus.Customer_Name</h6>
+                                    <small class="mb-0" style="font-size: 0.9rem">@cus.Customer_Email</small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             }
-    }
 
         </div>
     </div>

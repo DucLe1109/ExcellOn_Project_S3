@@ -63,10 +63,10 @@
                             @foreach (var item in Model)
                             {
                                 <tr style="height: 60px">
-                                    <td >@item.Id</td>
-                                    <td >@item.Order_DateCreate</td>
-                                    <td >@item.Order_Description</td>
-                                    <td >$ @item.Order_TotalCost</td>
+                                    <td>@item.Id</td>
+                                    <td>@item.Order_DateCreate</td>
+                                    <td>@item.Order_Description</td>
+                                    <td>$ @item.Order_TotalCost</td>
                                     <td style="font-size: 1rem;">
                                         @*<span class="status text-success">&bull;</span>@item.OrderDetail_Status*@
                                         @if (item.Order_Status == 0)
@@ -74,6 +74,12 @@
 
                                             <i class="fa fa-circle" style="color: blueviolet;margin-right: 8px;font-size:0.6rem"></i>
                                             <span> Pending </span>
+                                        }
+                                        else if (item.Order_Status == 99)
+                                        {
+
+                                            <i class="fa fa-circle" style="color: blueviolet;margin-right: 8px;font-size:0.6rem"></i>
+                                            <span> Ready </span>
                                         }
                                         else if (item.Order_Status == 1)
                                         {
@@ -111,6 +117,7 @@
 </div>
 
 @section js{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#table_OrderList').DataTable({

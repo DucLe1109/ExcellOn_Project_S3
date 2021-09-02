@@ -32,7 +32,10 @@
         <AssociationConnector Association="Model.FK__UserRole__UserId__0E04126B" />
         <AssociationConnector Association="Model.FK__Orders__Customer__5F492382" />
         <EntityTypeShape EntityType="Model.MyCompany" Width="1.5" PointX="10.375" PointY="5.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="Model.Banking" Width="1.5" PointX="15.25" PointY="4.625" />
+        <AssociationConnector Association="Model.FK__Banking__Custome__370627FE" />
+        <AssociationConnector Association="Model.FK__Banking__OrderId__361203C5" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

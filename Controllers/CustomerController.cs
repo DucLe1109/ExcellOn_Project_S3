@@ -33,6 +33,15 @@ namespace _ExcellOn_.Controllers
                     newCustomer.Customer_Email = modelSignUp.Email;
                     newCustomer.Customer_Phone = modelSignUp.Telephone;
                     newCustomer.Customer_Name = modelSignUp.FullName;
+                    newCustomer.Customer_Gender = modelSignUp.Gender;
+                    if (modelSignUp.Gender == 1)
+                    {
+                        newCustomer.Customer_Avatar = "/Public/Image/a19.jfif";
+                    }
+                    else
+                    {
+                        newCustomer.Customer_Avatar = "/Public/Image/a17.jfif";
+                    }
                     newCustomer.Customer_Password = BCrypt.Net.BCrypt.HashPassword(modelSignUp.Password);
 
                     newCustomer.Customer_Email = modelSignUp.Email;

@@ -9,16 +9,17 @@
                 <h6 class="h2 d-inline-block mb-0">Customer Management</h6>
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                        <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                        <li class="breadcrumb-item"><a href="/Admin/CustomerManagement/CustomerIndex"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="/Admin/CustomerManagement/CustomerIndex">Tables</a></li>
                     </ol>
                 </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
                 @if (list_permission.Contains("Customer_Add") || list_role.Contains("Admin"))
                 {
-    <a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#myModal1">Add New</a>}
+                    <a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#myModal1">Add New</a>}
                 <a href="#" class="btn btn-sm btn-neutral" id="popupsend" name="popupsend" data-toggle="modal" data-target="#sendEmailModal">Send Email</a>
+                <a style="font-size: 1.3rem" class="btn btn-sm btn-neutral" href="/Admin/CustomerManagement/CustomerDeletedIndex"> <i class="fa fa-trash"> </i> </a>
                 <a class="btn btn-sm btn-neutral" href="/Admin/CustomerManagement/CustomerIndex">Reload</a>
             </div>
         </div>
@@ -65,7 +66,7 @@
                                     <label>Comment</label>
                                     <textarea id="Customer_Comment" class="form-control"></textarea>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -144,45 +145,45 @@
 
     @using (Html.BeginForm("SendEmail", "CustomerManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-<input id="toEmail" type="text" value="" style="display: none" />
-                <div class="modal fade" id="sendEmailModal" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content" style="width: 150%">
-                            <div class="modal-header">
-                                <h2 class="modal-title" id="myModalLabel">New Email</h2>
-                                <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-12" style="display:none">
-                                        <div class="form-group">
-                                            @Html.TextBoxFor(model => model.To, new { @class = "form-control", required = "required" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Titile</label>
-                                            @Html.TextBoxFor(model => model.Subject, new { @class = "form-control", required = "required" })
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Content</label>
-                                            @Html.TextAreaFor(model => model.Body, new { cols = "5", rows = "6", @class = "form-control", required = "required" })
-                                        </div>
-                                    </div>
-                                    <div class="mx-auto">
-                                        <div class="loader" style="display:none"></div>
-                                    </div>
+        <div class="modal fade" id="sendEmailModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 150%">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="myModalLabel">New Email</h2>
+                        <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12" style="">
+                                <div class="form-group">
+                                    <label>Send to</label>
+                                    @Html.TextAreaFor(model => model.To, new { @class = "form-control", required = "required" })
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" id="send_email" onclick="return _send()" class="btn btn-primary">Send Email</button>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Titile</label>
+                                    @Html.TextBoxFor(model => model.Subject, new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Content</label>
+                                    @Html.TextAreaFor(model => model.Body, new { cols = "5", rows = "6", @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                            <div class="mx-auto">
+                                <div class="loader" style="display:none"></div>
                             </div>
                         </div>
                     </div>
-                </div>}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" id="send_email" onclick="return _send()" class="btn btn-primary">Send Email</button>
+                    </div>
+                </div>
+            </div>
+        </div>}
 
     <div class="row">
         <div class="col-xl-12">
@@ -213,44 +214,48 @@
                         {
                             foreach (var item in ViewBag.list_customer)
                             {
-            <tr>
-                <td><input onclick="checkItem(this)" type="checkbox" name="sendEmail" value="@item.Customer_Email" /></td>
-                <th>
-                    <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="@item.Customer_Avatar">
-                    </a>
-                </th>
-                <td>
-                    @item.Customer_Name
-                </td>
-                <td>
-                    <span>@(item.Customer_Gender == 1? "Female" : "Male")</span>
-                </td>
-                <td>
-                    <span class="badge badge-dot mr-4">
-                        <i class="bg-warning"></i>
-                        <span class="status">@item.Customer_Phone</span>
-                    </span>
-                </td>
-                <td>
-                    @item.Customer_Email
-                </td>
-                <td>
-                    @item.Customer_Comment
-                </td>
-                <td class="text-right">
-                    <div class="dropdown">
-                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            @if (list_permission.Contains("Customer_Edit") || list_role.Contains("Admin"))
-                            {
-        <a class="dropdown-item" data-toggle="modal" data-target="#myModal2" href="#" onclick="return _GetById(@item.Id)">Edit</a>}
-                        </div>
-                    </div>
-                </td>
-            </tr>}
+                                <tr>
+                                    <td><input onclick="checkItem(this)" type="checkbox" name="sendEmail" value="@item.Customer_Email" /></td>
+                                    <th>
+                                        <a href="#" class="avatar rounded-circle">
+                                            <img alt="Image placeholder" src="@item.Customer_Avatar">
+                                        </a>
+                                    </th>
+                                    <td>
+                                        <span id="Customer_Name_@item.Id">@item.Customer_Name</span>
+                                    </td>
+                                    <td>
+                                        <span id="Customer_Gender_@item.Id">@(item.Customer_Gender == 1? "Female" : "Male")</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-dot mr-4">
+                                            <i class="bg-warning"></i>
+                                            <span class="status" id="Customer_Phone_@item.Id">@item.Customer_Phone</span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span id="Customer_Email_@item.Id">@item.Customer_Email</span>
+                                    </td>
+                                    <td>
+                                        <span id="Customer_Comment_@item.Id">@item.Customer_Comment</span>
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                @if (list_permission.Contains("Customer_Edit") || list_role.Contains("Admin"))
+                                                {
+                                                    <a class="dropdown-item" data-toggle="modal" data-target="#myModal2" href="#" id="Edit_Row_@item.Id" onclick="return _GetById(@item.Id)">Edit</a>}
+                                                @if (list_permission.Contains("Customer_Delete") || list_role.Contains("Admin"))
+                                                {
+                                                    <a class="dropdown-item" id="@item.Id" onclick="return _Delete(@item.Id)">Delete</a>}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+}
                         }
                     </tbody>
                 </table>
@@ -286,149 +291,6 @@
     </script>
 
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
-    <script type="text/javascript">
-        function _send() {
-            if ($('#Subject').val() != "" && $('#Body').val() != "" && $('#To').val() != "") {
-                $('.loader').show();
-            } else {
-                alert("May be some information is null !");
-            }
-            
-        }
-        function check_uncheck_checkbox(isChecked) {
-            if (isChecked) {
-                $('input[name="sendEmail"]').each(function () {
-                    this.checked = true;
-                });
-            } else {
-                $('input[name="sendEmail"]').each(function () {
-                    this.checked = false;
-                });
-            }
-            checkItem();
-        }
-
-        function checkItem() {
-            //var isCheck = $(el).is(':checked');
-            var lstEmail = "";
-            var lstChecked = document.querySelectorAll('#lstCustomer input:checked');
-            [...lstChecked].map((elm, idx) => {
-                lstEmail += `${$(elm).val()},`;
-            })
-            $('#toEmail').val(lstEmail.slice(0, -1));
-
-            $("#popupsend").click(function () {
-                $("#To").val(lstEmail.slice(0, -1));
-            });
-        }
-
-        function _Add() {
-            var gender = $('#Customer_Gender option:selected');
-           
-            $('.block_loader').show();
-            var customerObj = {
-                Customer_Name: $('#Customer_Name').val(),
-                Customer_Gender: gender.val(),
-                Customer_Comment: $('#Customer_Comment').val(),
-                Customer_Phone: $('#Customer_Phone').val(),
-                Customer_Email: $('#Customer_Email').val()
-            }
-            $.ajax({
-                url: "/Admin/CustomerManagement/Add",
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify(customerObj),
-                type: "POST",
-                dataType: "json",
-                success: function (data) {
-                    window.location.href = data;
-                },
-                error: function (errormessage) {
-                    alert("Add Unsuccessfully !");
-                }
-
-            });
-        }
-
-        function _GetById(CustomerId) {
-            $.ajax({
-                url: "/Admin/CustomerManagement/GetById?CustomerId=" + CustomerId,
-                contentType: "application/json;charset=utf-8",
-                type: "GET",
-                dataType: "json",
-                success: function (result) {
-                    $('#Customer_Name_edit').val(result.Customer_Name);
-                    $('#Customer_Phone_edit').val(result.Customer_Phone);
-                    $('#Customer_Email_edit').val(result.Customer_Email);
-                    $('#Customer_Gender_edit').val(result.Customer_Gender).change();
-                    $('#Customer_Comment_edit').val(result.Customer_Comment);
-                    $('#Id_edit').val(result.Id);
-                },
-                error: function () {
-                    alert("Error");
-                }
-            });
-        }
-
-        function _Update() {
-            var gender = $('#Customer_Gender_edit option:selected');            
-            $('.block_loader').show();
-            var customerObj = {
-                Id: $('#Id_edit').val(),
-                Customer_Name: $('#Customer_Name_edit').val(),
-                Customer_Phone: $('#Customer_Phone_edit').val(),
-                Customer_Email: $('#Customer_Email_edit').val(),
-                Customer_Gender: gender.val(),
-                Customer_Comment: $('#Customer_Comment_edit').val()
-            }
-            console.log($('#Customer_Comment_edit').text());
-            $.ajax({
-                url: "/Admin/CustomerManagement/Update",
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify(customerObj),
-                type: "POST",
-                dataType: "json",
-                success: function (data) {
-                    window.location.href = data;
-                },
-                error: function (errormessage) {
-                    alert("Update Unsuccessfully !");
-                }
-
-            });
-        }
-
-        //function _Delete(CustomerId) {
-        //    Swal.fire({
-        //        title: 'Are you sure?',
-        //        text: "You won't be able to revert this!",
-        //        icon: 'warning',
-        //        showCancelButton: true,
-        //        confirmButtonColor: '#3085d6',
-        //        cancelButtonColor: '#d33',
-        //        confirmButtonText: 'Yes, delete it!'
-        //    }).then((result) => {
-        //        if (result.isConfirmed) {
-        //            $.ajax({
-        //                url: "/Admin/CustomerManagement/Delete?CustomerId=" + CustomerId,
-        //                contentType: "application/json;charset=utf-8",
-        //                type: "GET",
-        //                dataType: "json",
-        //                success: function (result) {
-        //                    $('#' + CustomerId).parent().parent().parent().parent().remove();
-        //                    Swal.fire(
-        //                        'Deleted!',
-        //                        'Your file has been deleted.',
-        //                        'success'
-        //                    )
-        //                },
-        //                error: function () {
-        //                    alert("Error !");
-        //                }
-        //            });
-
-        //        }
-        //    });
-        //}
-    </script>
+    <script src="~/Areas/Admin/Script_HuyDuc/Customer/Customer.js"></script>
 
 }

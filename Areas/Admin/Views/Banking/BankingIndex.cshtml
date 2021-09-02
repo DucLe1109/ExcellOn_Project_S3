@@ -1,0 +1,103 @@
+﻿
+@{ List<string> list_permission = (List<string>)Session["ListPermission"];
+    List<string> list_role = (List<string>)Session["ListRole"];
+    List<_ExcellOn_.Models.Banking> list_banking = ViewBag.list_banking;
+    float total = 0;
+    foreach (var item in list_banking) {
+        total += (float)item.Money;
+    }
+    var _total = string.Format("{0:0,0}", total);
+}
+@{
+    ViewBag.Title = "BankingIndex";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="container" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+    <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+                <h6 class="h2 d-inline-block mb-0">Banking Acoount Management</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item"><a href="/Admin/Banking/BankingIndex"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="/Admin/Banking/BankingIndex">Tables</a></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+                <a style="font-size: 1.3rem" class="btn btn-sm btn-neutral" href="/Admin/Banking/BankingDeletedIndex"> <i class="fa fa-trash"> </i> </a>
+                <a class="btn btn-sm btn-neutral" href="/Admin/Banking/BankingIndex">Reload</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 50px">
+    <div class="panel panel-info" style="min-height: 220px">
+        <div class="panel-heading" style="padding: 15px">
+            <form method="post" action="/Admin/Banking/Filter">
+                <div class="row">
+                    <div class="col-4">
+                        <label style="font-weight: 600">Date Start</label>
+                        <input value="@Request["Start"]" type="text" name="Start" class="form-control" style="height: 40px;font-weight: 600" id="Start" />
+                    </div>
+                    <div class="col-4">
+                        <label style="font-weight: 600">Date End</label>
+                        <input value="@Request["End"]" type="text" name="End" style="height: 40px;font-weight: 600" class="form-control" id="End" />
+                    </div>
+                    <div class="col-2">
+                        <label style="font-weight: 600">Total</label>
+                        <input value="$ @string.Format("{0:0,0}", total)"  type="text" readonly style="height: 40px;background-color: white;font-weight: 600" class="form-control" id="Total" />
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-success" style="float: right; margin-top: 1.9rem;margin-right: 0.6rem"> <i class="fa fa-filter" style="margin-right: 10px"> </i>Filter </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="cell-border text-center align-items-center table-flush " id="table_banking">
+                    <thead>
+                        <tr>
+                            <th class="list_item"><strong>Order Code</strong></th>
+                            <th class="list_item"><strong>Date Create</strong></th>
+                            <th class="list_item"><strong>Customer</strong></th>
+                            <th class="list_item"><strong>Money</strong></th>
+                            <th class="list_item"><strong>Action</strong></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (list_banking != null)
+                        {
+                            foreach (var item in list_banking)
+                            {
+                                <tr>
+                                    <td>@item.Order.Id</td>
+                                    <td>@item.DateCreate.Value.ToString("dd/MMM/yyyy")</td>
+                                    <td>@item.Customer.Customer_Name</td>
+                                    <td>@string.Format("{0:0,0}", item.Money)</td>
+                                    <td><span onclick="return _Delete(@item.Id)" id="@item.Id" class="btn" style="padding: 5px 8px;font-size: 1.2rem"><i class="fa fa-trash"></i></span></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <link href="~/Areas/Admin/Public/DataTable/pagination.css" rel="stylesheet" />
+}
+@section js{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="~/Areas/Admin/Script_HuyDuc/Banking/ManageBanking.js"></script>
+}

@@ -59,6 +59,9 @@
                         {
                             <div class="col-2" style="font-size: 1.2rem">@Model.Count items</div>
                         }
+                        <div class="col-7" style="float:right">
+                            <a href="/Admin/ServiceManagement/ServiceIndex" style="float:right;margin-top: 0px!important;width:30%;border-radius: 8px;font-weight: 600;font-size: 0.8rem" class="btn btn-info">Back</a>
+                        </div>
                     </div>
                 </div>
                 @{
@@ -135,7 +138,7 @@
                                     </div>
                                     <div class="col-12">
                                         <label>Description</label>
-                                        <textarea class="form-control" id="Customer_Description" ></textarea>
+                                        <textarea class="form-control" id="Customer_Description"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +169,7 @@
                                     </div>
                                     <div class="col-12">
                                         <label>Description</label>
-                                        <textarea class="form-control" id="Company_Description" > </textarea>
+                                        <textarea class="form-control" id="Company_Description"> </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -206,77 +209,7 @@
         </div>
     </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript">
-        var count = 0;
-        function _remove(ID) {
-            $.ajax({
-                url: "/Customer2/RemoveItem?OrderDetail_ID=" + ID,
-                contentType: "application/json;charset=utf-8",
-                type: "GET",
-                dataType: "json",
-                success: function (result) {
-                    $('#' + ID).parent().parent().remove();
-                    $('.total_cost').val($('.total_cost').val() - result);
-                },
-                error: function () {
-
-                }
-            });
-        }
-        function _GiveCode() {
-            var a = ($('#code').val() == "huyducdeptrai");
-            if (a && count < 2 && count != 1) {
-                var total_cost = parseInt($('._total_cost').text());
-                total_cost = total_cost - total_cost * 0.01;
-                $('.total_cost').text(total_cost);
-                $('#discount').show();
-                count += 1;
-            }
-            var b = ($('#code').val() == "huyducratdeptrai");
-            if (b && count < 2 && count != 1) {
-                var total_cost = parseInt($('._total_cost').text());
-                total_cost = total_cost - total_cost * 0.03;
-                $('.total_cost').text(total_cost);
-                $('#discount2').show();
-                count += 1;
-            }
-            //if () {
-            //
-            //}
-        }
-        function _CheckOut() {
-            var gender_selected = $('select option:selected');
-            var Customer_Gender = parseInt(gender_selected.val());
-            var data = {
-                total_cost: parseInt($('.total_cost').text()),
-                Customer_Description: $('#Customer_Description').val(),
-                Company_Description: $('#Company_Description').val(),
-                Company_Name: $('#Company_Name').val(),
-                Company_Phone: $('#Company_Phone').val(),
-                Company_Email: $('#Company_Email').val(),
-                Company_Address: $('#Company_Address').val(),
-                Customer_Name: $('#Customer_Name').val(),
-                Customer_Phone: $('#Customer_Phone').val(),
-                Customer_Email: $('#Customer_Email').val(),
-                Customer_Gender: Customer_Gender
-            };
-            console.log(data);
-            $.ajax({
-                url: "/Admin/OrderManagement/SubmitOrder",
-                contentType: "application/json;charset=utf-8",
-                type: "GET",
-                data: data,
-                dataType: "json",
-                success: function (result) {
-                    alert("Create Successful !")
-                    history.go(-1);
-                },
-                error: function (e) {
-                    console.log(e);
-                }
-            });
-        }
-    </script>
+    <script src="~/Areas/Admin/Script_HuyDuc/Order/CreateOrder.js"></script>
 </body>
 </html>
 

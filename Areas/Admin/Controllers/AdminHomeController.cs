@@ -13,18 +13,41 @@ namespace _ExcellOn_.Areas.Admin.Controllers
     {
         private Entities db = new Entities();
         // GET: Admin/Home
-        [HasPermission(Permission ="Admin")]
+        [HasPermission(Permission ="Home_Dashboard")]
         public ActionResult DashboardIndex()
         {
+            List<Order> list_order_is_comming_start = new List<Order>();
+            List<Order> list_order_is_comming_expire = new List<Order>();
+            DateTime today = DateTime.Now;
+            DateTime future = today.AddDays(100);
+
+            List<OrderDetail> list_ord = db.OrderDetails.Where(x => x.OrderDetail_Status != 3).ToList();
+            foreach (var item in list_ord)
+            {
+                DateTime date_start = (DateTime)item.OrderDetail_DateStart;
+                DateTime date_end = (DateTime)item.OrderDetail_DateEnd;
+                if ( (date_start - today).TotalDays <= 3 && (date_start - today).TotalDays > 0)
+                {
+                    if (list_order_is_comming_start.Contains(item.Order) == false)
+                    {
+                        list_order_is_comming_start.Add(item.Order);
+                    }
+                }else if ((date_end - today).TotalDays <= 3 && (date_end - today).TotalDays > 0)
+                {
+                    if (list_order_is_comming_expire.Contains(item.Order) == false)
+                    {
+                        list_order_is_comming_expire.Add(item.Order);
+                    }
+                }
+            }
+
             OrderDetail_Function orderDetail_Function = new OrderDetail_Function();
+            List<Order> list_order_ready = db.Orders.Where(x => x.Order_Status == 99).ToList();
             List<Order> list_order_completed = db.Orders.Where(x=>x.Order_Status == 2).ToList();
             List<Order> list_order_started = db.Orders.Where(x => x.Order_Status == 1).ToList();
             List<Order> list_order_pending = db.Orders.Where(x => x.Order_Status == 0).ToList();
             List<Customer> list_customer = db.Customers.ToList();
-            List<Staff> list_staff = db.Staffs.ToList();
-
-            DateTime today = DateTime.Now;
-            DateTime future = today.AddDays(100);
+            List<Staff> list_staff = db.Staffs.Where(x=>x.Deleted != 1).ToList();
 
             List<Staff> list_staff_free_inbound = orderDetail_Function.Take_List_Staff_Free(1, today,future);
             List<Staff> list_staff_free_outbound = orderDetail_Function.Take_List_Staff_Free(2, today,future);
@@ -37,6 +60,10 @@ namespace _ExcellOn_.Areas.Admin.Controllers
 
             int list_staff_in_working_count = list_staff.Count - list_staff_free.Count;
 
+
+            ViewBag.list_order_is_comming_start = list_order_is_comming_start;
+            ViewBag.list_order_is_comming_expire = list_order_is_comming_expire;
+            ViewBag.list_order_ready = list_order_ready;
             ViewBag.list_order_completed = list_order_completed;
             ViewBag.list_order_started = list_order_started;
             ViewBag.list_order_pending = list_order_pending;
@@ -47,7 +74,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return View();
         }
 
-        [HasPermission(Permission = "Order_List")]
+        [HasPermission(Permission = "Home_Dashboard")]
         public JsonResult GetJsonOrder(int num_of_days_ago)
         {
             // Lấy ra số ngày trước ngày hiện tại. VD: 5 ngày trước ngày hiện tại.(có thêm cả ngày hiện tại để hiển thị)
@@ -64,10 +91,13 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             foreach (var item in list_date)
             {
                 string _date = item.ToString("MMMM/dd/yyyy");
-                Order _order = db.Orders.Where(x => (x.Order_Status == 2 || x.Order_Status == 1) && (x.Order_DateCreate == _date)).FirstOrDefault();
+                List<Order> _order = db.Orders.Where(x => (x.Order_Status == 2 || x.Order_Status == 1) && (x.Order_DateCreate == _date)).ToList();
                 if (_order != null)
                 {
-                    list_order.Add(_order);
+                    foreach (var i in _order)
+                    {
+                        list_order.Add(i);
+                    }
                 }
             }
             
@@ -96,7 +126,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             return Json(list_order_vmd, JsonRequestBehavior.AllowGet);
         }
 
-        [HasPermission(Permission = "OrderDetail_List")]
+        [HasPermission(Permission = "Home_Dashboard")]
         public JsonResult GetJsonOrderDetail()
         {
             List<Service_OrderDetail> list_service_OrderDetail = new List<Service_OrderDetail>();

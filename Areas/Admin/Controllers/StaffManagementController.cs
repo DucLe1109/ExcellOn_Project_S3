@@ -1,4 +1,5 @@
 ﻿using _ExcellOn_.Areas.Admin.Model;
+using _ExcellOn_.Areas.Admin.ViewModel;
 using _ExcellOn_.Models;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,17 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HasPermission(Permission = "Staff_List")]
         public ActionResult StaffIndex()
         {
-            var list_staff = db.Staffs.ToList();
-            ViewBag.list_staff = list_staff;
-            return View();
+            var list_staff = db.Staffs.Where(x=>x.Deleted != 1).ToList();
+            return View(list_staff);
         }
-        
+
+        [HasPermission(Permission = "Staff_List")]
+        public ActionResult StaffDeletedIndex()
+        {
+            var list_staff = db.Staffs.Where(x=>x.Deleted == 1).ToList();
+            return View(list_staff);
+        }
+
         [HasPermission(Permission = "Staff_List")]
         public ActionResult StaffFreeIndex()
         {
@@ -36,7 +43,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             list_staff_free.AddRange(list_staff_free_inbound);
             list_staff_free.AddRange(list_staff_free_outbound);
             list_staff_free.AddRange(list_staff_free_telemarketing);
-            
+
             ViewBag.list_staff_free = list_staff_free;
             return View();
         }
@@ -45,7 +52,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         public ActionResult StaffInWorkingIndex()
         {
 
-            List<Staff> _list_staff = db.Staffs.Where(x=>x.ServiceId != null).ToList();
+            List<Staff> _list_staff = db.Staffs.Where(x => x.ServiceId != null).ToList();
 
             DateTime today = DateTime.Now;
             DateTime future = today.AddDays(100);
@@ -62,7 +69,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             List<Staff> list_staff_working = new List<Staff>();
             foreach (var item in _list_staff)
             {
-                if (list_staff_free.Exists(x=>x.Id == item.Id) == false)
+                if (list_staff_free.Exists(x => x.Id == item.Id) == false)
                 {
                     list_staff_working.Add(item);
                 }
@@ -136,9 +143,10 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HasPermission(Permission = "Staff_Edit")]
         //Function Update information for User
         [HttpPost]
+
+        [HasPermission(Permission = "Staff_Edit")]
         public ActionResult Update_Profile(Staff CurrentStaff, HttpPostedFileBase AvatarUpload)
         {
-
             var Staff = db.Staffs.Where(x => x.Staff_UserName == CurrentStaff.Staff_UserName).FirstOrDefault();
             if (Staff != null)
             {
@@ -184,15 +192,27 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         [HttpGet]
         public JsonResult Delete(int StaffId)
         {
-
             Staff staff = db.Staffs.Where(x => x.Id == StaffId).FirstOrDefault();
-
-            db.Staffs.Remove(staff);
-            db.SaveChanges();
-            return Json("", JsonRequestBehavior.AllowGet);
-
+            if (staff != null)
+            {
+                staff.Deleted = 1;
+                db.SaveChanges();
+                return Json("Deleted", JsonRequestBehavior.AllowGet);
+            }
+            return Json(404, JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult Reset(int StaffId)
+        {
+            Staff staff = db.Staffs.Where(x => x.Id == StaffId).FirstOrDefault();
+            if (staff != null)
+            {
+                staff.Deleted = 0;
+                db.SaveChanges();
+                return Json("Deleted", JsonRequestBehavior.AllowGet);
+            }
+            return Json(404, JsonRequestBehavior.AllowGet);
+        }
+        
         [HasPermission(Permission = "Staff_Status")]
         public JsonResult ChangeStatus(int StaffId)
         {
@@ -212,5 +232,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             }
 
         }
+
+        
     }
 }

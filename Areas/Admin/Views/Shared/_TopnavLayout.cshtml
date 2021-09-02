@@ -1,6 +1,9 @@
 ﻿@using _ExcellOn_.Models
-@{ List<string> list_permission = (List<string>)Session["ListPermission"];
-    List<string> list_role = (List<string>)Session["ListRole"]; }
+@{ Entities db2 = new Entities();
+    List<string> list_permission = (List<string>)Session["ListPermission"];
+    List<string> list_role = (List<string>)Session["ListRole"];
+    List<Banking> list_banking = db2.Bankings.Where(x => x.Status == 0 && x.Deleted != 1).OrderByDescending(x => x.DateCreate).ToList();
+}
 <style>
     .dropdown-item {
         cursor: pointer;
@@ -53,98 +56,140 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="ni ni-bell-55"></i>
+                        @if (list_banking != null && list_banking.Count > 0)
+                        {
+                            <p class="btn btn-primary" style="padding: 3px 6px;border-radius: 100%">
+                                @list_banking.Count
+                            </p>
+                        }
                     </a>
                     <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden">
                         <!-- Dropdown header -->
                         <div class="px-3 py-3">
-                            <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">13</strong> notifications.</h6>
+                            <h6 class="text-sm text-muted m-0">
+                                You have <strong class="text-primary">
+                                    @if (list_banking != null)
+                                    {<span>@list_banking.Count</span>}
+                                </strong> notifications for banking.
+                            </h6>
                         </div>
                         <!-- List group -->
                         <div class="list-group list-group-flush">
-
+                            <ul>
+                                @if (list_banking != null)
+                                {
+                                    foreach (var item in list_banking)
+                                    {
+                                        <li>
+                                            <a href="/Admin/Banking/DetailBanking/@item.OrderId" style="text-decoration: none">Your account has been added $@item.Money</a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
                         </div>
                         <!-- View all -->
-                        <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="ni ni-ungroup"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default  dropdown-menu-right ">
-                        <div class="row shortcuts px-4">
-                            
-                            <a href="#" onclick="return _Customer()" class="col-4 shortcut-item">
-                                <span class="shortcut-media avatar rounded-circle bg-gradient-orange">
-                                    <i class="ni ni-email-83"></i>
-                                </span>
-                                <small>Email</small>
-                            </a>
-                            <a href="#!" class="col-4 shortcut-item">
-                                <span class="shortcut-media avatar rounded-circle bg-gradient-info">
-                                    <i class="ni ni-credit-card"></i>
-                                </span>
-                                <small>Payments</small>
-                            </a>
-                            
-                            <a href="#!" class="col-4 shortcut-item">
-                                <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
-                                    <i class="ni ni-pin-3"></i>
-                                </span>
-                                <small>Maps</small>
-                            </a>
-                           
-                        </div>
+                        <a href="/Admin/Banking/BankingIndex2" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
                     </div>
                 </li>
             </ul>
-            @{ UserInFo current_user = (UserInFo)Session["UserName"]; }
-            <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
-                <li class="nav-item dropdown">
-                    <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="media align-items-center">
-                            <span class="avatar avatar-sm rounded-circle">
-                                <img alt="Image placeholder" src="@current_user.User_Avatar">
-                            </span>
-                            <div class="media-body  ml-2  d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">@current_user.User_Name</span>
+            @{ Entities db = new Entities();
+                UserInFo current_user = (UserInFo)Session["UserName"];
+                Staff current_staff = (Staff)Session["StaffName"];
+                Staff staff = new Staff();
+                UserInFo user = new UserInFo();
+                if (current_staff != null)
+                {
+                    staff = db.Staffs.Where(x => x.Id == current_staff.Id).FirstOrDefault();
+                }
+                if (current_user != null)
+                {
+                    user = db.UserInFoes.Where(x => x.Id == current_user.Id).FirstOrDefault();
+                }
+
+
+            }
+
+            @if (current_user != null && list_permission != null && list_role != null)
+            {
+                <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="media align-items-center">
+                                <span class="avatar avatar-sm rounded-circle">
+                                    <img alt="Image placeholder" src="@user.User_Avatar">
+                                </span>
+                                <div class="media-body  ml-2  d-none d-lg-block">
+                                    <span class="mb-0 text-sm  font-weight-bold">@user.User_Name</span>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right ">
-                        <div class="dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">Welcome!</h6>
-                        </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right ">
+                            <div class="dropdown-header noti-title">
+                                <h6 class="text-overflow m-0">Welcome!</h6>
+                            </div>
 
-                        <a class="dropdown-item" onclick="return _Profile()">
-                            <i class="ni ni-single-02"></i>
-                            <span>My profile</span>
-                        </a>
+                            <a class="dropdown-item" onclick="return _Redirect('/Admin/UserManagement/MyProfile')">
+                                <i class="ni ni-single-02"></i>
+                                <span>My profile</span>
+                            </a>
 
-                        @if (list_permission.Contains("Admin") || list_role.Contains("Admin"))
-                        {
-                            <a class="dropdown-item" onclick="return _Authorize()">
-                                <i class="ni ni-settings-gear-65"></i>
-                                <span>Role Management</span>
-                            </a>}
-                        @if (list_permission.Contains("Admin") || list_role.Contains("Admin"))
-                        {
-                            <a class="dropdown-item" onclick="return _UserManagement()">
-                                <i class="ni ni-calendar-grid-58"></i>
-                                <span>User Management</span>
-                            </a>}
-                        <a class="dropdown-item">
-                            <i class="ni ni-support-16"></i>
-                            <span>Support</span>
+                            @if (list_permission.Contains("Admin") || list_role.Contains("Admin"))
+                            {
+                                <a class="dropdown-item" onclick="return _Redirect('/Admin/RoleManagement/RoleIndex')">
+                                    <i class="ni ni-settings-gear-65"></i>
+                                    <span>Role Management</span>
+                                </a>}
+                            @if (list_permission.Contains("Admin") || list_role.Contains("Admin"))
+                            {
+                                <a class="dropdown-item" onclick="return _Redirect('/Admin/UserManagement/UserIndex')">
+                                    <i class="ni ni-calendar-grid-58"></i>
+                                    <span>User Management</span>
+                                </a>}
+                            <div class="dropdown-divider"></div>
+                            <a onclick="return _Redirect('/Admin/User/Logout')" class="dropdown-item">
+                                <i class="ni ni-user-run"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            }
+            @if (current_staff != null)
+            {
+                <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="media align-items-center">
+                                <span class="avatar avatar-sm rounded-circle">
+                                    <img alt="Image placeholder" src="@staff.Staff_Avatar">
+                                </span>
+                                <div class="media-body  ml-2  d-none d-lg-block">
+                                    <span class="mb-0 text-sm  font-weight-bold">@staff.Staff_UserName</span>
+                                </div>
+                            </div>
                         </a>
-                        <div class="dropdown-divider"></div>
-                        <a onclick="return _Logout()" class="dropdown-item">
-                            <i class="ni ni-user-run"></i>
-                            <span>Logout</span>
-                        </a>
-                    </div>
-                </li>
-            </ul>
+                        <div class="dropdown-menu dropdown-menu-right ">
+                            <div class="dropdown-header noti-title">
+                                <h6 class="text-overflow m-0">Welcome!</h6>
+                            </div>
+
+                            <a class="dropdown-item" onclick="return _Profile_Staff()">
+                                <i class="ni ni-single-02"></i>
+                                <span>My profile</span>
+                            </a>
+                            <a class="dropdown-item">
+                                <i class="ni ni-support-16"></i>
+                                <span>Support</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a onclick="return _Redirect('/Admin/Staff/Logout')" class="dropdown-item">
+                                <i class="ni ni-user-run"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            }
         </div>
     </div>
 </nav>

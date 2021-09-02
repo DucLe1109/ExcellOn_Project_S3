@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 @section css{
+    <link href="~/Content/Duc/Profile.css" rel="stylesheet" />
 
-    <link href="~/Areas/Admin/Public/css/argon.min.css" rel="stylesheet" />
 }
 <div class="main-content">
 
@@ -28,7 +28,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
-                                <img src="@Url.Content(Model.Customer_Avatar)" class="rounded-circle" />
+                                <img src="@Url.Content(Model.Customer_Avatar)" id="MyAvatar" class="rounded-circle" />
                             </div>
                         </div>
                     </div>
@@ -78,16 +78,16 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">My Account</h3>
+                                <h1 class="mb-0">My Account</h1>
                             </div>
 
                         </div>
                     </div>
                     <div class="card-body bg-white">
                         <hr class="my-4">
-                        <form action="/Customer2/Update_ProfileCustomer" method="post" enctype="multipart/form-data">
+                        <form action="/Customer2/Update_ProfileCustomer" method="post" id="FormDetail" enctype="multipart/form-data">
                             <input type="hidden" name="Id" value="@Model.Id" />
-                            <h6 class="heading-small text-muted mb-4">User information</h6>
+                            <h3>User information</h3>
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px">
@@ -95,7 +95,7 @@
                                     </div>
                                     <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px;">
                                         <p class="form-control-label text-left">Avatar</p>
-                                        <input name="AvatarUpload" type="file" class="btn btn-sm btn-primary col-lg-12 bg-white">
+                                        <input name="AvatarUpload" type="file" id="Avatar" class="btn btn-sm btn-primary col-lg-12">
                                     </div>
                                 </div>
 
@@ -120,6 +120,15 @@
                                             <input type="text" name="Customer_Name" class="form-control form-control-alternative" value="@Model.Customer_Name">
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-last-name">Gender</label>
+                                            <select name="Customer_Gender" class="form-control form-control-alternative">
+                                                <option value="1" @(Model.Customer_Gender == 1 ? "selected" : "")>Female</option>
+                                                <option value="0" @(Model.Customer_Gender == 0 ? "selected" : "")>Male</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -130,7 +139,7 @@
                                 </div>
                             </div>
                             <hr class="my-4">
-                            <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                            <h3 class="heading-small text-muted mb-4">Contact information</h3>
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -161,5 +170,58 @@
         </div>
     </div>
 </div>
-@*}*@
+@section js{
+    <script>
+        $(document).ready(function () {
+            $("#FormDetail").submit(function (submitEvent) {
+
+                // get the file name, possibly with path (depends on browser)
+                var filename = $("#Avatar").val();
+
+                // Use a regular expression to trim everything before final dot
+                var extension = filename.replace(/^.*\./, '');
+
+                // Iff there is no dot anywhere in filename, we would have extension == filename,
+                // so we account for this possibility now
+                if (extension == filename) {
+                    extension = '';
+                } else {
+                    // if there is an extension, we convert to lower case
+                    // (N.B. this conversion will not effect the value of the extension
+                    // on the file upload.)
+                    extension = extension.toLowerCase();
+                }
+
+                switch (extension) {
+                    case 'jpg':
+                    case 'jpeg':
+                    case 'png':
+                    case 'jfif':
+                        // uncomment the next line to allow the form to submitted in this case:
+                        //          break;
+                        break;
+                    default:
+                        // Cancel the form submission
+                        alert("File is not valid !");
+                        submitEvent.preventDefault();
+                }
+
+            });
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#MyAvatar').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#Avatar").change(function () {
+            readURL(this);
+        });
+
+    </script>
+}
 

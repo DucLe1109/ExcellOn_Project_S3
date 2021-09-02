@@ -10,15 +10,15 @@
                 <h6 class="h2 d-inline-block mb-0">Staff Management</h6>
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                        <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                        <li class="breadcrumb-item"><a href="/Admin/StaffManagement/StaffIndex"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item"><a href="/Admin/StaffManagement/StaffIndex">Tables</a></li>
                     </ol>
                 </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
                 @if (list_permission.Contains("Staff_Add") || list_role.Contains("Admin"))
                 {
-    <a href="/Admin/StaffManagement/Add" class="btn btn-sm btn-neutral">Add New</a>}
+                    <a href="/Admin/StaffManagement/Add" class="btn btn-sm btn-neutral">Add New</a>}
                 <a class="btn btn-sm btn-neutral" href="/Admin/StaffManagement/StaffIndex">Reload</a>
             </div>
         </div>
@@ -52,78 +52,78 @@
                         {
                             foreach (var item in list_staff_working)
                             {
-                        <tr>
-                            <th>
-                                <a href="#" class="avatar rounded-circle">
-                                    <img alt="Image placeholder" src="@item.Staff_Avatar">
-                                </a>
-                            </th>
-                            <td>
-                                @item.Staff_FullName
-                            </td>
-                            <td>
-                                @item.Service.Service_Name
-                            </td>
-                            <td>
-                                @item.Staff_OrderDetail.Count
-                            </td>
-                            <td>
-                                @item.Staff_Address
-                            </td>
-                            <td>
-                                @item.Staff_Phone
-                            </td>
-                            <td>
-                                @item.Staff_Age
-                            </td>
-                            <td>
-                                @if (item.Staff_Gender == 1)
-                                {
-                        <span>Female</span> }
-                    else
-                    {
-                        <span>Male</span>}
-                            </td>
-                            <td>
-                                @item.Staff_Email
-                            </td>
-                            @if (item.Staff_Status == 0)
-                            {
-                        <td>
-                            <span class="badge badge-dot mr-4">
-                                <i class="bg-warning"></i>
-                                <span id="status_@item.Id">Training</span>
-                            </span>
-                        </td>
- }
-                    else
-                    {
-                        <td>
-                            <span class="badge badge-dot mr-4">
-                                <i class="bg-info"></i>
-                                <span id="status_@item.Id">Profession</span>
-                            </span>
-                        </td>
-}
-                            <td class="text-right">
-                                <div class="dropdown">
-                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        @if (list_permission.Contains("Staff_Edit") || list_role.Contains("Admin"))
-                                        {<a class="dropdown-item" href="/Admin/StaffManagement/Edit/@item.Id">Edit</a>}
-                                        @if (list_permission.Contains("Staff_Status") || list_role.Contains("Admin"))
-                                        {<a class="dropdown-item" onclick="return _ChangeStatus(@item.Id)" style="cursor: pointer">Change Status</a>}
-                                        @if (list_permission.Contains("Staff_Delete") || list_role.Contains("Admin"))
-                                        {<a class="dropdown-item" onclick="return _Delete(@item.Id)" style="cursor: pointer" id="@item.Id">Delete</a>}
+                                <tr>
+                                    <th>
+                                        <a href="#" class="avatar rounded-circle">
+                                            <img alt="Image placeholder" src="@item.Staff_Avatar">
+                                        </a>
+                                    </th>
+                                    <td>
+                                        @item.Staff_FullName
+                                    </td>
+                                    <td>
+                                        @item.Service.Service_Name
+                                    </td>
+                                    <td>
+                                        @item.Staff_OrderDetail.Count
+                                    </td>
+                                    <td>
+                                        @item.Staff_Address
+                                    </td>
+                                    <td>
+                                        @item.Staff_Phone
+                                    </td>
+                                    <td>
+                                        @item.Staff_Age
+                                    </td>
+                                    <td>
+                                        @if (item.Staff_Gender == 1)
+                                        {
+                                            <span>Female</span> }
+                                        else
+                                        {
+                                            <span>Male</span>}
+                                    </td>
+                                    <td>
+                                        @item.Staff_Email
+                                    </td>
+                                    @if (item.Staff_Status == 0)
+                                    {
+                                        <td>
+                                            <span class="badge badge-dot mr-4">
+                                                <i class="bg-warning"></i>
+                                                <span id="status_@item.Id">Training</span>
+                                            </span>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <span class="badge badge-dot mr-4">
+                                                <i class="bg-info"></i>
+                                                <span id="status_@item.Id">Profession</span>
+                                            </span>
+                                        </td>
+                                    }
+                                    <td class="text-right">
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                @if (list_permission.Contains("Staff_Edit") || list_role.Contains("Admin"))
+                                                {<a class="dropdown-item" href="/Admin/StaffManagement/Edit/@item.Id">Edit</a>}
+                                                @if (list_permission.Contains("Staff_Status") || list_role.Contains("Admin"))
+                                                {<a class="dropdown-item" onclick="return _ChangeStatus(@item.Id)" style="cursor: pointer">Change Status</a>}
+                                                @if (list_permission.Contains("Staff_Delete") || list_role.Contains("Admin"))
+                                                {<a class="dropdown-item" onclick="return _Delete(@item.Id)" style="cursor: pointer" id="@item.Id">Delete</a>}
 
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-}
-    }
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
 
 
 
@@ -147,7 +147,7 @@
 }
 @section js{
     <script type="text/javascript">
-    $(document).ready(function () {
+        $(document).ready(function () {
             $('#table_Staff').DataTable({
                 "lengthMenu": [10, 15, 20, 30],
                 "pagingType": "full_numbers",
@@ -160,56 +160,6 @@
             });
         });</script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
-    <script type="text/javascript">
-    function _Delete(StaffId) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "/Admin/StaffManagement/Delete?StaffId=" + StaffId,
-                        contentType: "application/json;charset=utf-8",
-                        type: "GET",
-                        dataType: "json",
-                        success: function (result) {
-                            $('#' + StaffId).parent().parent().parent().parent().remove();
-                            Swal.fire(
-                                'Deleted!',
-                                'Your file has been deleted. Please Reload for Update',
-                                'success'
-                            )
-                        },
-                        error: function () {
-                            alert("Error !");
-                        }
-                    });
 
-                }
-            });
-        }
-        function _ChangeStatus(StaffId) {
-            $.ajax({
-                url: "/Admin/StaffManagement/ChangeStatus?StaffId=" + StaffId,
-                contentType: "application/json;charset=utf-8",
-                type: "GET",
-                dataType: "json",
-                success: function (result) {
-                    if (result == "status_1") {
-                        $('#status_' + StaffId).html("Profession");
-                    } else {
-                        $('#status_' + StaffId).html("Training");
-                    }
-
-                },
-                error: function () {
-                    alert("Error !");
-                }
-            });
-        }</script>
+    <script src="~/Areas/Admin/Script_HuyDuc/Staff/ManageStaff.js"></script>
 }

@@ -13,15 +13,21 @@ namespace _ExcellOn_.Areas.Admin.Controllers
     {
         private Entities db = new Entities();
 
-
         [HasPermission(Permission = "Customer_List")]
         public ActionResult CustomerIndex()
         {
-            var list_customer = db.Customers.ToList();
+            var list_customer = db.Customers.Where(x=>x.Deleted != 1).ToList();
             ViewBag.list_customer = list_customer;
             return View();
         }
-        
+
+        [HasPermission(Permission = "Customer_List")]
+        public ActionResult CustomerDeletedIndex()
+        {
+            var list_customer = db.Customers.Where(x=>x.Deleted == 1).ToList();
+            return View(list_customer);
+        }
+
         [HasPermission(Permission = "Customer_List")]
         public ActionResult CustomerInOrderIndex()
         {
@@ -86,22 +92,50 @@ namespace _ExcellOn_.Areas.Admin.Controllers
             customer.Customer_Email = customerObj.Customer_Email;
             customer.Customer_Comment = customerObj.Customer_Comment;
             customer.Customer_Gender = customerObj.Customer_Gender;
+
+            CustomerViewModel customerView = new CustomerViewModel();
+            customerView.Id = customer.Id;
+            customerView.Customer_Phone = customer.Customer_Phone;
+            customerView.Customer_Name = customer.Customer_Name;
+            customerView.Customer_Email = customer.Customer_Email;
+            customerView.Customer_Comment = customer.Customer_Comment;
+            customerView.Customer_Gender = (int)customer.Customer_Gender;
             db.SaveChanges();
-            return Json("/Admin/CustomerManagement/CustomerIndex", JsonRequestBehavior.AllowGet);
+
+            return Json(customerView, JsonRequestBehavior.AllowGet);
 
         }
 
-        //[HasPermission(Permission = "Customer_Delete")]
-        //[HttpGet]
-        //public JsonResult Delete(int CustomerId)
-        //{
-        //    Customer customer = db.Customers.Where(x => x.Id == CustomerId).FirstOrDefault();
-        //    db.Customers.Remove(customer);
-        //    db.SaveChanges();
-        //    return Json("/Admin/CustomerManagement/CustomerIndex", JsonRequestBehavior.AllowGet);
+        [HasPermission(Permission = "Customer_Delete")]
+        [HttpGet]
+        public JsonResult Delete(int CustomerId)
+        {
+            Customer customer = db.Customers.Where(x => x.Id == CustomerId).FirstOrDefault();
+            if (customer != null)
+            {
+                customer.Deleted = 1;
+                db.SaveChanges();
+                return Json("/Admin/CustomerManagement/CustomerIndex", JsonRequestBehavior.AllowGet);
+            }
+            return Json(404, JsonRequestBehavior.AllowGet);
 
-        //}
-        
+        }
+
+        [HasPermission(Permission = "Customer_Delete")]
+        [HttpGet]
+        public JsonResult Reset(int CustomerId)
+        {
+            Customer customer = db.Customers.Where(x => x.Id == CustomerId).FirstOrDefault();
+            if (customer != null)
+            {
+                customer.Deleted = 0;
+                db.SaveChanges();
+                return Json("/Admin/CustomerManagement/CustomerIndex", JsonRequestBehavior.AllowGet);
+            }
+            return Json(404, JsonRequestBehavior.AllowGet);
+
+        }
+
         [HasPermission(Permission = "Customer_List")]
         [HttpPost]
         public ActionResult SendEmail(SendEmailModel model)

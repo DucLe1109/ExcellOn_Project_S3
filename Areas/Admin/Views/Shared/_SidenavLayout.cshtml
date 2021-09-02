@@ -17,7 +17,7 @@
     <div class="scrollbar-inner">
         <!-- Brand -->
         <div class="sidenav-header  align-items-center" style="z-index:2">
-            <a class="navbar-brand" style="padding-top: 15px!important;padding-left:0px;padding-bottom:15px;border-bottom: 1px solid white">
+            <a class="navbar-brand" style="padding-top: 19px!important;padding-left:0px;padding-bottom:18px;border-bottom: 1px solid white">
                 <img src="/Public/Image/th (12).jfif" class="navbar-brand-img rounded-circle" width="40" height="60" alt="...">
                 <span style="margin-left: 20px;color: fuchsia;font-weight: 800">EXCELL ON</span>
             </a>
@@ -27,90 +27,126 @@
             <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                 <!-- Nav items -->
                 <ul class="navbar-nav">
-                    @if (list_permission.Contains("Admin") || list_role.Contains("Admin") || list_role.Contains("CEO") || list_role.Contains("Manager"))
+                    @if (list_permission != null && list_role != null)
                     {
-        <li class="nav-item">
-            <a class="nav-link active DashboardIndex" onclick="return _Dashboard()">
-                <i class="ni ni-tv-2 text-info"></i>
-                <span class="nav-link-text">Dashboard</span>
-            </a>
-        </li>
-}
-                    @if (list_permission.Contains("Service_List") || list_role.Contains("Admin"))
-                    {
-        <li class="nav-item">
-            <a class="nav-link ServiceIndex" onclick="return _Service()">
-                <i class="fa fa-handshake-o" aria-hidden="true" style="color:bisque"></i>
-                <span class="nav-link-text">Service</span>
-            </a>
-        </li>}
-                    @if (list_permission.Contains("OrderDetail_List") || list_role.Contains("Admin"))
-                    {
-        <li class="nav-item">
-            <a class="nav-link ServiceIndex2" onclick="return _Service2()">
-                <i class="fa fa-shopping-bag" aria-hidden="true" style="color: fuchsia"></i>
-                <span class="nav-link-text">Order Detail</span>
-            </a>
-        </li>}
-                    @if (list_permission.Contains("OrderDetail_List") || list_role.Contains("Admin"))
-                    {
-        <li class="nav-item">
-            <a class="nav-link OrderIndex" onclick="return _Order()">
-                <i class="fa fa-shopping-cart" aria-hidden="true" style="color:floralwhite"></i>
-                <span class="nav-link-text">Order</span>
-            </a>
-        </li>}
-                    @if (list_permission.Contains("Staff_List") || list_role.Contains("Admin"))
-                    {
-        <li class="nav-item">
-            <a class="nav-link StaffIndex" onclick="return _Staff()">
-                <i class="fa fa-users" style="color: khaki" aria-hidden="true"></i>
-                <span class="nav-link-text">Staff</span>
-            </a>
-        </li>}
-                    @if (list_permission.Contains("Customer_List") || list_role.Contains("Admin"))
-                    {
-        <li class="nav-item">
-            <a class="nav-link CustomerIndex" onclick="return _Customer()">
-                <i class="ni ni-planet text-orange"></i>
-                <span class="nav-link-text">Customer</span>
-            </a>
-        </li>
-}
-                    @if (list_permission.Contains("Company_List") || list_role.Contains("Admin"))
-                    {
-        <li class="nav-item">
-            <a class="nav-link CompanyIndex" onclick="return _Company()">
-                <i class="fa fa-building-o" style="color:aqua" aria-hidden="true"></i>
-                <span class="nav-link-text">Company</span>
-            </a>
-        </li>}
-                    @if (list_permission.Contains("Image_List") || list_permission.Contains("Service_List") || list_role.Contains("Admin"))
-                    {
-        <li class="nav-item">
-            <a class="nav-link ImageIndex" onclick="return _Image()">
-                <i class="fa fa-picture-o" aria-hidden="true" style="color: darkorange"></i>
-                <span class="nav-link-text">Image</span>
-            </a>
-        </li>}
-                    @if (list_role != null)
-                    {
-        <li class="nav-item">
-            <a class="nav-link MyProfile" onclick="return _Profile()">
-                <i class="ni ni-single-02 text-yellow"></i>
-                <span class="nav-link-text">My Profile</span>
-            </a>
-        </li>
-}
+                        if (list_permission.Contains("Home_Dashboard") || list_role.Contains("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link DashboardIndex" onclick="return _Redirect('/Admin/AdminHome/DashboardIndex')">
+                                    <i class="ni ni-tv-2 text-info"></i>
+                                    <span class="nav-link-text">Dashboard</span>
+                                </a>
+                            </li>
+                        }
+                        if (list_permission.Contains("Home_Dashboard") || list_role.Contains("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link BankingIndex" onclick="return _Redirect('/Admin/Banking/BankingIndex')">
+                                    <i class="fa fa-money" style="color:cyan"></i>
+                                    <span class="nav-link-text">Money</span>
+                                </a>
+                            </li>
+                        }
+                        if (list_permission.Contains("Service_List") || list_role.Contains("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link ServiceIndex" onclick="return _Redirect('/Admin/ServiceManagement/ServiceIndex')">
+                                    <i class="fa fa-handshake-o" aria-hidden="true" style="color:bisque"></i>
+                                    <span class="nav-link-text">Service</span>
+                                </a>
+                            </li>
+                        }
+                        if (list_permission.Contains("OrderDetail_List") || list_role.Contains("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link ServiceIndex2" onclick="return _Redirect('/Admin/ServiceManagement/ServiceIndex2')">
+                                    <i class="fa fa-shopping-bag" aria-hidden="true" style="color: fuchsia"></i>
+                                    <span class="nav-link-text">Order Detail</span>
+                                </a>
+                            </li>
+                        }
+                        if (list_permission.Contains("OrderDetail_List") || list_role.Contains("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link OrderIndex" onclick="return _Redirect('/Admin/OrderManagement/OrderIndex')">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true" style="color:floralwhite"></i>
+                                    <span class="nav-link-text">Order</span>
+                                </a>
+                            </li>
+                        }
+                        if (list_permission.Contains("Staff_List") || list_role.Contains("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link StaffIndex" onclick="return _Redirect('/Admin/StaffManagement/StaffIndex')">
+                                    <i class="fa fa-users" style="color: khaki" aria-hidden="true"></i>
+                                    <span class="nav-link-text">Staff</span>
+                                </a>
+                            </li>
+                        }
+                        if (list_permission.Contains("Customer_List") || list_role.Contains("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link CustomerIndex" onclick="return _Redirect('/Admin/CustomerManagement/CustomerIndex')">
+                                    <i class="ni ni-planet text-orange"></i>
+                                    <span class="nav-link-text">Customer</span>
+                                </a>
+                            </li>
+                        }
+                        if (list_permission.Contains("Company_List") || list_role.Contains("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link CompanyIndex" onclick="return _Redirect('/Admin/CompanyManagement/CompanyIndex')">
+                                    <i class="fa fa-building-o" style="color:aqua" aria-hidden="true"></i>
+                                    <span class="nav-link-text">Company</span>
+                                </a>
+                            </li>
+                        }
+                        if (list_permission.Contains("Image_List") || list_permission.Contains("Image_List") || list_role.Contains("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link ImageIndex" onclick="return _Redirect('/Admin/ImageManagement/ImageIndex')">
+                                    <i class="fa fa-picture-o" aria-hidden="true" style="color: darkorange"></i>
+                                    <span class="nav-link-text">Image</span>
+                                </a>
+                            </li>
+                        }
+                        if (list_role != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link MyProfile" onclick="return _Redirect('/Admin/UserManagement/MyProfile')">
+                                    <i class="ni ni-single-02 text-yellow"></i>
+                                    <span class="nav-link-text">My Profile</span>
+                                </a>
+                            </li>
+                        }
 
-                    @if (list_role.Contains("Admin"))
+                        if (list_role.Contains("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link AddUser" onclick="return _Redirect('/Admin/UserManagement/AddUser')">
+                                    <i class="ni ni-circle-08 text-pink"></i>
+                                    <span class="nav-link-text">Register</span>
+                                </a>
+                            </li>
+                        }
+                    }
+
+                    @if (Session["StaffName"] != null)
                     {
-        <li class="nav-item">
-            <a class="nav-link AddUser" onclick="return _Register()">
-                <i class="ni ni-circle-08 text-pink"></i>
-                <span class="nav-link-text">Register</span>
-            </a>
-        </li>}
+                        <li class="nav-item">
+                            <a class="nav-link MyProfile" onclick="return _Redirect('/Admin/Staff2/MyProfile')">
+                                <i class="ni ni-single-02 text-yellow"></i>
+                                <span class="nav-link-text">My Profile</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link MyOrder" onclick="return _Redirect('/Admin/Staff2/MyOrder')">
+                                <i class="ni ni-badge text-light"></i>
+                                <span class="nav-link-text">My Order</span>
+                            </a>
+                        </li>
+                    }
+
                 </ul>
                 <hr class="my-3">
 

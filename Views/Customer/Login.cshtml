@@ -18,21 +18,24 @@
 
     <div>
        
-        
+        <style>
+            .input_hd{
+                margin-bottom: 10px
+            }
+        </style>
         <div class="container" id="container">
             <div class="form-container sign-up-container">
                 <form action="#">
                     <h2 class="fw-bold">Create Account</h2>
-                    <div class="social-container">
-                        <div style="background-color: red; width: 30px;height:30px;border-radius: 50%; display: inline-block;margin-right: 10px"></div>
-                        <div style="background-color: blue; width: 30px;height:30px;border-radius: 50%;display: inline-block;margin-right: 10px"></div>
-                        <div style="background-color: yellowgreen; width: 30px;height:30px;border-radius: 50%; display: inline-block"></div>
-                    </div>
-
-                    <input type="text" style="border-radius: 30px" class="form-control" required id="FullName" placeholder="FullName" />
-                    <input type="text" style="border-radius: 30px" class="form-control" required id="Telephone" placeholder="Telephone" />
-                    <input type="text" style="border-radius: 30px" class="form-control" required id="UserName" placeholder="UserName" />
-                    <input type="password" style="border-radius: 30px" class="form-control" required id="Password" placeholder="Password" />
+                    <input type="text" style="border-radius: 30px" class="form-control input_hd" required id="FullName" placeholder="FullName" />
+                    <select style="border-radius: 30px" class="form-control input_hd" name="Gender">
+                        <option value="-1">Gender</option>
+                        <option value="1">Female</option>
+                        <option value="0">Male</option>
+                    </select>
+                    <input type="text" style="border-radius: 30px" class="form-control input_hd" required id="Telephone" placeholder="Telephone" />
+                    <input type="text" style="border-radius: 30px" class="form-control input_hd" required id="UserName" placeholder="UserName" />
+                    <input type="password" style="border-radius: 30px" class="form-control input_hd" required id="Password" placeholder="Password" />
                     <input type="email" style="border-radius: 30px" class="form-control" required id="Email" placeholder="Email" />
                     <button class="sign" style="margin-top: 10px; cursor:pointer" onclick="return _SignUp()">Sign Up</button>
                 </form>
@@ -77,12 +80,14 @@
     </div>
     <script type="text/javascript">
         function _SignUp() {
+            var option_selected = $('select option:selected');
             var SignUp_Obj = {
                 UserName: $('#UserName').val(),
                 FullName: $('#FullName').val(),
                 Telephone: $('#Telephone').val(),
                 Password: $('#Password').val(),
-                Email: $('#Email').val()
+                Email: $('#Email').val(),
+                Gender: option_selected.val()
             };
             $.ajax({
                 url: "/Customer/SignUp",

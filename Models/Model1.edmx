@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Banking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateCreate" Type="date" />
+          <Property Name="Money" Type="float" />
+          <Property Name="Deleted" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="OrderId" Type="int" />
+          <Property Name="CustomerId" Type="int" />
+        </EntityType>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Id" />
@@ -15,6 +27,7 @@
           <Property Name="Company_Address" Type="varchar" MaxLength="255" />
           <Property Name="Company_Email" Type="varchar" MaxLength="255" />
           <Property Name="Company_Description" Type="text" />
+          <Property Name="Deleted" Type="int" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -30,6 +43,7 @@
           <Property Name="Customer_Comment" Type="text" />
           <Property Name="Customer_Avatar" Type="text" />
           <Property Name="Customer_Gender" Type="int" />
+          <Property Name="Deleted" Type="int" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -112,6 +126,7 @@
           <Property Name="Service_SaleStatus" Type="int" />
           <Property Name="Service_Image" Type="text" />
           <Property Name="Service_PriceSale" Type="float" />
+          <Property Name="Deleted" Type="int" />
         </EntityType>
         <EntityType Name="Staff">
           <Key>
@@ -130,6 +145,7 @@
           <Property Name="Staff_FullName" Type="varchar" MaxLength="255" />
           <Property Name="Staff_AboutMe" Type="text" />
           <Property Name="ServiceId" Type="int" />
+          <Property Name="Deleted" Type="int" />
         </EntityType>
         <EntityType Name="Staff_OrderDetail">
           <Key>
@@ -175,6 +191,30 @@
           <Property Name="UserId" Type="int" />
           <Property Name="RoleId" Type="int" />
         </EntityType>
+        <Association Name="FK__Banking__Custome__370627FE">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Banking" Type="Self.Banking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Banking">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Banking__OrderId__361203C5">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Banking" Type="Self.Banking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Banking">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Customer__Compan__4C364F0E">
           <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
@@ -320,6 +360,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Banking" EntityType="Self.Banking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
@@ -335,6 +376,14 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInFo" EntityType="Self.UserInFo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Banking__Custome__370627FE" Association="Self.FK__Banking__Custome__370627FE">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Banking" EntitySet="Banking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Banking__OrderId__361203C5" Association="Self.FK__Banking__OrderId__361203C5">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Banking" EntitySet="Banking" />
+          </AssociationSet>
           <AssociationSet Name="FK__Customer__Compan__4C364F0E" Association="Self.FK__Customer__Compan__4C364F0E">
             <End Role="Company" EntitySet="Company" />
             <End Role="Customer" EntitySet="Customer" />
@@ -452,7 +501,16 @@
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <EntitySet Name="MyCompanies" EntityType="Model.MyCompany" />
-        </EntityContainer>
+          <EntitySet Name="Bankings" EntityType="Model.Banking" />
+          <AssociationSet Name="FK__Banking__Custome__370627FE" Association="Model.FK__Banking__Custome__370627FE">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Banking" EntitySet="Bankings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Banking__OrderId__361203C5" Association="Model.FK__Banking__OrderId__361203C5">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Banking" EntitySet="Bankings" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Id" />
@@ -464,6 +522,7 @@
           <Property Name="Company_Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Company_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Customers" Relationship="Model.FK__Customer__Compan__4C364F0E" FromRole="Company" ToRole="Customer" />
+          <Property Name="Deleted" Type="Int32" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -481,6 +540,8 @@
           <NavigationProperty Name="Company" Relationship="Model.FK__Customer__Compan__4C364F0E" FromRole="Customer" ToRole="Company" />
           <NavigationProperty Name="Orders" Relationship="Model.FK__Orders__Customer__5F492382" FromRole="Customer" ToRole="Order" />
           <Property Name="Customer_Gender" Type="Int32" />
+          <Property Name="Deleted" Type="Int32" />
+          <NavigationProperty Name="Bankings" Relationship="Model.FK__Banking__Custome__370627FE" FromRole="Customer" ToRole="Banking" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -518,6 +579,7 @@
           <Property Name="CustomerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="OrderDetails" Relationship="Model.FK__OrderDeta__Order__6319B466" FromRole="Order" ToRole="OrderDetail" />
           <NavigationProperty Name="Customer" Relationship="Model.FK__Orders__Customer__5F492382" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Bankings" Relationship="Model.FK__Banking__OrderId__361203C5" FromRole="Order" ToRole="Banking" />
         </EntityType>
         <EntityType Name="Permission">
           <Key>
@@ -563,6 +625,7 @@
           <NavigationProperty Name="Images" Relationship="Model.FK__Image__ServiceId__6CA31EA0" FromRole="Service" ToRole="Image" />
           <NavigationProperty Name="OrderDetails" Relationship="Model.FK__OrderDeta__Servi__6225902D" FromRole="Service" ToRole="OrderDetail" />
           <NavigationProperty Name="Staffs" Relationship="Model.FK__Staff__ServiceId__73501C2F" FromRole="Service" ToRole="Staff" />
+          <Property Name="Deleted" Type="Int32" />
         </EntityType>
         <EntityType Name="Staff">
           <Key>
@@ -583,6 +646,7 @@
           <Property Name="ServiceId" Type="Int32" />
           <NavigationProperty Name="Service" Relationship="Model.FK__Staff__ServiceId__73501C2F" FromRole="Staff" ToRole="Service" />
           <NavigationProperty Name="Staff_OrderDetail" Relationship="Model.FK__Staff_Ord__Staff__762C88DA" FromRole="Staff" ToRole="Staff_OrderDetail" />
+          <Property Name="Deleted" Type="Int32" />
         </EntityType>
         <EntityType Name="Staff_OrderDetail">
           <Key>
@@ -791,6 +855,44 @@
           <Property Name="MyVision" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MyTarget" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Banking">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateCreate" Type="DateTime" Precision="0" />
+          <Property Name="Money" Type="Double" />
+          <Property Name="Deleted" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="CustomerId" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Model.FK__Banking__Custome__370627FE" FromRole="Banking" ToRole="Customer" />
+          <NavigationProperty Name="Order" Relationship="Model.FK__Banking__OrderId__361203C5" FromRole="Banking" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK__Banking__Custome__370627FE">
+          <End Type="Model.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="Model.Banking" Role="Banking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Banking">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Banking__OrderId__361203C5">
+          <End Type="Model.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="Model.Banking" Role="Banking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Banking">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -800,6 +902,7 @@
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="Model.Company">
               <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Company_Description" ColumnName="Company_Description" />
                 <ScalarProperty Name="Company_Email" ColumnName="Company_Email" />
                 <ScalarProperty Name="Company_Address" ColumnName="Company_Address" />
@@ -812,6 +915,7 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="Model.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Customer_Gender" ColumnName="Customer_Gender" />
                 <ScalarProperty Name="Customer_Avatar" ColumnName="Customer_Avatar" />
                 <ScalarProperty Name="Customer_Comment" ColumnName="Customer_Comment" />
@@ -890,6 +994,7 @@
           <EntitySetMapping Name="Services">
             <EntityTypeMapping TypeName="Model.Service">
               <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="Service_PriceSale" ColumnName="Service_PriceSale" />
                 <ScalarProperty Name="Service_Image" ColumnName="Service_Image" />
                 <ScalarProperty Name="Service_SaleStatus" ColumnName="Service_SaleStatus" />
@@ -903,6 +1008,7 @@
           <EntitySetMapping Name="Staffs">
             <EntityTypeMapping TypeName="Model.Staff">
               <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="Staff_AboutMe" ColumnName="Staff_AboutMe" />
                 <ScalarProperty Name="Staff_FullName" ColumnName="Staff_FullName" />
@@ -978,6 +1084,19 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bankings">
+            <EntityTypeMapping TypeName="Model.Banking">
+              <MappingFragment StoreEntitySet="Banking">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

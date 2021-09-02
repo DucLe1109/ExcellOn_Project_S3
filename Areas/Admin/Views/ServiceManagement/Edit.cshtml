@@ -14,7 +14,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
-                                <img src="@Model.Service_Image" class="" />
+                                <img id="MyAvatar" src="@Model.Service_Image" class="" />
                             </div>
                         </div>
                     </div>
@@ -56,9 +56,12 @@
                                 <i class="ni business_briefcase-24 mr-2"></i>@Model.Service_PriceSale
                             </div>
                             <hr class="my-4">
-                            <p style="font-weight: bold">Status is: @if (Model.Service_SaleStatus == 1)
-                            {<span>Sale</span>}
-                            else { <span>Not Sale</span>}</p>
+                            <p style="font-weight: bold">
+                                Status is: @if (Model.Service_SaleStatus == 1)
+                                {<span>Sale</span>}
+                                else
+                                { <span>Not Sale</span>}
+                            </p>
 
                         </div>
                     </div>
@@ -75,17 +78,17 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="/Admin/ServiceManagement/Edit_Submit" method="post" enctype="multipart/form-data">
+                        <form action="/Admin/ServiceManagement/Edit_Submit" id="FormDetail" method="post" enctype="multipart/form-data">
                             <h6 class="heading-small text-muted mb-4">User information</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px">
                                         <p class="form-control-label">Feature Image</p>
-                                        <input name="FeatureImage" type="file" class="btn btn-sm btn-primary col-lg-12">
+                                        <input name="FeatureImage" id="Avatar" type="file" class="btn btn-sm btn-primary col-lg-12">
                                     </div>
                                     <div class="col-md-6 col-lg-6 text-right" style="margin-bottom: 20px;">
                                         <p class="form-control-label">Additional Image</p>
-                                        <input name="Service_AdditionalImage" type="file" multiple class="btn btn-sm btn-primary col-lg-12">
+                                        <input name="Service_AdditionalImage" id="AdditionalImage" type="file" multiple class="btn btn-sm btn-primary col-lg-12">
                                     </div>
                                 </div>
 
@@ -134,13 +137,13 @@
                                             </select>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <hr class="my-4">
                             <div class="pl-lg-4">
                                 <div class="form-group focused">
-                                    <button type="submit" class="btn btn-info">Edit service</button>
+                                    <button type="submit" class="btn btn-info" onclick="return _Edit()">Edit service</button>
                                 </div>
                             </div>
                         </form>
@@ -159,3 +162,68 @@
         </div>
     </div>
 </footer>
+@section js{
+    <script>
+        $(document).ready(function () {
+            $("#FormDetail").submit(function (submitEvent) {
+                var count = 0;
+                var fileUpload1 = $("#Avatar").get(0);
+                var file = fileUpload1.files[0];
+                fileName = file.name;
+                var fileExt = fileName.split('.').pop();
+                switch (fileExt) {
+                    case 'jpg':
+                        break;
+                    case 'jpeg':
+                        break;
+                    case 'png':
+                        break;
+                    case 'jfif':
+                        break;
+                    case 'gif':
+                        break;
+                    default:
+                        count += 1;
+                        submitEvent.preventDefault();
+                }
+
+                var fileUpload2 = $("#AdditionalImage").get(0);
+                var files = fileUpload2.files;
+                $.each(files, function (k, v) {
+                    fileName = v.name;
+                    var fileExt = fileName.split('.').pop();
+                    switch (fileExt) {
+                        case 'jpg':
+                            break;
+                        case 'jpeg':
+                            break;
+                        case 'png':
+                            break;
+                        case 'jfif':
+                            break;
+                        case 'gif':
+                            break;
+                        default:
+                            count += 1;
+                            submitEvent.preventDefault();
+                    }
+                });
+                if (count > 0) {
+                    alert("File is not valid !");
+                }
+            });
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#MyAvatar').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#Avatar").change(function () {
+            readURL(this);
+        });
+    </script>
+}

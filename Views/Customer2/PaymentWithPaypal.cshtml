@@ -1,0 +1,75 @@
+﻿@using _ExcellOn_.Models
+@model List<_ExcellOn_.Models.OrderDetail>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PaymentWithPaypal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <style>
+        h2 {
+            font-size: 35px;
+        }
+
+        img {
+            width: 95px;
+            margin: 30px 0px 30px 0px;
+        }
+
+        p {
+            font-size: 17px;
+            float: left;
+        }
+
+            p.item_list {
+                font-size: 20px;
+                float: left;
+            }
+
+        .section_payment_big {
+            margin-top: 85px;
+            border: 1px solid #ddd;
+            padding: 35px;
+            box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+        }
+
+        button.btn.btn-primary {
+            float: right;
+            margin-bottom: 10px;
+        }
+
+        .button_home {
+            text-decoration: none;
+            color: white;
+        }
+
+            .button_home:hover {
+                color: white;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4 section_payment_big">
+                <div class="section_payment">
+                    <h2 style="margin-top: 30px; text-align: center">Payment Success !</h2>
+                    <div style="text-align: center" class="box_img">
+                        <img src="https://www.freeiconspng.com/thumbs/success-icon/success-icon-10.png" />
+                    </div>
+                    <p>Payment has been made successfully.</br>Within 30 minutes, ExcellOn will contact to confirm delivery information for you!</p>
+                    <p>You can see details in <a href="@Url.Action("OrderListIndex","Customer2")"> My Order</a></p>
+                    <button class="btn btn-primary"><a class="button_home" href="/">Back to home</a></button>
+                </div>
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+    </div>
+</body>
+</html>

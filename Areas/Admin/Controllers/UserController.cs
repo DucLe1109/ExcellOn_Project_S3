@@ -18,7 +18,54 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         public ActionResult Login()
         {
             Session["UserName"] = null;
-            return View();
+            return View("~/Areas/Admin/Views/User/Login2.cshtml");
+        }
+
+        [HttpPost]
+        public JsonResult LoginAjax(LoginViewModel loginViewModel)
+        {
+            if (loginViewModel.UserName != null && loginViewModel.Password != null)
+            {
+                UserInFo User = db.UserInFoes.Where(x => x.User_Name == loginViewModel.UserName).FirstOrDefault();
+                if (User != null)
+                {
+                    bool test = BCrypt.Net.BCrypt.Verify(loginViewModel.Password, User.User_Password);
+                    if (test)
+                    {
+                        Session["UserName"] = User;
+
+                        // Take permission of current User
+                        Permission_Role_Function function = new Permission_Role_Function();
+                        List<string> list_permission = function.TakePermission(User);
+                        Session["ListPermission"] = list_permission;
+
+                        //Take role of current User
+                        List<string> list_role = function.TakeRole(User);
+                        Session["ListRole"] = list_role;
+
+                        if (list_role.Contains("Admin"))
+                        {
+                            return Json("/Admin/AdminHome/DashboardIndex",JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json("/Admin/UserManagement/MyProfile", JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                    else
+                    {
+                        return Json("Account or Password is not correct !",JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    return Json("Account or Password is not correct !",JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json("Account or Password is not correct !",JsonRequestBehavior.AllowGet);
+            }
         }
 
         // Function Login handle request

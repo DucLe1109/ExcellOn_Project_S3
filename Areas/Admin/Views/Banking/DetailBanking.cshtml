@@ -1,0 +1,302 @@
+﻿
+@using _ExcellOn_.Areas.Admin.ViewModel
+@model Order_OrderDetail
+@{
+    ViewBag.Title = "BankingIndex";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row" style="padding: 50px">
+        <div class="col-12">
+            <div class="text-center">
+                <i class="fa fa-search-plus pull-left icon"></i>
+                <h3 style="font-size:2rem">ORDER DETAIL</h3>
+            </div>
+            <hr>
+            @if (Model != null)
+            {
+
+                <div class="row" style="font-size: 1rem">
+                    <div class="col-xs-12 col-md-3 col-lg-3" style="color:black">
+                        <div class="panel panel-primary" style="min-height: 240px">
+                            <div class="panel-heading" style="font-weight: 600">Billing Details</div>
+                            <div class="panel-body" style="word-wrap: break-word">
+                                <strong>Customer: </strong><span>@Model.Orders.Customer.Customer_Name</span><br>
+                                <strong>Phone: </strong><span>@Model.Orders.Customer.Customer_Phone</span><br>
+                                <strong>Email: </strong><span>@Model.Orders.Customer.Customer_Email</span><br>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-3 col-lg-3" style="color:black">
+                        <div class="panel panel-success" style="min-height: 240px">
+                            <div class="panel-heading" style="font-weight: 600">Company Information</div>
+                            <div class="panel-body" style="word-wrap: break-word">
+                                <strong>Name: </strong><span>@Model.Orders.Customer.Company.Company_Name</span><br>
+                                <strong>Phone: </strong><span>@Model.Orders.Customer.Company.Company_Phone</span><br>
+                                <strong>Email: </strong><span>@Model.Orders.Customer.Company.Company_Email</span><br>
+                                <strong>Address: </strong><span>@Model.Orders.Customer.Company.Company_Address</span><br>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-3 col-lg-3" style="color:black">
+                        <div class="panel panel-info" style="min-height: 240px">
+                            <div class="panel-heading" style="font-weight: 600">Order Information</div>
+                            <div class="panel-body" style="word-wrap: break-word">
+                                <strong>Created Date: </strong><span>@Model.Orders.Order_DateCreate</span><br>
+                                <strong>Description: </strong><span>@Model.Orders.Order_Description </span><br>
+                                <strong>Total amount: </strong><span>$@Model.Orders.Order_TotalCost</span><br>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-3 col-lg-3" style="color:black">
+                        <div class="panel panel-warning" style="min-height: 240px">
+                            <div class="panel-heading" style="font-weight: 600">Payment Information</div>
+                            <div class="panel-body" style="word-wrap: break-word">
+                                <strong>Method: </strong><span> Visa/ Mastercard</span><br>
+                                <strong>Bank name: </strong><span> N/A</span><br>
+                                <strong>Owner: </strong><span> Le Huy Duc</span><br>
+                                <strong>Card Number: </strong><span>***** 431</span> <br>
+                                <strong>Exp Date: </strong><span> 8/9/2026</span><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info" style="min-height: 220px">
+                            <div class="panel-heading" style="padding: 0px">
+                                <p class="text-center" style="font-size: 2.3rem;font-weight: 600;color:brown;margin-bottom: 5px">Order summary</p>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive" style="width: 100%">
+                                    <table class="table" style="padding: 10px;text-align:center">
+                                        <thead>
+                                            <tr>
+                                                <td class="list_item"><strong>Service Name</strong></td>
+                                                <td class="list_item"><strong>Code</strong></td>
+                                                <td class="list_item"><strong> Start</strong></td>
+                                                <td class="list_item"><strong> End</strong></td>
+                                                <td class="list_item"><strong>Number of Staff</strong></td>
+                                                <td class="list_item"><strong>Status</strong></td>
+                                                <td class="list_item"><strong>Price</strong></td>
+                                                <td class="list_item"><strong>Action</strong></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var ord in Model.List_OrderDetail)
+                                            {
+                                                int interval = (int)((DateTime)ord.OrderDetail_DateEnd - (DateTime)ord.OrderDetail_DateStart).TotalDays;
+                                                float price = (float)(interval * ord.OrderDetail_NumberOfPeople * ord.Service.Service_Price);
+                                                <tr>
+                                                    <td style="font-size: 1rem!important" class="list_item_order">@ord.Service.Service_Name</td>
+                                                    <td style="font-size: 1rem!important" class="list_item_order">@ord.Id</td>
+                                                    <td style="font-size: 1rem!important" class="list_item_order">@ord.OrderDetail_DateStart.Value.ToString("dd/MMM/yyyy")</td>
+                                                    <td style="font-size: 1rem!important" class="list_item_order">@ord.OrderDetail_DateEnd.Value.ToString("dd/MMM/yyyy")</td>
+                                                    <td style="font-size: 1rem!important" class="list_item_order">@ord.OrderDetail_NumberOfPeople</td>
+                                                    @if (ord.OrderDetail_Status == 0)
+                                                    {
+
+                                                        <td style="font-size: 1rem!important" class="list_item_order">
+                                                            <i class="fa fa-circle" style="color: blueviolet;margin-right: 8px;font-size:0.6rem"></i>Pending
+                                                        </td>
+                                                    }
+                                                    else if (ord.OrderDetail_Status == 1)
+                                                    {
+                                                        <td style="font-size: 1rem!important" class="list_item_order">
+                                                            <i class="fa fa-circle" style="color: orangered;margin-right: 8px;font-size:0.6rem"></i>Started
+                                                        </td>
+                                                    }
+                                                    else if (ord.OrderDetail_Status == 2)
+                                                    {
+                                                        <td style="font-size: 1rem!important" class="list_item_order">
+                                                            <i class="fa fa-circle" style="color: chartreuse;margin-right: 8px;font-size:0.6rem"></i>Completed
+                                                        </td>
+                                                    }
+                                                    else if (ord.OrderDetail_Status == 99)
+                                                    {
+                                                        <td style="font-size: 1rem!important" class="list_item_order">
+                                                            <i class="fa fa-circle" style="color: orangered;margin-right: 8px;font-size:0.6rem"></i>Ready
+                                                        </td>
+                                                    }
+                                                    <td style="font-size: 1rem!important">$@price</td>
+                                                    <td style="font-size: 1rem!important">
+                                                        @if (ord.OrderDetail_Status == 0)
+                                                        {
+                                                            <a class="btn btn-primary text-white" style="padding: 5px 8px" onclick="return _SetData(@ord.Id,@ord.Service.Id, '@ord.Service.Service_Name', '@ord.OrderDetail_DateStart.Value.ToString("dd/MMM/yyyy")', '@ord.OrderDetail_DateEnd.Value.ToString("dd/MMM/yyyy")',@ord.OrderDetail_NumberOfPeople)" data-toggle="modal" data-target="#Modal_OrderDetail"> Edit</a>
+                                                        }
+
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                            <tr>
+                                                <td class="highrow"></td>
+                                                <td class="highrow"></td>
+                                                <td class="highrow"></td>
+                                                <td class="highrow"></td>
+                                                <td class="highrow"></td>
+                                                <td class="highrow text-center"><strong>Subtotal</strong></td>
+                                                <td class="highrow"><span style="font-size: 1rem;">$@Model.Orders.Order_TotalCost</span></td>
+                                                <td class="emptyrow"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 60px" class="emptyrow"><i class="fa fa-barcode iconbig"></i></td>
+                                                <td class="emptyrow"></td>
+                                                <td class="emptyrow"></td>
+                                                <td class="emptyrow"></td>
+                                                <td class="emptyrow"></td>
+                                                <td class="emptyrow text-center"><strong>Total</strong></td>
+                                                <td class="emptyrow"><span style="font-size: 1rem;" id="Total_Cost">$@Model.Orders.Order_TotalCost</span></td>
+                                                <td class="emptyrow"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    @if (Model.Orders.Order_Status != 0)
+                                    {
+                                        <p class="alert text-center" style="color: brown;background-color:#d9edf7;font-size: 1.1rem; font-weight: 600">This order has been paid</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Modal_OrderDetail" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 800px">
+        <div class="modal-content" style="border-radius: 10px">
+            <div class="modal-header" style="background-color:burlywood">
+                <h3 class="modal-title" style="color: white;font-weight:bold" id="myModalLabel">EDIT YOUR ORDER</h3>
+                <button type="button" class="close fa fa-close" data-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="form">
+                <div class="row">
+                    <div class="modal-body" style="padding: 50px">
+                        <div class="row">
+                            <div class="col-md-12" style="display:none">
+                                <label style="font-weight: 600">Ord_ID</label>
+                                <input type="number" readonly value="" id="OrderDetail_Id_Edit" class="form-control">
+                            </div>
+                            <div class="col-md-6" style="display:none">
+                                <label style="font-weight: 600">Service_Id</label>
+                                <input type="text" required readonly id="Service_Id_Edit" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label style="font-weight: 600">Service</label>
+                                <select class="form-control" id="Service_Name_Edit">
+                                    <option value="1">In-Bound</option>
+                                    <option value="2">Out-Bound</option>
+                                    <option value="3">Tele Marketing</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label style="font-weight: 600">Number of Employee</label>
+                                <input type="number" required id="Number_Of_Employee_Edit" min="1" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:20px">
+                            <div class="col-md-6">
+                                <label style="font-weight: 600">Date Start</label>
+                                <input type="text" required id="Date_Start_Edit" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label style="font-weight: 600">Date End</label>
+                                <input type="text" required id="Date_End_Edit" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 30px">
+                            <div class="col-md-12 block_loader" style="display: none">
+                                <div style="float:right;width: 55%">
+                                    <div class="loader"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="button" style="float:right;margin-left: 10px" class="btn btn-dark" data-dismiss="modal">Close</button>
+                                <button type="button" style="float:right" class="btn btn-info" onclick="return _Edit()">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section css{
+    <style>
+        .highrow {
+            font-size: 1rem;
+        }
+
+        .emptyrow {
+            font-size: 1rem;
+        }
+    </style>
+}
+@section js{
+    @*jquery datepicker css*@
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script type="text/javascript">
+        function _SetData(ord_id, ord_service_id, ord_service_name, ord_date_start, ord_date_end, ord_number_of_employee) {
+            var date_start = new Date(ord_date_start);
+            console.log(ord_number_of_employee);
+            $('#OrderDetail_Id_Edit').val(ord_id);
+            $('#Service_Id_Edit').val(ord_service_id);
+            $('#Service_Name_Edit').val(ord_service_id).change();
+            $('#Number_Of_Employee_Edit').val(ord_number_of_employee);
+            $('#Date_End_Edit').val(ord_date_end);
+            $('#Date_Start_Edit').val(ord_date_start);
+            $('#Date_Start_Edit').datepicker({
+                minDate: 0,
+                dateFormat: "dd/M/yy"
+            });
+            $('#Date_End_Edit').datepicker({
+                minDate: 0,
+                dateFormat: "dd/M/yy"
+            });
+        }
+
+        function _Edit() {
+            var service_id = $('#Service_Name_Edit option:selected').val();
+            var data = {
+                Id: $('#OrderDetail_Id_Edit').val(),
+                OrderDetail_NumberOfPeople: $('#Number_Of_Employee_Edit').val(),
+                OrderDetail_DateStart: $('#Date_Start_Edit').val(),
+                OrderDetail_DateEnd: $('#Date_End_Edit').val(),
+
+            }
+            console.log();
+            $.ajax({
+                url: "/Admin/OrderManagement/Update_OrderDetail?service_id=" + service_id,
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(data),
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+                    if (result != 404 && result != "The Staff is not sufficient for this order !") {
+                        alert("Update successfully");
+                        history.go(0);
+                    } else if (result == 404) {
+                        alert("This order may be deleted or has some information is not valid !")
+                    } else {
+                        alert("The staff is not sufficient for this update. Please go searching to get valid service for you !");
+                    }
+                },
+                error: function (errormessage) {
+                    alert("Add Unsuccessfully !");
+                }
+            });
+        }
+    </script>
+} 
