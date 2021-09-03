@@ -2997,6 +2997,7 @@
     <Content Include="Content\Template\assets\js\jquery.magnific-popup.min.js" />
     <Content Include="Content\Template\assets\js\owl.carousel.js" />
     <Content Include="Content\Template\assets\js\theme-change.js" />
+    <Content Include="Database\ExcellOn_Database.sql" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
