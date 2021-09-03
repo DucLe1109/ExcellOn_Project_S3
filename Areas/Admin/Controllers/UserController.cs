@@ -18,7 +18,7 @@ namespace _ExcellOn_.Areas.Admin.Controllers
         public ActionResult Login()
         {
             Session["UserName"] = null;
-            return View("~/Areas/Admin/Views/User/Login2.cshtml");
+            return View();
         }
 
         [HttpPost]

@@ -3133,7 +3133,7 @@
     <Content Include="Areas\Admin\Views\Staff\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Staff2\MyProfile.cshtml" />
     <Content Include="Areas\Admin\Views\Staff2\MyOrder.cshtml" />
-    <Content Include="Areas\Admin\Views\User\Login2.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Login.cshtml" />
     <Content Include="Areas\Admin\Views\CustomerManagement\CustomerDeletedIndex.cshtml" />
     <Content Include="Areas\Admin\Views\CompanyManagement\CompanyDeletedIndex.cshtml" />
     <Content Include="Areas\Admin\Views\StaffManagement\StaffDeletedIndex.cshtml" />
@@ -3393,7 +3393,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\User\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Login_demo.cshtml" />
     <Content Include="Areas\Admin\Public\fonts\nucleo\nucleo-icons.eot" />
     <Content Include="Areas\Admin\Public\fonts\nucleo\nucleo-icons.ttf" />
     <Content Include="Areas\Admin\Public\fonts\nucleo\nucleo-icons.woff" />
